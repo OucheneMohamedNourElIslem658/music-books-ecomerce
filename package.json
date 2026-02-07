@@ -23,6 +23,8 @@
   },
   "dependencies": {
     "@payloadcms/admin-bar": "3.75.0",
+    "@payloadcms/db-mongodb": "3.75.0",
+    "@payloadcms/db-sqlite": "^3.75.0",
     "@payloadcms/email-nodemailer": "3.75.0",
     "@payloadcms/live-preview-react": "3.75.0",
     "@payloadcms/next": "3.75.0",
@@ -62,8 +64,7 @@
     "sharp": "0.34.2",
     "sonner": "^1.7.2",
     "stripe": "18.5.0",
-    "tailwind-merge": "^3.4.0",
-    "@payloadcms/db-mongodb": "3.75.0"
+    "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

@@ -1,5 +1,4 @@
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
-
+import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import {
   BoldFeature,
   EXPERIMENTAL_TableFeature,
@@ -39,8 +38,12 @@ export default buildConfig({
     user: Users.slug,
   },
   collections: [Users, Pages, Categories, Media],
-  db: mongooseAdapter({
-    url: process.env.DATABASE_URL || '',
+  db: sqliteAdapter({
+    client: {
+      // You can use an environment variable or a hardcoded string
+      // The format must be 'file:./filename.db' for local files
+      url: process.env.DATABASE_URI || 'file:./payload.db',
+    },
   }),
   editor: lexicalEditor({
     features: () => {
