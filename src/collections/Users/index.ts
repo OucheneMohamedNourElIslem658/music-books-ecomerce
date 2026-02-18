@@ -2,14 +2,26 @@ import type { CollectionConfig } from 'payload'
 
 import { adminOnly } from '@/access/adminOnly'
 import { adminOnlyFieldAccess } from '@/access/adminOnlyFieldAccess'
-import { publicAccess } from '@/access/publicAccess'
 import { adminOrSelf } from '@/access/adminOrSelf'
+import { publicAccess } from '@/access/publicAccess'
 import { checkRole } from '@/access/utilities'
 
 import { ensureFirstUserIsAdmin } from './hooks/ensureFirstUserIsAdmin'
+import { CustomTranslationsKeys } from '@/utilities/translations'
+import { TFunction } from 'node_modules/@payloadcms/translations/dist/types'
 
 export const Users: CollectionConfig = {
   slug: 'users',
+  labels: {
+    plural: ({ t: defaultT }) => {
+      const t = defaultT as TFunction<CustomTranslationsKeys>
+      return t('general:users:label:plural')
+    },
+    singular: ({ t: defaultT }) => {
+      const t = defaultT as TFunction<CustomTranslationsKeys>
+      return t('general:users:label:singular')
+    },
+  },
   access: {
     admin: ({ req: { user } }) => checkRole(['admin'], user),
     create: publicAccess,
@@ -24,6 +36,7 @@ export const Users: CollectionConfig = {
   },
   auth: {
     tokenExpiration: 1209600,
+    verify: true
   },
   fields: [
     {

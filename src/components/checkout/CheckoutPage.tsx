@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { Media } from '@/components/Media'
 import { Message } from '@/components/Message'
@@ -14,20 +14,28 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { Suspense, useCallback, useEffect, useState } from 'react'
 
-import { cssVariables } from '@/cssVariables'
-import { CheckoutForm } from '@/components/forms/CheckoutForm'
-import { useAddresses, useCart, usePayments } from '@payloadcms/plugin-ecommerce/client/react'
-import { CheckoutAddresses } from '@/components/checkout/CheckoutAddresses'
-import { CreateAddressModal } from '@/components/addresses/CreateAddressModal'
-import { Address } from '@/payload-types'
-import { Checkbox } from '@/components/ui/checkbox'
 import { AddressItem } from '@/components/addresses/AddressItem'
+import { CreateAddressModal } from '@/components/addresses/CreateAddressModal'
+import { CheckoutAddresses } from '@/components/checkout/CheckoutAddresses'
+import { CheckoutForm } from '@/components/forms/CheckoutForm'
 import { FormItem } from '@/components/forms/FormItem'
-import { toast } from 'sonner'
 import { LoadingSpinner } from '@/components/LoadingSpinner'
+import { Checkbox } from '@/components/ui/checkbox'
+import { cssVariables } from '@/cssVariables'
+import { Address } from '@/payload-types'
+import { useAddresses, useCart, usePayments } from '@payloadcms/plugin-ecommerce/client/react'
+import { toast } from 'sonner'
 
 const apiKey = `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`
 const stripe = loadStripe(apiKey)
+
+// Define available payment methods
+const PAYMENT_METHODS = [
+  { id: 'stripe', name: 'Credit Card (Stripe)' },
+  { id: 'paypal', name: 'PayPal' },
+] as const
+
+type PaymentMethodId = typeof PAYMENT_METHODS[number]['id']
 
 export const CheckoutPage: React.FC = () => {
   const { user } = useAuth()
@@ -41,12 +49,15 @@ export const CheckoutPage: React.FC = () => {
   const [email, setEmail] = useState('')
   const [emailEditable, setEmailEditable] = useState(true)
   const [paymentData, setPaymentData] = useState<null | Record<string, unknown>>(null)
-  const { initiatePayment } = usePayments()
+  const { initiatePayment, paymentMethods } = usePayments()
   const { addresses } = useAddresses()
   const [shippingAddress, setShippingAddress] = useState<Partial<Address>>()
   const [billingAddress, setBillingAddress] = useState<Partial<Address>>()
   const [billingAddressSameAsShipping, setBillingAddressSameAsShipping] = useState(true)
   const [isProcessingPayment, setProcessingPayment] = useState(false)
+
+  // New state for selected payment method
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethodId>('stripe')
 
   const cartIsEmpty = !cart || !cart.items || !cart.items.length
 
@@ -77,9 +88,10 @@ export const CheckoutPage: React.FC = () => {
   }, [])
 
   const initiatePaymentIntent = useCallback(
-    async (paymentID: string) => {
+    async (paymentMethodId: string) => {
       try {
-        const paymentData = (await initiatePayment(paymentID, {
+        setProcessingPayment(true)
+        const paymentData = (await initiatePayment(paymentMethodId, {
           additionalData: {
             ...(email ? { customerEmail: email } : {}),
             billingAddress,
@@ -92,6 +104,7 @@ export const CheckoutPage: React.FC = () => {
         }
       } catch (error) {
         const errorData = error instanceof Error ? JSON.parse(error.message) : {}
+
         let errorMessage = 'An error occurred while initiating payment.'
 
         if (errorData?.cause?.code === 'OutOfStock') {
@@ -100,10 +113,23 @@ export const CheckoutPage: React.FC = () => {
 
         setError(errorMessage)
         toast.error(errorMessage)
+      } finally {
+        setProcessingPayment(false)
       }
     },
-    [billingAddress, billingAddressSameAsShipping, shippingAddress],
+    [billingAddress, billingAddressSameAsShipping, shippingAddress, email],
   )
+
+  const handlePaymentMethodSelect = (methodId: PaymentMethodId) => {
+    setSelectedPaymentMethod(methodId)
+    // Clear any existing payment data when switching methods
+    setPaymentData(null)
+    setError(null)
+  }
+
+  const handleGoToPayment = () => {
+    void initiatePaymentIntent(selectedPaymentMethod)
+  }
 
   if (!stripe) return null
 
@@ -269,16 +295,44 @@ export const CheckoutPage: React.FC = () => {
           </>
         )}
 
+        {/* Payment Method Selection */}
+        {!paymentData && (
+          <div className="mt-4">
+            <h2 className="font-medium text-3xl mb-4">Payment Method</h2>
+            <div className="space-y-3">
+              {PAYMENT_METHODS.map((method) => (
+                <div key={method.id} className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    id={method.id}
+                    name="paymentMethod"
+                    value={method.id}
+                    checked={selectedPaymentMethod === method.id}
+                    onChange={() => handlePaymentMethodSelect(method.id)}
+                    className="h-4 w-4"
+                    disabled={!canGoToPayment}
+                  />
+                  <Label htmlFor={method.id}>{method.name}</Label>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {!paymentData && (
           <Button
-            className="self-start"
-            disabled={!canGoToPayment}
-            onClick={(e) => {
-              e.preventDefault()
-              void initiatePaymentIntent('stripe')
-            }}
+            className="self-start mt-4"
+            disabled={!canGoToPayment || isProcessingPayment}
+            onClick={handleGoToPayment}
           >
-            Go to payment
+            {isProcessingPayment ? (
+              <>
+                <LoadingSpinner className="mr-2 h-4 w-4" />
+                Processing...
+              </>
+            ) : (
+              `Continue with ${PAYMENT_METHODS.find(m => m.id === selectedPaymentMethod)?.name}`
+            )}
           </Button>
         )}
 
@@ -300,7 +354,7 @@ export const CheckoutPage: React.FC = () => {
 
         <Suspense fallback={<React.Fragment />}>
           {/* @ts-ignore */}
-          {paymentData && paymentData?.['clientSecret'] && (
+          {paymentData && paymentData?.['clientSecret'] && selectedPaymentMethod === 'stripe' && (
             <div className="pb-16">
               <h2 className="font-medium text-3xl">Payment</h2>
               {error && <p>{`Error: ${error}`}</p>}
@@ -348,9 +402,38 @@ export const CheckoutPage: React.FC = () => {
               </Elements>
             </div>
           )}
+
+          {/* PayPal Payment Section */}
+          {paymentData && selectedPaymentMethod === 'paypal' && (
+            <div className="pb-16">
+              <h2 className="font-medium text-3xl mb-4">PayPal Payment</h2>
+              <div className="bg-accent dark:bg-card rounded-lg p-6">
+                <p className="mb-4">You will be redirected to PayPal to complete your payment.</p>
+                <Button
+                  onClick={() => {
+                    // Handle PayPal redirect
+                    if (paymentData.approvalUrl) {
+                      window.location.href = paymentData.approvalUrl as string;
+                    }
+                  }}
+                  className="w-full"
+                >
+                  Continue to PayPal
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="mt-4 w-full"
+                  onClick={() => setPaymentData(null)}
+                >
+                  Cancel and choose another payment method
+                </Button>
+              </div>
+            </div>
+          )}
         </Suspense>
       </div>
 
+      {/* Cart summary section - unchanged */}
       {!cartIsEmpty && (
         <div className="basis-full lg:basis-1/3 lg:pl-8 p-8 border-none bg-primary/5 flex flex-col gap-8 rounded-lg">
           <h2 className="text-3xl font-medium">Your cart</h2>

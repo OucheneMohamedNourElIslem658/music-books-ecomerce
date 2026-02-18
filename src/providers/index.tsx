@@ -6,6 +6,7 @@ import React from 'react'
 import { HeaderThemeProvider } from './HeaderTheme'
 import { ThemeProvider } from './Theme'
 import { SonnerProvider } from '@/providers/Sonner'
+import { paypalAdapter, paypalAdapterClient } from '@/lib/payments/paypal'
 
 export const Providers: React.FC<{
   children: React.ReactNode
@@ -38,6 +39,7 @@ export const Providers: React.FC<{
               stripeAdapterClient({
                 publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '',
               }),
+              paypalAdapterClient()
             ]}
           >
             {children}
