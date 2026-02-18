@@ -21,9 +21,21 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { revalidatePage, revalidateDelete } from './hooks/revalidatePage'
+import { CustomTranslationsKeys } from '@/utilities/translations'
+import { TFunction } from 'node_modules/@payloadcms/translations/dist/types'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
+  labels: {
+    plural: ({ t: defaultT }) => {
+      const t = defaultT as TFunction<CustomTranslationsKeys>
+      return t('general:pages:label:plural')
+    },
+    singular: ({ t: defaultT }) => {
+      const t = defaultT as TFunction<CustomTranslationsKeys>
+      return t('general:pages:label:singular')
+    },
+  },
   access: {
     create: adminOnly,
     delete: adminOnly,
@@ -54,6 +66,7 @@ export const Pages: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'publishedOn',

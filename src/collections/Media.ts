@@ -7,6 +7,8 @@ import {
 } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { CustomTranslationsKeys } from '@/utilities/translations'
+import { TFunction } from 'node_modules/@payloadcms/translations/dist/types'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -16,6 +18,16 @@ export const Media: CollectionConfig = {
     group: 'Content',
   },
   slug: 'media',
+  labels: {
+    plural: ({ t: defaultT }) => {
+      const t = defaultT as TFunction<CustomTranslationsKeys>
+      return t('general:media:label:plural')
+    },
+    singular: ({ t: defaultT }) => {
+      const t = defaultT as TFunction<CustomTranslationsKeys>
+      return t('general:media:label:singular')
+    },
+  },
   access: {
     read: () => true,
   },
@@ -28,6 +40,7 @@ export const Media: CollectionConfig = {
     {
       name: 'caption',
       type: 'richText',
+      localized: true,
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]
