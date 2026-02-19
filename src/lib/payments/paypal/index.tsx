@@ -335,13 +335,10 @@ export const paypalAdapter = (args: PayPalAdapterArgs): PaymentAdapter => {
                 },
             })
 
-            // ── 5. Mark cart as purchased (prevents further cart updates) ───
-            await payload.update({
+            // ── 5. Remove Cart from DB ───
+            await payload.delete({
                 collection: cartsSlug,
                 id: cartId,
-                data: {
-                    purchasedAt: timestamp,
-                },
             })
 
             // ── 6. Update transaction: attach order + mark succeeded ─────────
