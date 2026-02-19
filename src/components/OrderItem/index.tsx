@@ -1,6 +1,8 @@
 import { OrderStatus } from '@/components/OrderStatus'
 import { Price } from '@/components/Price'
 import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 import { Order } from '@/payload-types'
 import { formatDateTime } from '@/utilities/formatDateTime'
 import Link from 'next/link'
@@ -13,36 +15,44 @@ export const OrderItem: React.FC<Props> = ({ order }) => {
   const itemsLabel = order.items?.length === 1 ? 'Item' : 'Items'
 
   return (
-    <div className="bg-card border rounded-lg px-4 py-2 md:px-6 md:py-4 flex flex-col sm:flex-row gap-12 sm:items-center sm:justify-between">
-      <div className="flex flex-col gap-4">
-        <h3 className="text-sm uppercase font-mono tracking-widest text-primary/50 truncate max-w-32 sm:max-w-none">{`#${order.id}`}</h3>
+    <Card>
+      <CardContent className="flex flex-col sm:flex-row gap-6 sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3">
 
-        <div className="flex flex-col-reverse sm:flex-row sm:items-center gap-6">
-          <p className="text-xl">
-            <time dateTime={order.createdAt}>
-              {formatDateTime({ date: order.createdAt, format: 'MMMM dd, yyyy' })}
-            </time>
+          {/* Order ID */}
+          <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground truncate max-w-32 sm:max-w-none">
+            #{order.id}
           </p>
 
-          {order.status && <OrderStatus status={order.status} />}
+          {/* Date + Status */}
+          <div className="flex flex-col-reverse sm:flex-row sm:items-center gap-3">
+            <p className="text-base font-medium">
+              <time dateTime={order.createdAt}>
+                {formatDateTime({ date: order.createdAt, format: 'MMMM dd, yyyy' })}
+              </time>
+            </p>
+            {order.status && <OrderStatus status={order.status} />}
+          </div>
+
+          <Separator />
+
+          {/* Items + Price */}
+          <p className="flex items-center gap-2 text-xs text-muted-foreground">
+            <span>{order.items?.length} {itemsLabel}</span>
+            {order.amount && (
+              <>
+                <span>•</span>
+                <Price as="span" amount={order.amount} currencyCode={order.currency ?? undefined} />
+              </>
+            )}
+          </p>
+
         </div>
 
-        <p className="flex gap-2 text-xs text-primary/80">
-          <span>
-            {order.items?.length} {itemsLabel}
-          </span>
-          {order.amount && (
-            <>
-              <span>•</span>
-              <Price as="span" amount={order.amount} currencyCode={order.currency ?? undefined} />
-            </>
-          )}
-        </p>
-      </div>
-
-      <Button variant="outline" asChild className="self-start sm:self-auto">
-        <Link href={`/orders/${order.id}`}>View Order</Link>
-      </Button>
-    </div>
+        <Button variant="outline" asChild className="self-start sm:self-auto shrink-0">
+          <Link href={`/orders/${order.id}`}>View Order</Link>
+        </Button>
+      </CardContent>
+    </Card>
   )
 }

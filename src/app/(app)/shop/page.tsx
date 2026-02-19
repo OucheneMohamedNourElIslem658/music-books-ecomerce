@@ -35,38 +35,11 @@ export default async function ShopPage({ searchParams }: Props) {
       ? {
           where: {
             and: [
-              {
-                _status: {
-                  equals: 'published',
-                },
-              },
+              { _status: { equals: 'published' } },
               ...(searchValue
-                ? [
-                    {
-                      or: [
-                        {
-                          title: {
-                            like: searchValue,
-                          },
-                        },
-                        {
-                          description: {
-                            like: searchValue,
-                          },
-                        },
-                      ],
-                    },
-                  ]
+                ? [{ or: [{ title: { like: searchValue } }, { description: { like: searchValue } }] }]
                 : []),
-              ...(category
-                ? [
-                    {
-                      categories: {
-                        contains: category,
-                      },
-                    },
-                  ]
-                : []),
+              ...(category ? [{ categories: { contains: category } }] : []),
             ],
           },
         }
@@ -74,29 +47,48 @@ export default async function ShopPage({ searchParams }: Props) {
   })
 
   const resultsText = products.docs.length > 1 ? 'results' : 'result'
+  const hasProducts = products.docs.length > 0
 
   return (
-    <div>
-      {searchValue ? (
-        <p className="mb-4">
-          {products.docs?.length === 0
-            ? 'There are no products that match '
-            : `Showing ${products.docs.length} ${resultsText} for `}
-          <span className="font-bold">&quot;{searchValue}&quot;</span>
-        </p>
-      ) : null}
+    <div className="flex flex-col gap-6">
 
-      {!searchValue && products.docs?.length === 0 && (
-        <p className="mb-4">No products found. Please try different filters.</p>
+      {/* Search feedback */}
+      {searchValue && (
+        <p className="text-sm text-muted-foreground">
+          {products.docs.length === 0 ? (
+            <>No products match <span className="font-semibold text-foreground">&quot;{searchValue}&quot;</span></>
+          ) : (
+            <>
+              Showing{' '}
+              <span className="font-semibold text-foreground">
+                {products.docs.length} {resultsText}
+              </span>{' '}
+              for <span className="font-semibold text-foreground">&quot;{searchValue}&quot;</span>
+            </>
+          )}
+        </p>
       )}
 
-      {products?.docs.length > 0 ? (
+      {/* Empty state */}
+      {!searchValue && !hasProducts && (
+        <div className="flex flex-col items-center justify-center py-24 gap-3 text-center">
+          <div className="size-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+            <span className="text-2xl">🔍</span>
+          </div>
+          <p className="font-semibold text-foreground">No products found</p>
+          <p className="text-sm text-muted-foreground">Please try different filters.</p>
+        </div>
+      )}
+
+      {/* Product grid */}
+      {hasProducts && (
         <Grid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.docs.map((product) => {
-            return <ProductGridItem key={product.id} product={product} />
-          })}
+          {products.docs.map((product) => (
+            <ProductGridItem key={product.id} product={product} />
+          ))}
         </Grid>
-      ) : null}
+      )}
+
     </div>
   )
 }

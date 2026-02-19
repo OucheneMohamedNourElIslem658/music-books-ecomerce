@@ -11,13 +11,12 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import React, { Suspense } from 'react'
 import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import { ChevronLeftIcon } from 'lucide-react'
 import { Metadata } from 'next'
 
 type Args = {
-  params: Promise<{
-    slug: string
-  }>
+  params: Promise<{ slug: string }>
 }
 
 export async function generateMetadata({ params }: Args): Promise<Metadata> {
@@ -27,10 +26,8 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   if (!product) return notFound()
 
   const gallery = product.gallery?.filter((item) => typeof item.image === 'object') || []
-
   const metaImage = typeof product.meta?.image === 'object' ? product.meta?.image : undefined
   const canIndex = product._status === 'published'
-
   const seoImage = metaImage || (gallery.length ? (gallery[0]?.image as Media) : undefined)
 
   return {
@@ -49,10 +46,7 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
       : null,
     robots: {
       follow: canIndex,
-      googleBot: {
-        follow: canIndex,
-        index: canIndex,
-      },
+      googleBot: { follow: canIndex, index: canIndex },
       index: canIndex,
     },
     title: product.meta?.title || product.title,
@@ -68,24 +62,21 @@ export default async function ProductPage({ params }: Args) {
   const gallery =
     product.gallery
       ?.filter((item) => typeof item.image === 'object')
-      .map((item) => ({
-        ...item,
-        image: item.image as Media,
-      })) || []
+      .map((item) => ({ ...item, image: item.image as Media })) || []
 
   const metaImage = typeof product.meta?.image === 'object' ? product.meta?.image : undefined
+
   const hasStock = product.enableVariants
-    ? product?.variants?.docs?.some((variant) => {
-        if (typeof variant !== 'object') return false
-        return variant.inventory && variant?.inventory > 0
-      })
+    ? product?.variants?.docs?.some(
+        (variant) => typeof variant === 'object' && variant.inventory && variant.inventory > 0,
+      )
     : product.inventory! > 0
 
   let price = product.priceInUSD
 
   if (product.enableVariants && product?.variants?.docs?.length) {
     price = product?.variants?.docs?.reduce((acc, variant) => {
-      if (typeof variant === 'object' && variant?.priceInUSD && acc && variant?.priceInUSD > acc) {
+      if (typeof variant === 'object' && variant?.priceInUSD && acc && variant.priceInUSD > acc) {
         return variant.priceInUSD
       }
       return acc
@@ -93,42 +84,45 @@ export default async function ProductPage({ params }: Args) {
   }
 
   const productJsonLd = {
-    name: product.title,
     '@context': 'https://schema.org',
     '@type': 'Product',
+    name: product.title,
     description: product.description,
     image: metaImage?.url,
     offers: {
       '@type': 'AggregateOffer',
       availability: hasStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-      price: price,
+      price,
       priceCurrency: 'usd',
     },
   }
 
   const relatedProducts =
-    product.relatedProducts?.filter((relatedProduct) => typeof relatedProduct === 'object') ?? []
+    product.relatedProducts?.filter((p) => typeof p === 'object') ?? []
 
   return (
     <React.Fragment>
       <script
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(productJsonLd),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
         type="application/ld+json"
       />
-      <div className="container pt-8 pb-8">
-        <Button asChild variant="ghost" className="mb-4">
+
+      <div className="container py-8 flex flex-col gap-8">
+
+        {/* Back button */}
+        <Button asChild variant="ghost" size="sm" className="self-start">
           <Link href="/shop">
-            <ChevronLeftIcon />
-            All products
+            <ChevronLeftIcon className="mr-1 h-4 w-4" />
+            All Products
           </Link>
         </Button>
-        <div className="flex flex-col gap-12 rounded-lg border p-8 md:py-12 lg:flex-row lg:gap-8 bg-primary-foreground">
+
+        {/* Product card */}
+        <div className="bg-card border border-border rounded-xl p-8 md:py-12 flex flex-col lg:flex-row gap-12">
           <div className="h-full w-full basis-full lg:basis-1/2">
             <Suspense
               fallback={
-                <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden" />
+                <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden rounded-xl bg-muted animate-pulse" />
               }
             >
               {Boolean(gallery?.length) && <Gallery gallery={gallery} />}
@@ -139,17 +133,16 @@ export default async function ProductPage({ params }: Args) {
             <ProductDescription product={product} />
           </div>
         </div>
-      </div>
 
-      {product.layout?.length ? <RenderBlocks blocks={product.layout} /> : <></>}
+        {/* Content blocks */}
+        {product.layout?.length ? <RenderBlocks blocks={product.layout} /> : null}
 
-      {relatedProducts.length ? (
-        <div className="container">
+        {/* Related products */}
+        {relatedProducts.length ? (
           <RelatedProducts products={relatedProducts as Product[]} />
-        </div>
-      ) : (
-        <></>
-      )}
+        ) : null}
+
+      </div>
     </React.Fragment>
   )
 }
@@ -158,9 +151,15 @@ function RelatedProducts({ products }: { products: Product[] }) {
   if (!products.length) return null
 
   return (
-    <div className="py-8">
-      <h2 className="mb-4 text-2xl font-bold">Related Products</h2>
-      <ul className="flex w-full gap-4 overflow-x-auto pt-1">
+    <div className="flex flex-col gap-6">
+      <div className="flex items-center gap-3">
+        <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground shrink-0">
+          Related Products
+        </p>
+        <Separator className="flex-1" />
+      </div>
+
+      <ul className="flex w-full gap-4 overflow-x-auto pb-2">
         {products.map((product) => (
           <li
             className="aspect-square w-full flex-none min-[475px]:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5"
@@ -184,7 +183,6 @@ function RelatedProducts({ products }: { products: Product[] }) {
 
 const queryProductBySlug = async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = await draftMode()
-
   const payload = await getPayload({ config: configPromise })
 
   const result = await payload.find({
@@ -196,11 +194,7 @@ const queryProductBySlug = async ({ slug }: { slug: string }) => {
     pagination: false,
     where: {
       and: [
-        {
-          slug: {
-            equals: slug,
-          },
-        },
+        { slug: { equals: slug } },
         ...(draft ? [] : [{ _status: { equals: 'published' } }]),
       ],
     },

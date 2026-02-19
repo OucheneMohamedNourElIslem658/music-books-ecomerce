@@ -2,12 +2,13 @@ import type { Order } from '@/payload-types'
 import type { Metadata } from 'next'
 
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-
 import { OrderItem } from '@/components/OrderItem'
 import { headers as getHeaders } from 'next/headers'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { redirect } from 'next/navigation'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 
 export default async function Orders() {
   const headers = await getHeaders()
@@ -38,24 +39,28 @@ export default async function Orders() {
   } catch (error) {}
 
   return (
-    <>
-      <div className="border p-8 rounded-lg bg-primary-foreground w-full">
-        <h1 className="text-3xl font-medium mb-8">Orders</h1>
-        {(!orders || !Array.isArray(orders) || orders?.length === 0) && (
-          <p className="">You have no orders.</p>
-        )}
+    <div className="w-full mx-auto px-4 pb-10">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-2xl font-semibold">Orders</CardTitle>
+          <Separator />
+        </CardHeader>
 
-        {orders && orders.length > 0 && (
-          <ul className="flex flex-col gap-6">
-            {orders?.map((order, index) => (
-              <li key={order.id}>
-                <OrderItem order={order} />
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </>
+        <CardContent>
+          {(!orders || !Array.isArray(orders) || orders.length === 0) ? (
+            <p className="text-muted-foreground text-sm">You have no orders.</p>
+          ) : (
+            <ul className="flex flex-col gap-6">
+              {orders.map((order) => (
+                <li key={order.id}>
+                  <OrderItem order={order} />
+                </li>
+              ))}
+            </ul>
+          )}
+        </CardContent>
+      </Card>
+    </div>
   )
 }
 

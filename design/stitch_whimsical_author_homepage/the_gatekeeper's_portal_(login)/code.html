@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Gatekeeper's Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Noto+Sans:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "sans": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Noto Serif', serif;
+        }
+        .parchment-texture {
+            background-color: #f4ecd8;
+            background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0.05) 100%);
+            position: relative;
+        }
+        .parchment-texture::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        .wax-seal {
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.3), 0 4px 10px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+        }
+        .wax-seal:hover {
+            transform: scale(1.05);
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.4), 0 6px 15px rgba(43, 108, 238, 0.5);
+        }
+        .magical-glow {
+            text-shadow: 0 0 8px rgba(43, 108, 238, 0.6);
+        }
+        .floating-stars {
+            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-white/10 px-10 py-3 bg-background-dark/40 backdrop-blur-md">
+<div class="flex items-center gap-4 text-white">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined text-3xl">auto_stories</span>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-tight uppercase tracking-[0.1em]">Musical Author</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<div class="hidden md:flex items-center gap-9">
+<a class="text-white/80 hover:text-primary text-sm font-medium transition-colors" href="#">Home</a>
+<a class="text-white/80 hover:text-primary text-sm font-medium transition-colors" href="#">Library</a>
+<a class="text-white/80 hover:text-primary text-sm font-medium transition-colors" href="#">Melodies</a>
+<a class="text-white/80 hover:text-primary text-sm font-medium transition-colors" href="#">About</a>
+</div>
+<button class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-full h-10 px-6 bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary/80 transition-all">
+<span>Enter</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area with Magical Background -->
+<main class="relative flex min-h-screen w-full flex-col items-center justify-center p-4 pt-20 floating-stars">
+<!-- Decorative Background Elements -->
+<div class="absolute inset-0 pointer-events-none opacity-40">
+<div class="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full animate-pulse shadow-[0_0_10px_white]"></div>
+<div class="absolute top-1/3 right-1/4 w-2 h-2 bg-primary rounded-full animate-pulse shadow-[0_0_15px_#2b6cee]"></div>
+<div class="absolute bottom-1/4 left-1/3 w-1 h-1 bg-white rounded-full animate-pulse"></div>
+<div class="absolute top-1/2 right-10 text-primary/30 rotate-12">
+<span class="material-symbols-outlined text-6xl">music_note</span>
+</div>
+<div class="absolute bottom-20 left-10 text-primary/20 -rotate-12">
+<span class="material-symbols-outlined text-8xl">auto_awesome</span>
+</div>
+</div>
+<!-- The Floating Scroll Login Form -->
+<div class="relative w-full max-w-[520px] z-10">
+<!-- Scroll Top Header Decor -->
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 w-[110%] h-12 bg-[#e8dec0] rounded-full border-4 border-[#c8b486] shadow-xl z-20 flex items-center justify-center">
+<div class="w-full h-1 bg-[#c8b486] mx-4 opacity-50"></div>
+<div class="px-4 text-[#8a7241] font-bold text-sm tracking-widest whitespace-nowrap uppercase">Archivist Seal</div>
+<div class="w-full h-1 bg-[#c8b486] mx-4 opacity-50"></div>
+</div>
+<!-- Parchment Scroll Body -->
+<div class="parchment-texture rounded-xl p-8 md:p-12 shadow-2xl border-x-[12px] border-[#d9cdab] flex flex-col items-center">
+<div class="text-center mb-10">
+<h1 class="text-[#4a3728] text-4xl font-bold mb-3 tracking-tight">The Gatekeeper's Portal</h1>
+<div class="h-0.5 w-24 bg-[#4a3728]/20 mx-auto mb-4"></div>
+<p class="text-[#6d5b4b] text-base italic leading-relaxed">Whisper your credentials to enter the ancient library of melodies.</p>
+</div>
+<form class="w-full space-y-6">
+<!-- Chronicler Name Input -->
+<div class="flex flex-col gap-2">
+<label class="text-[#4a3728] text-sm font-bold uppercase tracking-wider pl-1">Chronicler Name</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#8a7241]">person_book</span>
+<input class="w-full bg-white/50 border-2 border-[#d9cdab] rounded-xl py-4 pl-12 pr-4 text-[#4a3728] placeholder-[#a69671] focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-sans" placeholder="Enter your username" type="text"/>
+</div>
+</div>
+<!-- Secret Key Input -->
+<div class="flex flex-col gap-2">
+<label class="text-[#4a3728] text-sm font-bold uppercase tracking-wider pl-1">Secret Key</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#8a7241]">key</span>
+<input class="w-full bg-white/50 border-2 border-[#d9cdab] rounded-xl py-4 pl-12 pr-12 text-[#4a3728] placeholder-[#a69671] focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-sans" placeholder="Enter your secret key" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-[#8a7241] hover:text-[#4a3728]" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded text-primary focus:ring-primary/40 border-[#d9cdab] bg-white/50" type="checkbox"/>
+<span class="text-xs font-bold text-[#6d5b4b] uppercase tracking-tighter group-hover:text-[#4a3728]">Stay Bound</span>
+</label>
+<a class="text-xs font-bold text-primary uppercase tracking-tighter hover:underline" href="#">Lost the Key?</a>
+</div>
+<!-- Login Button - The Wax Seal -->
+<div class="flex justify-center pt-6 pb-2">
+<button class="wax-seal group relative flex h-24 w-24 items-center justify-center rounded-full bg-primary text-white border-4 border-white/20" type="submit">
+<div class="absolute inset-0 rounded-full border-2 border-primary-light/30 scale-90"></div>
+<span class="material-symbols-outlined text-4xl group-hover:scale-110 transition-transform">lock_open</span>
+<!-- Button Label -->
+<div class="absolute -bottom-8 whitespace-nowrap text-[#4a3728] font-bold text-sm tracking-[0.2em] uppercase">Unseal Portal</div>
+</button>
+</div>
+</form>
+<div class="mt-16 w-full text-center border-t border-[#d9cdab] pt-6">
+<p class="text-[#6d5b4b] text-sm">
+                        Not yet a member of our world?
+                    </p>
+<a class="inline-block mt-2 text-primary font-bold magical-glow hover:scale-105 transition-transform" href="#">
+                        Join the Guild <span class="ml-1">→</span>
+</a>
+</div>
+</div>
+<!-- Scroll Bottom Footer Decor -->
+<div class="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[110%] h-12 bg-[#e8dec0] rounded-full border-4 border-[#c8b486] shadow-xl z-20 flex items-center justify-center">
+<div class="flex gap-4">
+<div class="w-2 h-2 rounded-full bg-[#c8b486]"></div>
+<div class="w-2 h-2 rounded-full bg-[#c8b486]"></div>
+<div class="w-2 h-2 rounded-full bg-[#c8b486]"></div>
+</div>
+</div>
+</div>
+<!-- Background Image for depth -->
+<div class="fixed bottom-0 left-0 w-full h-[30vh] opacity-20 pointer-events-none z-0">
+<img class="w-full h-full object-cover" data-alt="Ancient wooden library shelves in soft magical light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTeYHQvFAVYefTl1BfqPFZyfXAwMeLMDo5LPcoRTU8sRxWJHclTaYe6QbY1NWW8LeuCpMxVHYfHDvFC97H26kMxNIfnK9NC8ISiWsR293InnAUKHRRO637KeaTT4TjQjpvnFMgf8XflS6JNA2cS8VBsyaTEXWO-5H6MvpCpu-GUtLPU7_zbFkLVuZTd6TGYez7u_YR8lCXvBA_3l-Kh0KpssYJscSBvkYCk3pJIcvoSlW37mSFxE4_kb1jrOK3dDBBTUFBdjOgvgaC"/>
+</div>
+</main>
+<!-- Footer Simple -->
+<footer class="fixed bottom-0 w-full py-4 text-center z-10 pointer-events-none">
+<p class="text-white/40 text-[10px] uppercase tracking-[0.4em]">© MMXXIV The Musical Author - All Stories Reserved</p>
+</footer>
+</body></html>

@@ -3,11 +3,14 @@ import type { Metadata } from 'next'
 
 import { Price } from '@/components/Price'
 import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 import { formatDateTime } from '@/utilities/formatDateTime'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ChevronLeftIcon } from 'lucide-react'
+import { ChevronLeft } from 'lucide-react'
 import { ProductItem } from '@/components/ProductItem'
 import { headers as getHeaders } from 'next/headers.js'
 import configPromise from '@payload-config'
@@ -22,7 +25,7 @@ type PageProps = {
   searchParams: Promise<{ email?: string }>
 }
 
-export default async function Order({ params, searchParams }: PageProps) {
+export default async function OrderPage({ params, searchParams }: PageProps) {
   const headers = await getHeaders()
   const payload = await getPayload({ config: configPromise })
   const { user } = await payload.auth({ headers })
@@ -42,29 +45,9 @@ export default async function Order({ params, searchParams }: PageProps) {
       depth: 2,
       where: {
         and: [
-          {
-            id: {
-              equals: id,
-            },
-          },
-          ...(user
-            ? [
-                {
-                  customer: {
-                    equals: user.id,
-                  },
-                },
-              ]
-            : []),
-          ...(email
-            ? [
-                {
-                  customerEmail: {
-                    equals: email,
-                  },
-                },
-              ]
-            : []),
+          { id: { equals: id } },
+          ...(user ? [{ customer: { equals: user.id } }] : []),
+          ...(email ? [{ customerEmail: { equals: email } }] : []),
         ],
       },
       select: {
@@ -81,17 +64,12 @@ export default async function Order({ params, searchParams }: PageProps) {
     })
 
     const canAccessAsGuest =
-      !user &&
-      email &&
-      orderResult &&
-      orderResult.customerEmail &&
-      orderResult.customerEmail === email
+      !user && email && orderResult?.customerEmail === email
     const canAccessAsUser =
       user &&
       orderResult &&
-      orderResult.customer &&
       (typeof orderResult.customer === 'object'
-        ? orderResult.customer.id
+        ? orderResult.customer?.id
         : orderResult.customer) === user.id
 
     if (orderResult && (canAccessAsGuest || canAccessAsUser)) {
@@ -101,107 +79,133 @@ export default async function Order({ params, searchParams }: PageProps) {
     console.error(error)
   }
 
-  if (!order) {
-    notFound()
-  }
+  if (!order) notFound()
 
   return (
-    <div className="">
-      <div className="flex gap-8 justify-between items-center mb-6">
+    <div className="w-full mx-auto px-4 pb-10 flex flex-col gap-6">
+
+      {/* Header row */}
+      <div className="flex items-center justify-between gap-4">
         {user ? (
-          <div className="flex gap-4">
-            <Button asChild variant="ghost">
-              <Link href="/orders">
-                <ChevronLeftIcon />
-                All orders
-              </Link>
-            </Button>
-          </div>
+          <Button asChild variant="ghost" size="sm">
+            <Link href="/orders">
+              <ChevronLeft className="mr-1 h-4 w-4" />
+              All Orders
+            </Link>
+          </Button>
         ) : (
-          <div></div>
+          <div />
         )}
 
-        <h1 className="text-sm uppercase font-mono px-2 bg-primary/10 rounded tracking-[0.07em]">
-          <span className="">{`Order #${order.id}`}</span>
-        </h1>
+        <Badge variant="secondary" className="font-mono tracking-widest uppercase text-xs px-3 py-1">
+          Order #{order.id}
+        </Badge>
       </div>
 
-      <div className="bg-card border rounded-lg px-6 py-4 flex flex-col gap-12">
-        <div className="flex flex-col gap-6 lg:flex-row lg:justify-between">
-          <div className="">
-            <p className="font-mono uppercase text-primary/50 mb-1 text-sm">Order Date</p>
-            <p className="text-lg">
-              <time dateTime={order.createdAt}>
-                {formatDateTime({ date: order.createdAt, format: 'MMMM dd, yyyy' })}
-              </time>
-            </p>
-          </div>
+      {/* Main card */}
+      <Card>
+        <CardHeader className="pb-0">
+          {/* Meta row */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="flex flex-col gap-1">
+              <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                Order Date
+              </p>
+              <p className="text-base font-medium">
+                <time dateTime={order.createdAt}>
+                  {formatDateTime({ date: order.createdAt, format: 'MMMM dd, yyyy' })}
+                </time>
+              </p>
+            </div>
 
-          <div className="">
-            <p className="font-mono uppercase text-primary/50 mb-1 text-sm">Total</p>
-            {order.amount && <Price className="text-lg" amount={order.amount} />}
-          </div>
+            <div className="flex flex-col gap-1">
+              <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                Total
+              </p>
+              {order.amount && (
+                <Price className="text-base font-medium" amount={order.amount} />
+              )}
+            </div>
 
-          {order.status && (
-            <div className="grow max-w-1/3">
-              <p className="font-mono uppercase text-primary/50 mb-1 text-sm">Status</p>
-              <OrderStatus className="text-sm" status={order.status} />
+            {order.status && (
+              <div className="flex flex-col gap-1">
+                <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                  Status
+                </p>
+                <OrderStatus className="text-sm" status={order.status} />
+              </div>
+            )}
+          </div>
+        </CardHeader>
+
+        <CardContent className="flex flex-col gap-8 pt-8">
+
+          {/* Items */}
+          {order.items && order.items.length > 0 && (
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-3">
+                <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                  Items
+                </p>
+                <Separator className="flex-1" />
+              </div>
+              <ul className="flex flex-col gap-6">
+                {order.items.map((item, index) => {
+                  if (typeof item.product === 'string') return null
+                  if (!item.product || typeof item.product !== 'object') {
+                    return (
+                      <li key={index}>
+                        <p className="text-sm text-muted-foreground">
+                          This item is no longer available.
+                        </p>
+                      </li>
+                    )
+                  }
+
+                  const variant =
+                    item.variant && typeof item.variant === 'object'
+                      ? item.variant
+                      : undefined
+
+                  return (
+                    <li key={item.id}>
+                      <ProductItem
+                        product={item.product}
+                        quantity={item.quantity}
+                        variant={variant}
+                      />
+                    </li>
+                  )
+                })}
+              </ul>
             </div>
           )}
-        </div>
 
-        {order.items && (
-          <div>
-            <h2 className="font-mono text-primary/50 mb-4 uppercase text-sm">Items</h2>
-            <ul className="flex flex-col gap-6">
-              {order.items?.map((item, index) => {
-                if (typeof item.product === 'string') {
-                  return null
-                }
+          {/* Shipping address */}
+          {order.shippingAddress && (
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-3">
+                <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                  Shipping Address
+                </p>
+                <Separator className="flex-1" />
+              </div>
+              {/* @ts-expect-error - some kind of type hell */}
+              <AddressItem address={order.shippingAddress} hideActions />
+            </div>
+          )}
 
-                if (!item.product || typeof item.product !== 'object') {
-                  return <div key={index}>This item is no longer available.</div>
-                }
-
-                const variant =
-                  item.variant && typeof item.variant === 'object' ? item.variant : undefined
-
-                return (
-                  <li key={item.id}>
-                    <ProductItem
-                      product={item.product}
-                      quantity={item.quantity}
-                      variant={variant}
-                    />
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-        )}
-
-        {order.shippingAddress && (
-          <div>
-            <h2 className="font-mono text-primary/50 mb-4 uppercase text-sm">Shipping Address</h2>
-
-            {/* @ts-expect-error - some kind of type hell */}
-            <AddressItem address={order.shippingAddress} hideActions />
-          </div>
-        )}
-      </div>
+        </CardContent>
+      </Card>
     </div>
   )
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params
-
   return {
     description: `Order details for order ${id}.`,
-    openGraph: mergeOpenGraph({
-      title: `Order ${id}`,
-      url: `/orders/${id}`,
-    }),
+    openGraph: mergeOpenGraph({ title: `Order ${id}`, url: `/orders/${id}` }),
     title: `Order ${id}`,
   }
 }

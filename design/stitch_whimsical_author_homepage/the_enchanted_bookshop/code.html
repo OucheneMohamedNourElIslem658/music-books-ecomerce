@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Enchanted Bookshop | Musical Tales &amp; Adventures</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "parchment": "#f4e4bc",
+                        "parchment-dark": "#2d2820",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>.parchment-texture {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuAtnbooX8Zy_0G3hedb_gPJackqHPcE7EciKqHgcQ1hHEk7Jz7DsgLUJ-mdpgUJc9eg8DkQatNt2h224mMdFwgCH83Ag1TVRBcUmk4VHbBeuf7vt0B7_Y4NxiX8NAKl9evAxXIModJvB_cPx85v84TXyNcGaxliJs5ErsvZ-JCEnDnBJQ1h0YeZdhMrh28OCMLLYmhh-UgV1RfISkjgqURSxMe-2LV-MDy5B_NL7k5dYqYwDD8ybmoDgvbQA7ViYYP420UllMN6BAmZ)
+    }
+.glow-primary {
+    box-shadow: 0 0 20px rgba(43, 108, 238, 0.3)
+    }
+.book-card:hover .book-overlay {
+    opacity: 1
+    }</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 w-full border-b border-white/10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-6 md:px-20 py-4">
+<div class="max-w-[1400px] mx-auto flex items-center justify-between">
+<div class="flex items-center gap-12">
+<div class="flex items-center gap-3">
+<div class="text-primary">
+<span class="material-symbols-outlined text-4xl">auto_stories</span>
+</div>
+<h1 class="text-xl font-black tracking-tight uppercase">The Enchanted Bookshop</h1>
+</div>
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Library</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Musical Scores</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">The Author</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">World Map</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="bg-slate-200 dark:bg-white/5 border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary w-64 transition-all" placeholder="Search the archives..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 hover:bg-primary/10 rounded-full transition-colors relative">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+<button class="p-2 hover:bg-primary/10 rounded-full transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-[1400px] mx-auto px-6 md:px-20 py-10">
+<!-- Hero Section: Featured Tome -->
+<section class="mb-16">
+<div class="relative overflow-hidden rounded-xl bg-slate-900 aspect-[21/9] flex items-center">
+<div class="absolute inset-0 bg-cover bg-center opacity-60" data-alt="Magical library with glowing books and stars" style="background-image: linear-gradient(to right, #101622 30%, transparent 100%), url('https://lh3.googleusercontent.com/aida-public/AB6AXuDwMdslsf3kVv6nrB6dKOsV7yJMFni1OarrgeIZTljiRAIzhvr-d8yQ7nSmrMFxgx9wawBeKK_GuwRt_VbIupH_WJmpSu2DFD56xAxoXQol495qvJ0JdhEw6pRcIY-KeyD_IDTdujtUbK19ud-mDWnuVa2pl9GaTG77dnbR9zrVdsuS5-mGzKbjqISYmEdN799wdhIMZQNk9vJ0pEfX5mbSQF192KqyID-ziYG-2YqJX_s4Si1cGgYcXZfU9-nnJybgpNYMjUG0trwE');"></div>
+<div class="relative z-10 px-12 max-w-2xl">
+<span class="inline-block px-4 py-1 rounded-full bg-primary/20 text-primary text-xs font-bold mb-4 border border-primary/30 uppercase tracking-widest">Masterpiece of the Month</span>
+<h2 class="text-5xl font-black text-white mb-4 leading-tight">The Symphony of Silent Stars</h2>
+<p class="text-slate-300 text-lg mb-8 leading-relaxed italic">"Every star has a song. This is the map to finding yours." — An immersive musical adventure through the cosmos.</p>
+<div class="flex gap-4">
+<button class="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-full font-bold flex items-center gap-2 transition-transform active:scale-95 glow-primary">
+<span class="material-symbols-outlined">play_circle</span>
+                            Listen to Prologue
+                        </button>
+<button class="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border border-white/20 px-8 py-4 rounded-full font-bold transition-colors">
+                            Explore Details
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Filter & Search Section -->
+<section class="mb-12">
+<div class="flex flex-col md:flex-row gap-6 items-center justify-between border-b border-white/10 pb-8">
+<div class="flex gap-4 overflow-x-auto pb-2 w-full md:w-auto no-scrollbar">
+<button class="flex h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-white px-6 font-semibold">
+<span class="material-symbols-outlined text-sm">auto_awesome</span>
+                        All Realms
+                    </button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white px-6 font-semibold border border-white/10 transition-colors">
+<span class="material-symbols-outlined text-sm">music_note</span>
+                        Musical Novels
+                    </button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white px-6 font-semibold border border-white/10 transition-colors">
+<span class="material-symbols-outlined text-sm">explore</span>
+                        Treasure Maps
+                    </button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white px-6 font-semibold border border-white/10 transition-colors">
+<span class="material-symbols-outlined text-sm">history_edu</span>
+                        Signed Tomes
+                    </button>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-sm text-slate-400">Sort by:</span>
+<button class="flex h-10 items-center gap-2 rounded-full bg-white/5 px-4 text-sm font-bold border border-white/10">
+                        Most Enchanted
+                        <span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Book Grid -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-12">
+<!-- Book Card 1 -->
+<div class="flex flex-col gap-5 group">
+<div class="relative aspect-[3/4] rounded-xl overflow-hidden bg-slate-800 shadow-2xl transition-transform duration-500 group-hover:-translate-y-2">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Blue magical book cover with golden ornaments" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAl-Hv_frwq9b-urh57vO9S6PIzjzUsPq9-RWkwmnlF6lKKlGHKsyAL1AMQtT-5WHr2-Q9P1JHslv6dq-fy6s19JBoie4TEft0lMGMbQA4VV4TVvKC6TVVupATt7vQ5Z3sSXaCYDzbFNMuoKemefQmZXKKQtUDoH08Ip2blF19D78G2HhBJ7juWF53DqUoVPIi4vPE_oGCGzqZsvEt0TCoKOqJ6SwAEtL3aAw-YfkUqNJT25-oc2iaAM-dGHtdnSv0ow_W_TiJp7tL7');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
+<button class="w-full bg-primary text-white py-3 rounded-full font-bold mb-3 flex items-center justify-center gap-2 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">headphones</span> Listen Sample
+                        </button>
+<button class="w-full bg-white text-slate-900 py-3 rounded-full font-bold hover:scale-105 transition-transform">
+                            Quick View
+                        </button>
+</div>
+<div class="absolute top-4 right-4 bg-primary/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter text-white">Audio Book Included</div>
+</div>
+<div class="parchment-texture bg-parchment dark:bg-parchment-dark p-6 rounded-xl border-b-4 border-primary/20 shadow-inner">
+<h3 class="text-xl font-bold dark:text-[#f4e4bc] text-[#2d2820] line-clamp-1">The Whispering Woods</h3>
+<p class="text-xs font-bold uppercase tracking-widest text-primary mb-2">Musical Adventure</p>
+<div class="flex items-center justify-between mt-4">
+<span class="text-2xl font-black dark:text-[#f4e4bc] text-[#2d2820]">$24.99</span>
+<button class="bg-[#2d2820] dark:bg-[#f4e4bc] text-[#f4e4bc] dark:text-[#2d2820] p-2 rounded-full hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Book Card 2 -->
+<div class="flex flex-col gap-5 group">
+<div class="relative aspect-[3/4] rounded-xl overflow-hidden bg-slate-800 shadow-2xl transition-transform duration-500 group-hover:-translate-y-2">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Red and gold leather bound book cover" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCQr14Uaodu7qiKcy9FW1mH-msn93salS8c5pQxDSl_J_L9ZjTqAmSbu1K5IOfp-UOCnquFDYrPw1dkLfk_a_Qj8GiAnX_bvE5y7T8PCUbAjTv2bNQGZ7kF3JFPxdvW3BZ7urRFNtOUUFgCC0ZlHA4tq8PeHQQyzlIOSG98wZk0vAAo0RDBeLLVafzOBTLlBU0_58fxdE28RCCz548J_rF7Q4_0rccaT3wZAEqtULgz6i1l1el0GrIOh-_e8_DQJB4mxcWvnda216uQ');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
+<button class="w-full bg-primary text-white py-3 rounded-full font-bold mb-3 flex items-center justify-center gap-2 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">headphones</span> Listen Sample
+                        </button>
+<button class="w-full bg-white text-slate-900 py-3 rounded-full font-bold hover:scale-105 transition-transform">
+                            Quick View
+                        </button>
+</div>
+</div>
+<div class="parchment-texture bg-parchment dark:bg-parchment-dark p-6 rounded-xl border-b-4 border-primary/20 shadow-inner">
+<h3 class="text-xl font-bold dark:text-[#f4e4bc] text-[#2d2820] line-clamp-1">Chronicles of the Blue Moon</h3>
+<p class="text-xs font-bold uppercase tracking-widest text-primary mb-2">Fantasy Novel</p>
+<div class="flex items-center justify-between mt-4">
+<span class="text-2xl font-black dark:text-[#f4e4bc] text-[#2d2820]">$19.99</span>
+<button class="bg-[#2d2820] dark:bg-[#f4e4bc] text-[#f4e4bc] dark:text-[#2d2820] p-2 rounded-full hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Book Card 3 -->
+<div class="flex flex-col gap-5 group">
+<div class="relative aspect-[3/4] rounded-xl overflow-hidden bg-slate-800 shadow-2xl transition-transform duration-500 group-hover:-translate-y-2">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Green book with tree of life emblem" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBWrvxqA7gOdYl5KKvWaZLNxWze34LIkiUQ3nmUVdB8u-BOP0Wc96E9yxWQ6u1EnSpVshwbrdCd5Pr8ZQZzFOtiXRS091Z1j07uincRW-xGOPt5ldmil_DSZw8i633MdZqOc8nyx_roQBoeVGR9epgJ9rHJ8MMNSFNP95ph30yWdF3fJHL8mYE9-ctgPYnYTGrMb0FckXMfv4neEnmK_OE5DWFj-MpqlZ6WhsfDcI6mdG48w27vkN7izJXW97XuuWDc3bE4g0IfB95t');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
+<button class="w-full bg-primary text-white py-3 rounded-full font-bold mb-3 flex items-center justify-center gap-2 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">headphones</span> Listen Sample
+                        </button>
+<button class="w-full bg-white text-slate-900 py-3 rounded-full font-bold hover:scale-105 transition-transform">
+                            Quick View
+                        </button>
+</div>
+<div class="absolute top-4 right-4 bg-amber-500/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter text-white">Signed Edition</div>
+</div>
+<div class="parchment-texture bg-parchment dark:bg-parchment-dark p-6 rounded-xl border-b-4 border-primary/20 shadow-inner">
+<h3 class="text-xl font-bold dark:text-[#f4e4bc] text-[#2d2820] line-clamp-1">The Gilded Harp</h3>
+<p class="text-xs font-bold uppercase tracking-widest text-primary mb-2">Magical Tale</p>
+<div class="flex items-center justify-between mt-4">
+<span class="text-2xl font-black dark:text-[#f4e4bc] text-[#2d2820]">$29.00</span>
+<button class="bg-[#2d2820] dark:bg-[#f4e4bc] text-[#f4e4bc] dark:text-[#2d2820] p-2 rounded-full hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Book Card 4 -->
+<div class="flex flex-col gap-5 group">
+<div class="relative aspect-[3/4] rounded-xl overflow-hidden bg-slate-800 shadow-2xl transition-transform duration-500 group-hover:-translate-y-2">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Starlit sky book cover design" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDGBnbtBGkdvR7SzXlk4olZ7Fgxe9IZ15g4iqNYRR38Vmzv6RF3DoOf71yAWG_iTawlv6E_FCkQFz52HSDrbOP0Vu5xePGutrPE3faD1RCfchDv4q15ZcqMnpq7pPTwsPVJvwM93RrOTaKCI8y0C2oSX--FtUa_n2Qu_KUgozXI-VC9cy4ZNWiPg6j8EE2dYZO6ICdir3igueztch5zEVobfh3Msj1qtG1Ek123T0dC14WCIi6HnsE2hkeDCotXsrFl5NfIMwq19qy_');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
+<button class="w-full bg-primary text-white py-3 rounded-full font-bold mb-3 flex items-center justify-center gap-2 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">headphones</span> Listen Sample
+                        </button>
+<button class="w-full bg-white text-slate-900 py-3 rounded-full font-bold hover:scale-105 transition-transform">
+                            Quick View
+                        </button>
+</div>
+</div>
+<div class="parchment-texture bg-parchment dark:bg-parchment-dark p-6 rounded-xl border-b-4 border-primary/20 shadow-inner">
+<h3 class="text-xl font-bold dark:text-[#f4e4bc] text-[#2d2820] line-clamp-1">Symphony of Stars</h3>
+<p class="text-xs font-bold uppercase tracking-widest text-primary mb-2">Sci-Fi Fantasy</p>
+<div class="flex items-center justify-between mt-4">
+<span class="text-2xl font-black dark:text-[#f4e4bc] text-[#2d2820]">$22.50</span>
+<button class="bg-[#2d2820] dark:bg-[#f4e4bc] text-[#f4e4bc] dark:text-[#2d2820] p-2 rounded-full hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- World Map Call to Action -->
+<section class="mt-24 mb-16 rounded-3xl overflow-hidden relative min-h-[400px] flex items-center justify-center text-center p-10 bg-slate-900">
+<div class="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay" data-alt="Antique world map with compass" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBkTzkacXAsZ585ZBjVUlfmRgKazUWX-hPaK-F-B48Sjd63NifeUZC_6KCXsGL2JUQuQNdJVEaR2mMMF6-Bot28pf8vsnvOvIa_faM8kGpjyyjxgg1d77OSUR47coNCn23d4cWSKM8ipWb9WWvqQcLdjDoheKjg2C3nQIT2Zq7Se7hEzi9aff92eTfV1VurDDZVQGeIVWp_T9_OYVlBlrhquxKihuRdNL2pOLCnOfsraBWymEAgv1k0SXGvw7B0jSf2QbJNZWf2YupM');"></div>
+<div class="relative z-10 max-w-xl">
+<h2 class="text-4xl font-black text-white mb-4">Discover the Kingdoms</h2>
+<p class="text-slate-300 mb-8 italic">Every book in our collection belongs to a unique realm within the Enchanted musical universe. Explore where your stories come from.</p>
+<button class="px-10 py-4 bg-white text-slate-900 rounded-full font-bold flex items-center gap-3 mx-auto hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined">map</span>
+                    Open the World Map
+                </button>
+</div>
+</section>
+</main>
+<!-- Floating Audio Player (Active when sample clicked) -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-2xl bg-slate-900/90 backdrop-blur-xl border border-white/10 rounded-full p-2 pr-6 shadow-2xl flex items-center gap-4 glow-primary">
+<div class="w-12 h-12 rounded-full overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Mini book cover thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEC_CY7ZYDp19FVkJCUnGSstMv1aQGJGiDwU1UK_3Pw2lx-v-vGEXac_eUPnN89US7_UrI2CboTk5FPTxuv_rJ0aS-LDL7N6wR2dxUehioOoIUuIEjIoxJsT4AkrG5hFsF9vRdp07DaTblu1TdynNOa0Fp_aGP69GZb1LDKpBhVlZX158JdHdViKKBgz8ER4tyEZAMX15W7VeObEul9-ZQbi2rWRLByb9ilMqyHLzpIeGrctEZRZ6MNbyTtaYmmlIveIQg61nMD_WG"/>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="text-xs font-bold text-primary uppercase tracking-tighter truncate">Now Playing Sample</p>
+<p class="text-sm font-bold text-white truncate">The Whispering Woods - Prologue</p>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex items-center gap-1">
+<div class="w-1 h-3 bg-primary rounded-full animate-pulse"></div>
+<div class="w-1 h-5 bg-primary/80 rounded-full"></div>
+<div class="w-1 h-4 bg-primary/60 rounded-full animate-pulse"></div>
+<div class="w-1 h-6 bg-primary rounded-full"></div>
+<div class="w-1 h-3 bg-primary/40 rounded-full"></div>
+</div>
+<button class="bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">pause</span>
+</button>
+<button class="text-slate-400 hover:text-white">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</div>
+<!-- Footer -->
+<footer class="bg-slate-950 text-slate-400 py-16 px-6 md:px-20 mt-20 border-t border-white/5">
+<div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-3 text-white mb-6">
+<span class="material-symbols-outlined text-3xl">auto_stories</span>
+<h2 class="text-lg font-black tracking-tight uppercase">The Enchanted Bookshop</h2>
+</div>
+<p class="text-sm leading-relaxed mb-6">Curating musical stories that bridge the gap between imagination and reality. Join our fellowship of readers.</p>
+<div class="flex gap-4">
+<a class="hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">mail</span></a>
+<a class="hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">alternate_email</span></a>
+<a class="hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">campaign</span></a>
+</div>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Archives</h4>
+<ul class="space-y-4 text-sm">
+<li><a class="hover:text-white transition-colors" href="#">Musical Stories</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Art Journals</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Collector's Items</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Gift Cards</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Support</h4>
+<ul class="space-y-4 text-sm">
+<li><a class="hover:text-white transition-colors" href="#">Shipping Magic</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Order Tracking</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Lost Tomes Policy</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Contact Scroll</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Newsletter</h4>
+<p class="text-sm mb-4">Receive weekly enchantments and new release spells.</p>
+<div class="flex gap-2">
+<input class="bg-white/5 border-white/10 rounded-full px-4 py-2 text-sm w-full focus:ring-primary" placeholder="Email Address" type="email"/>
+<button class="bg-primary text-white px-4 py-2 rounded-full font-bold hover:scale-105 transition-transform">
+                        Join
+                    </button>
+</div>
+</div>
+</div>
+<div class="max-w-[1400px] mx-auto mt-16 pt-8 border-t border-white/5 text-xs flex flex-col md:flex-row justify-between items-center gap-4">
+<p>© 2024 The Enchanted Bookshop. All rights preserved by ancient spellwork.</p>
+<div class="flex gap-8">
+<a class="hover:text-white" href="#">Privacy Policy</a>
+<a class="hover:text-white" href="#">Terms of Enchantment</a>
+</div>
+</div>
+</footer>
+</body></html>

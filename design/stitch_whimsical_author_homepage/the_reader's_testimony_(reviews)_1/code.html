@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Reader's Testimony - Musical Author</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4c025",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221e10",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>.parchment-texture {
+    background-color: #f2e8cf;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBEMDEFNdYWH5K7CJQVVpKm2DgvQ3pa-eOc98bnbaDzrEUUnfp64b5400_yd-d8u5mLz9vB4w2BlggGqaUF3RzUrsfslMM6VqfQzgYVeD5Hkneb3JNiJzGq6yTTbmeMIl6iWa_aEgFREXq1duKRXnNGOeV5gVG0WSmaUOCseBJcrH4LHNEE26kTDCtU0fPuhJiEyzqzsVdUoqNXlyD_2CJyi6Zisj3SGD3aNWcmwKbg9jPkAtd_-iFh5mwHgBpmA1YjnvRAhtvhPwP_);
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.1), 0 20px 50px rgba(0, 0, 0, 0.5)
+    }
+.ink-border {
+    border-image: radial-gradient(circle, #393528 0%, transparent 80%) 1
+    }
+.royal-seal {
+    background: radial-gradient(circle at 30% 30%, #f4c025, #b88a00);
+    box-shadow: 0 4px 0 #8a6800, 0 10px 20px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s ease
+    }
+.royal-seal:active {
+    transform: translatey(4px);
+    box-shadow: 0 0 0 #8a6800, 0 5px 10px rgba(0, 0, 0, 0.4)
+    }
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px
+    }
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #f4c025;
+    border-radius: 10px
+    }</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-900 dark:text-white min-h-screen overflow-x-hidden">
+<!-- Background Environment -->
+<div class="fixed inset-0 z-0 opacity-40 pointer-events-none">
+<div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80"></div>
+<div class="w-full h-full bg-cover bg-center" data-alt="A cozy candlelit library with ancient books and soft shadows" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZ3dDZbCAYxc1n1j3gk2d8GXA_kupH-bJZqh-nrV0j1vxZvRcKiNHQa-g4tBLoBvAzwiDGTkhdmLyIDik-c3a_4e3RloCZFFHfFG0ZIZBS1_p1MAF3ie_TJDF6cyz0dXYVZxi-F0iYRURTwqu-7aJzbLDyQ1ujx3_3iSBoUC_SWlp6j-OV_XjXDeb-uG93bAGifiG9tpYaACPeVeJZp2xVGgFhwXohTokGHiXIEYwHZfEVNoHwREnKWWlfMKeZjEfrZ4W4SzYnbXcG')"></div>
+</div>
+<!-- Navigation -->
+<header class="relative z-20 flex items-center justify-between px-10 py-6 border-b border-primary/20 backdrop-blur-sm bg-black/10">
+<div class="flex items-center gap-4 text-primary">
+<span class="material-symbols-outlined text-3xl">auto_stories</span>
+<h2 class="text-xl font-bold tracking-tight">The Musical Author</h2>
+</div>
+<nav class="hidden md:flex items-center gap-10">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">The Library</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Musical Scores</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Author's Tale</a>
+<a class="text-primary text-sm font-bold border-b-2 border-primary pb-1" href="#">Testimonies</a>
+</nav>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center bg-white/5 rounded-full px-4 py-2 border border-white/10">
+<span class="material-symbols-outlined text-gray-400 text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-40 placeholder:text-gray-500" placeholder="Search the archives..." type="text"/>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-primary/50 overflow-hidden">
+<img alt="Avatar" class="w-full h-full object-cover" data-alt="User profile portrait in a vintage frame" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlfO2-1FYAOJfCphUouyMYYTVnYLRuxUv51oFVT8IZjEZj5_jA4lS9G0q5dyAQvcQyX0enekJ_ZaUSwZWGnDwggkvMNbFLeIaaNdzp4swchtvHjroyHR-xC5B7U34WZV_q9SKrybtMZvFUmJ28AMm7L5PNKULGeZ2mBsw_kus8ykHdbG67tT_0mCxwS14rzbDs8uUpIoK7X5wWhkyWqHzba96XCpdXO0gO2lBXUduyM94MGI7yVaIvMMwIk_pcyq5JxyJ8LK7hmFUR"/>
+</div>
+</div>
+</header>
+<main class="relative z-10 container mx-auto px-4 py-12 flex flex-col items-center">
+<!-- Animated Floating Candles (Visual Flavor) -->
+<div class="absolute top-20 left-10 hidden xl:block opacity-60">
+<span class="material-symbols-outlined text-primary text-4xl animate-pulse">local_fire_department</span>
+</div>
+<div class="absolute top-40 right-20 hidden xl:block opacity-40">
+<span class="material-symbols-outlined text-primary text-2xl animate-pulse">local_fire_department</span>
+</div>
+<!-- The Enchanted Scroll -->
+<div class="w-full max-w-3xl parchment-texture rounded-sm p-1 md:p-4 shadow-2xl relative">
+<!-- Torn Edge Effect Top -->
+<div class="absolute -top-4 left-0 right-0 h-8 bg-[url('https://www.transparenttextures.com/patterns/asfalt-dark.png')] opacity-10 rotate-180"></div>
+<div class="bg-transparent border-[12px] border-double border-[#8b7355]/30 p-8 md:p-16 flex flex-col items-center text-[#393528]">
+<header class="text-center mb-12">
+<h1 class="text-5xl md:text-6xl font-black mb-4 tracking-tighter italic">The Reader's Testimony</h1>
+<div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+<p class="text-xl font-medium italic opacity-80 italic">"Cast your light upon this tale, traveler..."</p>
+</header>
+<!-- Rating Section -->
+<div class="flex flex-col items-center mb-12">
+<div class="flex gap-4 mb-4">
+<!-- Magic Star Orbs -->
+<button class="group relative">
+<span class="material-symbols-outlined text-5xl text-primary transition-all group-hover:scale-125" style="font-variation-settings: 'FILL' 1">grade</span>
+<div class="absolute inset-0 bg-primary/20 blur-xl rounded-full scale-150"></div>
+</button>
+<button class="group relative">
+<span class="material-symbols-outlined text-5xl text-primary transition-all group-hover:scale-125" style="font-variation-settings: 'FILL' 1">grade</span>
+<div class="absolute inset-0 bg-primary/20 blur-xl rounded-full scale-150"></div>
+</button>
+<button class="group relative">
+<span class="material-symbols-outlined text-5xl text-primary transition-all group-hover:scale-125" style="font-variation-settings: 'FILL' 1">grade</span>
+<div class="absolute inset-0 bg-primary/20 blur-xl rounded-full scale-150"></div>
+</button>
+<button class="group relative">
+<span class="material-symbols-outlined text-5xl text-primary transition-all group-hover:scale-125" style="font-variation-settings: 'FILL' 1">grade</span>
+<div class="absolute inset-0 bg-primary/20 blur-xl rounded-full scale-150"></div>
+</button>
+<button class="group">
+<span class="material-symbols-outlined text-5xl text-primary/30 transition-all group-hover:text-primary group-hover:scale-125">grade</span>
+</button>
+</div>
+<p class="text-sm uppercase tracking-widest font-bold opacity-60">Divine Rating</p>
+</div>
+<!-- Review Form -->
+<div class="w-full space-y-8">
+<div class="relative group">
+<label class="block text-xs uppercase tracking-[0.2em] font-bold mb-2 opacity-70">Your Chronicle</label>
+<div class="absolute -inset-1 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 opacity-0 group-focus-within:opacity-100 transition-opacity"></div>
+<textarea class="w-full bg-transparent border-x-0 border-t-0 border-b-2 border-[#8b7355]/30 focus:border-primary focus:ring-0 text-xl font-medium placeholder:italic placeholder:text-[#8b7355]/50 resize-none transition-all py-4 px-2" placeholder="Write your magical journey here..." rows="6"></textarea>
+<!-- Decorative Ink Wash Illustration Corners -->
+<div class="absolute -bottom-4 -left-4 w-16 h-16 opacity-20 pointer-events-none">
+<img class="grayscale brightness-0" data-alt="Decorative ink splash illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4AypY2PwmCVXwOuvgKmyZ0zVUukLI4kQdeHYsMEvQ0K8qIosT9_Bd4W1lXnGSwB1NMGQ5AT2QkM3zmLBDXHa4l2nZFLqMsSbNvGf720RLdhmXuhED3pq6HYzrjIzqBSksRRvU8qjblVefEBRCRvvGU-0bfMmwDSJxXljVetWzH1oly6iTgWJh5UVJPgA884GTSw7FQEthum-oNSt5Ytpxz_TgX4yKmOhP2dS7cU4KyIe2nA-bLEXgPft3nSS6EXVMqMVc2J0IuYTB"/>
+</div>
+<div class="absolute -top-4 -right-4 w-16 h-16 opacity-20 pointer-events-none rotate-180">
+<img class="grayscale brightness-0" data-alt="Decorative ink splash illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBW7eLfIBuljtuanRBrEIbiHINuJfJMjz2d1npdoHdmiRD37WPZFxzLnB5JX3XmqHFVhBDHxuRVjU-FCYaCcSSG73Z87McZ34TxfeXBfd02k0MkkXe6eYPEobLdyGtIVgKrfRaT8g-tSvDnGIZ4MIE93ZIMZO5DoD7PJtbIqwFL6IOIHPPJL5_w0_8KPXRgdKTFChBsNsDjuaiiLPVjT_9NczgdCPqsipdqbMPw61EN8EPv60ggJjE77k4QM4JrMbn6SrM-YdeBwDZo"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div>
+<label class="block text-xs uppercase tracking-[0.2em] font-bold mb-2 opacity-70">Scribe's Name</label>
+<input class="w-full bg-transparent border-x-0 border-t-0 border-b-2 border-[#8b7355]/30 focus:border-primary focus:ring-0 text-lg font-medium py-2 px-2" placeholder="Gideon Pendragon" type="text"/>
+</div>
+<div>
+<label class="block text-xs uppercase tracking-[0.2em] font-bold mb-2 opacity-70">Ethereal Address</label>
+<input class="w-full bg-transparent border-x-0 border-t-0 border-b-2 border-[#8b7355]/30 focus:border-primary focus:ring-0 text-lg font-medium py-2 px-2" placeholder="gideon@mystic.com" type="email"/>
+</div>
+</div>
+</div>
+<!-- The Royal Seal (Submit Button) -->
+<div class="mt-16 relative">
+<button class="royal-seal w-32 h-32 rounded-full flex flex-col items-center justify-center text-white group cursor-pointer border-4 border-[#8a6800]">
+<span class="material-symbols-outlined text-4xl mb-1 group-hover:scale-110 transition-transform">history_edu</span>
+<span class="text-[10px] font-black uppercase tracking-[0.3em]">Seal Scroll</span>
+<!-- Monogram Detail -->
+<div class="absolute inset-0 rounded-full border border-white/20 m-2"></div>
+</button>
+<!-- Visual Sparkles -->
+<div class="absolute -top-2 -right-2 text-primary/40 animate-pulse">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+</div>
+<div class="mt-12 text-center">
+<p class="text-xs uppercase tracking-widest opacity-40 font-bold">This testimony will be archived in the King's Vault</p>
+</div>
+</div>
+<!-- Torn Edge Effect Bottom -->
+<div class="absolute -bottom-4 left-0 right-0 h-8 bg-[url('https://www.transparenttextures.com/patterns/asfalt-dark.png')] opacity-10"></div>
+</div>
+<!-- Recent Testimonies Preview -->
+<section class="mt-24 w-full max-w-5xl">
+<h3 class="text-center text-3xl font-bold mb-12 text-primary/80">Echoes of Past Tales</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Testimony Card 1 -->
+<div class="bg-black/40 backdrop-blur-md border border-white/10 p-6 rounded-lg hover:border-primary/50 transition-all group">
+<div class="flex gap-1 mb-4">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">grade</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">grade</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">grade</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">grade</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">grade</span>
+</div>
+<p class="italic text-gray-300 mb-6 leading-relaxed group-hover:text-white transition-colors">"The music practically lifted off the pages! A symphony of words that I couldn't put down."</p>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xs">person</span>
+</div>
+<span class="text-xs font-bold uppercase tracking-widest text-primary">Elara Vance</span>
+</div>
+</div>
+<!-- Testimony Card 2 -->
+<div class="bg-black/40 backdrop-blur-md border border-white/10 p-6 rounded-lg hover:border-primary/50 transition-all group">
+<div class="flex gap-1 mb-4">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">grade</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">grade</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">grade</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">grade</span>
+<span class="material-symbols-outlined text-white/20 text-sm">grade</span>
+</div>
+<p class="italic text-gray-300 mb-6 leading-relaxed group-hover:text-white transition-colors">"A hauntingly beautiful journey. Each chapter felt like a different movement in a grand concerto."</p>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xs">person</span>
+</div>
+<span class="text-xs font-bold uppercase tracking-widest text-primary">Julian Thorne</span>
+</div>
+</div>
+<!-- Testimony Card 3 -->
+<div class="bg-black/40 backdrop-blur-md border border-white/10 p-6 rounded-lg hover:border-primary/50 transition-all group">
+<div class="flex gap-1 mb-4">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">grade</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">grade</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">grade</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">grade</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">grade</span>
+</div>
+<p class="italic text-gray-300 mb-6 leading-relaxed group-hover:text-white transition-colors">"Simply magical. The Author has captured lightning in a bottle and composed it into a book."</p>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xs">person</span>
+</div>
+<span class="text-xs font-bold uppercase tracking-widest text-primary">Seraphina Moon</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Decoration -->
+<footer class="relative z-10 py-12 border-t border-white/5 mt-20 flex flex-col items-center gap-4">
+<div class="flex items-center gap-2 text-primary/40">
+<span class="material-symbols-outlined">music_note</span>
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="material-symbols-outlined">music_note</span>
+</div>
+<p class="text-xs uppercase tracking-[0.5em] opacity-40">© The Musical Author - MMXIV</p>
+</footer>
+</body></html>

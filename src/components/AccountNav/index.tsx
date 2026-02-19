@@ -1,69 +1,68 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import clsx from 'clsx'
+import { Separator } from '@/components/ui/separator'
+import { cn } from '@/utilities/cn'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { SettingsIcon, MapPinIcon, PackageIcon, LogOutIcon } from 'lucide-react'
 
 type Props = {
   className?: string
 }
 
+const navItems = [
+  { href: '/account', label: 'Account Settings', icon: SettingsIcon },
+  { href: '/account/addresses', label: 'Addresses', icon: MapPinIcon },
+  { href: '/orders', label: 'Orders', icon: PackageIcon },
+]
+
 export const AccountNav: React.FC<Props> = ({ className }) => {
   const pathname = usePathname()
 
   return (
-    <div className={clsx(className)}>
-      <ul className="flex flex-col gap-2">
-        <li>
-          <Button asChild variant="link">
-            <Link
-              href="/account"
-              className={clsx('text-primary/50 hover:text-primary hover:no-underline', {
-                'text-primary': pathname === '/account',
-              })}
-            >
-              Account settings
-            </Link>
-          </Button>
-        </li>
+    <div className={cn('flex flex-col gap-2', className)}>
+      <ul className="flex flex-col gap-1">
+        {navItems.map(({ href, label, icon: Icon }) => {
+          const isActive =
+            href === '/orders'
+              ? pathname.includes('/orders')
+              : pathname === href
 
-        <li>
-          <Button asChild variant="link">
-            <Link
-              href="/account/addresses"
-              className={clsx('text-primary/50 hover:text-primary hover:no-underline', {
-                'text-primary': pathname === '/account/addresses',
-              })}
-            >
-              Addresses
-            </Link>
-          </Button>
-        </li>
-
-        <li>
-          <Button
-            asChild
-            variant="link"
-            className={clsx('text-primary/50 hover:text-primary hover:no-underline', {
-              'text-primary': pathname === '/orders' || pathname.includes('/orders'),
-            })}
-          >
-            <Link href="/orders">Orders</Link>
-          </Button>
-        </li>
+          return (
+            <li key={href}>
+              <Button
+                asChild
+                variant="ghost"
+                className={cn(
+                  'w-full justify-start gap-3 rounded-lg text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-colors',
+                  isActive && 'text-primary bg-primary/10 font-medium hover:text-primary',
+                )}
+              >
+                <Link href={href}>
+                  <Icon className="size-4" />
+                  {label}
+                </Link>
+              </Button>
+            </li>
+          )
+        })}
       </ul>
 
-      <hr className="w-full border-white/5" />
+      <Separator />
 
       <Button
         asChild
-        variant="link"
-        className={clsx('text-primary/50 hover:text-primary hover:no-underline', {
-          'text-primary': pathname === '/logout',
-        })}
+        variant="ghost"
+        className={cn(
+          'w-full justify-start gap-3 rounded-lg text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-colors',
+          pathname === '/logout' && 'text-primary bg-primary/10',
+        )}
       >
-        <Link href="/logout">Log out</Link>
+        <Link href="/logout">
+          <LogOutIcon className="size-4" />
+          Log out
+        </Link>
       </Button>
     </div>
   )
