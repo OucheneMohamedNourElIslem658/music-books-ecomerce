@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kingdom Chronicles | Magical News</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Spline Sans", sans-serif;
+        }
+        .parchment-glow {
+            box-shadow: 0 0 20px rgba(43, 108, 238, 0.1);
+        }
+        .parchment-glow:hover {
+            box-shadow: 0 0 30px rgba(43, 108, 238, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 w-full border-b border-solid border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-6 md:px-20 py-3">
+<div class="max-w-[1200px] mx-auto flex items-center justify-between whitespace-nowrap">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z" fill="currentColor"></path>
+<path clip-rule="evenodd" d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764ZM4.95178 32.7688L21.4543 6.30267C22.6288 4.4191 25.3712 4.41909 26.5457 6.30267L43.0534 32.777C43.0709 32.8052 43.0878 32.8338 43.104 32.8629L41.3563 33.8352C43.104 32.8629 43.1038 32.8626 43.104 32.8629L43.1051 32.865L43.1065 32.8675L43.1101 32.8739L43.1199 32.8918C43.1276 32.906 43.1377 32.9246 43.1497 32.9473C43.1738 32.9925 43.2062 33.0545 43.244 33.1299C43.319 33.2792 43.4196 33.489 43.5217 33.7317C43.6901 34.1321 44 34.9311 44 35.7391C44 37.4427 43.003 38.7775 41.8558 39.7209C40.6947 40.6757 39.1354 41.4464 37.385 42.0552C33.8654 43.2794 29.133 44 24 44C18.867 44 14.1346 43.2794 10.615 42.0552C8.86463 41.4464 7.30529 40.6757 6.14419 39.7209C4.99695 38.7775 3.99999 37.4427 3.99999 35.7391C3.99999 34.8725 4.29264 34.0922 4.49321 33.6393C4.60375 33.3898 4.71348 33.1804 4.79687 33.0311C4.83898 32.9556 4.87547 32.8935 4.9035 32.8471C4.91754 32.8238 4.92954 32.8043 4.93916 32.7889L4.94662 32.777L4.95178 32.7688ZM35.9868 29.004L24 9.77997L12.0131 29.004C12.4661 28.8609 12.9179 28.7342 13.3617 28.6282C16.4281 27.8961 20.0901 27.4783 24 27.4783C27.9099 27.4783 31.5719 27.8961 34.6383 28.6282C35.082 28.7342 35.5339 28.8609 35.9868 29.004Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold tracking-tight">Kingdom Chronicles</h2>
+</div>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Chronicles</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Royal Tours</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">The Library</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">About the Author</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<label class="hidden md:flex items-center bg-slate-100 dark:bg-slate-800 rounded-full px-4 py-2 w-64">
+<span class="material-symbols-outlined text-slate-400 text-lg mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-slate-500" placeholder="Search the archives..." type="text"/>
+</label>
+<button class="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-full text-sm font-bold transition-all shadow-lg shadow-primary/20">
+                    Royal Portal
+                </button>
+</div>
+</div>
+</header>
+<main class="max-w-[1200px] mx-auto px-6 py-8">
+<div class="flex flex-col lg:flex-row gap-12">
+<!-- Left Content: Chronicles Feed -->
+<div class="flex-1 space-y-8">
+<!-- Hero Section: HeaderImage -->
+<div class="@container">
+<div class="relative rounded-xl overflow-hidden min-h-[320px] group">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Mystical enchanted library with floating blue musical notes" style='background-image: linear-gradient(0deg, rgba(16, 22, 34, 0.9) 0%, rgba(16, 22, 34, 0.2) 60%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuCCzSyy_NRa1FXF1KatWE_rzjYu8p1FjWvtDGnc2jHmQQD_TjSWxKVvJ22NZ74T_gXx3CtEC6SHCUN6UPrA8aYo5xLVT8UZpw4PXNvDKXeTOO4H1Uokg9iTw777YOpmm5rPJQcSJSCSKB6psgCXt6CC5HGda_vo_B4wr00S1CeJ2PHPzz5m102YaS9kDNo4h4bNkn6sjDmmIqpyHSu5o8igyQjGhPMOzpvb4nFDbhTbI6kqWcHsVc1kO24FHkz0xsCI4ZxzIqO0ANI3");'>
+</div>
+<div class="absolute bottom-0 left-0 p-8">
+<span class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block uppercase tracking-wider">Latest News</span>
+<h1 class="text-4xl font-bold text-white leading-tight mb-2">Resonance of the Realm: New Chapter Unveiled</h1>
+<p class="text-slate-300 max-w-xl">The royal archives have opened once more, revealing the long-lost melodies of the Crystal Spire.</p>
+</div>
+</div>
+</div>
+<!-- Tabs -->
+<div class="border-b border-slate-200 dark:border-slate-800">
+<div class="flex gap-8 overflow-x-auto pb-px">
+<a class="border-b-2 border-primary py-4 text-primary font-bold text-sm whitespace-nowrap" href="#">All Scrolls</a>
+<a class="border-b-2 border-transparent py-4 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 font-bold text-sm transition-colors whitespace-nowrap" href="#">Royal Tours</a>
+<a class="border-b-2 border-transparent py-4 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 font-bold text-sm transition-colors whitespace-nowrap" href="#">Book Signings</a>
+<a class="border-b-2 border-transparent py-4 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 font-bold text-sm transition-colors whitespace-nowrap" href="#">New Releases</a>
+</div>
+</div>
+<!-- SectionHeader -->
+<div class="flex items-center justify-between">
+<h2 class="text-2xl font-bold tracking-tight">Latest Chronicles</h2>
+<div class="flex gap-2">
+<button class="size-10 rounded-full border border-slate-200 dark:border-slate-800 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="size-10 rounded-full border border-slate-200 dark:border-slate-800 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Blog Feed (Card Components) -->
+<div class="grid gap-6">
+<!-- New Release Card -->
+<div class="parchment-glow bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden flex flex-col md:flex-row transition-all group">
+<div class="md:w-1/3 min-h-[200px] bg-cover bg-center" data-alt="Glowing crystal blue book cover on a dark table" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAFZcSULCUL3ZWp6DuxaGINkaDyryh4-AmZ_2D3PmILs6tpjJvi7hDyPckGbEZo-34_YoDMxQNL8yncVvKa1qrZRvEjULIX89sQ9c_N9Rqq7T8OdhBUJbglQw3VKbaLWiqF-JbIahfaHTGsQPvJ2TATAd-FOdC_awqqtQKz2EvLevmGIuDmzs3FL4iT8Pd0bfjIvuqON_jevgv1ISybe5wttPybsNioU9GNmlhxz_1AcRo1eJES8TEIbtONIAy9Arolfm9z7pUayNpj");'>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="text-primary text-[10px] font-black uppercase tracking-widest px-2 py-0.5 border border-primary/30 rounded-full">New Release</span>
+<span class="text-slate-400 text-xs">• 2 days ago</span>
+</div>
+<h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">The Crystal Chord: Proclamation of Release</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
+                                    The long-awaited sequel to the melody of the spheres has finally emerged from the royal archives. Available in all kingdoms this moon-cycle.
+                                </p>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-800 bg-cover" data-alt="Author profile portrait" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC38Pm4vUZVpcbZs62hl5Pl_c7ouCvvAgis-WdsjhxwLsMLSA4R1bL96FF8wJ2gxLFP7oIWp_pN1FoKPT46dIFeFcDD_XUnfU0pDTr8KHTUZMeKC9OIEXBKFnIGJw6bD3QpXJY4dcHdFXE-po6Fe-xchrXwlFSFLZLRtFyCuixpspoeYF7dq-H8Jwgi-xisbq4lifY9Dr6BU9gdKBtL1UDwpaRzUTdPNQxnf72GIry_GiYo4TABi1H7x2Kvrv7RSGZr7cenIlle-78Y');"></div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Lady Lyra</span>
+</div>
+<button class="flex items-center gap-2 text-primary text-sm font-bold group">
+                                    Read Proclamation <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_right_alt</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Tour Card -->
+<div class="parchment-glow bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden flex flex-col md:flex-row transition-all group">
+<div class="md:w-1/3 min-h-[200px] bg-cover bg-center" data-alt="An old map with a compass and magical dust" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC5AyBOu9DAdMVUoYLEpwTyx4_3geCkYy6ijKO-rGvzs1RgxdIjOYm1vtPkASaRQNPSzRyZ_5A8t6bncVhgkzxew04M9P7W1xKSlVtqNuaqg1Jf6LHtSbk4gZYcyyHr7e-3B48-qegtHpAK_-fFz2wrgiQiZHRp-8tSJ1qjY7Avj7fPkq5hxQGulmWElKlWYNqeDWGV6mMI1iyRGNMthWBmw-W79231IdOQswvwv6vXUKJ40REaeYLHoNvnypP429f8d7BqcK0Nce2a");'>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="text-amber-500 text-[10px] font-black uppercase tracking-widest px-2 py-0.5 border border-amber-500/30 rounded-full">Royal Tour</span>
+<span class="text-slate-400 text-xs">• 1 week ago</span>
+</div>
+<h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">The Autumn Equinox Tour: Kingdom Dates</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
+                                    Join us as we traverse the Great Divide. From the Silver Coast to the Whispering Woods, see where the music takes us next.
+                                </p>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Across the Five Realms</span>
+</div>
+<button class="bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white text-slate-700 dark:text-slate-300 px-5 py-2 rounded-full text-xs font-bold transition-all">
+                                    View Dates
+                                </button>
+</div>
+</div>
+</div>
+<!-- Book Signing Card -->
+<div class="parchment-glow bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden flex flex-col md:flex-row transition-all group">
+<div class="md:w-1/3 min-h-[200px] bg-cover bg-center" data-alt="A feather quill resting on an open ink bottle" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDf0vdjNfNCk4FAILXW2N2PXxQKYAW-3LTobgll4YeYN3lypYiMjTsQPJLc1Yp_48cfmcCMcVK8r-BKYLd6p9iDHNUka8trLdpvBJR34bGJFlldQr31adAlyikTz7VrBdYWELpsE9p3frl_c7QW5PMd2AaErFDU_inDMzWNs8hdyKtqBtBCTsoMvi1OBOignj-SYqhoJ4TGtY6Ae8xX0DUfRSMXuEFdbiaQi-irKneiX682XCSTgpPAFNdVUFJQs7GhAwsNHl91Vnjf");'>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="text-emerald-500 text-[10px] font-black uppercase tracking-widest px-2 py-0.5 border border-emerald-500/30 rounded-full">Signing</span>
+<span class="text-slate-400 text-xs">• 2 weeks ago</span>
+</div>
+<h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">A Night of Quills and Ink at The Citadel</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
+                                    A rare opportunity to have your scrolls inscribed by the author. Limited enchantments will be available for first arrivals.
+                                </p>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">event</span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">October 15th, Dusk</span>
+</div>
+<button class="bg-primary/10 text-primary hover:bg-primary hover:text-white px-5 py-2 rounded-full text-xs font-bold transition-all">
+                                    Reserve Spot
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar -->
+<aside class="w-full lg:w-80 space-y-8">
+<!-- Subscription Box: Royal Newsletter -->
+<div class="bg-primary/5 dark:bg-primary/10 border border-primary/20 p-8 rounded-xl relative overflow-hidden">
+<div class="absolute -top-4 -right-4 size-24 bg-primary/10 rounded-full blur-2xl"></div>
+<div class="relative">
+<span class="material-symbols-outlined text-primary text-4xl mb-4">mail</span>
+<h3 class="text-xl font-bold mb-2">The Royal Messenger</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-6 leading-relaxed">
+                            Be the first to receive proclamations of tours, secret chapters, and magical giveaways.
+                        </p>
+<div class="space-y-3">
+<input class="w-full bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-full py-3 px-5 text-sm focus:ring-primary focus:border-primary" placeholder="Your herald address (Email)" type="email"/>
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-full transition-all shadow-md shadow-primary/30 flex items-center justify-center gap-2">
+                                Join the Service <span class="material-symbols-outlined text-sm">send</span>
+</button>
+</div>
+<p class="text-[10px] text-slate-400 mt-4 text-center">
+                            By joining, you agree to the Kingdom's Scrolls of Privacy.
+                        </p>
+</div>
+</div>
+<!-- Recent Chronicles List -->
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-xl">
+<h3 class="text-sm font-black uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2">
+<span class="size-2 rounded-full bg-primary"></span> Recently Inscribed
+                    </h3>
+<div class="space-y-6">
+<div class="group cursor-pointer">
+<p class="text-[10px] text-primary font-bold uppercase mb-1">Archive Entry #421</p>
+<h4 class="text-sm font-bold group-hover:text-primary transition-colors line-clamp-2">Behind the Melody: The Making of the Crystal Chord</h4>
+<p class="text-xs text-slate-500 mt-1">12th Sept, 12:00 PM</p>
+</div>
+<div class="group cursor-pointer">
+<p class="text-[10px] text-amber-500 font-bold uppercase mb-1">Travel Log</p>
+<h4 class="text-sm font-bold group-hover:text-primary transition-colors line-clamp-2">5 Hidden Spots in the Whispering Woods</h4>
+<p class="text-xs text-slate-500 mt-1">8th Sept, 09:15 AM</p>
+</div>
+<div class="group cursor-pointer">
+<p class="text-[10px] text-emerald-500 font-bold uppercase mb-1">Fan Works</p>
+<h4 class="text-sm font-bold group-hover:text-primary transition-colors line-clamp-2">Symphony of the Fans: Art Showcase</h4>
+<p class="text-xs text-slate-500 mt-1">1st Sept, 03:45 PM</p>
+</div>
+</div>
+</div>
+<!-- Social Scrolls -->
+<div class="flex justify-between items-center px-2">
+<p class="text-xs font-bold text-slate-400">Social Scrolls</p>
+<div class="flex gap-3">
+<a class="size-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-base">share</span>
+</a>
+<a class="size-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-base">forum</span>
+</a>
+<a class="size-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-base">photo_camera</span>
+</a>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<footer class="mt-20 border-t border-slate-200 dark:border-slate-800 py-12 bg-slate-50 dark:bg-slate-900/50">
+<div class="max-w-[1200px] mx-auto px-6 text-center">
+<div class="flex items-center justify-center gap-3 text-primary/50 mb-6">
+<span class="material-symbols-outlined text-3xl">auto_stories</span>
+</div>
+<p class="text-slate-500 text-sm mb-4">© 1204 - 2024 Kingdom Chronicles Publishing House.</p>
+<div class="flex justify-center gap-6 text-xs font-bold text-slate-400 uppercase tracking-widest">
+<a class="hover:text-primary transition-colors" href="#">Privacy Proclamation</a>
+<a class="hover:text-primary transition-colors" href="#">Royal Terms</a>
+<a class="hover:text-primary transition-colors" href="#">Contact The Bard</a>
+</div>
+</div>
+</footer>
+</body></html>

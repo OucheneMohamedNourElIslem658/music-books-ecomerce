@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Reader's Testimony - Musical Author</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Great+Vibes&amp;family=Pinyon+Script&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4c025",
+                        "background-dark": "#0a0904",
+                        "parchment": "#f2e8cf",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"],
+                        "handwritten": ["Pinyon Script", "cursive"],
+                        "serif-body": ["Newsreader", "serif"]
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .parchment-scroll {
+                background-color: #f2e8cf;
+                background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBEMDEFNdYWH5K7CJQVVpKm2DgvQ3pa-eOc98bnbaDzrEUUnfp64b5400_yd-d8u5mLz9vB4w2BlggGqaUF3RzUrsfslMM6VqfQzgYVeD5Hkneb3JNiJzGq6yTTbmeMIl6iWa_aEgFREXq1duKRXnNGOeV5gVG0WSmaUOCseBJcrH4LHNEE26kTDCtU0fPuhJiEyzqzsVdUoqNXlyD_2CJyi6Zisj3SGD3aNWcmwKbg9jPkAtd_-iFh5mwHgBpmA1YjnvRAhtvhPwP_');
+                background-blend-mode: multiply;
+                box-shadow: 
+                    0 0 0 1px rgba(0,0,0,0.1),
+                    0 20px 50px rgba(0, 0, 0, 0.7),
+                    inset 0 0 60px rgba(139, 115, 85, 0.3);
+            }
+            .parchment-lines {
+                background-image: linear-gradient(rgba(139, 115, 85, 0.15) 1px, transparent 1px);
+                background-size: 100% 2.5rem;
+                line-height: 2.5rem;
+            }
+            .golden-filigree {
+                border-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0H0V20C0 10 10 0 20 0Z' fill='%23f4c025'/%3E%3Cpath d='M80 0H100V20C100 10 90 0 80 0Z' fill='%23f4c025'/%3E%3Cpath d='M20 100H0V80C0 90 10 100 20 100Z' fill='%23f4c025'/%3E%3Cpath d='M80 100H100V80C100 90 90 100 80 100Z' fill='%23f4c025'/%3E%3C/svg%3E") 30 stretch;
+                border-width: 12px;
+                border-style: solid;
+            }
+            .magic-star-glow:hover {
+                text-shadow: 0 0 15px #f4c025, 0 0 30px #f4c025;
+                transform: scale(1.2) rotate(15deg);
+            }
+            .royal-seal-btn {
+                background: radial-gradient(circle at 40% 40%, #eab308, #854d0e);
+                box-shadow: 
+                    0 6px 0 #451a03,
+                    0 12px 20px rgba(0,0,0,0.5),
+                    inset 0 2px 4px rgba(255,255,255,0.3);
+                transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
+            .royal-seal-btn:active {
+                transform: translateY(4px);
+                box-shadow: 
+                    0 2px 0 #451a03,
+                    0 4px 10px rgba(0,0,0,0.5);
+            }
+            .vignette {
+                background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 100%);
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-dark font-display text-gray-900 min-h-screen overflow-x-hidden selection:bg-primary/30">
+<div class="fixed inset-0 z-0">
+<div class="absolute inset-0 bg-cover bg-center opacity-30 brightness-50 grayscale-[0.5]" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZ3dDZbCAYxc1n1j3gk2d8GXA_kupH-bJZqh-nrV0j1vxZvRcKiNHQa-g4tBLoBvAzwiDGTkhdmLyIDik-c3a_4e3RloCZFFHfFG0ZIZBS1_p1MAF3ie_TJDF6cyz0dXYVZxi-F0iYRURTwqu-7aJzbLDyQ1ujx3_3iSBoUC_SWlp6j-OV_XjXDeb-uG93bAGifiG9tpYaACPeVeJZp2xVGgFhwXohTokGHiXIEYwHZfEVNoHwREnKWWlfMKeZjEfrZ4W4SzYnbXcG')"></div>
+<div class="absolute inset-0 vignette"></div>
+<div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+</div>
+<header class="relative z-50 flex items-center justify-between px-10 py-6">
+<div class="flex items-center gap-4 text-primary">
+<span class="material-symbols-outlined text-3xl">auto_stories</span>
+<h2 class="text-xl font-bold tracking-widest uppercase">The Musical Author</h2>
+</div>
+<div class="flex gap-8 text-white/60 text-sm font-medium">
+<a class="hover:text-primary transition-colors" href="#">Library</a>
+<a class="hover:text-primary transition-colors" href="#">Scores</a>
+<a class="text-primary" href="#">Testimonies</a>
+</div>
+</header>
+<main class="relative z-40 container mx-auto px-4 min-h-[calc(100vh-100px)] flex items-center justify-center">
+<div class="w-full max-w-2xl parchment-scroll rounded-sm relative golden-filigree p-1">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 w-[105%] h-12 bg-[#d9c5a0] rounded-full shadow-lg border-y-2 border-[#8b7355]/40 z-[-1]"></div>
+<div class="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[105%] h-12 bg-[#d9c5a0] rounded-full shadow-lg border-y-2 border-[#8b7355]/40 z-[-1]"></div>
+<div class="px-8 py-12 md:px-16 md:py-16 flex flex-col items-center text-[#393528]">
+<header class="text-center mb-8">
+<h1 class="text-4xl md:text-5xl font-bold mb-2 font-display">The Reader's Testimony</h1>
+<p class="font-handwritten text-3xl text-[#5d5440]">"Immortalize your journey in ink..."</p>
+</header>
+<div class="flex flex-col items-center mb-10">
+<div class="flex gap-2">
+<button class="group transition-all">
+<span class="material-symbols-outlined text-5xl text-primary magic-star-glow transition-all" style="font-variation-settings: 'FILL' 1">grade</span>
+</button>
+<button class="group transition-all">
+<span class="material-symbols-outlined text-5xl text-primary magic-star-glow transition-all" style="font-variation-settings: 'FILL' 1">grade</span>
+</button>
+<button class="group transition-all">
+<span class="material-symbols-outlined text-5xl text-primary magic-star-glow transition-all" style="font-variation-settings: 'FILL' 1">grade</span>
+</button>
+<button class="group transition-all">
+<span class="material-symbols-outlined text-5xl text-primary magic-star-glow transition-all" style="font-variation-settings: 'FILL' 1">grade</span>
+</button>
+<button class="group transition-all">
+<span class="material-symbols-outlined text-5xl text-[#8b7355]/30 magic-star-glow transition-all">grade</span>
+</button>
+</div>
+<span class="text-[10px] uppercase tracking-[0.4em] font-bold mt-2 opacity-60">Ascended Rating</span>
+</div>
+<form class="w-full space-y-6">
+<div class="relative">
+<textarea class="w-full bg-transparent border-none focus:ring-0 text-3xl font-handwritten parchment-lines placeholder:text-[#8b7355]/40 resize-none py-2 h-48 custom-scrollbar" placeholder="Once upon a time, as I turned the pages..."></textarea>
+<div class="absolute -bottom-4 -left-4 w-20 h-20 opacity-30 pointer-events-none">
+<img alt="ink wash decor" class="grayscale brightness-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4AypY2PwmCVXwOuvgKmyZ0zVUukLI4kQdeHYsMEvQ0K8qIosT9_Bd4W1lXnGSwB1NMGQ5AT2QkM3zmLBDXHa4l2nZFLqMsSbNvGf720RLdhmXuhED3pq6HYzrjIzqBSksRRvU8qjblVefEBRCRvvGU-0bfMmwDSJxXljVetWzH1oly6iTgWJh5UVJPgA884GTSw7FQEthum-oNSt5Ytpxz_TgX4yKmOhP2dS7cU4KyIe2nA-bLEXgPft3nSS6EXVMqMVc2J0IuYTB"/>
+</div>
+<div class="absolute -top-4 -right-4 w-20 h-20 opacity-30 pointer-events-none rotate-180">
+<img alt="ink wash decor" class="grayscale brightness-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBW7eLfIBuljtuanRBrEIbiHINuJfJMjz2d1npdoHdmiRD37WPZFxzLnB5JX3XmqHFVhBDHxuRVjU-FCYaCcSSG73Z87McZ34TxfeXBfd02k0MkkXe6eYPEobLdyGtIVgKrfRaT8g-tSvDnGIZ4MIE93ZIMZO5DoD7PJtbIqwFL6IOIHPPJL5_w0_8KPXRgdKTFChBsNsDjuaiiLPVjT_9NczgdCPqsipdqbMPw61EN8EPv60ggJjE77k4QM4JrMbn6SrM-YdeBwDZo"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+<div class="border-b-2 border-[#8b7355]/20 focus-within:border-primary transition-colors">
+<label class="block text-[10px] uppercase tracking-widest font-bold opacity-60">Scribe's Name</label>
+<input class="w-full bg-transparent border-none focus:ring-0 font-handwritten text-2xl py-1 px-0" placeholder="Arthur Pendragon" type="text"/>
+</div>
+<div class="border-b-2 border-[#8b7355]/20 focus-within:border-primary transition-colors">
+<label class="block text-[10px] uppercase tracking-widest font-bold opacity-60">Ethereal Mark (Email)</label>
+<input class="w-full bg-transparent border-none focus:ring-0 font-handwritten text-2xl py-1 px-0" placeholder="king@camelot.org" type="email"/>
+</div>
+</div>
+<div class="flex justify-center pt-8">
+<button class="royal-seal-btn w-28 h-28 rounded-full flex flex-col items-center justify-center text-white/90 relative group" type="submit">
+<span class="material-symbols-outlined text-4xl mb-1 group-hover:scale-110 transition-transform">history_edu</span>
+<span class="text-[9px] font-black uppercase tracking-[0.2em] leading-tight">Seal the<br/>Scroll</span>
+<div class="absolute inset-2 rounded-full border border-white/20"></div>
+<div class="absolute -top-1 -right-1 text-yellow-300/60 animate-pulse">
+<span class="material-symbols-outlined text-lg">auto_awesome</span>
+</div>
+</button>
+</div>
+</form>
+</div>
+</div>
+</main>
+<footer class="relative z-40 py-8 text-center">
+<p class="text-[10px] text-white/20 uppercase tracking-[0.5em]">This testimony shall be preserved for eternity</p>
+</footer>
+
+</body></html>

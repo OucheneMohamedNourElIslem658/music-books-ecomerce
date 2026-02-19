@@ -43,47 +43,52 @@ export default {
     },
     extend: {
       borderRadius: {
-        lg: 'var(--radius)',
+        DEFAULT: '0.25rem',
+        lg: '0.5rem',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+        xl: '0.75rem',
+        full: '9999px',
       },
       colors: {
         accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))',
+          DEFAULT: 'oklch(var(--accent))',
+          foreground: 'oklch(var(--accent-foreground))',
         },
-        background: 'hsl(var(--background))',
-        border: 'hsl(var(--border))',
+        'background-light': '#f8f8f5',
+        'background-dark': '#221e10',
+        background: 'oklch(var(--background))',
+        border: 'oklch(var(--border))',
         card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))',
+          DEFAULT: 'oklch(var(--card))',
+          foreground: 'oklch(var(--card-foreground))',
         },
         destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
+          DEFAULT: 'oklch(var(--destructive))',
+          foreground: 'oklch(var(--destructive-foreground))',
         },
-        foreground: 'hsl(var(--foreground))',
-        input: 'hsl(var(--input))',
+        foreground: 'oklch(var(--foreground))',
+        input: 'oklch(var(--input))',
         muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))',
+          DEFAULT: 'oklch(var(--muted))',
+          foreground: 'oklch(var(--muted-foreground))',
         },
         popover: {
-          DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))',
+          DEFAULT: 'oklch(var(--popover))',
+          foreground: 'oklch(var(--popover-foreground))',
         },
         primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
+          DEFAULT: 'oklch(var(--primary))',
+          foreground: 'oklch(var(--primary-foreground))',
         },
-        ring: 'hsl(var(--ring))',
+        ring: 'oklch(var(--ring))',
         secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))',
+          DEFAULT: 'oklch(var(--secondary))',
+          foreground: 'oklch(var(--secondary-foreground))',
         },
-        success: 'hsl(var(--success))',
-        error: 'hsl(var(--error))',
-        warning: 'hsl(var(--warning))',
+        success: 'oklch(var(--success))',
+        error: 'oklch(var(--error))',
+        warning: 'oklch(var(--warning))',
       },
       typography: ({ theme }) => ({
         DEFAULT: {
@@ -103,7 +108,8 @@ export default {
       }),
       fontFamily: {
         mono: ['var(--font-geist-mono)'],
-        sans: ['var(--font-geist-sans)'],
+        sans: ['var(--font-spline-sans)', 'sans-serif'],
+        display: ['var(--font-spline-sans)', 'sans-serif'],
       },
       keyframes: {
         fadeIn: {

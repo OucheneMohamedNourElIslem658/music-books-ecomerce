@@ -1,4 +1,5 @@
 'use client'
+
 import { Button } from '@/components/ui/button'
 import React, { useState } from 'react'
 import {
@@ -9,9 +10,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { Separator } from '@/components/ui/separator'
 import { AddressForm } from '@/components/forms/AddressForm'
 import { Address } from '@/payload-types'
 import { DefaultDocumentIDType } from 'payload'
+import { PlusIcon, MapPinIcon } from 'lucide-react'
 
 type Props = {
   addressID?: DefaultDocumentIDType
@@ -33,31 +36,44 @@ export const CreateAddressModal: React.FC<Props> = ({
   disabled,
 }) => {
   const [open, setOpen] = useState(false)
-  const handleOpenChange = (state: boolean) => {
-    setOpen(state)
-  }
 
-  const closeModal = () => {
-    setOpen(false)
-  }
+  const closeModal = () => setOpen(false)
 
   const handleCallback = (data: Partial<Address>) => {
     closeModal()
-
-    if (callback) {
-      callback(data)
-    }
+    if (callback) callback(data)
   }
 
+  const isEditing = Boolean(addressID)
+
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild disabled={disabled}>
-        <Button variant={'outline'}>{buttonText}</Button>
+        <Button
+          variant={isEditing ? 'outline' : 'default'}
+          className="rounded-full gap-2"
+        >
+          {!isEditing && <PlusIcon className="size-4" />}
+          {buttonText}
+        </Button>
       </DialogTrigger>
-      <DialogContent>
+
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>{modalTitle}</DialogTitle>
-          <DialogDescription>This address will be connected to your account.</DialogDescription>
+          <div className="flex items-center gap-3 mb-1">
+            <div className="size-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+              <MapPinIcon className="size-4" />
+            </div>
+            <div>
+              <DialogTitle className="text-lg font-semibold text-foreground">
+                {modalTitle}
+              </DialogTitle>
+              <DialogDescription className="text-sm text-muted-foreground">
+                This address will be connected to your account.
+              </DialogDescription>
+            </div>
+          </div>
+          <Separator />
         </DialogHeader>
 
         <AddressForm

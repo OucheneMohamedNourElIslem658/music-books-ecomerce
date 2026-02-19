@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 
 import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import Link from 'next/link'
 import { headers as getHeaders } from 'next/headers.js'
@@ -10,6 +12,7 @@ import { Order } from '@/payload-types'
 import { OrderItem } from '@/components/OrderItem'
 import { getPayload } from 'payload'
 import { redirect } from 'next/navigation'
+import { SettingsIcon, PackageIcon } from 'lucide-react'
 
 export default async function AccountPage() {
   const headers = await getHeaders()
@@ -39,49 +42,67 @@ export default async function AccountPage() {
     })
 
     orders = ordersResult?.docs || []
-  } catch (error) {
-    // when deploying this template on Payload Cloud, this page needs to build before the APIs are live
-    // so swallow the error here and simply render the page with fallback data where necessary
-    // in production you may want to redirect to a 404  page or at least log the error somewhere
-    // console.error(error)
-  }
+  } catch (error) {}
 
   return (
-    <>
-      <div className="border p-8 rounded-lg bg-primary-foreground">
-        <h1 className="text-3xl font-medium mb-8">Account settings</h1>
-        <AccountForm />
-      </div>
+    <div className="w-full mx-auto px-4 pb-10 flex flex-col gap-6">
 
-      <div className=" border p-8 rounded-lg bg-primary-foreground">
-        <h2 className="text-3xl font-medium mb-8">Recent Orders</h2>
+      {/* Account Settings */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-3">
+            <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+              <SettingsIcon className="size-5" />
+            </div>
+            <div>
+              <CardTitle className="text-xl font-semibold">Account Settings</CardTitle>
+              <CardDescription>Manage your profile and preferences</CardDescription>
+            </div>
+          </div>
+          <Separator className="mt-4" />
+        </CardHeader>
+        <CardContent>
+          <AccountForm />
+        </CardContent>
+      </Card>
 
-        <div className="prose dark:prose-invert mb-8">
-          <p>
-            These are the most recent orders you have placed. Each order is associated with an
-            payment. As you place more orders, they will appear in your orders list.
-          </p>
-        </div>
+      {/* Recent Orders */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-3">
+            <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+              <PackageIcon className="size-5" />
+            </div>
+            <div>
+              <CardTitle className="text-xl font-semibold">Recent Orders</CardTitle>
+              <CardDescription>
+                Your most recent orders. As you place more, they will appear here.
+              </CardDescription>
+            </div>
+          </div>
+          <Separator className="mt-4" />
+        </CardHeader>
 
-        {(!orders || !Array.isArray(orders) || orders?.length === 0) && (
-          <p className="mb-8">You have no orders.</p>
-        )}
+        <CardContent className="flex flex-col gap-6">
+          {(!orders || !Array.isArray(orders) || orders.length === 0) ? (
+            <p className="text-sm text-muted-foreground">You have no orders.</p>
+          ) : (
+            <ul className="flex flex-col gap-4">
+              {orders.map((order) => (
+                <li key={order.id}>
+                  <OrderItem order={order} />
+                </li>
+              ))}
+            </ul>
+          )}
 
-        {orders && orders.length > 0 && (
-          <ul className="flex flex-col gap-6 mb-8">
-            {orders?.map((order, index) => (
-              <li key={order.id}>
-                <OrderItem order={order} />
-              </li>
-            ))}
-          </ul>
-        )}
+          <Button asChild variant="outline" className="self-start rounded-full">
+            <Link href="/orders">View all orders</Link>
+          </Button>
+        </CardContent>
+      </Card>
 
-        <Button asChild variant="default">
-          <Link href="/orders">View all orders</Link>
-        </Button>
-      </div>
-    </>
+    </div>
   )
 }
 

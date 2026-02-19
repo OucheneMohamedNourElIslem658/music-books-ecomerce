@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>A Tale of Whispering Woods | Enchanted Melodies</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scroll-texture {
+            background: linear-gradient(135deg, #fdfcf0 0%, #e2d1a6 100%);
+        }
+        .magic-glow {
+            box-shadow: 0 0 40px rgba(43, 108, 238, 0.3);
+        }
+        .glass-panel {
+            background: rgba(40, 46, 57, 0.6);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white transition-colors duration-300">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 glass-panel border-b border-white/10 px-6 py-4 lg:px-20">
+<div class="max-w-[1400px] mx-auto flex items-center justify-between">
+<div class="flex items-center gap-12">
+<div class="flex items-center gap-3">
+<div class="text-primary">
+<span class="material-symbols-outlined text-4xl">auto_stories</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight">Enchanted Melodies</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Library</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Magic Box</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">The Author</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="bg-white/5 border-none rounded-full pl-10 pr-4 py-2 w-64 focus:ring-2 focus:ring-primary text-sm" placeholder="Search for magic..." type="text"/>
+</div>
+<button class="relative p-2 hover:bg-white/10 rounded-full transition-colors">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="absolute top-0 right-0 w-4 h-4 bg-primary text-[10px] flex items-center justify-center rounded-full text-white">2</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-cover bg-center border-2 border-primary/30" data-alt="User profile avatar in circular frame" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD4QANl3qEdwky8vWhYc7vhSqeeEU5S4gMZq0Elkd11eKokKddcTVQKNKyY_K4Se7r5L5bhgL1Vm1CLg0hz9MpnwchfZeG4upIlFmCnfQfNYwq0znqE-dVQ-uRpo_hE1onY7Ln4emznglR5rBFwS0kue3jnrVVEMLhaIXFdbtDPvMFDm93ixV12-Nq7bFB7dNDhNDN0pdAKb47NdVW-JNBiS-Hd9SwCsks4gpu1Tvb1oqkH6iPhv7s8QFORXt0owJ6-LNBfkzaCtjtT')"></div>
+</div>
+</div>
+</header>
+<main class="max-w-[1400px] mx-auto px-6 lg:px-20 py-8">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-8">
+<a class="hover:text-primary" href="#">Home</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<a class="hover:text-primary" href="#">Musical Books</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-slate-900 dark:text-white font-medium">A Tale of Whispering Woods</span>
+</nav>
+<!-- Hero Product Section -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
+<!-- Book Visual -->
+<div class="relative group">
+<div class="absolute inset-0 bg-primary/20 blur-[100px] rounded-full scale-75 -z-10"></div>
+<div class="relative rounded-xl overflow-hidden magic-glow aspect-[4/5] bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.02]" data-alt="Intricate 3D book cover with glowing magical elements and forest motifs" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBVLMV-wTqPB7F9-al-htqpBJpsU956HKx9xLZ2kHoeobcPto1nFWD22tx2te_EMKzXeTBda7ldczvBc3CGymCENGY80T7ph_vPZrAlJ5y6ao6BEXQ3fBh0E2BAzCJP8h-teFMUTXR2HIr5miiTJey1i3q9ui_lxGdKg6NWbpwpZJJqfwgKxasTxfYyqUAlRsXSgwPUUaEDBFSa_1pa6iqShC2RZod2z_hTCNBowDbropvmDyP7PmL08SSf2sv6NIB0NZXU3ILDlHeU')">
+</div>
+<!-- Floating Play Button -->
+<div class="absolute bottom-8 right-8">
+<button class="flex items-center gap-4 bg-primary hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95 group/btn">
+<span class="material-symbols-outlined fill-1">play_arrow</span>
+<span>Magic Play (Listen to Score)</span>
+</button>
+</div>
+</div>
+<!-- Product Info -->
+<div class="flex flex-col gap-6">
+<div>
+<span class="inline-block px-4 py-1 bg-primary/20 text-primary text-xs font-bold uppercase tracking-widest rounded-full mb-4">New Musical Release</span>
+<h1 class="text-5xl lg:text-6xl font-bold leading-tight mb-2">A Tale of Whispering Woods</h1>
+<p class="text-xl text-slate-500 dark:text-slate-400 italic">An Orchestral Journey through the Ancient Forest</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex text-amber-400">
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+</div>
+<span class="text-sm font-medium">(1,248 Magical Reviews)</span>
+</div>
+<div class="text-lg leading-relaxed text-slate-600 dark:text-slate-300">
+                    Step into a world where every page turn resonates with the sound of a 60-piece symphony. This isn't just a story—it's an immersive sonic experience where the rustle of leaves and the secrets of the ancients are captured in sweeping orchestral compositions.
+                </div>
+<div class="flex items-baseline gap-4 mt-4">
+<span class="text-4xl font-bold text-primary">$49.00</span>
+<span class="text-slate-400 line-through">$65.00</span>
+</div>
+<div class="flex flex-wrap gap-4 mt-4">
+<button class="flex-1 min-w-[200px] flex items-center justify-center gap-3 bg-primary hover:bg-blue-600 text-white font-bold py-4 rounded-full transition-all magic-glow">
+<span class="material-symbols-outlined">shopping_cart</span>
+                        Add to Satchel
+                    </button>
+<button class="w-16 h-16 flex items-center justify-center rounded-full border border-white/10 hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<!-- Features Grid -->
+<div class="grid grid-cols-2 gap-4 mt-8">
+<div class="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/5">
+<span class="material-symbols-outlined text-primary">music_note</span>
+<span class="text-sm font-medium">12 Original Scores</span>
+</div>
+<div class="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/5">
+<span class="material-symbols-outlined text-primary">auto_fix</span>
+<span class="text-sm font-medium">Interactive App</span>
+</div>
+<div class="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/5">
+<span class="material-symbols-outlined text-primary">local_shipping</span>
+<span class="text-sm font-medium">Fast Realm Delivery</span>
+</div>
+<div class="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/5">
+<span class="material-symbols-outlined text-primary">verified</span>
+<span class="text-sm font-medium">Signed First Edition</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed Lyrical Description -->
+<section class="mb-24 py-16 border-y border-white/5 relative overflow-hidden">
+<div class="absolute top-0 right-0 -z-10 opacity-20 translate-x-1/2 -translate-y-1/2">
+<span class="material-symbols-outlined text-[400px] text-primary select-none">waves</span>
+</div>
+<div class="max-w-3xl mx-auto text-center mb-12">
+<h2 class="text-3xl font-bold mb-6">The Lyrical Journey</h2>
+<div class="h-1 w-24 bg-primary mx-auto rounded-full mb-8"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<div class="flex flex-col gap-4 text-center md:text-left">
+<h3 class="text-xl font-bold text-primary">Chapter I: The Awakening</h3>
+<p class="text-slate-400 leading-relaxed">As the dawn breaks over the Silver Peak, the strings begin a gentle tremolo, signaling the start of Elara's journey. Listen as the melody grows with her curiosity.</p>
+</div>
+<div class="flex flex-col gap-4 text-center md:text-left">
+<h3 class="text-xl font-bold text-primary">Chapter VII: The Shadow Grove</h3>
+<p class="text-slate-400 leading-relaxed">The tone shifts to deep bassoons and haunting cellos. The musical score adapts to the darker path, guiding the reader through the veil of mystery.</p>
+</div>
+<div class="flex flex-col gap-4 text-center md:text-left">
+<h3 class="text-xl font-bold text-primary">The Grand Finale</h3>
+<p class="text-slate-400 leading-relaxed">Experience a full orchestral crescendo that mirrors the triumph of light. A 40-voice choir joins the symphony for an unforgettable conclusion.</p>
+</div>
+</div>
+</section>
+<!-- Customer Reviews as Scrolls -->
+<section class="mb-24">
+<div class="flex items-center justify-between mb-12">
+<h2 class="text-3xl font-bold">Echoes from the Kingdom</h2>
+<button class="text-primary font-medium flex items-center gap-2 hover:underline">
+                    Read all reviews <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Scroll Card 1 -->
+<div class="scroll-texture p-8 rounded-xl shadow-xl transform rotate-1 text-slate-800 relative">
+<div class="absolute -top-3 -left-3 w-10 h-10 bg-[#e2d1a6] rounded-full flex items-center justify-center border-4 border-[#c4af85]">
+<span class="material-symbols-outlined text-slate-600 text-sm">history_edu</span>
+</div>
+<div class="flex text-amber-600 mb-4">
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+</div>
+<p class="text-lg font-medium italic mb-6">"I've never experienced a book like this. The music feels alive, dancing with the words. Truly magical!"</p>
+<div class="flex items-center gap-4 border-t border-slate-900/10 pt-4">
+<div class="w-10 h-10 rounded-full bg-slate-300" data-alt="Placeholder for reviewer profile picture"></div>
+<div>
+<p class="font-bold text-sm">Lady Seraphina</p>
+<p class="text-xs text-slate-600 uppercase tracking-wider">Book Collector</p>
+</div>
+</div>
+</div>
+<!-- Scroll Card 2 -->
+<div class="scroll-texture p-8 rounded-xl shadow-xl transform -rotate-1 text-slate-800 relative">
+<div class="absolute -top-3 -left-3 w-10 h-10 bg-[#e2d1a6] rounded-full flex items-center justify-center border-4 border-[#c4af85]">
+<span class="material-symbols-outlined text-slate-600 text-sm">history_edu</span>
+</div>
+<div class="flex text-amber-600 mb-4">
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1 text-slate-300">star</span>
+</div>
+<p class="text-lg font-medium italic mb-6">"The production quality of the orchestral tracks is cinema-grade. My children are obsessed with the 'Magic Play' feature."</p>
+<div class="flex items-center gap-4 border-t border-slate-900/10 pt-4">
+<div class="w-10 h-10 rounded-full bg-slate-300" data-alt="Placeholder for reviewer profile picture"></div>
+<div>
+<p class="font-bold text-sm">Master Alaric</p>
+<p class="text-xs text-slate-600 uppercase tracking-wider">Music Educator</p>
+</div>
+</div>
+</div>
+<!-- Scroll Card 3 -->
+<div class="scroll-texture p-8 rounded-xl shadow-xl transform rotate-2 text-slate-800 relative">
+<div class="absolute -top-3 -left-3 w-10 h-10 bg-[#e2d1a6] rounded-full flex items-center justify-center border-4 border-[#c4af85]">
+<span class="material-symbols-outlined text-slate-600 text-sm">history_edu</span>
+</div>
+<div class="flex text-amber-600 mb-4">
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+</div>
+<p class="text-lg font-medium italic mb-6">"A masterpiece of storytelling and composition. The Whispering Woods theme is now my favorite morning listen."</p>
+<div class="flex items-center gap-4 border-t border-slate-900/10 pt-4">
+<div class="w-10 h-10 rounded-full bg-slate-300" data-alt="Placeholder for reviewer profile picture"></div>
+<div>
+<p class="font-bold text-sm">Balthazar T.</p>
+<p class="text-xs text-slate-600 uppercase tracking-wider">Adventurer</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Newsletter / Magical Invitation -->
+<section class="mb-16 bg-gradient-to-br from-primary/30 to-purple-600/30 rounded-3xl p-12 relative overflow-hidden text-center">
+<div class="relative z-10">
+<h2 class="text-4xl font-bold mb-4">Join the Musical Order</h2>
+<p class="text-lg text-slate-300 mb-8 max-w-xl mx-auto">Be the first to hear about new chapters, orchestral scores, and magical discounts delivered by owl.</p>
+<form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+<input class="flex-1 bg-white/10 border-white/20 rounded-full px-6 py-4 focus:ring-2 focus:ring-primary text-white" placeholder="Your scroll address (Email)" type="email"/>
+<button class="bg-white text-primary font-bold px-8 py-4 rounded-full hover:bg-slate-100 transition-colors">Sign Me Up</button>
+</form>
+</div>
+<!-- Decorative particles/stars background would go here -->
+<div class="absolute inset-0 -z-0 opacity-20 bg-[radial-gradient(circle_at_center,_white_1px,_transparent_1px)] bg-[length:20px_20px]"></div>
+</section>
+</main>
+<!-- Sticky Mobile Purchase Bar -->
+<div class="lg:hidden fixed bottom-0 left-0 right-0 p-4 glass-panel border-t border-white/10 z-50">
+<div class="flex items-center justify-between gap-4">
+<div class="flex flex-col">
+<span class="text-xs text-slate-400 uppercase tracking-wider">Price</span>
+<span class="text-xl font-bold text-primary">$49.00</span>
+</div>
+<button class="flex-1 bg-primary text-white font-bold py-3 rounded-full flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">shopping_cart</span>
+                Add to Satchel
+            </button>
+</div>
+</div>
+<!-- Footer -->
+<footer class="bg-background-light dark:bg-[#0a0f18] border-t border-white/5 py-12 px-6 lg:px-20">
+<div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="flex flex-col gap-6">
+<div class="flex items-center gap-3">
+<div class="text-primary">
+<span class="material-symbols-outlined text-3xl">auto_stories</span>
+</div>
+<h2 class="text-lg font-bold">Enchanted Melodies</h2>
+</div>
+<p class="text-sm text-slate-500">Creating immersive musical experiences that bring stories to life through the power of symphonic orchestration.</p>
+</div>
+<div>
+<h3 class="font-bold mb-6">The Library</h3>
+<ul class="flex flex-col gap-4 text-sm text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">All Musical Books</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Digital Collections</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Limited Editions</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Magic Box Subscriptions</a></li>
+</ul>
+</div>
+<div>
+<h3 class="font-bold mb-6">Support</h3>
+<ul class="flex flex-col gap-4 text-sm text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">Delivery FAQ</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">App Connectivity</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Terms of Magic</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contact Scroll</a></li>
+</ul>
+</div>
+<div>
+<h3 class="font-bold mb-6">Follow the Magic</h3>
+<div class="flex gap-4">
+<a class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">camera</span>
+</a>
+<a class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">music_note</span>
+</a>
+<a class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">podcasts</span>
+</a>
+</div>
+</div>
+</div>
+<div class="max-w-[1400px] mx-auto mt-12 pt-8 border-t border-white/5 text-center text-xs text-slate-600">
+            © 2023 Enchanted Melodies Publishing House. All Spells Reserved.
+        </div>
+</footer>
+</body></html>

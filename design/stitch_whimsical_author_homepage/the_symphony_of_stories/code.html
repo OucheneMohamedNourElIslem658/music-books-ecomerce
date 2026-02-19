@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Musical Journey | The Symphony of Stories</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700;800&amp;family=Noto+Sans:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0a0a1a",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Spline Sans', sans-serif;
+            background-color: #0a0a1a;
+            color: white;
+        }
+        .glass-player {
+            background: rgba(16, 22, 34, 0.8);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .music-note {
+            position: absolute;
+            color: rgba(43, 108, 238, 0.2);
+            pointer-events: none;
+            user-select: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col relative overflow-x-hidden">
+<!-- Floating Background Elements -->
+<div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+<span class="material-symbols-outlined music-note text-6xl top-20 left-[10%]">music_note</span>
+<span class="material-symbols-outlined music-note text-4xl top-1/2 left-[5%]">queue_music</span>
+<span class="material-symbols-outlined music-note text-5xl top-1/3 right-[10%]">music_note</span>
+<span class="material-symbols-outlined music-note text-7xl bottom-1/4 right-[5%]">audiotrack</span>
+<span class="material-symbols-outlined music-note text-3xl top-1/4 left-1/2">music_note</span>
+</div>
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 glass-player border-b border-white/10 px-6 py-3">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="size-8 bg-primary rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-xl">auto_stories</span>
+</div>
+<h2 class="text-white text-lg font-bold tracking-tight">The Symphony of Stories</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-white/70 hover:text-white text-sm font-medium transition-colors" href="#">Books</a>
+<a class="text-primary text-sm font-bold border-b-2 border-primary" href="#">Musical Journey</a>
+<a class="text-white/70 hover:text-white text-sm font-medium transition-colors" href="#">The Orchestra</a>
+<a class="text-white/70 hover:text-white text-sm font-medium transition-colors" href="#">Shop</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="bg-primary hover:bg-primary/80 text-white text-sm font-bold px-5 py-2 rounded-full transition-all">
+                    Listen Now
+                </button>
+<div class="size-10 rounded-full border border-white/20 bg-cover bg-center" data-alt="User profile avatar close up" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDTq32CbnQx5HhrWUJklMnGylgbJD1pFSLUcYHzKwhwLanvSVqz1c1Uq3Yc_94e29Rx8umMvjmwr33wRbxx6Vy8D1xEZl6FAEDV94Qd-ghW1XLtiPoMDzU9I7yNVt8oTKtq7VTUddT5DgqLJ35qNjLTmNNrShkRI7Nq9TQkd5D11qER3yYmWMuSTmXQY5dvSfwr5bZ4F-6F87Mu_KxC9VbhXAxSQ0OAwgRhyk_aL2luF9-ZVEASO3FcrbfhpI48Jwizlcjmqc4VCrbh');"></div>
+</div>
+</div>
+</header>
+<main class="flex-grow z-10">
+<!-- Hero Section: The Orchestral Heart -->
+<section class="max-w-7xl mx-auto px-6 py-12">
+<div class="relative overflow-hidden rounded-xl bg-background-dark shadow-2xl">
+<div class="flex flex-col @[480px]:flex-row min-h-[520px] bg-cover bg-center items-center justify-center p-8 text-center" data-alt="Cinematic wide shot of an orchestra in a recording studio" style="background-image: linear-gradient(rgba(10, 10, 26, 0.7) 0%, rgba(10, 10, 26, 0.8) 100%), url('https://lh3.googleusercontent.com/aida-public/AB6AXuDaBrDARV7Jd80pjcR4Kg3MXpvjL_H62Zf1ObjDaIVTzn4N7R8hcCxzoBsWUMfw0rkMVm0pIoabqjGmzmFDXxl0gK67WU6bnJZS0xMs6NMmw01ourqkTNFJyTUVJdQE07n41-mc5mC4yMTWXwfN16uFVrnwIDA1MxO8brOiTh0VKLDytPPu3NyvMHiC6744DGcfqAViVoXLRvsaI3wL8ZIfWVcBU-RfV142suVL7MmL1U3wbJk5ckUbyTL0ZMd2wBCfavjnosSNSiWY');">
+<div class="max-w-2xl flex flex-col gap-6 items-center">
+<span class="px-4 py-1 bg-primary/20 text-primary text-xs font-bold uppercase tracking-widest rounded-full border border-primary/30">Behind the Baton</span>
+<h1 class="text-white text-5xl md:text-7xl font-black leading-tight tracking-tighter">
+                            The Orchestral Heart
+                        </h1>
+<p class="text-white/80 text-lg md:text-xl font-normal max-w-lg">
+                            Experience the behind-the-scenes magic of our recording sessions. From the first whispered note to the final thundering crescendo.
+                        </p>
+<div class="flex gap-4">
+<button class="bg-primary hover:bg-primary/90 text-white font-bold px-8 py-4 rounded-full flex items-center gap-2 transition-all transform hover:scale-105">
+<span class="material-symbols-outlined">play_circle</span>
+                                Watch the Feature
+                            </button>
+<button class="bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-full border border-white/20 transition-all">
+                                Gallery
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section Header: The Enchanted Armory -->
+<section class="max-w-7xl mx-auto px-6 pt-12">
+<div class="flex flex-col items-center text-center mb-10">
+<h2 class="text-white text-3xl md:text-4xl font-bold tracking-tight mb-4">The Enchanted Armory</h2>
+<div class="h-1 w-20 bg-primary rounded-full mb-4"></div>
+<p class="text-white/60 text-lg max-w-2xl">
+                    Discover the instruments that give voice to our characters and breath to our stories. Each sample below is pulled directly from the book's signature themes.
+                </p>
+</div>
+<!-- Image Grid / Instrument Gallery -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pb-20">
+<div class="group relative overflow-hidden rounded-xl aspect-[3/4] bg-background-dark border border-white/5 hover:border-primary/50 transition-all cursor-pointer shadow-lg" data-alt="Close up of a wooden cello with dramatic lighting">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Beautiful wooden cello neck and strings" style="background-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 60%), url('https://lh3.googleusercontent.com/aida-public/AB6AXuBxasNppooEBncoZOHnuIcbDOKGCUoem7zHB8KN5E-rlfgm7wbRVKlk0TEYkI2agHsVJDSRwBhV1crnM-ozYxYCvCeRO3tmzhzHFkOpxRCJjgZRg9yiGoOKzVu_BX6kv7qlGuvilbxB75t9MXe7KLgDxGwvLVzfSaFZx8r9gGlavlz-5a11NnvBvYGhaJye5N7ueTkN0SHdo_tlP33Bt7Lv5u5tTrd26mF8ZmuTeCUoSSIY1vWTbjoMD-UbnLGyGxXGsmnNMRmvAgPk');"></div>
+<div class="absolute inset-0 p-6 flex flex-col justify-end">
+<span class="text-primary text-xs font-bold uppercase tracking-widest mb-1">String Section</span>
+<h3 class="text-white text-xl font-bold">The Elder Cello</h3>
+<p class="text-white/60 text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Represents the voice of the Great Dragon Kings.</p>
+<div class="mt-4 size-10 rounded-full bg-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-y-4 group-hover:translate-y-0">
+<span class="material-symbols-outlined text-white">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="group relative overflow-hidden rounded-xl aspect-[3/4] bg-background-dark border border-white/5 hover:border-primary/50 transition-all cursor-pointer shadow-lg" data-alt="Close up of a silver flute reflecting light">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Shiny silver metal flute details" style="background-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 60%), url('https://lh3.googleusercontent.com/aida-public/AB6AXuDV2Tof0_V7Ih13WJ-Ej2NinD0PSGKNiaKYHk4M8okVYyE29SZrS7iLULiDdFktZ_OXaeKwIEm9WXRzFNG4hJuK_SkIfsC38r5bcM1F0JaN6r0K28rsEbBxk3QNggTL82JflTGff7xRJNauzOtoFKsr_B2InuuNm1xwT-ZTUo1wF08WfUDm57pLs9YnmRk8IuAes8N7-ixRhXGGtHSIGWogD3KVAgFOSWmN4oVhcL1izgki2522bxDXTCyUtsup_FSV4y4WcB6T3WE3');"></div>
+<div class="absolute inset-0 p-6 flex flex-col justify-end">
+<span class="text-primary text-xs font-bold uppercase tracking-widest mb-1">Woodwind Section</span>
+<h3 class="text-white text-xl font-bold">Silver-Wound Flute</h3>
+<p class="text-white/60 text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">The whimsical melody of the Forest Nymphs.</p>
+<div class="mt-4 size-10 rounded-full bg-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-y-4 group-hover:translate-y-0">
+<span class="material-symbols-outlined text-white">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="group relative overflow-hidden rounded-xl aspect-[3/4] bg-background-dark border border-white/5 hover:border-primary/50 transition-all cursor-pointer shadow-lg" data-alt="Large gold harp with intricate carvings">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Classical harp golden frame and strings" style="background-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 60%), url('https://lh3.googleusercontent.com/aida-public/AB6AXuB8LGuHlRdn9pXpAzAY2VD8a38s3xdSIujBpaLFyLmG7FoWe09D_u1LjU7m_WYXrjmol4YnWlMP1gqrWd5gY22q_ntKFUTBbqx4FjP3UJWCjBt7UKtwiEMB_3kDtX0IhZ_kNIqon-NCyO-x7rBAnaOO12SeyPZmI3Bf-T7AVLmPm0-F2WBESDxe2jWW48xP0BIKP4le1xx1vK29WTkkqya5veWRQdyEYz-peXSKnH_qaKvDZeTOdD87m9hKDUoakmNEBtOf4WRfgaMC');"></div>
+<div class="absolute inset-0 p-6 flex flex-col justify-end">
+<span class="text-primary text-xs font-bold uppercase tracking-widest mb-1">Celestial Section</span>
+<h3 class="text-white text-xl font-bold">Celestial Harp</h3>
+<p class="text-white/60 text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Evoking the starlit skies of the Astral Plains.</p>
+<div class="mt-4 size-10 rounded-full bg-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-y-4 group-hover:translate-y-0">
+<span class="material-symbols-outlined text-white">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="group relative overflow-hidden rounded-xl aspect-[3/4] bg-background-dark border border-white/5 hover:border-primary/50 transition-all cursor-pointer shadow-lg" data-alt="Dark wood violin in shadows">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Violin bridge and dark wood texture" style="background-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 60%), url('https://lh3.googleusercontent.com/aida-public/AB6AXuAIfbGywe3ed99Js78xd7GoUDD30GqThGCOHrwnt8fwRwDKoZNEkqgAStxzkBDlrKzUIqCUgwwQg4VwgO4IvykX-FvPM5kuie0AWEIGkutHKLAsGsiYRU50A15yzXRHAkU9JqlXmpNOTAE_pmT-wMQCMMr0Zdnm49GhlRKWbIzmhgWvS7vHgDDXAMuK-YOMKlDqsg7EhL70UyxEldi1YYpDrU34bx_Ciu9VINMvyoUxBGuNxVJo_uw1MDrUxjKEXN13bO1d6XOx_2yY');"></div>
+<div class="absolute inset-0 p-6 flex flex-col justify-end">
+<span class="text-primary text-xs font-bold uppercase tracking-widest mb-1">Lead Section</span>
+<h3 class="text-white text-xl font-bold">Midnight Violin</h3>
+<p class="text-white/60 text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">The mournful theme of the Fallen Kingdom.</p>
+<div class="mt-4 size-10 rounded-full bg-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-y-4 group-hover:translate-y-0">
+<span class="material-symbols-outlined text-white">play_arrow</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Recording Studio Gallery Row -->
+<section class="bg-primary/5 py-20">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<div class="space-y-6">
+<h2 class="text-white text-3xl font-bold leading-tight">Beyond the Score: <br/><span class="text-primary">Capturing the Magic</span></h2>
+<p class="text-white/70 text-lg leading-relaxed">
+                            Our recording sessions at Abbey Wood Studios involved over 80 musicians from the Royal Philharmonic. Each note was captured in 96kHz High Definition to ensure every emotional nuance of the story translates into your ears.
+                        </p>
+<ul class="space-y-4">
+<li class="flex items-center gap-3 text-white/80">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+                                Dolby Atmos Spatial Mix
+                            </li>
+<li class="flex items-center gap-3 text-white/80">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+                                14-piece Percussion Ensemble
+                            </li>
+<li class="flex items-center gap-3 text-white/80">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+                                Live Gospel Choir in Chapter 12
+                            </li>
+</ul>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="rounded-xl overflow-hidden aspect-video bg-cover bg-center" data-alt="Sound mixing board with glowing lights" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCNiWrYqGrBmDl2jZClGuBFNh6UeZFS64j_WjRlsKUncr_mUsrxySn1MHZF9Lz9rdqmB0JO8mOnWBRtF1Li-9-8uj0vGD8A_IyEgtm3CIZd2ZswCCbyWqLKSEvmgxfIL0jAMoGLykHfv3YPQ-HhQ5uVHrrvEyWncyMnz1UdvOuaDjtCzGs2Ml-1pS_yjLzY7e8Rs1-ySBU6_2k6xgzfh-dPqABDGV1rdowgWob_NL49ooG01pTmMIfhzcSlM8N4VJsulURnokblPQew');"></div>
+<div class="rounded-xl overflow-hidden aspect-video bg-cover bg-center" data-alt="Conductor leading an orchestra" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBB608FFb53gK0tZyS8axT7NA1li3EuiZOorhCXP-eLOffLDf50oAobG0K7QrXmcmcD4wFJVT7LgpdLNGjCHkfN3li86JT7LzLxwCRCLRW84JYtxyZ-EogeGgHHMjUvmNWXYqMA58_-VhsuF4iuQzqEegkcV2onmJedKmWwMaeZ0QnfmF2VjR107Cpz7H33nF1609QUHW0Qea0UYz-rNd307oi6FLvmSyIyqB-Sy2pPzfIxPCuCNva1mzDGjINvVFHbKzu3L7w3Vd4W');"></div>
+<div class="col-span-2 rounded-xl overflow-hidden aspect-[21/9] bg-cover bg-center" data-alt="Microphones placed around studio instruments" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC2Q1Ds0emnW64hnSUGIO3a2iR0xRaMRRJ-9m8XZy87vvYB_gpKmGwpkxyWxbJ8rpZlwEe7IfqCdkLOcs83VIpoO5jEBBQbJdYSz9kfHo2So-D99NjYgpQNA2cC8jRAqB6SlbgTUAtwOjEJ74qJJFdyNuBOF3PxprqZnuM6k-ZLQiuUFG5z0n6eI11xF5pGozXIzzttnE7KdFYCxnSB241_Oj23fuM7VWGiiLPOb5Ptd--0dg5BleWcDDNL6ZwwMQ17JltxUsVJLZ1e');"></div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Persistent Floating Audio Player -->
+<footer class="fixed bottom-0 left-0 right-0 z-[60] glass-player px-6 py-4 shadow-2xl">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-6">
+<!-- Current Track Info -->
+<div class="flex items-center gap-4 min-w-[280px]">
+<div class="size-14 bg-cover bg-center rounded-lg shadow-lg border border-white/10" data-alt="Album art featuring a mystical glowing book" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDFJDiX11Cn8OHru_38uFUpbQ-5Nwj6VTjmDKehLGZscLV0MFx9tg94Cs5zcXRulEdVnuTXSVbTFTGWwyvFkVchpI6UhtjiJMvVTEbxnEFCXH3JORArmL-v3o1skvv0Jz8uDYgkXZeaZNTZ_VPQz5sc1Ira5d4WSgjj8LEviuib__K1VaI1BJJ59tiYER7i7ppGO-Z-8th1mrdwa5Wqu8Uy2q8fRj-vb9QziRhPzufiKklJIDYNmq5hsU_-8FSTdnZuHh-ksOn_h57k');"></div>
+<div>
+<h4 class="text-white font-bold text-sm leading-tight">The Dragon's Lullaby</h4>
+<p class="text-white/50 text-xs">Official Book Theme • 3:42</p>
+</div>
+<button class="ml-auto text-white/50 hover:text-white transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<!-- Playback Controls -->
+<div class="flex flex-col items-center flex-grow gap-2">
+<div class="flex items-center gap-6">
+<button class="text-white/50 hover:text-white transition-colors">
+<span class="material-symbols-outlined">shuffle</span>
+</button>
+<button class="text-white/80 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-3xl">skip_previous</span>
+</button>
+<button class="size-12 rounded-full bg-primary flex items-center justify-center text-white hover:scale-110 transition-transform shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-4xl">play_arrow</span>
+</button>
+<button class="text-white/80 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-3xl">skip_next</span>
+</button>
+<button class="text-white/50 hover:text-white transition-colors">
+<span class="material-symbols-outlined">repeat</span>
+</button>
+</div>
+<div class="w-full flex items-center gap-3">
+<span class="text-[10px] text-white/40 tabular-nums">1:45</span>
+<div class="flex-grow h-1 bg-white/10 rounded-full relative group cursor-pointer">
+<div class="absolute left-0 top-0 h-full bg-primary rounded-full w-[45%]"></div>
+<div class="absolute left-[45%] top-1/2 -translate-y-1/2 size-3 bg-white rounded-full shadow-lg scale-0 group-hover:scale-100 transition-transform"></div>
+</div>
+<span class="text-[10px] text-white/40 tabular-nums">3:42</span>
+</div>
+</div>
+<!-- Volume & Tools -->
+<div class="flex items-center gap-4 min-w-[200px] justify-end">
+<span class="material-symbols-outlined text-white/50 text-xl">playlist_play</span>
+<span class="material-symbols-outlined text-white/50 text-xl">lyrics</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-white/50 text-xl">volume_up</span>
+<div class="w-20 h-1 bg-white/10 rounded-full">
+<div class="h-full bg-white/60 rounded-full w-[70%]"></div>
+</div>
+</div>
+<span class="material-symbols-outlined text-white/50 text-xl">fullscreen</span>
+</div>
+</div>
+</footer>
+<!-- Spacer for Footer -->
+<div class="h-32"></div>
+</body></html>

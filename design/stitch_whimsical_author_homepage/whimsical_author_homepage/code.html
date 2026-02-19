@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Melody &amp; Myth | Whimsical Musical Adventures</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee",
+                        "accent-gold": "#f4c430",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .parchment-glow {
+            box-shadow: 0 0 40px rgba(43, 108, 238, 0.15);
+        }
+        .magical-gradient {
+            background: radial-gradient(circle at top right, rgba(43, 108, 238, 0.15), transparent),
+                        radial-gradient(circle at bottom left, rgba(244, 196, 48, 0.05), transparent);
+        }
+        body {
+            font-family: 'Spline Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-300">
+<div class="relative flex min-h-screen w-full flex-col magical-gradient overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-white/10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="max-w-[1200px] mx-auto px-6 h-20 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-primary rounded-xl text-white">
+<span class="material-symbols-outlined text-2xl">auto_stories</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight">Melody &amp; Myth</h2>
+</div>
+<nav class="hidden md:flex items-center gap-10">
+<a class="text-sm font-semibold hover:text-primary transition-colors uppercase tracking-widest" href="#">The Library</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors uppercase tracking-widest" href="#">Soundscapes</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors uppercase tracking-widest" href="#">About the Author</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors uppercase tracking-widest" href="#">Contact</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center p-2 rounded-full border border-white/10 hover:bg-white/5 transition-all">
+<span class="material-symbols-outlined text-xl">search</span>
+</button>
+<button class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all shadow-lg shadow-primary/20">
+                        Join the Adventure
+                    </button>
+</div>
+</div>
+</header>
+<main class="flex-1 w-full max-w-[1200px] mx-auto px-6">
+<!-- Hero Section -->
+<section class="py-12 @container">
+<div class="flex flex-col gap-12 @[864px]:flex-row items-center">
+<div class="w-full relative group @[864px]:w-1/2">
+<div class="absolute -inset-4 bg-primary/20 blur-3xl rounded-full opacity-50 group-hover:opacity-75 transition-opacity"></div>
+<div class="relative aspect-[4/5] w-full bg-cover bg-center rounded-xl shadow-2xl overflow-hidden transform hover:scale-[1.02] transition-transform duration-500" data-alt="A magical book cover with glowing blue musical notes" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBqRrFL07u4_YXWqNIJjk3BZmJhUq_AdP2PyLL7ktNLL4XLC3pJMY2EZGsVSXTyypz5v-MYJ8ibDDmtvuZb7Wp1NbPdu1sykCoIyurAAmUdrAokwVv8_ElVftg3o-sQ17De91mVRZvS981St2p90GN8w0EadvSAm6EhSOu9gQelK3wnFLcBXV0ubuHB8mf-x8m55KfWowZBhws6-kxozqT48fxU-5KcetdV4WfsNcKOJqBRUOVuYuTWtu0NotJvWKPGo2YaYdE-W4_o");'>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-6 left-6 right-6">
+<span class="bg-accent-gold text-background-dark px-3 py-1 rounded-full text-xs font-black uppercase tracking-tighter">New Release</span>
+</div>
+</div>
+</div>
+<div class="w-full flex flex-col gap-8 @[864px]:w-1/2">
+<div class="space-y-4">
+<h1 class="text-5xl @[480px]:text-7xl font-black leading-[1.1] tracking-tighter">
+                                Step into the Song: <span class="text-primary italic">The Midnight Symphony</span>
+</h1>
+<p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-lg">
+                                Experience a magical journey where every chapter has its own melody. Discover the latest musical masterpiece from the world's most whimsical storyteller.
+                            </p>
+</div>
+<div class="flex flex-wrap gap-4">
+<button class="flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-xl hover:shadow-primary/30 transition-all">
+<span class="material-symbols-outlined">menu_book</span>
+                                Explore the Book
+                            </button>
+<button class="flex items-center gap-2 bg-white/10 dark:bg-white/5 border border-white/10 text-slate-900 dark:text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition-all">
+<span class="material-symbols-outlined">play_circle</span>
+                                Listen Now
+                            </button>
+</div>
+<!-- Mini Music Preview Widget -->
+<div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm flex items-center gap-4">
+<div class="size-12 bg-primary rounded-full flex items-center justify-center text-white">
+<span class="material-symbols-outlined">graphic_eq</span>
+</div>
+<div class="flex-1">
+<p class="text-xs font-bold uppercase tracking-widest text-primary">Now Previewing</p>
+<p class="text-sm font-medium">Lullaby of the Starry Forest</p>
+</div>
+<div class="flex gap-2">
+<div class="h-1 w-12 bg-white/10 rounded-full overflow-hidden">
+<div class="h-full w-2/3 bg-primary"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Collection Header -->
+<section class="py-12 border-t border-white/5">
+<div class="flex justify-between items-end mb-10 px-4">
+<div>
+<span class="text-primary font-bold tracking-widest uppercase text-xs">Curated Works</span>
+<h2 class="text-3xl font-bold tracking-tight">The Enchanted Library</h2>
+</div>
+<button class="text-sm font-bold text-primary flex items-center gap-1 hover:underline">
+                        View All Collections <span class="material-symbols-outlined">arrow_right_alt</span>
+</button>
+</div>
+<!-- Books Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+<!-- Book Card 1 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] rounded-xl overflow-hidden mb-4 shadow-xl">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-700" data-alt="Illustration of a golden clock in a magical forest" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBvPm2RblwydKrsC7PxUJH3PK-eqcZTg6lMEpjY68mV_m2XtOACsberTvQKOqofd5IPmuBkS-mqBUFNxY34w3sPbFvU1EnFpmtakNk6oE-iU9iClB9jcNaUgOMMEShcpH-p2RvRCPufSVjHho7raaWMTA4Cj0hmxBrMW02YnSpjKyNlZnEJ3HbnjlF6-YdGk52cqnz4733jlpDHS8-9bydt-AfebhegXlRsqJGTI_Oi1edG3RS7hn_hLNrNFEZvkYYNTCK0OPKQ8jmO");'></div>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-5xl">headphones</span>
+</div>
+</div>
+<h3 class="text-xl font-bold mb-1">Crescendo of the Clouds</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">A soaring adventure through floating islands.</p>
+</div>
+<!-- Book Card 2 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] rounded-xl overflow-hidden mb-4 shadow-xl">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-700" data-alt="An underwater castle made of coral and musical instruments" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDN9AIo5YxLI9bv6QuKZUH9ELyBUsx_0qO6ffg0q-RB6P4K9iaTyeWUl1t3C2p_ohRMmLAwpf2VR-800v6caAuZssZrueop9zGuEYG83rBQi2oAyVu8BX-nV91r7M6tGc0JoO75zcbLHzJZ7vZ-K8LY9JA9Diai8vtRyrPFDCaIB75bjB2KRTJWiCSbsoCaLu3tehJ9-cniUNP9gOBnWchBFCQRf8L6hTb7LMY1mDdBnm86yhItSA-_v3gJPBdkElXksAoTJBC1QUpM");'></div>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-5xl">headphones</span>
+</div>
+</div>
+<h3 class="text-xl font-bold mb-1">The Coral Cantata</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Deep-sea rhythms and hidden treasures.</p>
+</div>
+<!-- Book Card 3 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] rounded-xl overflow-hidden mb-4 shadow-xl">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-700" data-alt="A steam-powered mechanical bird with music notes for wings" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCm8h6KpD7t4UFnzPI6EuQafsMVSSZPh9uPIJZzZYBhctfW4c7grPxNlcSxYN2TbvLl1vhaUl3ricUNSLBxik8bokZtOOt3hnpNHoki-4FQGM7x7THUJvlFY1eq7BJuIO_OPoWOioQXe6g9Nv-Ph17w4iLy53tTwTopHJabB2bvy54-UsmN4X_yccTTCSk3vbR1L8vpftNhTZGGkqtSbieLtnWy1AWSC53egiFEwae_O0XOcvl_Vh2LAELBYjK4upUMYdvXMZ9YhO3K");'></div>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-5xl">headphones</span>
+</div>
+</div>
+<h3 class="text-xl font-bold mb-1">Echoes of the Gear</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Steampunk melodies in a forgotten city.</p>
+</div>
+</div>
+</section>
+<!-- Bio Section -->
+<section class="py-20">
+<div class="bg-white/5 border border-white/10 rounded-xl p-8 @container">
+<div class="flex flex-col gap-10 @[520px]:flex-row items-center">
+<div class="relative size-48 shrink-0">
+<div class="absolute -inset-2 bg-accent-gold rounded-full blur opacity-20"></div>
+<div class="relative size-full bg-cover bg-center rounded-full border-4 border-white/10" data-alt="Portrait of the author playing a golden flute" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDWiUsMIEc0yL7o-vgqGnn2n4sxlZ1m_wvgUIXwqXoojioMlX1W8sS5zCwxppEtdVDhoTc4FW838r2DAIXrImvXzAQWCk2-yKomjTF8Wu2QK0jyO_ZhLDA3lQBNToAjLYZv9-wqQP0x97WybZPS9UGuHBoeKKnA_Rhp4Yh41nygNMfChqOQVSaGsJVo_IIp4kLbf6JpOcpLjlOA30UKAXio6FR6waXvw0sKKWmY8qbjZX6X1lgWlKHrfJjYQILB550y7C7Yk_Xsj8v9");'></div>
+</div>
+<div class="flex flex-col gap-4 text-center @[520px]:text-left">
+<h2 class="text-3xl font-bold tracking-tight">Meet the Composer-Author</h2>
+<p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed max-w-2xl">
+                                Blending prose with orchestral magic to create immersive worlds for the young and young at heart. Each story is composed twice: once in words, and once in notes, ensuring your imagination always has a soundtrack.
+                            </p>
+<div class="flex flex-wrap gap-4 justify-center @[520px]:justify-start mt-2">
+<div class="flex items-center gap-2 text-sm font-semibold px-4 py-2 bg-white/10 rounded-full border border-white/10">
+<span class="material-symbols-outlined text-primary text-lg">star</span>
+                                    Award-winning Author
+                                </div>
+<div class="flex items-center gap-2 text-sm font-semibold px-4 py-2 bg-white/10 rounded-full border border-white/10">
+<span class="material-symbols-outlined text-primary text-lg">music_note</span>
+                                    Classical Composer
+                                </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Newsletter Call to Action -->
+<section class="pb-24">
+<div class="relative overflow-hidden bg-primary rounded-xl p-12 text-center text-white">
+<div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBa1ap7ZEPLPGgqiO0v79VP-7gyWsLYtMbWJiszSa2HIUfFoIvrQ_eh1hTA1a4UEby4yYLrHXlO6ARb11xmVnMGYtSIABuui6xrZklwlAftbCJ8aqZO3NO8muyE0FIL7TCzZPQj3_Ra_Eyza3lHTLueC-6slRx3zEcxScY2-5aqydj6GIkNo_h6yoDvaL-tjTSXOE-bcvs5-0jdlx_ucwLvOthTDHRwASSm2IvX8xLB_n2SpKROwqd4DfzNjpDHhKBQ58MIj3_dvrbi');"></div>
+<div class="relative z-10 max-w-2xl mx-auto space-y-6">
+<h2 class="text-4xl font-black tracking-tight">Never Miss a Note</h2>
+<p class="text-white/80 text-lg">
+                            Join the secret mailing list to receive early previews of upcoming scores, exclusive concept art, and magical updates.
+                        </p>
+<div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+<input class="flex-1 px-6 py-4 rounded-full bg-white/20 border-transparent placeholder:text-white/60 focus:bg-white/30 focus:border-white focus:ring-0 transition-all text-white outline-none" placeholder="Your email address" type="email"/>
+<button class="bg-white text-primary px-8 py-4 rounded-full font-black hover:bg-slate-100 transition-all">
+                                SUBSCRIBE
+                            </button>
+</div>
+<p class="text-xs text-white/50 uppercase tracking-[0.2em] font-bold">Join 15,000+ Seekers of Magic</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-background-light dark:bg-background-dark border-t border-white/5 py-12">
+<div class="max-w-[1200px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="p-1.5 bg-primary/20 rounded-lg text-primary">
+<span class="material-symbols-outlined">auto_stories</span>
+</div>
+<h2 class="text-lg font-bold">Melody &amp; Myth</h2>
+</div>
+<div class="flex gap-8 text-slate-500 dark:text-slate-400 text-sm font-medium">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Copyright 2024</a>
+</div>
+<div class="flex gap-4">
+<a class="size-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 hover:bg-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">brand_awareness</span>
+</a>
+<a class="size-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 hover:bg-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">mail</span>
+</a>
+</div>
+</div>
+</footer>
+<!-- Floating Audio Player Bar -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] w-[calc(100%-3rem)] max-w-3xl">
+<div class="bg-background-light/90 dark:bg-background-dark/95 backdrop-blur-xl border border-white/10 rounded-full p-2 px-4 shadow-2xl flex items-center gap-4">
+<div class="size-10 bg-cover bg-center rounded-full border border-white/10 hidden sm:block" data-alt="Miniature book cover icon" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuChYqmHTaRMDoG6-4GCicyN4ruN0yqUp02obVwL8_pS5FvBnd6hoTJL6RKsW3KvWSygdlLyLytXE4MTaK67kT22yhPFJYiPnvaIoHUkXHzTiutQ3FfUJs-M97F9PXqnesnhoNzQcU6mVWQ5ZtxSRP52AwPR1Ck6KBMLux2DbXnk26vEsXzawBuNEbv_QxVKo-88BHfy_NmiPTHN1K8GSEu8DvFpqeruxtxF89qPiZshv5Qqj3on6v3t3ibT-zfToYx_pdlK83bGCwS1");'></div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-bold truncate text-primary uppercase tracking-tighter">The Midnight Symphony</p>
+<p class="text-sm font-medium truncate dark:text-white/80">Overture: Whispers in the Wind</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="material-symbols-outlined text-2xl hover:text-primary transition-colors">skip_previous</button>
+<button class="size-10 bg-primary rounded-full flex items-center justify-center text-white hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-2xl">play_arrow</span>
+</button>
+<button class="material-symbols-outlined text-2xl hover:text-primary transition-colors">skip_next</button>
+</div>
+<div class="hidden md:flex items-center gap-3 ml-4 border-l border-white/10 pl-4">
+<span class="material-symbols-outlined text-xl text-slate-500">volume_up</span>
+<div class="w-24 h-1 bg-white/10 rounded-full overflow-hidden">
+<div class="h-full w-3/4 bg-primary"></div>
+</div>
+</div>
+<button class="material-symbols-outlined text-xl ml-2 text-slate-500 hover:text-white">close</button>
+</div>
+</div>
+</div>
+</body></html>
