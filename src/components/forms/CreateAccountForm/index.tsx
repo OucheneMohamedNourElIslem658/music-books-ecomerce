@@ -21,7 +21,7 @@ type FormData = {
 export const CreateAccountForm: React.FC = () => {
   const searchParams = useSearchParams()
   const allParams = searchParams.toString() ? `?${searchParams.toString()}` : ''
-  const { login } = useAuth()
+  const { create } = useAuth()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<null | string>(null)
@@ -38,37 +38,31 @@ export const CreateAccountForm: React.FC = () => {
 
   const onSubmit = useCallback(
     async (data: FormData) => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users`, {
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
-
-      if (!response.ok) {
-        const message = response.statusText || 'There was an error creating the account.'
-        setError(message)
-        return
-      }
-
-      const redirect = searchParams.get('redirect')
-
-      const timer = setTimeout(() => {
-        setLoading(true)
-      }, 1000)
+      setLoading(true)
+      setError(null)
 
       try {
-        await login(data)
-        clearTimeout(timer)
-        if (redirect) router.push(redirect)
-        else router.push(`/account?success=${encodeURIComponent('Account created successfully')}`)
-      } catch (_) {
-        clearTimeout(timer)
-        setError('There was an error with the credentials provided. Please try again.')
+        // Use the auth hook's create() which handles the API call,
+        // sets the user in context, and manages the session cookie
+        await create(data)
+
+        const redirect = searchParams.get('redirect')
+        router.push(
+          redirect ?? `/account?success=${encodeURIComponent('Account created successfully')}`,
+        )
+      } catch (err) {
+        // Surface the actual error message rather than a static fallback.
+        // The create() function throws with the API's error message when available.
+        const message =
+          err instanceof Error && err.message
+            ? err.message
+            : 'There was an error creating the account. Please try again.'
+        setError(message)
+      } finally {
+        setLoading(false)
       }
     },
-    [login, router, searchParams],
+    [create, router, searchParams],
   )
 
   return (
@@ -122,8 +116,9 @@ export const CreateAccountForm: React.FC = () => {
           {errors.passwordConfirm && <FormError message={errors.passwordConfirm.message} />}
         </FormItem>
       </div>
+
       <Button disabled={loading} type="submit" variant="default">
-        {loading ? 'Processing' : 'Create Account'}
+        {loading ? 'Creating account…' : 'Create Account'}
       </Button>
 
       <div className="prose dark:prose-invert mt-8">

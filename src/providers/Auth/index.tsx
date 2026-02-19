@@ -1,23 +1,38 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import type { User } from '@/payload-types'
 
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
 
-// eslint-disable-next-line no-unused-vars
+
 type ResetPassword = (args: {
   password: string
   passwordConfirm: string
   token: string
 }) => Promise<void>
 
-type ForgotPassword = (args: { email: string }) => Promise<void> // eslint-disable-line no-unused-vars
+type ForgotPassword = (args: { email: string }) => Promise<void>
 
-type Create = (args: { email: string; password: string; passwordConfirm: string }) => Promise<void> // eslint-disable-line no-unused-vars
+type Create = (args: { email: string; password: string; passwordConfirm: string }) => Promise<void>
 
-type Login = (args: { email: string; password: string }) => Promise<User> // eslint-disable-line no-unused-vars
+type Login = (args: { email: string; password: string }) => Promise<User>
 
 type Logout = () => Promise<void>
+
+function extractErrorMessage(body: any, fallback: string): string {
+  const top = body?.errors?.[0]
+  if (!top) return fallback
+
+  // Field-level message (most specific)
+  const fieldMessage = top?.data?.errors?.[0]?.message
+  if (fieldMessage) return fieldMessage
+
+  // Top-level Payload message
+  if (top?.message) return top.message
+
+  return fallback
+}
 
 type AuthContext = {
   create: Create
@@ -25,7 +40,7 @@ type AuthContext = {
   login: Login
   logout: Logout
   resetPassword: ResetPassword
-  setUser: (user: User | null) => void // eslint-disable-line no-unused-vars
+  setUser: (user: User | null) => void
   status: 'loggedIn' | 'loggedOut' | undefined
   user?: User | null
 }
@@ -39,58 +54,52 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // useful for `useEffect` hooks that should only run once
   const [status, setStatus] = useState<'loggedIn' | 'loggedOut' | undefined>()
   const create = useCallback<Create>(async (args) => {
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/create`, {
-        body: JSON.stringify({
-          email: args.email,
-          password: args.password,
-          passwordConfirm: args.passwordConfirm,
-        }),
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users`, {
+      body: JSON.stringify({
+        email: args.email,
+        password: args.password,
+        passwordConfirm: args.passwordConfirm,
+      }),
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+    })
 
-      if (res.ok) {
-        const { data, errors } = await res.json()
-        if (errors) throw new Error(errors[0].message)
-        setUser(data?.loginUser?.user)
-        setStatus('loggedIn')
-      } else {
-        throw new Error('Invalid login')
-      }
-    } catch (e) {
-      throw new Error('An error occurred while attempting to login.')
+    const { data, errors } = await res.json().catch(() => ({}))
+
+    if (res.ok) {
+      if (errors) throw new Error(extractErrorMessage({ errors }, 'Failed to create account'))
+      setUser(data?.loginUser?.user)
+      setStatus('loggedIn')
+    } else {
+      throw new Error(extractErrorMessage({ errors }, 'Failed to create account'))
     }
   }, [])
 
   const login = useCallback<Login>(async (args) => {
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/login`, {
-        body: JSON.stringify({
-          email: args.email,
-          password: args.password,
-        }),
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/login`, {
+      body: JSON.stringify({
+        email: args.email,
+        password: args.password,
+      }),
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+    })
 
-      if (res.ok) {
-        const { errors, user } = await res.json()
-        if (errors) throw new Error(errors[0].message)
-        setUser(user)
-        setStatus('loggedIn')
-        return user
-      }
+    const { errors, user } = await res.json()
 
-      throw new Error('Invalid login')
-    } catch (e) {
-      throw new Error('An error occurred while attempting to login.')
+    if (res.ok) {
+      if (errors) throw new Error(extractErrorMessage({ errors }, 'Failed to login'))
+      setUser(user)
+      setStatus('loggedIn')
+      return user
+    } else {
+      throw new Error(extractErrorMessage({ errors }, 'Failed to login'))
     }
   }, [])
 
@@ -213,6 +222,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   )
 }
 
-type UseAuth<T = User> = () => AuthContext // eslint-disable-line no-unused-vars
+type UseAuth<T = User> = () => AuthContext
 
 export const useAuth: UseAuth = () => useContext(Context)

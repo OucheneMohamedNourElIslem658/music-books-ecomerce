@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label'
 import { useAuth } from '@/providers/Auth'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 type FormData = {
@@ -23,30 +23,36 @@ export const LoginForm: React.FC = () => {
   const redirect = useRef(searchParams.get('redirect'))
   const { login } = useAuth()
   const router = useRouter()
-  const [error, setError] = React.useState<null | string>(null)
+  const [error, setError] = useState<null | string>(null)
 
   const {
-    formState: { errors, isLoading },
+    formState: { errors, isSubmitting },
     handleSubmit,
     register,
   } = useForm<FormData>()
 
   const onSubmit = useCallback(
     async (data: FormData) => {
+      setError(null)
       try {
         await login(data)
-        if (redirect?.current) router.push(redirect.current)
-        else router.push('/account')
-      } catch (_) {
-        setError('There was an error with the credentials provided. Please try again.')
+        router.push(redirect.current ?? '/account')
+      } catch (err) {
+        // Surface the actual message from the auth hook (which now forwards
+        // Payload's field-level errors) instead of a static fallback
+        const message =
+          err instanceof Error && err.message
+            ? err.message
+            : 'There was an error with the credentials provided. Please try again.'
+        setError(message)
       }
     },
     [login, router],
   )
 
   return (
-    <form className="" onSubmit={handleSubmit(onSubmit)}>
-      <Message className="classes.message" error={error} />
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Message error={error} />
       <div className="flex flex-col gap-8">
         <FormItem>
           <Label htmlFor="email">Email</Label>
@@ -82,8 +88,8 @@ export const LoginForm: React.FC = () => {
             Create an account
           </Link>
         </Button>
-        <Button className="grow" disabled={isLoading} size="lg" type="submit" variant="default">
-          {isLoading ? 'Processing' : 'Continue'}
+        <Button className="grow" disabled={isSubmitting} size="lg" type="submit" variant="default">
+          {isSubmitting ? 'Signing in…' : 'Continue'}
         </Button>
       </div>
     </form>
