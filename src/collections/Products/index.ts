@@ -78,6 +78,17 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
               required: false,
             },
             {
+              label: 'Song',
+              name: 'song',
+              type: 'upload',
+              relationTo: 'media',
+              filterOptions: {
+                mimeType: {
+                  contains: 'audio',
+                },
+              },
+            },
+            {
               name: 'gallery',
               type: 'array',
               minRows: 1,
@@ -131,7 +142,6 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
                 },
               ],
             },
-
             {
               name: 'layout',
               type: 'blocks',
@@ -154,8 +164,6 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
                     },
                   }
                 }
-
-                // ID comes back as undefined during seeding so we need to handle that case
                 return {
                   id: {
                     exists: true,
@@ -165,6 +173,15 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
               hasMany: true,
               relationTo: 'products',
             },
+            {
+              name: 'popularReviews',
+              type: 'relationship',
+              relationTo: 'reviews',
+              hasMany: true,
+              admin: {
+                sortOptions: '-rating',
+              },
+            }
           ],
           label: 'Product Details',
         },
@@ -183,13 +200,9 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
             MetaImageField({
               relationTo: 'media',
             }),
-
             MetaDescriptionField({}),
             PreviewField({
-              // if the `generateUrl` function is configured
               hasGenerateFn: true,
-
-              // field paths to match the target field for data
               titlePath: 'meta.title',
               descriptionPath: 'meta.description',
             }),
@@ -206,6 +219,81 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
       },
       hasMany: true,
       relationTo: 'categories',
+    },
+
+    // Virtual fields — never stored in DB, computed on read
+    {
+      name: 'reviewCount',
+      type: 'number',
+      virtual: true,
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+        description: 'Total number of approved reviews',
+      },
+      hooks: {
+        afterRead: [
+          async ({ req, data }) => {
+            if (!data?.id) return 0
+            try {
+              const result = await req.payload.find({
+                collection: 'reviews',
+                where: {
+                  and: [
+                    { product: { equals: data.id } },
+                    { status: { equals: 'approved' } },
+                  ],
+                },
+                pagination: false,
+                depth: 0,
+              })
+              return result.totalDocs
+            } catch {
+              return 0
+            }
+          },
+        ],
+      },
+    },
+    {
+      name: 'averageRating',
+      type: 'number',
+      virtual: true,
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+        description: 'Average rating out of 5',
+      },
+      hooks: {
+        afterRead: [
+          async ({ req, data }) => {
+            if (!data?.id) return null
+            try {
+              const result = await req.payload.find({
+                collection: 'reviews',
+                where: {
+                  and: [
+                    { product: { equals: data.id } },
+                    { status: { equals: 'approved' } },
+                  ],
+                },
+                pagination: false,
+                depth: 0,
+              })
+
+              const reviews = result.docs
+              if (!reviews.length) return null
+
+              const average =
+                reviews.reduce((sum, r) => sum + (r.rating ?? 0), 0) / reviews.length
+
+              return Math.round(average * 10) / 10
+            } catch {
+              return null
+            }
+          },
+        ],
+      },
     },
     slugField(),
   ],

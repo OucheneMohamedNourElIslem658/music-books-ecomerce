@@ -76,6 +76,7 @@ export interface Config {
     pages: Page;
     categories: Category;
     media: Media;
+    reviews: Review;
     forms: Form;
     'form-submissions': FormSubmission;
     addresses: Address;
@@ -109,6 +110,7 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     addresses: AddressesSelect<false> | AddressesSelect<true>;
@@ -279,6 +281,7 @@ export interface Product {
     };
     [k: string]: unknown;
   } | null;
+  song?: (number | null) | Media;
   gallery?:
     | {
         image: number | Media;
@@ -298,6 +301,7 @@ export interface Product {
   priceInUSDEnabled?: boolean | null;
   priceInUSD?: number | null;
   relatedProducts?: (number | Product)[] | null;
+  popularReviews?: (number | Review)[] | null;
   meta?: {
     title?: string | null;
     /**
@@ -307,6 +311,14 @@ export interface Product {
     description?: string | null;
   };
   categories?: (number | Category)[] | null;
+  /**
+   * Total number of approved reviews
+   */
+  reviewCount?: number | null;
+  /**
+   * Average rating out of 5
+   */
+  averageRating?: number | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -894,6 +906,24 @@ export interface Variant {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews".
+ */
+export interface Review {
+  id: number;
+  product: number | Product;
+  author: number | User;
+  /**
+   * Rating from 1 to 5
+   */
+  rating: number;
+  title: string;
+  body: string;
+  status?: ('pending' | 'approved' | 'rejected') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "transactions".
  */
 export interface Transaction {
@@ -906,7 +936,16 @@ export interface Transaction {
         id?: string | null;
       }[]
     | null;
-  paymentMethod?: 'stripe' | null;
+  paymentMethod?: ('paypal' | 'stripe') | null;
+  paypal?: {
+    orderId?: string | null;
+    captureId?: string | null;
+    payerId?: string | null;
+    payerEmail?: string | null;
+    status?: string | null;
+    createTime?: string | null;
+    updateTime?: string | null;
+  };
   stripe?: {
     customerID?: string | null;
     paymentIntentID?: string | null;
@@ -1074,6 +1113,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'reviews';
+        value: number | Review;
       } | null)
     | ({
         relationTo: 'forms';
@@ -1390,6 +1433,20 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews_select".
+ */
+export interface ReviewsSelect<T extends boolean = true> {
+  product?: T;
+  author?: T;
+  rating?: T;
+  title?: T;
+  body?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "forms_select".
  */
 export interface FormsSelect<T extends boolean = true> {
@@ -1605,6 +1662,7 @@ export interface VariantOptionsSelect<T extends boolean = true> {
 export interface ProductsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
+  song?: T;
   gallery?:
     | T
     | {
@@ -1626,6 +1684,7 @@ export interface ProductsSelect<T extends boolean = true> {
   priceInUSDEnabled?: T;
   priceInUSD?: T;
   relatedProducts?: T;
+  popularReviews?: T;
   meta?:
     | T
     | {
@@ -1634,6 +1693,8 @@ export interface ProductsSelect<T extends boolean = true> {
         description?: T;
       };
   categories?: T;
+  reviewCount?: T;
+  averageRating?: T;
   generateSlug?: T;
   slug?: T;
   updatedAt?: T;
@@ -1714,6 +1775,17 @@ export interface TransactionsSelect<T extends boolean = true> {
         id?: T;
       };
   paymentMethod?: T;
+  paypal?:
+    | T
+    | {
+        orderId?: T;
+        captureId?: T;
+        payerId?: T;
+        payerEmail?: T;
+        status?: T;
+        createTime?: T;
+        updateTime?: T;
+      };
   stripe?:
     | T
     | {

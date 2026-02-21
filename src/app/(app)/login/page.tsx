@@ -1,14 +1,16 @@
 import type { Metadata } from 'next'
 
 import { RenderParams } from '@/components/RenderParams'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import React from 'react'
-
 import { headers as getHeaders } from 'next/headers'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { LoginForm } from '@/components/forms/LoginForm'
 import { redirect } from 'next/navigation'
+import { LogInIcon } from 'lucide-react'
 
 export default async function Login() {
   const headers = await getHeaders()
@@ -20,16 +22,41 @@ export default async function Login() {
   }
 
   return (
-    <div className="container">
-      <div className="max-w-xl mx-auto my-12">
+    <div className="container py-12">
+      <div className="max-w-md mx-auto">
         <RenderParams />
 
-        <h1 className="mb-4 text-[1.8rem]">Log in</h1>
-        <p className="mb-8">
-          {`This is where your customers will login to manage their account, review their order history, and more. To manage all users, `}
-          <Link href="/admin/collections/users">login to the admin dashboard</Link>.
-        </p>
-        <LoginForm />
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-3">
+              <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                <LogInIcon className="size-5" />
+              </div>
+              <div>
+                <CardTitle className="text-xl font-semibold text-foreground">Log in</CardTitle>
+                <CardDescription className="text-muted-foreground">
+                  Welcome back. Sign in to your account.
+                </CardDescription>
+              </div>
+            </div>
+            <Separator className="mt-4" />
+          </CardHeader>
+
+          <CardContent className="flex flex-col gap-6">
+            {/* <p className="text-sm text-muted-foreground">
+              To create your account,{' '}
+              <Link
+                href="/create-account"
+                className="text-primary hover:no-underline underline-offset-4 underline"
+              >
+                sign up and create a new account
+              </Link>
+              .
+            </p> */}
+
+            <LoginForm />
+          </CardContent>
+        </Card>
       </div>
     </div>
   )

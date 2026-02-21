@@ -6,6 +6,7 @@ import { Message } from '@/components/Message'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Separator } from '@/components/ui/separator'
 import { useAuth } from '@/providers/Auth'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -42,17 +43,12 @@ export const CreateAccountForm: React.FC = () => {
       setError(null)
 
       try {
-        // Use the auth hook's create() which handles the API call,
-        // sets the user in context, and manages the session cookie
         await create(data)
-
         const redirect = searchParams.get('redirect')
         router.push(
           redirect ?? `/account?success=${encodeURIComponent('Account created successfully')}`,
         )
       } catch (err) {
-        // Surface the actual error message rather than a static fallback.
-        // The create() function throws with the API's error message when available.
         const message =
           err instanceof Error && err.message
             ? err.message
@@ -66,21 +62,24 @@ export const CreateAccountForm: React.FC = () => {
   )
 
   return (
-    <form className="max-w-lg py-4" onSubmit={handleSubmit(onSubmit)}>
-      <div className="prose dark:prose-invert mb-6">
-        <p>
-          {`This is where new customers can signup and create a new account. To manage all users, `}
-          <Link href="/admin/collections/users">login to the admin dashboard</Link>.
-        </p>
-      </div>
+    <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
+
+      {/* <p className="text-sm text-muted-foreground">
+        If you already have an account,{' '}
+        <Link
+          href="/login"
+          className="text-primary hover:no-underline underline-offset-4 underline"
+        >
+          log in instead
+        </Link>
+        .
+      </p> */}
 
       <Message error={error} />
 
-      <div className="flex flex-col gap-8 mb-8">
+      <div className="flex flex-col gap-4">
         <FormItem>
-          <Label htmlFor="email" className="mb-2">
-            Email Address
-          </Label>
+          <Label htmlFor="email">Email Address</Label>
           <Input
             id="email"
             {...register('email', { required: 'Email is required.' })}
@@ -90,9 +89,7 @@ export const CreateAccountForm: React.FC = () => {
         </FormItem>
 
         <FormItem>
-          <Label htmlFor="password" className="mb-2">
-            New password
-          </Label>
+          <Label htmlFor="password">New Password</Label>
           <Input
             id="password"
             {...register('password', { required: 'Password is required.' })}
@@ -102,9 +99,7 @@ export const CreateAccountForm: React.FC = () => {
         </FormItem>
 
         <FormItem>
-          <Label htmlFor="passwordConfirm" className="mb-2">
-            Confirm Password
-          </Label>
+          <Label htmlFor="passwordConfirm">Confirm Password</Label>
           <Input
             id="passwordConfirm"
             {...register('passwordConfirm', {
@@ -117,16 +112,21 @@ export const CreateAccountForm: React.FC = () => {
         </FormItem>
       </div>
 
-      <Button disabled={loading} type="submit" variant="default">
-        {loading ? 'Creating account…' : 'Create Account'}
-      </Button>
+      <Separator />
 
-      <div className="prose dark:prose-invert mt-8">
-        <p>
-          {'Already have an account? '}
-          <Link href={`/login${allParams}`}>Login</Link>
-        </p>
+      <div className="flex gap-3">
+        <Button asChild variant="outline" className="flex-1 rounded-full">
+          <Link href={`/login${allParams}`}>Log in instead</Link>
+        </Button>
+        <Button
+          disabled={loading}
+          type="submit"
+          className="flex-1 rounded-full"
+        >
+          {loading ? 'Creating account…' : 'Create Account'}
+        </Button>
       </div>
+
     </form>
   )
 }

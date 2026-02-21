@@ -6,9 +6,11 @@ import { Message } from '@/components/Message'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
-import React, { Fragment, useCallback, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { MailCheckIcon } from 'lucide-react'
 
 type FormData = {
   email: string
@@ -29,9 +31,7 @@ export const ForgotPasswordForm: React.FC = () => {
       `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/forgot-password`,
       {
         body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         method: 'POST',
       },
     )
@@ -41,52 +41,58 @@ export const ForgotPasswordForm: React.FC = () => {
       setError('')
     } else {
       setError(
-        'There was a problem while attempting to send you a password reset email. Please try again.',
+        'There was a problem sending a password reset email. Please try again.',
       )
     }
   }, [])
 
+  if (success) {
+    return (
+      <div className="flex flex-col items-center gap-4 py-6 text-center">
+        <div className="size-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+          <MailCheckIcon className="size-6" />
+        </div>
+        <div>
+          <p className="font-semibold text-foreground">Check your email</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            We sent you a link to securely reset your password.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <Fragment>
-      {!success && (
-        <React.Fragment>
-          <h1 className="text-xl mb-4">Forgot Password</h1>
-          <div className="prose dark:prose-invert mb-8">
-            <p>
-              {`Please enter your email below. You will receive an email message with instructions on
-              how to reset your password. To manage your all users, `}
-              <Link href="/admin/collections/users">login to the admin dashboard</Link>.
-            </p>
-          </div>
-          <form className="max-w-lg" onSubmit={handleSubmit(onSubmit)}>
-            <Message className="mb-8" error={error} />
+    <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
+      <p className="text-sm text-muted-foreground">
+        Enter your email below and we&apos;ll send you reset instructions. 
+        {/* To manage all users,{' '}
+        <Link
+          href="/admin/collections/users"
+          className="text-primary hover:no-underline underline-offset-4 underline"
+        >
+          login to the admin dashboard
+        </Link> */}
+        .
+      </p>
 
-            <FormItem className="mb-8">
-              <Label htmlFor="email" className="mb-2">
-                Email address
-              </Label>
-              <Input
-                id="email"
-                {...register('email', { required: 'Please provide your email.' })}
-                type="email"
-              />
-              {errors.email && <FormError message={errors.email.message} />}
-            </FormItem>
+      <Message error={error} />
 
-            <Button type="submit" variant="default">
-              Forgot Password
-            </Button>
-          </form>
-        </React.Fragment>
-      )}
-      {success && (
-        <React.Fragment>
-          <h1 className="text-xl mb-4">Request submitted</h1>
-          <div className="prose dark:prose-invert">
-            <p>Check your email for a link that will allow you to securely reset your password.</p>
-          </div>
-        </React.Fragment>
-      )}
-    </Fragment>
+      <FormItem>
+        <Label htmlFor="email">Email Address</Label>
+        <Input
+          id="email"
+          {...register('email', { required: 'Please provide your email.' })}
+          type="email"
+        />
+        {errors.email && <FormError message={errors.email.message} />}
+      </FormItem>
+
+      <Separator />
+
+      <Button type="submit" className="rounded-full w-full">
+        Send Reset Link
+      </Button>
+    </form>
   )
 }

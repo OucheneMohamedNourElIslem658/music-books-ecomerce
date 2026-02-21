@@ -125,7 +125,7 @@ export default async function ProductPage({ params }: Args) {
                 <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden rounded-xl bg-muted animate-pulse" />
               }
             >
-              {Boolean(gallery?.length) && <Gallery gallery={gallery} />}
+              {Boolean(gallery?.length) && <Gallery gallery={gallery} song={product.song} />}
             </Suspense>
           </div>
 
