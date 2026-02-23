@@ -6,7 +6,7 @@ export const Reviews: CollectionConfig = {
   slug: 'reviews',
   admin: {
     group: 'Content',
-    useAsTitle: 'title',
+    useAsTitle: 'comment',
   },
   access: {
     read: () => true,
@@ -54,12 +54,7 @@ export const Reviews: CollectionConfig = {
       },
     },
     {
-      name: 'title',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'body',
+      name: 'comment',
       type: 'textarea',
       required: true,
     },

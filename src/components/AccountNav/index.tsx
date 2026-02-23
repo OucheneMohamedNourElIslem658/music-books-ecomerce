@@ -3,9 +3,9 @@
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/utilities/cn'
+import { LogOutIcon, MapPinIcon, PackageIcon, SettingsIcon, StarIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { SettingsIcon, MapPinIcon, PackageIcon, LogOutIcon } from 'lucide-react'
 
 type Props = {
   className?: string
@@ -15,6 +15,7 @@ const navItems = [
   { href: '/account', label: 'Account Settings', icon: SettingsIcon },
   { href: '/account/addresses', label: 'Addresses', icon: MapPinIcon },
   { href: '/orders', label: 'Orders', icon: PackageIcon },
+  { href: '/account/reviews', label: 'Reviews', icon: StarIcon },
 ]
 
 export const AccountNav: React.FC<Props> = ({ className }) => {

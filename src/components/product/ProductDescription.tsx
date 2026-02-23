@@ -9,9 +9,14 @@ import React, { Suspense } from 'react'
 import { VariantSelector } from './VariantSelector'
 import { useCurrency } from '@payloadcms/plugin-ecommerce/client/react'
 import { StockIndicator } from '@/components/product/StockIndicator'
+import { CreateReviewModal } from '../reviews/CreateReviewModel'
+import StarRating from '../reviews/StarRating'
+import { useAuth } from '@/providers/Auth'
 
 export function ProductDescription({ product }: { product: Product }) {
   const { currency } = useCurrency()
+  const { user } = useAuth()
+
   let amount = 0,
     lowestAmount = 0,
     highestAmount = 0
@@ -33,7 +38,6 @@ export function ProductDescription({ product }: { product: Product }) {
         ) {
           return a[priceField] - b[priceField]
         }
-
         return 0
       }) as Variant[]
 
@@ -50,6 +54,7 @@ export function ProductDescription({ product }: { product: Product }) {
   } else if (product[priceField] && typeof product[priceField] === 'number') {
     amount = product[priceField]
   }
+  
 
   return (
     <div className="flex flex-col gap-6">
@@ -63,6 +68,23 @@ export function ProductDescription({ product }: { product: Product }) {
           )}
         </div>
       </div>
+
+      {(product.averageRating || product.reviewCount) ? (
+        <div className="flex items-center gap-2">
+          {product.averageRating ? (
+            <>
+              <StarRating rating={product.averageRating} />
+              <span className="text-sm font-medium">{product.averageRating.toFixed(1)}</span>
+            </>
+          ) : null}
+          {product.reviewCount ? (
+            <span className="text-sm text-muted-foreground">
+              ({product.reviewCount} {product.reviewCount === 1 ? 'review' : 'reviews'})
+            </span>
+          ) : null}
+        </div>
+      ) : null}
+
       {product.description ? (
         <RichText className="" data={product.description} enableGutter={false} />
       ) : null}
@@ -72,7 +94,6 @@ export function ProductDescription({ product }: { product: Product }) {
           <Suspense fallback={null}>
             <VariantSelector product={product} />
           </Suspense>
-
           <hr />
         </>
       )}
@@ -81,11 +102,22 @@ export function ProductDescription({ product }: { product: Product }) {
           <StockIndicator product={product} />
         </Suspense>
       </div>
-
       <div className="flex items-center justify-between">
         <Suspense fallback={null}>
           <AddToCart product={product} />
         </Suspense>
+      </div>
+
+      <hr />
+
+      <div className="flex items-center justify-between">
+        {user && (
+          <CreateReviewModal
+            productID={product.id}
+            buttonText="Leave a Review"
+            modalTitle={`Review ${product.title}`}
+          />
+        )}
       </div>
     </div>
   )

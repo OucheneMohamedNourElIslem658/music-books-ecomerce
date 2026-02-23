@@ -135,7 +135,7 @@ export default async function ProductPage({ params }: Args) {
         </div>
 
         {/* Content blocks */}
-        {product.layout?.length ? <RenderBlocks blocks={product.layout} /> : null}
+        {product.layout?.length ? <RenderBlocks blocks={product.layout}product={product} /> : null}
 
         {/* Related products */}
         {relatedProducts.length ? (

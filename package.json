@@ -22,6 +22,7 @@
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@payloadcms/admin-bar": "3.75.0",
     "@payloadcms/db-mongodb": "3.75.0",
     "@payloadcms/db-sqlite": "^3.75.0",
@@ -38,7 +39,7 @@
     "@radix-ui/react-accordion": "1.2.11",
     "@radix-ui/react-checkbox": "^1.1.4",
     "@radix-ui/react-dialog": "^1.1.14",
-    "@radix-ui/react-label": "^2.1.2",
+    "@radix-ui/react-label": "^2.1.8",
     "@radix-ui/react-select": "^2.1.6",
     "@radix-ui/react-separator": "^1.1.8",
     "@radix-ui/react-slot": "^1.2.4",
@@ -63,11 +64,12 @@
     "radix-ui": "^1.4.3",
     "react": "19.2.1",
     "react-dom": "19.2.1",
-    "react-hook-form": "7.71.1",
+    "react-hook-form": "^7.71.1",
     "sharp": "0.34.2",
     "sonner": "^1.7.2",
     "stripe": "18.5.0",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
