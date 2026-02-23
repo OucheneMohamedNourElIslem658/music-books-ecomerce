@@ -289,7 +289,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  layout?: (CallToActionBlock | ContentBlock | MediaBlock)[] | null;
+  layout?: (CallToActionBlock | ContentBlock | MediaBlock | ReviewsBlock)[] | null;
   inventory?: number | null;
   enableVariants?: boolean | null;
   variantTypes?: (number | VariantType)[] | null;
@@ -886,6 +886,17 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ReviewsBlock".
+ */
+export interface ReviewsBlock {
+  heading?: string | null;
+  displayMode?: ('grid' | 'list' | 'carousel') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'reviewsBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "variants".
  */
 export interface Variant {
@@ -916,8 +927,7 @@ export interface Review {
    * Rating from 1 to 5
    */
   rating: number;
-  title: string;
-  body: string;
+  comment: string;
   status?: ('pending' | 'approved' | 'rejected') | null;
   updatedAt: string;
   createdAt: string;
@@ -1439,8 +1449,7 @@ export interface ReviewsSelect<T extends boolean = true> {
   product?: T;
   author?: T;
   rating?: T;
-  title?: T;
-  body?: T;
+  comment?: T;
   status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1676,6 +1685,7 @@ export interface ProductsSelect<T extends boolean = true> {
         cta?: T | CallToActionBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
+        reviewsBlock?: T | ReviewsBlockSelect<T>;
       };
   inventory?: T;
   enableVariants?: T;
@@ -1701,6 +1711,16 @@ export interface ProductsSelect<T extends boolean = true> {
   createdAt?: T;
   deletedAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ReviewsBlock_select".
+ */
+export interface ReviewsBlockSelect<T extends boolean = true> {
+  heading?: T;
+  displayMode?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

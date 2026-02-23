@@ -11,7 +11,7 @@ export const CarouselBlock: React.FC<
     id?: DefaultDocumentIDType
   }
 > = async (props) => {
-  const { id, categories, limit = 3, populateBy, selectedDocs } = props
+  const { id : _, categories, limit = 3, populateBy, selectedDocs } = props
 
   let products: Product[] = []
 

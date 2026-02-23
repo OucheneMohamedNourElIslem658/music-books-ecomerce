@@ -9,7 +9,8 @@ import { ThreeItemGridBlock } from '@/blocks/ThreeItemGrid/Component'
 import { toKebabCase } from '@/utilities/toKebabCase'
 import React, { Fragment } from 'react'
 
-import type { Page } from '../payload-types'
+import type { Page, Product } from '../payload-types'
+import { ReviewsBlock } from './ReviewsBlock/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -20,12 +21,14 @@ const blockComponents = {
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   threeItemGrid: ThreeItemGridBlock,
+  reviewsBlock: ReviewsBlock,
 }
 
 export const RenderBlocks: React.FC<{
   blocks: Page['layout'][0][]
+  product?: Product
 }> = (props) => {
-  const { blocks } = props
+  const { blocks, product } = props
 
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
 
@@ -43,7 +46,7 @@ export const RenderBlocks: React.FC<{
                 <div className="my-16" key={index}>
                   {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
                   {/* @ts-ignore - weird type mismatch here */}
-                  <Block id={toKebabCase(blockName!)} {...block} />
+                  <Block id={toKebabCase(blockName!)} {...block} product={product} />
                 </div>
               )
             }

@@ -1,6 +1,7 @@
 import { CallToAction } from '@/blocks/CallToAction/config'
 import { Content } from '@/blocks/Content/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
+import { ReviewsBlock } from '@/blocks/ReviewsBlock/config'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 import { CollectionOverride } from '@payloadcms/plugin-ecommerce/types'
 import {
@@ -145,7 +146,7 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock],
+              blocks: [CallToAction, Content, MediaBlock, ReviewsBlock],
             },
           ],
           label: 'Content',
@@ -178,8 +179,14 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
               type: 'relationship',
               relationTo: 'reviews',
               hasMany: true,
-              admin: {
-                sortOptions: '-rating',
+              filterOptions: ({ id }): Where => {
+                if (!id) return { status: { equals: 'approved' } }
+                return {
+                  and: [
+                    { product: { equals: id } },
+                    { status: { equals: 'approved' } },
+                  ],
+                }
               },
             }
           ],
