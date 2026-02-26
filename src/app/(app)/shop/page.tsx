@@ -1,4 +1,5 @@
 import { Grid } from '@/components/Grid'
+import { PaginationController } from '@/components/Pagination/PaginationController'
 import { ProductGridItem } from '@/components/ProductGridItem'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
@@ -9,18 +10,26 @@ export const metadata = {
   title: 'Shop',
 }
 
-type SearchParams = { [key: string]: string | string[] | undefined }
+type SearchParams = { [key: string]: string | string[] | undefined, page?: string }
 
 type Props = {
   searchParams: Promise<SearchParams>
 }
 
+const LIMIT = 10
+
 export default async function ShopPage({ searchParams }: Props) {
-  const { q: searchValue, sort, category } = await searchParams
+  const { q: searchValue, sort, category, page: pageParam } = await searchParams
   const payload = await getPayload({ config: configPromise })
+
+  const page = Math.max(1, parseInt(pageParam ?? '1', 10))
+
+  let totalPages = 1
 
   const products = await payload.find({
     collection: 'products',
+    limit: LIMIT,
+    page,
     draft: false,
     overrideAccess: false,
     select: {
@@ -48,6 +57,7 @@ export default async function ShopPage({ searchParams }: Props) {
 
   const resultsText = products.docs.length > 1 ? 'results' : 'result'
   const hasProducts = products.docs.length > 0
+  totalPages = products.totalPages
 
   return (
     <div className="flex flex-col gap-6">
@@ -89,6 +99,9 @@ export default async function ShopPage({ searchParams }: Props) {
         </Grid>
       )}
 
+      {totalPages > 1 && (
+        <PaginationController page={page} totalPages={totalPages}/>
+      )}
     </div>
   )
 }

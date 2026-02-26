@@ -1,13 +1,13 @@
-import type { Media, Product, ThreeItemGridBlock as ThreeItemGridBlockProps } from '@/payload-types'
+import type { Media, PopularProductsBlock as PopularProductsBlockProps, Product } from '@/payload-types'
 
 import { GridTileImage } from '@/components/Grid/tile'
 import Link from 'next/link'
-import React from 'react'
 import type { DefaultDocumentIDType } from 'payload'
+import React from 'react'
 
 type Props = { item: Product; priority?: boolean; size: 'full' | 'half' }
 
-export const ThreeItemGridItem: React.FC<Props> = ({ item, size }) => {
+export const PopularProducts: React.FC<Props> = ({ item, size }) => {
   let price = item.priceInUSD
 
   if (item.enableVariants && item.variants?.docs?.length) {
@@ -36,8 +36,8 @@ export const ThreeItemGridItem: React.FC<Props> = ({ item, size }) => {
   )
 }
 
-export const ThreeItemGridBlock: React.FC<
-  ThreeItemGridBlockProps & {
+export const PopularProductsBlock: React.FC<
+  PopularProductsBlockProps & {
     id?: DefaultDocumentIDType
     className?: string
   }
@@ -48,9 +48,9 @@ export const ThreeItemGridBlock: React.FC<
 
   return (
     <section className="container grid gap-4 pb-4 md:grid-cols-6 md:grid-rows-2">
-      <ThreeItemGridItem item={firstProduct as Product} priority size="full" />
-      <ThreeItemGridItem item={secondProduct as Product} priority size="half" />
-      <ThreeItemGridItem item={thirdProduct as Product} size="half" />
+      <PopularProducts item={firstProduct as Product} priority size="full" />
+      <PopularProducts item={secondProduct as Product} priority size="half" />
+      <PopularProducts item={thirdProduct as Product} size="half" />
     </section>
   )
 }

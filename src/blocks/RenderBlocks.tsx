@@ -5,11 +5,12 @@ import { CarouselBlock } from '@/blocks/Carousel/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
-import { ThreeItemGridBlock } from '@/blocks/ThreeItemGrid/Component'
 import { toKebabCase } from '@/utilities/toKebabCase'
 import React, { Fragment } from 'react'
 
 import type { Page, Product } from '../payload-types'
+import { LinkToPageBlock } from './LinkToPage/Component'
+import { PopularProductsBlock } from './PopularProducts/Component'
 import { ReviewsBlock } from './ReviewsBlock/Component'
 
 const blockComponents = {
@@ -20,8 +21,9 @@ const blockComponents = {
   cta: CallToActionBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
-  threeItemGrid: ThreeItemGridBlock,
+  popularProducts: PopularProductsBlock,
   reviewsBlock: ReviewsBlock,
+  linkToPageBlock: LinkToPageBlock
 }
 
 export const RenderBlocks: React.FC<{

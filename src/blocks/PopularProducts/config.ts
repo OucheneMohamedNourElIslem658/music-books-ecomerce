@@ -1,6 +1,6 @@
 import type { Block } from 'payload'
 
-export const ThreeItemGrid: Block = {
+export const PopularProducts: Block = {
   slug: 'threeItemGrid',
   fields: [
     {
@@ -16,9 +16,9 @@ export const ThreeItemGrid: Block = {
       relationTo: 'products',
     },
   ],
-  interfaceName: 'ThreeItemGridBlock',
+  interfaceName: 'PopularProductsBlock',
   labels: {
-    plural: 'Three Item Grids',
-    singular: 'Three Item Grid',
+    plural: 'Popular Products',
+    singular: 'Popular Product',
   },
 }
