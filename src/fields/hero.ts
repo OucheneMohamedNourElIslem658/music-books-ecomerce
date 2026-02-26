@@ -5,6 +5,7 @@ import {
   HeadingFeature,
   InlineToolbarFeature,
   lexicalEditor,
+  TextStateFeature
 } from '@payloadcms/richtext-lexical'
 
 import { linkGroup } from './linkGroup'
@@ -49,6 +50,14 @@ export const hero: Field = {
             HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
             FixedToolbarFeature(),
             InlineToolbarFeature(),
+            TextStateFeature({
+              state: {
+                color: {
+                  // custom primary
+                  primary: { label: 'Blue', css: { color: '#154eec' } },
+                },
+              },
+            }),
           ]
         },
       }),
@@ -67,6 +76,41 @@ export const hero: Field = {
       },
       relationTo: 'media',
       required: true,
+    },
+    {
+      name: 'hasSong',
+      type: 'checkbox',
+      label: 'Add Song',
+      defaultValue: false,
+      admin: {
+        description: 'Toggle to attach a song to this content',
+      },
+    },
+    {
+      name: 'songGroup',
+      type: 'group',
+      label: 'Song',
+      admin: {
+        condition: (data, siblingData) => Boolean(siblingData?.hasSong),
+      },
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          label: 'Song Title',
+        },
+        {
+          label: 'Song',
+          name: 'song',
+          type: 'upload',
+          relationTo: 'media',
+          filterOptions: {
+            mimeType: {
+              contains: 'audio',
+            },
+          },
+        },
+      ],
     },
   ],
   label: false,

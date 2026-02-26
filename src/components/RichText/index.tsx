@@ -8,13 +8,13 @@ import {
 
 import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
 
+import { BannerBlock } from '@/blocks/Banner/Component'
+import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import type {
   BannerBlock as BannerBlockProps,
   CallToActionBlock as CTABlockProps,
   MediaBlock as MediaBlockProps,
 } from '@/payload-types'
-import { BannerBlock } from '@/blocks/Banner/Component'
-import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { cn } from '@/utilities/cn'
 
 import {
@@ -216,6 +216,30 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     if (format & 2) el = <em>{el}</em>
     if (format & 4) el = <s className="text-muted-foreground/70">{el}</s>
     if (format & 8) el = <u className="underline underline-offset-2">{el}</u>
+
+    // 👇 TextStateFeature stores state in node.$
+    const textState = (node as any).$
+    if (textState) {
+      // Build a CSS string from all state keys (color, underline, etc.)
+      // Each value is a key like "blue", "primary" — map it to the CSS you defined
+      // But Payload actually stores the resolved CSS directly, so just apply it
+
+      const colorKey = textState.color // e.g. "blue", "primary", "text-red"
+      if (colorKey) {
+        // The node stores the stateValue key, not the CSS.
+        // You need to map it to your CSS here:
+
+        const colorMap: Record<string, React.CSSProperties> = {
+          primary: { color: '#154eec' },
+          // add your other colors here to match your TextStateFeature config
+          'text-red': { color: 'red' },
+          'text-blue': { color: 'blue' },
+          // ...etc
+        }
+        const css = colorMap[colorKey]
+        if (css) el = <span style={css}>{el}</span>
+      }
+    }
 
     return <>{el}</>
   },

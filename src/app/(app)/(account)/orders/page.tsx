@@ -1,19 +1,31 @@
 import type { Order } from '@/payload-types'
 import type { Metadata } from 'next'
 
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { OrderItem } from '@/components/OrderItem'
-import { headers as getHeaders } from 'next/headers'
-import configPromise from '@payload-config'
-import { getPayload } from 'payload'
-import { redirect } from 'next/navigation'
+import { PaginationController } from '@/components/Pagination/PaginationController'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import configPromise from '@payload-config'
+import { headers as getHeaders } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { getPayload } from 'payload'
 
-export default async function Orders() {
+const LIMIT = 10
+
+interface Props {
+  searchParams: Promise<{ page?: string }>
+}
+
+export default async function Orders(
+  { searchParams }: Props
+) {
   const headers = await getHeaders()
   const payload = await getPayload({ config: configPromise })
   const { user } = await payload.auth({ headers })
+
+  const { page: pageParam } = await searchParams
+  const page = Math.max(1, parseInt(pageParam ?? '1', 10))
 
   let orders: Order[] | null = null
 
@@ -21,11 +33,14 @@ export default async function Orders() {
     redirect(`/login?warning=${encodeURIComponent('Please login to access your orders.')}`)
   }
 
+  let totalPages = 1
+
   try {
     const ordersResult = await payload.find({
       collection: 'orders',
-      limit: 0,
-      pagination: false,
+      limit: LIMIT,
+      page,
+      pagination: true,
       user,
       overrideAccess: false,
       where: {
@@ -33,13 +48,15 @@ export default async function Orders() {
           equals: user?.id,
         },
       },
+
     })
 
     orders = ordersResult?.docs || []
-  } catch (error) {}
+    totalPages = ordersResult?.totalPages
+  } catch (error) { }
 
   return (
-    <div className="w-full mx-auto px-4 pb-10">
+    <div className="w-full mx-auto px-4 pb-10 flex flex-col gap-6">
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl font-semibold">Orders</CardTitle>
@@ -60,6 +77,8 @@ export default async function Orders() {
           )}
         </CardContent>
       </Card>
+
+      {totalPages == 1 && (<PaginationController page={page} totalPages={totalPages} />)}
     </div>
   )
 }

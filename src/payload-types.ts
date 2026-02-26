@@ -485,6 +485,14 @@ export interface Page {
         }[]
       | null;
     media?: (number | null) | Media;
+    /**
+     * Toggle to attach a song to this content
+     */
+    hasSong?: boolean | null;
+    songGroup?: {
+      title?: string | null;
+      song?: (number | null) | Media;
+    };
   };
   layout: (
     | CallToActionBlock
@@ -492,9 +500,36 @@ export interface Page {
     | MediaBlock
     | ArchiveBlock
     | CarouselBlock
-    | ThreeItemGridBlock
+    | PopularProductsBlock
     | BannerBlock
     | FormBlock
+    | {
+        image: number | Media;
+        title: string;
+        description?: string | null;
+        links?:
+          | {
+              link: {
+                type?: ('reference' | 'custom') | null;
+                newTab?: boolean | null;
+                reference?: {
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null;
+                url?: string | null;
+                label: string;
+                /**
+                 * Choose how the link should be rendered.
+                 */
+                appearance?: ('default' | 'outline') | null;
+              };
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'linkToPageBlock';
+      }
   )[];
   meta?: {
     title?: string | null;
@@ -651,9 +686,9 @@ export interface CarouselBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ThreeItemGridBlock".
+ * via the `definition` "PopularProductsBlock".
  */
-export interface ThreeItemGridBlock {
+export interface PopularProductsBlock {
   products?: (number | Product)[] | null;
   id?: string | null;
   blockName?: string | null;
@@ -1267,6 +1302,13 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        hasSong?: T;
+        songGroup?:
+          | T
+          | {
+              title?: T;
+              song?: T;
+            };
       };
   layout?:
     | T
@@ -1276,9 +1318,33 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         carousel?: T | CarouselBlockSelect<T>;
-        threeItemGrid?: T | ThreeItemGridBlockSelect<T>;
+        threeItemGrid?: T | PopularProductsBlockSelect<T>;
         banner?: T | BannerBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        linkToPageBlock?:
+          | T
+          | {
+              image?: T;
+              title?: T;
+              description?: T;
+              links?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T
@@ -1383,9 +1449,9 @@ export interface CarouselBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ThreeItemGridBlock_select".
+ * via the `definition` "PopularProductsBlock_select".
  */
-export interface ThreeItemGridBlockSelect<T extends boolean = true> {
+export interface PopularProductsBlockSelect<T extends boolean = true> {
   products?: T;
   id?: T;
   blockName?: T;
