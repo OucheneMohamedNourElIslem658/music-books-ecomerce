@@ -1,18 +1,11 @@
-import type { Media, Page } from '@/payload-types'
+import { CMSLink, CMSLinkType } from '@/components/Link'
+import type { Media } from '@/payload-types'
 import Image from 'next/image'
-import Link from 'next/link'
 import type { DefaultDocumentIDType } from 'payload'
 import React from 'react'
 
-type CMSLink = {
-    link: {
-        type?: 'reference' | 'custom'
-        newTab?: boolean
-        reference?: { relationTo: 'pages'; value: Page | string }
-        url?: string
-        label: string
-        appearance?: string
-    }
+type LinkItem = {
+    link: CMSLinkType
     id?: string
 }
 
@@ -22,7 +15,7 @@ export type LinkToPageBlockProps = {
     image: Media | string
     title: string
     description?: string
-    links?: CMSLink[]
+    links?: LinkItem[]
 }
 
 export const LinkToPageBlock: React.FC<LinkToPageBlockProps> = ({
@@ -56,30 +49,25 @@ export const LinkToPageBlock: React.FC<LinkToPageBlockProps> = ({
                     <h3 className="text-xl font-bold text-white">{title}</h3>
 
                     {description && (
-                        <p className="text-sm leading-relaxed text-white/60 line-clamp-3">{description}</p>
+                        <p className="text-sm leading-relaxed text-white/60 line-clamp-3">
+                            {description}
+                        </p>
                     )}
 
                     {/* Links */}
                     {links && links.length > 0 && (
-                        <div className="flex flex-wrap gap-2 mt-1">
-                            {links.map(({ link, id }) => {
-                                const href =
-                                    link.type === 'reference'
-                                        ? `/${(link.reference?.value as Page)?.slug ?? ''}`
-                                        : (link.url ?? '#')
-
-                                return (
-                                    <Link
-                                        key={id}
-                                        href={href}
-                                        target={link.newTab ? '_blank' : undefined}
-                                        rel={link.newTab ? 'noopener noreferrer' : undefined}
-                                        className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-white/80 transition-all duration-200 hover:border-primary/50 hover:text-white hover:bg-primary/10"
-                                    >
-                                        {link.label}
-                                    </Link>
-                                )
-                            })}
+                        <div className="flex flex-wrap items-center gap-3 mt-2">
+                            {links.map(({ link, id }, i) => (
+                                <CMSLink
+                                    key={id ?? i}
+                                    {...link}
+                                    className={
+                                        i === 0
+                                            ? 'inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-bold text-white transition-all hover:bg-primary/80'
+                                            : 'inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-3 text-sm font-bold text-white backdrop-blur-sm transition-all hover:bg-white/20'
+                                    }
+                                />
+                            ))}
                         </div>
                     )}
                 </div>

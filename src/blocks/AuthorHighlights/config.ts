@@ -2,7 +2,7 @@ import type { Block } from 'payload'
 
 export const AuthorHighlightsBlock: Block = {
     slug: 'authorHighlights',
-    labels: { singular: 'Author Highlights', plural: 'Author Highlights Blocks' },
+    labels: { singular: 'Highlights', plural: 'Highlights Blocks' },
     fields: [
         {
             name: 'title',

@@ -13,6 +13,7 @@ import { linkGroup } from './linkGroup'
 export const hero: Field = {
   name: 'hero',
   type: 'group',
+  label: false,
   fields: [
     {
       name: 'type',
@@ -29,20 +30,35 @@ export const hero: Field = {
           value: 'highImpact',
         },
         {
-          label: 'Medium Impact',
-          value: 'mediumImpact',
-        },
-        {
           label: 'Low Impact',
           value: 'lowImpact',
+        },
+        {
+          label: 'Author Header',
+          value: 'authorHeader',
         },
       ],
       required: true,
     },
+
+    // ─── isBlog toggle (hidden for authorHeader) ──────────────────────────────
+    {
+      name: 'isBlog',
+      type: 'checkbox',
+      label: 'This is a Blog Page',
+      defaultValue: false,
+    },
+
+    // ─── Normal / Blog hero fields ────────────────────────────────────────────
     {
       name: 'richText',
       type: 'richText',
       localized: true,
+      label: false,
+      admin: {
+        condition: (_, siblingData) =>
+          siblingData?.type !== 'authorHeader' && siblingData?.type !== 'none',
+      },
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [
@@ -53,7 +69,6 @@ export const hero: Field = {
             TextStateFeature({
               state: {
                 color: {
-                  // custom primary
                   primary: { label: 'Blue', css: { color: '#154eec' } },
                 },
               },
@@ -61,7 +76,6 @@ export const hero: Field = {
           ]
         },
       }),
-      label: false,
     },
     linkGroup({
       overrides: {
@@ -71,11 +85,7 @@ export const hero: Field = {
     {
       name: 'media',
       type: 'upload',
-      admin: {
-        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
-      },
       relationTo: 'media',
-      required: true,
     },
     {
       name: 'hasSong',
@@ -84,6 +94,7 @@ export const hero: Field = {
       defaultValue: false,
       admin: {
         description: 'Toggle to attach a song to this content',
+        condition: (_, siblingData) => siblingData?.type !== 'authorHeader',
       },
     },
     {
@@ -91,7 +102,8 @@ export const hero: Field = {
       type: 'group',
       label: 'Song',
       admin: {
-        condition: (data, siblingData) => Boolean(siblingData?.hasSong),
+        condition: (_, siblingData) =>
+          siblingData?.type !== 'authorHeader' && Boolean(siblingData?.hasSong),
       },
       fields: [
         {
@@ -117,6 +129,33 @@ export const hero: Field = {
         },
       ],
     },
+
+    // ─── Author Header fields (mirrors AuthorOverviewBlock schema) ────────────
+    {
+      name: 'eyebrow',
+      type: 'text',
+      label: 'Eyebrow Text',
+      admin: {
+        description: "Small label above the title e.g. \"THE AUTHOR'S MANUSCRIPT\"",
+        condition: (_, siblingData) => siblingData?.type === 'authorHeader',
+      },
+    },
+    {
+      name: 'title',
+      type: 'text',
+      required: true,
+      label: 'Title',
+      admin: {
+        condition: (_, siblingData) => siblingData?.type === 'authorHeader',
+      },
+    },
+    {
+      name: 'quote',
+      type: 'textarea',
+      label: 'Quote',
+      admin: {
+        condition: (_, siblingData) => siblingData?.type === 'authorHeader',
+      },
+    },
   ],
-  label: false,
 }

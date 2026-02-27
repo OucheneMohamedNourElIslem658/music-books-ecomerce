@@ -7,14 +7,14 @@ import React from 'react'
 
 type CMSLink = {
     link: {
-        type?: 'reference' | 'custom'
-        newTab?: boolean
-        reference?: { relationTo: 'pages'; value: Page | string }
-        url?: string
+        type?: 'reference' | 'custom' | null
+        newTab?: boolean | null
+        reference?: { relationTo: 'pages'; value: Page | number } | null
+        url?: string | null
         label: string
-        appearance?: string
+        appearance?: string | null
     }
-    id?: string
+    id?: string | null
 }
 
 export type AuthorOverviewBlockProps = {
