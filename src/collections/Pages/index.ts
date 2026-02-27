@@ -2,17 +2,12 @@ import type { CollectionConfig } from 'payload'
 
 import { adminOnly } from '@/access/adminOnly'
 import { adminOrPublishedStatus } from '@/access/adminOrPublishedStatus'
-import { Archive } from '@/blocks/ArchiveBlock/config'
 import { AuthorHighlightsBlock } from '@/blocks/AuthorHighlights/config'
 import { AuthorOverviewBlock } from '@/blocks/AuthorOverviewBlock/config'
-import { Banner } from '@/blocks/Banner/config'
-import { CallToAction } from '@/blocks/CallToAction/config'
-import { Carousel } from '@/blocks/Carousel/config'
-import { Content } from '@/blocks/Content/config'
+import { FeatureShowcaseBlock } from '@/blocks/FeatureShowcase/config'
 import { FormBlock } from '@/blocks/Form/config'
 import { LinkToContactBlock } from '@/blocks/LinkToContact/config'
 import { LinkToPageBlock } from '@/blocks/LinkToPage/config'
-import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { PopularProducts } from '@/blocks/PopularProducts/config'
 import { QuestMapBlock } from '@/blocks/QuestMapBlock/config'
 import { hero } from '@/fields/hero'
@@ -106,19 +101,20 @@ export const Pages: CollectionConfig = {
               name: 'layout',
               type: 'blocks',
               blocks: [
-                CallToAction,
-                Content,
-                MediaBlock,
-                Archive,
-                Carousel,
+                // CallToAction,
+                // Content,
+                // MediaBlock,
+                // Archive,
+                // Carousel,
                 PopularProducts,
-                Banner,
+                // Banner,
                 FormBlock,
                 LinkToPageBlock,
                 AuthorOverviewBlock,
                 QuestMapBlock,
                 AuthorHighlightsBlock,
-                LinkToContactBlock
+                LinkToContactBlock,
+                FeatureShowcaseBlock
               ],
               required: true,
             },
@@ -130,37 +126,6 @@ export const Pages: CollectionConfig = {
               admin: {
                 description: 'Toggle to attach a song to this content',
               },
-            },
-            {
-              name: 'songGroup',
-              type: 'group',
-              label: 'Song',
-              admin: {
-                condition: (data, siblingData) => Boolean(siblingData?.hasSong),
-              },
-              fields: [
-                {
-                  name: 'title',
-                  type: 'text',
-                  label: 'Song Title',
-                },
-                {
-                  name: 'description',
-                  type: 'text',
-                  label: 'Song Description',
-                },
-                {
-                  label: 'Song',
-                  name: 'song',
-                  type: 'upload',
-                  relationTo: 'media',
-                  filterOptions: {
-                    mimeType: {
-                      contains: 'audio',
-                    },
-                  },
-                },
-              ],
             },
           ],
           label: 'Content',

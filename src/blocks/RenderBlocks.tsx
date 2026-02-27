@@ -11,6 +11,7 @@ import React, { Fragment } from 'react'
 import type { Page, Product } from '../payload-types'
 import { AuthorHighlightsBlock } from './AuthorHighlights/Component'
 import { AuthorOverviewBlock } from './AuthorOverviewBlock/Component'
+import { FeatureShowcaseBlock } from './FeatureShowcase/Component'
 import { LinkToContactBlock } from './LinkToContact/Component'
 import { LinkToPageBlock } from './LinkToPage/Component'
 import { PopularProductsBlock } from './PopularProducts/Component'
@@ -32,6 +33,7 @@ const blockComponents = {
   questMap: QuestMapBlock,
   authorHighlights: AuthorHighlightsBlock,
   linkToContact: LinkToContactBlock,
+  featureShowcase: FeatureShowcaseBlock
 }
 
 export const RenderBlocks: React.FC<{
