@@ -448,7 +448,7 @@ export interface Page {
   id: number;
   title: string;
   publishedOn?: string | null;
-  hero?: {
+  hero: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
     richText?: {
       root: {
@@ -491,6 +491,7 @@ export interface Page {
     hasSong?: boolean | null;
     songGroup?: {
       title?: string | null;
+      description?: string | null;
       song?: (number | null) | Media;
     };
   };
@@ -618,6 +619,15 @@ export interface Page {
         blockType: 'linkToContact';
       }
   )[];
+  /**
+   * Toggle to attach a song to this content
+   */
+  hasSong?: boolean | null;
+  songGroup?: {
+    title?: string | null;
+    description?: string | null;
+    song?: (number | null) | Media;
+  };
   meta?: {
     title?: string | null;
     /**
@@ -1394,6 +1404,7 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
+              description?: T;
               song?: T;
             };
       };
@@ -1510,6 +1521,14 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+      };
+  hasSong?: T;
+  songGroup?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        song?: T;
       };
   meta?:
     | T
