@@ -9,8 +9,12 @@ import { toKebabCase } from '@/utilities/toKebabCase'
 import React, { Fragment } from 'react'
 
 import type { Page, Product } from '../payload-types'
+import { AuthorHighlightsBlock } from './AuthorHighlights/Component'
+import { AuthorOverviewBlock } from './AuthorOverviewBlock/Component'
+import { LinkToContactBlock } from './LinkToContact/Component'
 import { LinkToPageBlock } from './LinkToPage/Component'
 import { PopularProductsBlock } from './PopularProducts/Component'
+import { QuestMapBlock } from './QuestMapBlock/Component'
 import { ReviewsBlock } from './ReviewsBlock/Component'
 
 const blockComponents = {
@@ -23,7 +27,11 @@ const blockComponents = {
   mediaBlock: MediaBlock,
   popularProducts: PopularProductsBlock,
   reviewsBlock: ReviewsBlock,
-  linkToPageBlock: LinkToPageBlock
+  linkToPageBlock: LinkToPageBlock,
+  authorOverview: AuthorOverviewBlock,
+  questMap: QuestMapBlock,
+  authorHighlights: AuthorHighlightsBlock,
+  linkToContact: LinkToContactBlock,
 }
 
 export const RenderBlocks: React.FC<{

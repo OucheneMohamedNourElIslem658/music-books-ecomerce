@@ -13,6 +13,9 @@ import { linkGroup } from './linkGroup'
 export const hero: Field = {
   name: 'hero',
   type: 'group',
+  admin: {
+    condition: (data, siblingData) => siblingData?.template === 'author',
+  },
   fields: [
     {
       name: 'type',
