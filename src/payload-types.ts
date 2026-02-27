@@ -448,7 +448,7 @@ export interface Page {
   id: number;
   title: string;
   publishedOn?: string | null;
-  hero: {
+  hero?: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
     richText?: {
       root: {
@@ -529,6 +529,93 @@ export interface Page {
         id?: string | null;
         blockName?: string | null;
         blockType: 'linkToPageBlock';
+      }
+    | {
+        /**
+         * Small label above the title e.g. "THE AUTHOR'S MANUSCRIPT"
+         */
+        eyebrow?: string | null;
+        title: string;
+        quote?: string | null;
+        image: number | Media;
+        links?:
+          | {
+              link: {
+                type?: ('reference' | 'custom') | null;
+                newTab?: boolean | null;
+                reference?: {
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null;
+                url?: string | null;
+                label: string;
+                /**
+                 * Choose how the link should be rendered.
+                 */
+                appearance?: ('default' | 'outline') | null;
+              };
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'authorOverview';
+      }
+    | {
+        title: string;
+        items?:
+          | {
+              icon?: ('music' | 'clipboard' | 'sparkles' | 'star' | 'book' | 'map' | 'target' | 'trophy') | null;
+              isActive?: boolean | null;
+              title: string;
+              year: string;
+              tag: string;
+              description?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'questMap';
+      }
+    | {
+        title: string;
+        icon?: ('settings' | 'music' | 'book' | 'star' | 'map' | 'target') | null;
+        items?:
+          | {
+              icon?:
+                | ('pen' | 'piano' | 'mic' | 'music' | 'book' | 'star' | 'fire' | 'lightbulb' | 'target' | 'trophy')
+                | null;
+              title: string;
+              description?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'authorHighlights';
+      }
+    | {
+        title: string;
+        description?: string | null;
+        inputPlaceholder?: string | null;
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'linkToContact';
       }
   )[];
   meta?: {
@@ -1341,6 +1428,84 @@ export interface PagesSelect<T extends boolean = true> {
                           appearance?: T;
                         };
                     id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        authorOverview?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              quote?: T;
+              image?: T;
+              links?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        questMap?:
+          | T
+          | {
+              title?: T;
+              items?:
+                | T
+                | {
+                    icon?: T;
+                    isActive?: T;
+                    title?: T;
+                    year?: T;
+                    tag?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        authorHighlights?:
+          | T
+          | {
+              title?: T;
+              icon?: T;
+              items?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        linkToContact?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              inputPlaceholder?: T;
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    appearance?: T;
                   };
               id?: T;
               blockName?: T;

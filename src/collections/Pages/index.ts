@@ -3,14 +3,18 @@ import type { CollectionConfig } from 'payload'
 import { adminOnly } from '@/access/adminOnly'
 import { adminOrPublishedStatus } from '@/access/adminOrPublishedStatus'
 import { Archive } from '@/blocks/ArchiveBlock/config'
+import { AuthorHighlightsBlock } from '@/blocks/AuthorHighlights/config'
+import { AuthorOverviewBlock } from '@/blocks/AuthorOverviewBlock/config'
 import { Banner } from '@/blocks/Banner/config'
 import { CallToAction } from '@/blocks/CallToAction/config'
 import { Carousel } from '@/blocks/Carousel/config'
 import { Content } from '@/blocks/Content/config'
 import { FormBlock } from '@/blocks/Form/config'
+import { LinkToContactBlock } from '@/blocks/LinkToContact/config'
 import { LinkToPageBlock } from '@/blocks/LinkToPage/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { PopularProducts } from '@/blocks/PopularProducts/config'
+import { QuestMapBlock } from '@/blocks/QuestMapBlock/config'
 import { hero } from '@/fields/hero'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 import { CustomTranslationsKeys } from '@/utilities/translations'
@@ -111,6 +115,10 @@ export const Pages: CollectionConfig = {
                 Banner,
                 FormBlock,
                 LinkToPageBlock,
+                AuthorOverviewBlock,
+                QuestMapBlock,
+                AuthorHighlightsBlock,
+                LinkToContactBlock
               ],
               required: true,
             },
