@@ -122,6 +122,46 @@ export const Pages: CollectionConfig = {
               ],
               required: true,
             },
+            {
+              name: 'hasSong',
+              type: 'checkbox',
+              label: 'Add Song',
+              defaultValue: false,
+              admin: {
+                description: 'Toggle to attach a song to this content',
+              },
+            },
+            {
+              name: 'songGroup',
+              type: 'group',
+              label: 'Song',
+              admin: {
+                condition: (data, siblingData) => Boolean(siblingData?.hasSong),
+              },
+              fields: [
+                {
+                  name: 'title',
+                  type: 'text',
+                  label: 'Song Title',
+                },
+                {
+                  name: 'description',
+                  type: 'text',
+                  label: 'Song Description',
+                },
+                {
+                  label: 'Song',
+                  name: 'song',
+                  type: 'upload',
+                  relationTo: 'media',
+                  filterOptions: {
+                    mimeType: {
+                      contains: 'audio',
+                    },
+                  },
+                },
+              ],
+            },
           ],
           label: 'Content',
         },

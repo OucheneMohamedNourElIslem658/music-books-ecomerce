@@ -13,9 +13,6 @@ import { linkGroup } from './linkGroup'
 export const hero: Field = {
   name: 'hero',
   type: 'group',
-  admin: {
-    condition: (data, siblingData) => siblingData?.template === 'author',
-  },
   fields: [
     {
       name: 'type',
@@ -101,6 +98,11 @@ export const hero: Field = {
           name: 'title',
           type: 'text',
           label: 'Song Title',
+        },
+        {
+          name: 'description',
+          type: 'text',
+          label: 'Song Description',
         },
         {
           label: 'Song',
