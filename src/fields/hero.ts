@@ -41,14 +41,6 @@ export const hero: Field = {
       required: true,
     },
 
-    // ─── isBlog toggle (hidden for authorHeader) ──────────────────────────────
-    {
-      name: 'isBlog',
-      type: 'checkbox',
-      label: 'This is a Blog Page',
-      defaultValue: false,
-    },
-
     // ─── Normal / Blog hero fields ────────────────────────────────────────────
     {
       name: 'richText',
@@ -110,11 +102,13 @@ export const hero: Field = {
           name: 'title',
           type: 'text',
           label: 'Song Title',
+          localized: true,
         },
         {
           name: 'description',
           type: 'text',
           label: 'Song Description',
+          localized: true,
         },
         {
           label: 'Song',
@@ -135,6 +129,7 @@ export const hero: Field = {
       name: 'eyebrow',
       type: 'text',
       label: 'Eyebrow Text',
+      localized: true,
       admin: {
         description: "Small label above the title e.g. \"THE AUTHOR'S MANUSCRIPT\"",
         condition: (_, siblingData) => siblingData?.type === 'authorHeader',
@@ -145,6 +140,7 @@ export const hero: Field = {
       type: 'text',
       required: true,
       label: 'Title',
+      localized: true,
       admin: {
         condition: (_, siblingData) => siblingData?.type === 'authorHeader',
       },
@@ -153,6 +149,7 @@ export const hero: Field = {
       name: 'quote',
       type: 'textarea',
       label: 'Quote',
+      localized: true,
       admin: {
         condition: (_, siblingData) => siblingData?.type === 'authorHeader',
       },

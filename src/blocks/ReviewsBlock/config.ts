@@ -12,6 +12,7 @@ export const ReviewsBlock: Block = {
       name: 'heading',
       type: 'text',
       defaultValue: 'Customer Reviews',
+      localized: true,
     },
     {
       name: 'displayMode',

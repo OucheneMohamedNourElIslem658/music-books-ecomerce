@@ -22,6 +22,7 @@ export const FeatureShowcaseBlock: Block = {
             type: 'richText',
             label: 'Content',
             required: true,
+            localized: true,
             editor: lexicalEditor({
                 features: ({ rootFeatures }) => [
                     ...rootFeatures,
@@ -56,6 +57,7 @@ export const FeatureShowcaseBlock: Block = {
                     name: 'alt',
                     type: 'text',
                     label: 'Alt Text',
+                    localized: true,
                 },
             ],
         },

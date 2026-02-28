@@ -69,6 +69,12 @@ export const Pages: CollectionConfig = {
       localized: true,
     },
     {
+      name: 'isBlog',
+      type: 'checkbox',
+      label: 'This is a Blog Page',
+      defaultValue: false,
+    },
+    {
       name: 'publishedOn',
       type: 'date',
       admin: {
