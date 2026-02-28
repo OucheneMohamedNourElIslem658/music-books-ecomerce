@@ -15,7 +15,7 @@ type Props = { searchParams: Promise<SearchParams> }
 const LIMIT = 9
 
 export default async function ChroniclesPage({ searchParams }: Props) {
-    const { q: searchValue, sort, category, page: pageParam } = await searchParams
+    const { q: searchValue, sort, page: pageParam } = await searchParams
     const payload = await getPayload({ config: configPromise })
     const page = Math.max(1, parseInt(pageParam ?? '1', 10))
 
@@ -30,15 +30,22 @@ export default async function ChroniclesPage({ searchParams }: Props) {
             slug: true,
             meta: true,
             publishedOn: true,
-            categories: true,
             isBlog: true,
+            hero: true,
         },
         where: {
             and: [
                 { _status: { equals: 'published' } },
-                // { isBlog: { equals: true } },
+                { isBlog: { equals: true } },
                 ...(searchValue
-                    ? [{ or: [{ title: { like: searchValue } }, { 'meta.description': { like: searchValue } }] }]
+                    ? [{
+                        or: [
+                            { title: { like: searchValue } },
+                            { 'meta.title': { like: searchValue } },
+                            { 'meta.description': { like: searchValue } },
+                            { 'hero.richText': { like: searchValue } },
+                        ],
+                    }]
                     : []),
             ],
         },

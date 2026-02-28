@@ -1,5 +1,4 @@
 import { ChroniclesSidebar } from '@/components/Chronicals/SideBar'
-import { Categories } from '@/components/layout/search/Categories'
 import { FilterList } from '@/components/layout/search/filter'
 import { Search } from '@/components/Search'
 import { sorting } from '@/lib/constants'
@@ -13,9 +12,8 @@ export default function ChroniclesLayout({ children }: { children: React.ReactNo
 
                 <div className="flex flex-col lg:flex-row items-start gap-8">
 
-                    {/* Left — filters */}
+                    {/* Left — sort filter only (no categories on pages) */}
                     <div className="w-full flex-none flex flex-col gap-6 lg:w-48">
-                        <Categories />
                         <FilterList list={sorting} title="Sort by" />
                     </div>
 
