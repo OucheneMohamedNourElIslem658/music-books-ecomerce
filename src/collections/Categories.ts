@@ -1,7 +1,7 @@
 import { CustomTranslationsKeys } from '@/utilities/translations'
 import { TFunction } from 'node_modules/@payloadcms/translations/dist/types'
-import { slugField } from 'payload'
 import type { CollectionConfig } from 'payload'
+import { slugField } from 'payload'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',

@@ -9,6 +9,7 @@ export const QuestMapBlock: Block = {
             type: 'text',
             required: true,
             label: 'Section Title',
+            localized: true,
         },
         {
             name: 'items',
@@ -43,6 +44,7 @@ export const QuestMapBlock: Block = {
                     type: 'text',
                     required: true,
                     label: 'Title',
+                    localized: true,
                 },
                 {
                     name: 'year',
@@ -50,6 +52,7 @@ export const QuestMapBlock: Block = {
                     required: true,
                     label: 'Year',
                     admin: { placeholder: '2024' },
+                    localized: true,
                 },
                 {
                     name: 'tag',
@@ -57,11 +60,13 @@ export const QuestMapBlock: Block = {
                     required: true,
                     label: 'Tag',
                     admin: { placeholder: 'THE PRESENT' },
+                    localized: true,
                 },
                 {
                     name: 'description',
                     type: 'textarea',
                     label: 'Description',
+                    localized: true,
                 },
             ],
         },

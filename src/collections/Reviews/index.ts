@@ -1,6 +1,6 @@
-import type { CollectionConfig } from 'payload'
-import { adminOnlyFieldAccess } from '@/access/adminOnlyFieldAccess'
 import { adminOnly } from '@/access/adminOnly'
+import { adminOnlyFieldAccess } from '@/access/adminOnlyFieldAccess'
+import type { CollectionConfig } from 'payload'
 
 export const Reviews: CollectionConfig = {
   slug: 'reviews',
@@ -57,6 +57,7 @@ export const Reviews: CollectionConfig = {
       name: 'comment',
       type: 'textarea',
       required: true,
+      localized: true,
     },
     {
       name: 'status',

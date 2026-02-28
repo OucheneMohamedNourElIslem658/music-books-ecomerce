@@ -9,6 +9,7 @@ export const AuthorHighlightsBlock: Block = {
             type: 'text',
             required: true,
             label: 'Section Title',
+            localized: true,
         },
         {
             name: 'icon',
@@ -54,11 +55,13 @@ export const AuthorHighlightsBlock: Block = {
                     type: 'text',
                     required: true,
                     label: 'Card Title',
+                    localized: true,
                 },
                 {
                     name: 'description',
                     type: 'textarea',
                     label: 'Card Description',
+                    localized: true,
                 },
             ],
         },

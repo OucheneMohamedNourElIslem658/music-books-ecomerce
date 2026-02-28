@@ -447,10 +447,10 @@ export interface CallToActionBlock {
 export interface Page {
   id: number;
   title: string;
+  isBlog?: boolean | null;
   publishedOn?: string | null;
   hero: {
     type: 'none' | 'highImpact' | 'lowImpact' | 'authorHeader';
-    isBlog?: boolean | null;
     richText?: {
       root: {
         type: string;
@@ -1310,12 +1310,12 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
+  isBlog?: T;
   publishedOn?: T;
   hero?:
     | T
     | {
         type?: T;
-        isBlog?: T;
         richText?: T;
         links?:
           | T

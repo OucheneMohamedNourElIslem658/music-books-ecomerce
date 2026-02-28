@@ -9,6 +9,7 @@ export const AuthorOverviewBlock: Block = {
             name: 'eyebrow',
             type: 'text',
             label: 'Eyebrow Text',
+            localized: true,
             admin: {
                 description: 'Small label above the title e.g. "THE AUTHOR\'S MANUSCRIPT"',
             },
@@ -18,11 +19,13 @@ export const AuthorOverviewBlock: Block = {
             type: 'text',
             required: true,
             label: 'Title',
+            localized: true,
         },
         {
             name: 'quote',
             type: 'textarea',
             label: 'Quote',
+            localized: true,
         },
         {
             name: 'image',

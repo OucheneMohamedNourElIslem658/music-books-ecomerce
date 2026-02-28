@@ -10,17 +10,20 @@ export const LinkToContactBlock: Block = {
             type: 'text',
             required: true,
             label: 'Title',
+            localized: true,
         },
         {
             name: 'description',
             type: 'textarea',
             label: 'Description',
+            localized: true,
         },
         {
             name: 'inputPlaceholder',
             type: 'text',
             label: 'Input Placeholder',
             defaultValue: 'Enter your email address...',
+            localized: true,
         },
         link({
             appearances: ['default', 'outline'],

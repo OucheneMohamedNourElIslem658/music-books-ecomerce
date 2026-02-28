@@ -17,11 +17,13 @@ export const LinkToPageBlock: Block = {
             type: 'text',
             required: true,
             label: 'Title',
+            localized: true,
         },
         {
             name: 'description',
             type: 'textarea',
             label: 'Description',
+            localized: true,
         },
         linkGroup({
             overrides: {
