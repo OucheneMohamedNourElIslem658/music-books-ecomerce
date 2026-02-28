@@ -1,5 +1,5 @@
 import configPromise from '@payload-config'
-import { Camera, Mail, MessageSquare, Share2 } from 'lucide-react'
+import { Mail } from 'lucide-react'
 import Link from 'next/link'
 import { getPayload } from 'payload'
 import React from 'react'
@@ -101,23 +101,6 @@ export const ChroniclesSidebar: React.FC = async () => {
                     })}
                 </div>
             </div>
-
-            {/* Social scrolls */}
-            <div className="rounded-2xl border border-border bg-card p-5 flex flex-col gap-3">
-                <span className="text-xs font-semibold text-muted-foreground">Social Scrolls</span>
-                <div className="flex items-center gap-2">
-                    <button className="flex items-center justify-center w-9 h-9 rounded-lg border border-border bg-background hover:border-primary/40 hover:text-primary transition-colors text-muted-foreground">
-                        <Share2 className="h-4 w-4" />
-                    </button>
-                    <button className="flex items-center justify-center w-9 h-9 rounded-lg border border-border bg-background hover:border-primary/40 hover:text-primary transition-colors text-muted-foreground">
-                        <MessageSquare className="h-4 w-4" />
-                    </button>
-                    <button className="flex items-center justify-center w-9 h-9 rounded-lg border border-border bg-background hover:border-primary/40 hover:text-primary transition-colors text-muted-foreground">
-                        <Camera className="h-4 w-4" />
-                    </button>
-                </div>
-            </div>
-
         </div>
     )
 }

@@ -1,9 +1,8 @@
 'use client'
 
 import { cn } from '@/utilities/cn'
-import { createUrl } from '@/utilities/createUrl'
 import { SearchIcon } from 'lucide-react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
 
 type Props = {
@@ -13,6 +12,7 @@ type Props = {
 export const Search: React.FC<Props> = ({ className }) => {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const pathname = usePathname()
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -27,7 +27,7 @@ export const Search: React.FC<Props> = ({ className }) => {
       newParams.delete('q')
     }
 
-    router.push(createUrl('/shop', newParams))
+    router.push(`${pathname}?${newParams.toString()}`)
   }
 
   return (
@@ -44,7 +44,7 @@ export const Search: React.FC<Props> = ({ className }) => {
         defaultValue={searchParams?.get('q') || ''}
         key={searchParams?.get('q')}
         name="search"
-        placeholder="Search for products..."
+        placeholder="Search..."
         type="text"
       />
       <button
