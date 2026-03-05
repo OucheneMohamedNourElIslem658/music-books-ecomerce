@@ -1,7 +1,7 @@
 'use client'
 
+import { Link } from '@/i18n/navigation'
 import { useAuth } from '@/providers/Auth'
-import Link from 'next/link'
 import React, { Fragment, useEffect, useState } from 'react'
 
 export const LogoutPage: React.FC = (props) => {

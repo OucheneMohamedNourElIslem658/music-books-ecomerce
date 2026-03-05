@@ -1,16 +1,14 @@
 import type { Metadata } from 'next'
 
-import { RenderParams } from '@/components/RenderParams'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
-import Link from 'next/link'
-import React from 'react'
-import { headers as getHeaders } from 'next/headers'
-import configPromise from '@payload-config'
-import { getPayload } from 'payload'
 import { LoginForm } from '@/components/forms/LoginForm'
-import { redirect } from 'next/navigation'
+import { RenderParams } from '@/components/RenderParams'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import configPromise from '@payload-config'
 import { LogInIcon } from 'lucide-react'
+import { headers as getHeaders } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { getPayload } from 'payload'
 
 export default async function Login() {
   const headers = await getHeaders()

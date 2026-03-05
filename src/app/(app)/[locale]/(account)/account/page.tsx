@@ -1,30 +1,40 @@
 import type { Metadata } from 'next'
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import Link from 'next/link'
-import { headers as getHeaders } from 'next/headers.js'
-import configPromise from '@payload-config'
 import { AccountForm } from '@/components/forms/AccountForm'
-import { Order } from '@/payload-types'
 import { OrderItem } from '@/components/OrderItem'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import { Link, redirect } from '@/i18n/navigation'
+import { Order } from '@/payload-types'
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import configPromise from '@payload-config'
+import { PackageIcon, SettingsIcon } from 'lucide-react'
+import { headers as getHeaders } from 'next/headers.js'
+// import { redirect } from 'next/navigation'
 import { getPayload } from 'payload'
-import { redirect } from 'next/navigation'
-import { SettingsIcon, PackageIcon } from 'lucide-react'
 
-export default async function AccountPage() {
+interface AccountPageProps {
+  params: Promise<{ locale: string }>
+}
+
+
+export default async function AccountPage(
+  { params }: AccountPageProps
+) {
   const headers = await getHeaders()
   const payload = await getPayload({ config: configPromise })
   const { user } = await payload.auth({ headers })
 
   let orders: Order[] | null = null
 
+  const { locale } = await params
+
   if (!user) {
-    redirect(
-      `/login?warning=${encodeURIComponent('Please login to access your account settings.')}`,
-    )
+    redirect({
+      href: `/login?warning=${encodeURIComponent('Please login to access your account settings.')}`,
+      locale,
+    })
   }
 
   try {
@@ -42,7 +52,7 @@ export default async function AccountPage() {
     })
 
     orders = ordersResult?.docs || []
-  } catch (error) {}
+  } catch (error) { }
 
   return (
     <div className="w-full mx-auto px-4 pb-10 flex flex-col gap-6">

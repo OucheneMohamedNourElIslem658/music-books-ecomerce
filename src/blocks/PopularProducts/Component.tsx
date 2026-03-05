@@ -1,7 +1,7 @@
 import type { Media, PopularProductsBlock as PopularProductsBlockProps, Product } from '@/payload-types'
 
 import { GridTileImage } from '@/components/Grid/tile'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import type { DefaultDocumentIDType } from 'payload'
 import React from 'react'
 

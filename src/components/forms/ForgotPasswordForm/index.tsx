@@ -7,10 +7,9 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
-import Link from 'next/link'
+import { MailCheckIcon } from 'lucide-react'
 import React, { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { MailCheckIcon } from 'lucide-react'
 
 type FormData = {
   email: string
@@ -65,7 +64,7 @@ export const ForgotPasswordForm: React.FC = () => {
   return (
     <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
       <p className="text-sm text-muted-foreground">
-        Enter your email below and we&apos;ll send you reset instructions. 
+        Enter your email below and we&apos;ll send you reset instructions.
         {/* To manage all users,{' '}
         <Link
           href="/admin/collections/users"

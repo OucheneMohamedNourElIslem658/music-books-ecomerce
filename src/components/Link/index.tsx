@@ -1,8 +1,8 @@
 import type { Page, Product } from '@/payload-types'
 
 import { Button, type ButtonProps } from '@/components/ui/button'
+import { Link } from '@/i18n/navigation'
 import { cn } from '@/utilities/cn'
-import Link from 'next/link'
 import React from 'react'
 
 export type CMSLinkType = {

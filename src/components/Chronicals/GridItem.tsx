@@ -1,8 +1,8 @@
+import { Link } from '@/i18n/navigation'
 import type { Media, Page } from '@/payload-types'
 import { extractHeroText } from '@/utilities/extractTextFromNode'
 import { formatDistanceToNow } from 'date-fns'
 import Image from 'next/image'
-import Link from 'next/link'
 import React from 'react'
 
 type Props = {

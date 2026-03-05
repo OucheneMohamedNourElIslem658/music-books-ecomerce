@@ -7,11 +7,11 @@ import { Price } from '@/components/Price'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Link } from '@/i18n/navigation'
 import { useAuth } from '@/providers/Auth'
 import { useTheme } from '@/providers/Theme'
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 
@@ -42,29 +42,26 @@ function StepIndicator({ current }: { current: number }) {
         <React.Fragment key={step}>
           <div className="flex items-center gap-2">
             <div
-              className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
-                i < current
-                  ? 'bg-foreground text-background'
-                  : i === current
+              className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${i < current
+                ? 'bg-foreground text-background'
+                : i === current
                   ? 'bg-foreground text-background ring-4 ring-foreground/20'
                   : 'bg-muted text-muted-foreground'
-              }`}
+                }`}
             >
               {i < current ? '✓' : i + 1}
             </div>
             <span
-              className={`text-sm font-medium transition-colors duration-300 ${
-                i <= current ? 'text-foreground' : 'text-muted-foreground'
-              }`}
+              className={`text-sm font-medium transition-colors duration-300 ${i <= current ? 'text-foreground' : 'text-muted-foreground'
+                }`}
             >
               {step}
             </span>
           </div>
           {i < STEPS.length - 1 && (
             <div
-              className={`h-px flex-1 mx-3 transition-all duration-500 ${
-                i < current ? 'bg-foreground' : 'bg-border'
-              }`}
+              className={`h-px flex-1 mx-3 transition-all duration-500 ${i < current ? 'bg-foreground' : 'bg-border'
+                }`}
             />
           )}
         </React.Fragment>
@@ -239,7 +236,7 @@ export const CheckoutPage: React.FC = () => {
     return (
       <div className="py-24 w-full flex flex-col items-center justify-center gap-4 text-center">
         <p className="text-2xl font-medium">Your cart is empty</p>
-        <Link href="/search" className="text-muted-foreground underline underline-offset-4 hover:text-foreground transition-colors">
+        <Link href="/shop" className="text-muted-foreground underline underline-offset-4 hover:text-foreground transition-colors">
           Continue shopping
         </Link>
       </div>
@@ -422,11 +419,10 @@ export const CheckoutPage: React.FC = () => {
                   {paymentMethods.map((method) => (
                     <label
                       key={method.name}
-                      className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all duration-200 ${
-                        selectedPaymentMethod?.name === method.name
-                          ? 'border-foreground bg-foreground/5'
-                          : 'border-border hover:border-foreground/40'
-                      } ${!canGoToPayment ? 'opacity-40 pointer-events-none' : ''}`}
+                      className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all duration-200 ${selectedPaymentMethod?.name === method.name
+                        ? 'border-foreground bg-foreground/5'
+                        : 'border-border hover:border-foreground/40'
+                        } ${!canGoToPayment ? 'opacity-40 pointer-events-none' : ''}`}
                     >
                       <input
                         type="radio"

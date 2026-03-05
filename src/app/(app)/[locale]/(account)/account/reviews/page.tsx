@@ -1,16 +1,16 @@
 import type { Review } from '@/payload-types'
 import type { Metadata } from 'next'
 
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import { headers as getHeaders } from 'next/headers'
-import configPromise from '@payload-config'
-import { getPayload } from 'payload'
-import { redirect } from 'next/navigation'
+import { PaginationController } from '@/components/Pagination/PaginationController'
+import StarRating from '@/components/reviews/StarRating'
+import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import { Badge } from '@/components/ui/badge'
-import StarRating from '@/components/reviews/StarRating'
-import { PaginationController } from '@/components/Pagination/PaginationController'
+import { redirect } from '@/i18n/navigation'
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import configPromise from '@payload-config'
+import { headers as getHeaders } from 'next/headers'
+import { getPayload } from 'payload'
 
 const statusVariant: Record<string, 'default' | 'secondary' | 'destructive' | 'outline'> = {
   approved: 'default',
@@ -22,9 +22,10 @@ const LIMIT = 3
 
 type Args = {
   searchParams: Promise<{ page?: string }>
+  params: Promise<{ locale: string }>
 }
 
-export default async function ReviewsPage({ searchParams }: Args) {
+export default async function ReviewsPage({ searchParams, params }: Args) {
   const { page: pageParam } = await searchParams
   const page = Math.max(1, parseInt(pageParam ?? '1', 10))
 
@@ -32,8 +33,13 @@ export default async function ReviewsPage({ searchParams }: Args) {
   const payload = await getPayload({ config: configPromise })
   const { user } = await payload.auth({ headers })
 
+  const { locale } = await params
+
   if (!user) {
-    redirect(`/login?warning=${encodeURIComponent('Please login to access your reviews.')}`)
+    redirect({
+      href: `/login?warning=${encodeURIComponent('Please login to access your reviews.')}`,
+      locale,
+    })
   }
 
   let reviews: Review[] = []
@@ -57,7 +63,7 @@ export default async function ReviewsPage({ searchParams }: Args) {
 
     reviews = result.docs
     totalPages = result.totalPages
-  } catch (error) {}
+  } catch (error) { }
 
   return (
     <div className="w-full mx-auto px-4 pb-10">
@@ -81,10 +87,10 @@ export default async function ReviewsPage({ searchParams }: Args) {
 
                   const formattedDate = review.createdAt
                     ? new Intl.DateTimeFormat('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric',
-                      }).format(new Date(review.createdAt))
+                      month: 'short',
+                      day: 'numeric',
+                      year: 'numeric',
+                    }).format(new Date(review.createdAt))
                     : null
 
                   return (
@@ -114,7 +120,7 @@ export default async function ReviewsPage({ searchParams }: Args) {
               </ul>
 
               {totalPages > 1 && (
-                <PaginationController page={page} totalPages={totalPages}/>
+                <PaginationController page={page} totalPages={totalPages} />
               )}
             </>
           )}

@@ -1,11 +1,11 @@
 'use client'
 import type { Media, Product } from '@/payload-types'
 
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
-import AutoScroll from 'embla-carousel-auto-scroll'
-import Link from 'next/link'
-import React from 'react'
 import { GridTileImage } from '@/components/Grid/tile'
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
+import { Link } from '@/i18n/navigation'
+import AutoScroll from 'embla-carousel-auto-scroll'
+import React from 'react'
 
 export const CarouselClient: React.FC<{ products: Product[] }> = async ({ products }) => {
   if (!products?.length) return null

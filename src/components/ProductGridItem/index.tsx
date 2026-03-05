@@ -1,9 +1,9 @@
 import type { Product } from '@/payload-types'
 
-import Link from 'next/link'
-import React from 'react'
 import { Media } from '@/components/Media'
 import { Price } from '@/components/Price'
+import { Link } from '@/i18n/navigation'
+import React from 'react'
 
 type Props = {
   product: Partial<Product>

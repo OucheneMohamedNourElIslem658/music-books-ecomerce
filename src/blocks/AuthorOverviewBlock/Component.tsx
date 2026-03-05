@@ -1,7 +1,7 @@
+import { Link } from '@/i18n/navigation'
 import type { Media, Page } from '@/payload-types'
 import { FileText } from 'lucide-react'
 import Image from 'next/image'
-import Link from 'next/link'
 import type { DefaultDocumentIDType } from 'payload'
 import React from 'react'
 
