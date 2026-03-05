@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-// import { Link } from '@/i18n/navigation'
+import { Link } from '@/i18n/navigation'
 
 export default function notFound() {
   return (
@@ -9,7 +9,7 @@ export default function notFound() {
         <p className="mb-4">This page could not be found.</p>
       </div>
       <Button asChild variant="default">
-        {/* <Link href="/">Go home</Link> */}
+        <Link href="/">Go home</Link>
       </Button>
     </div>
   )

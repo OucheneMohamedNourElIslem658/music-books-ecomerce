@@ -2,7 +2,7 @@
 import { Cart } from '@/components/Cart'
 import { OpenCartButton } from '@/components/Cart/OpenCart'
 import { CMSLink } from '@/components/Link'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { Suspense } from 'react'
 
 import type { Header } from 'src/payload-types'

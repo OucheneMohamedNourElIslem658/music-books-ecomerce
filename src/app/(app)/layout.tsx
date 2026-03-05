@@ -16,7 +16,7 @@ export default async function AppLayout({
   children: ReactNode
   params: Promise<{ locale: string }>
 }) {
-  const { locale } = await params   // ← works because [locale] is a child segment
+  const { locale } = await params
 
   return (
     <html

@@ -3,9 +3,9 @@ import { Price } from '@/components/Price'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { Link } from '@/i18n/navigation'
 import { Order } from '@/payload-types'
 import { formatDateTime } from '@/utilities/formatDateTime'
-import Link from 'next/link'
 
 type Props = {
   order: Order

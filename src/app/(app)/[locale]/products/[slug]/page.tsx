@@ -4,16 +4,16 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { GridTileImage } from '@/components/Grid/tile'
 import { Gallery } from '@/components/product/Gallery'
 import { ProductDescription } from '@/components/product/ProductDescription'
-import configPromise from '@payload-config'
-import { getPayload } from 'payload'
-import { draftMode } from 'next/headers'
-import Link from 'next/link'
-import { notFound } from 'next/navigation'
-import React, { Suspense } from 'react'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { Link } from '@/i18n/navigation'
+import configPromise from '@payload-config'
 import { ChevronLeftIcon } from 'lucide-react'
 import { Metadata } from 'next'
+import { draftMode } from 'next/headers'
+import { notFound } from 'next/navigation'
+import { getPayload } from 'payload'
+import React, { Suspense } from 'react'
 
 type Args = {
   params: Promise<{ slug: string }>
@@ -34,15 +34,15 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
     description: product.meta?.description || '',
     openGraph: seoImage?.url
       ? {
-          images: [
-            {
-              alt: seoImage?.alt,
-              height: seoImage.height!,
-              url: seoImage?.url,
-              width: seoImage.width!,
-            },
-          ],
-        }
+        images: [
+          {
+            alt: seoImage?.alt,
+            height: seoImage.height!,
+            url: seoImage?.url,
+            width: seoImage.width!,
+          },
+        ],
+      }
       : null,
     robots: {
       follow: canIndex,
@@ -68,8 +68,8 @@ export default async function ProductPage({ params }: Args) {
 
   const hasStock = product.enableVariants
     ? product?.variants?.docs?.some(
-        (variant) => typeof variant === 'object' && variant.inventory && variant.inventory > 0,
-      )
+      (variant) => typeof variant === 'object' && variant.inventory && variant.inventory > 0,
+    )
     : product.inventory! > 0
 
   let price = product.priceInUSD
@@ -135,7 +135,7 @@ export default async function ProductPage({ params }: Args) {
         </div>
 
         {/* Content blocks */}
-        {product.layout?.length ? <RenderBlocks blocks={product.layout}product={product} /> : null}
+        {product.layout?.length ? <RenderBlocks blocks={product.layout} product={product} /> : null}
 
         {/* Related products */}
         {relatedProducts.length ? (

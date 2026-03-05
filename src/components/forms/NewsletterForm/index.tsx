@@ -1,7 +1,7 @@
 'use client'
 
+import { Link } from '@/i18n/navigation'
 import { Mail } from 'lucide-react'
-import Link from 'next/link'
 import React, { useState } from 'react'
 
 type Props = {

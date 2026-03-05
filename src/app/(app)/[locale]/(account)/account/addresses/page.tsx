@@ -1,25 +1,34 @@
 import type { Metadata } from 'next'
 
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import { headers as getHeaders } from 'next/headers.js'
-import configPromise from '@payload-config'
-import { getPayload } from 'payload'
-import { redirect } from 'next/navigation'
 import { AddressListing } from '@/components/addresses/AddressListing'
 import { CreateAddressModal } from '@/components/addresses/CreateAddressModal'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { redirect } from '@/i18n/navigation'
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import configPromise from '@payload-config'
 import { MapPinIcon } from 'lucide-react'
+import { headers as getHeaders } from 'next/headers.js'
+import { getPayload } from 'payload'
 
-export default async function AddressesPage() {
+interface AddressesPageProps {
+  params: Promise<{ locale: string }>
+}
+
+export default async function AddressesPage(
+  { params }: AddressesPageProps
+) {
   const headers = await getHeaders()
   const payload = await getPayload({ config: configPromise })
   const { user } = await payload.auth({ headers })
 
+  const { locale } = await params
+
   if (!user) {
-    redirect(
-      `/login?warning=${encodeURIComponent('Please login to access your account settings.')}`,
-    )
+    redirect({
+      href: `/login?warning=${encodeURIComponent('Please login to access your account settings.')}`,
+      locale,
+    })
   }
 
   return (

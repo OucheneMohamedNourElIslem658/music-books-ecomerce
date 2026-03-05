@@ -2,14 +2,12 @@
 
 import type { SortFilterItem as SortFilterItemType } from '@/lib/constants'
 
+import { Link } from '@/i18n/navigation'
 import { createUrl } from '@/utilities/createUrl'
 import clsx from 'clsx'
-import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
-import React from 'react'
 
-import type { ListItem } from '.'
-import type { PathFilterItem as PathFilterItemType } from '.'
+import type { ListItem, PathFilterItem as PathFilterItemType } from '.'
 
 function PathFilterItem({ item }: { item: PathFilterItemType }) {
   const pathname = usePathname()

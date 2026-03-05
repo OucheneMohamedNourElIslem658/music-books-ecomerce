@@ -1,6 +1,6 @@
+import { Link } from '@/i18n/navigation'
 import configPromise from '@payload-config'
 import { Mail } from 'lucide-react'
-import Link from 'next/link'
 import { getPayload } from 'payload'
 import React from 'react'
 

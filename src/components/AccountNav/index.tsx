@@ -2,9 +2,9 @@
 
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { Link } from '@/i18n/navigation'
 import { cn } from '@/utilities/cn'
 import { LogOutIcon, MapPinIcon, PackageIcon, SettingsIcon, StarIcon } from 'lucide-react'
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 type Props = {
