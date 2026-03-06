@@ -10,6 +10,7 @@ type HomePageArgs = {
   product1Id: number | string
   product2Id: number | string
   product3Id: number | string
+  heroSong: Media
 }
 
 const makeRichText = (text: string) => ({
@@ -63,6 +64,7 @@ export const homePageData = ({
   product1Id,
   product2Id,
   product3Id,
+  heroSong,
 }: HomePageArgs): RequiredDataFromCollectionSlug<'pages'> => ({
   slug: 'home',
   _status: 'published',
@@ -70,6 +72,12 @@ export const homePageData = ({
   hero: {
     type: 'highImpact',
     media: heroImage,
+    hasSong: true,
+    songGroup: {
+      title: 'The Midnight Symphony',
+      description: 'Official Book Theme · 3:42',
+      song: heroSong,
+    },
     richText: {
       root: {
         type: 'root',
@@ -79,7 +87,7 @@ export const homePageData = ({
             tag: 'h1',
             children: [
               { type: 'text', detail: 0, format: 0, mode: 'normal', style: '', text: 'Step into the Song: ', version: 1 },
-              { type: 'text', detail: 0, format: 2, mode: 'normal', style: '', text: 'The Midnight Symphony', version: 1 },
+              { type: 'text', detail: 0, format: 2, mode: 'normal', style: 'color-primary', text: 'The Midnight Symphony', version: 1 },
             ],
             direction: 'ltr',
             format: '',
@@ -208,4 +216,164 @@ export const homePageData = ({
     description: 'Experience a magical journey where every chapter has its own melody. Musical books for the young and young at heart.',
     image: heroImage,
   },
+})
+
+// ─── Arabic translation ───────────────────────────────────────────────────────
+
+export const homePageAR = ({
+  heroImage,
+  authorImage,
+  heroSong,
+  product1Id,
+  product2Id,
+  product3Id,
+}: {
+  heroImage: Media
+  authorImage: Media
+  heroSong: Media
+  product1Id: number | string
+  product2Id: number | string
+  product3Id: number | string
+}) => ({
+  title: 'الرئيسية',
+  hero: {
+    type: 'highImpact' as const,
+    media: heroImage,
+    hasSong: true,
+    songGroup: {
+      title: 'السيمفونية المنتصف الليل',
+      description: 'الموضوع الرسمي · ٣:٤٢',
+      song: heroSong,
+    },
+    richText: {
+      root: {
+        type: 'root' as const, direction: 'rtl' as const, format: '' as const, indent: 0, version: 1,
+        children: [
+          {
+            type: 'heading' as const, tag: 'h1' as const, direction: 'rtl' as const, format: '' as const, indent: 0, version: 1,
+            children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'ادخل إلى اللحن: السيمفونية المنتصف الليل', version: 1 }]
+          },
+          {
+            type: 'paragraph' as const, direction: 'rtl' as const, format: '' as const, indent: 0, textFormat: 0, version: 1,
+            children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'تجربة رحلة سحرية حيث لكل فصل لحنه الخاص. اكتشف أحدث تحفة موسيقية من أكثر رواة العالم غرابةً وجمالاً.', version: 1 }]
+          },
+        ],
+      },
+    },
+    links: [
+      { link: { type: 'custom' as const, appearance: 'default' as const, label: 'استكشف الكتاب', url: '/shop' } },
+      { link: { type: 'custom' as const, appearance: 'outline' as const, label: 'عن المؤلف', url: '/author' } },
+    ],
+  },
+  layout: [
+    { blockType: 'threeItemGrid' as const, products: [product1Id, product2Id, product3Id] },
+    {
+      blockType: 'authorOverview' as const,
+      eyebrow: 'مخطوطة المؤلف',
+      title: 'تعرف على المؤلف الموسيقي',
+      quote: 'حياة أمضيتها بين الأحبار والآلات الموسيقية، أنسج الألحان في نسيج الكلمة المكتوبة. كل قصة تُؤلَّف مرتين: مرة بالكلمات، ومرة بالنوتات.',
+      image: authorImage,
+      links: [
+        { link: { type: 'custom' as const, appearance: 'default' as const, label: 'اقرأ الرسالة', url: '/author' } },
+        { link: { type: 'custom' as const, appearance: 'outline' as const, label: 'اسمع لحني', url: '/shop' } },
+      ],
+    },
+    {
+      blockType: 'authorHighlights' as const,
+      title: 'المصنع الموسيقي',
+      icon: 'music' as const,
+      items: [
+        { icon: 'pen' as const, title: 'الحبر والإلهام', description: 'كل فصل يبدأ بلحن. أكتب بينما أستمع إلى الدوافع الموسيقية لشخصياتي.' },
+        { icon: 'piano' as const, title: 'حكاية العود', description: 'أستخدم الآلات الموسيقية القديمة للعثور على الصوت الأصيل لموسيقى عالم الخيال الشعبية.' },
+        { icon: 'mic' as const, title: 'أصداء السحر', description: 'الطبقات الصوتية والترتيبات الكورالية توفر العمق الروحي للتعاويذ المُلقاة في النص.' },
+      ],
+    },
+    {
+      blockType: 'linkToContact' as const,
+      title: 'لا تفوت أي نغمة',
+      description: 'انضم إلى القائمة البريدية السرية لتلقي معاينات حصرية للمقطوعات القادمة والتحديثات السحرية.',
+      inputPlaceholder: 'عنوان بريدك الإلكتروني',
+      link: { type: 'custom' as const, appearance: 'default' as const, label: 'انضم إلى المغامرة', url: '/contact' },
+    },
+  ],
+})
+
+// ─── Portuguese translation ───────────────────────────────────────────────────
+
+export const homePagePT = ({
+  heroImage,
+  authorImage,
+  heroSong,
+  product1Id,
+  product2Id,
+  product3Id,
+}: {
+  heroImage: Media
+  authorImage: Media
+  heroSong: Media
+  product1Id: number | string
+  product2Id: number | string
+  product3Id: number | string
+}) => ({
+  title: 'Início',
+  hero: {
+    type: 'highImpact' as const,
+    media: heroImage,
+    hasSong: true,
+    songGroup: {
+      title: 'A Sinfonia da Meia-Noite',
+      description: 'Tema oficial · 3:42',
+      song: heroSong,
+    },
+    richText: {
+      root: {
+        type: 'root' as const, direction: 'ltr' as const, format: '' as const, indent: 0, version: 1,
+        children: [
+          {
+            type: 'heading' as const, tag: 'h1' as const, direction: 'ltr' as const, format: '' as const, indent: 0, version: 1,
+            children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'Entre na Canção: A Sinfonia da Meia-Noite', version: 1 }]
+          },
+          {
+            type: 'paragraph' as const, direction: 'ltr' as const, format: '' as const, indent: 0, textFormat: 0, version: 1,
+            children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'Experiencie uma jornada mágica onde cada capítulo tem a sua própria melodia. Descubra a mais recente obra-prima do contador de histórias mais encantador do mundo.', version: 1 }]
+          },
+        ],
+      },
+    },
+    links: [
+      { link: { type: 'custom' as const, appearance: 'default' as const, label: 'Explorar o Livro', url: '/shop' } },
+      { link: { type: 'custom' as const, appearance: 'outline' as const, label: 'Sobre o Autor', url: '/author' } },
+    ],
+  },
+  layout: [
+    { blockType: 'threeItemGrid' as const, products: [product1Id, product2Id, product3Id] },
+    {
+      blockType: 'authorOverview' as const,
+      eyebrow: 'O Manuscrito do Autor',
+      title: 'Conheça o Autor-Compositor',
+      quote: 'Uma vida passada entre tinteiros e instrumentos, tecendo melodias nas fibras da palavra escrita. Cada história é composta duas vezes: uma em palavras e outra em notas.',
+      image: authorImage,
+      links: [
+        { link: { type: 'custom' as const, appearance: 'default' as const, label: 'Ler a Carta', url: '/author' } },
+        { link: { type: 'custom' as const, appearance: 'outline' as const, label: 'Ouvir o Meu Tema', url: '/shop' } },
+      ],
+    },
+    {
+      blockType: 'authorHighlights' as const,
+      title: 'A Forja Harmónica',
+      icon: 'music' as const,
+      items: [
+        { icon: 'pen' as const, title: 'Tinta e Inspiração', description: 'Cada capítulo começa com uma melodia. Escrevo enquanto ouço os motivos específicos dos meus personagens.' },
+        { icon: 'piano' as const, title: 'A Lenda do Alaúde', description: 'Uso instrumentos antigos para encontrar a voz autêntica da música folclórica do mundo fantástico.' },
+        { icon: 'mic' as const, title: 'Ecos da Magia', description: 'Camadas vocais e arranjos corais fornecem a profundidade espiritual dos feitiços lançados no texto.' },
+      ],
+    },
+    {
+      blockType: 'linkToContact' as const,
+      title: 'Nunca Perca uma Nota',
+      description: 'Junte-se à lista de correio secreta para receber pré-visualizações exclusivas de partituras e atualizações mágicas.',
+      inputPlaceholder: 'O seu endereço de email',
+      link: { type: 'custom' as const, appearance: 'default' as const, label: 'Juntar-me à Aventura', url: '/contact' },
+    },
+  ],
 })

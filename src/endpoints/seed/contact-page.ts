@@ -135,3 +135,89 @@ export const contactFormData = () => ({
   updatedAt: new Date().toISOString(),
   createdAt: new Date().toISOString(),
 })
+
+// ─── Arabic translation ───────────────────────────────────────────────────────
+
+export const contactPageAR = ({ contactForm }: { contactForm: Form }) => ({
+  title: 'تواصل مع البرج',
+  hero: {
+    type: 'lowImpact' as const,
+    richText: {
+      root: {
+        type: 'root' as const, direction: 'rtl' as const, format: '' as const, indent: 0, version: 1,
+        children: [
+          {
+            type: 'heading' as const, tag: 'h1' as const, direction: 'rtl' as const, format: '' as const, indent: 0, version: 1,
+            children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'أرسل غراباً إلى البرج العالي', version: 1 }]
+          },
+          {
+            type: 'paragraph' as const, direction: 'rtl' as const, format: '' as const, indent: 0, textFormat: 0, version: 1,
+            children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'ستُحمل رسالتك بضوء النجوم عبر الغابات المسحورة. اكتب أسطورتك أدناه.', version: 1 }]
+          },
+        ],
+      },
+    },
+    links: [],
+  },
+  layout: [
+    {
+      blockType: 'formBlock' as const,
+      enableIntro: true,
+      form: contactForm,
+      introContent: {
+        root: {
+          type: 'root' as const, direction: 'rtl' as const, format: '' as const, indent: 0, version: 1,
+          children: [
+            {
+              type: 'heading' as const, tag: 'h3' as const, direction: 'rtl' as const, format: '' as const, indent: 0, version: 1,
+              children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'طومار المرسال', version: 1 }]
+            },
+          ],
+        },
+      },
+    },
+  ],
+})
+
+// ─── Portuguese translation ───────────────────────────────────────────────────
+
+export const contactPagePT = ({ contactForm }: { contactForm: Form }) => ({
+  title: 'Contactar a Torre',
+  hero: {
+    type: 'lowImpact' as const,
+    richText: {
+      root: {
+        type: 'root' as const, direction: 'ltr' as const, format: '' as const, indent: 0, version: 1,
+        children: [
+          {
+            type: 'heading' as const, tag: 'h1' as const, direction: 'ltr' as const, format: '' as const, indent: 0, version: 1,
+            children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'Envie um Corvo para a Torre Alta', version: 1 }]
+          },
+          {
+            type: 'paragraph' as const, direction: 'ltr' as const, format: '' as const, indent: 0, textFormat: 0, version: 1,
+            children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'A sua mensagem será transportada pela luz das estrelas através das florestas encantadas. Escreva a sua lenda abaixo.', version: 1 }]
+          },
+        ],
+      },
+    },
+    links: [],
+  },
+  layout: [
+    {
+      blockType: 'formBlock' as const,
+      enableIntro: true,
+      form: contactForm,
+      introContent: {
+        root: {
+          type: 'root' as const, direction: 'ltr' as const, format: '' as const, indent: 0, version: 1,
+          children: [
+            {
+              type: 'heading' as const, tag: 'h3' as const, direction: 'ltr' as const, format: '' as const, indent: 0, version: 1,
+              children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'O Pergaminho do Mensageiro', version: 1 }]
+            },
+          ],
+        },
+      },
+    },
+  ],
+})
