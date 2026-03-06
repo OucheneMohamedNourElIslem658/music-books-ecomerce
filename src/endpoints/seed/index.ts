@@ -1,15 +1,32 @@
 import type { CollectionSlug, GlobalSlug, Payload, PayloadRequest, File } from 'payload'
 
-import { contactFormData } from './contact-form'
-import { contactPageData } from './contact-page'
-import { productHatData } from './product-hat'
-import { productTshirtData, productTshirtVariant } from './product-tshirt'
-import { homePageData } from './home'
-import { imageHatData } from './image-hat'
-import { imageTshirtBlackData } from './image-tshirt-black'
-import { imageTshirtWhiteData } from './image-tshirt-white'
-import { imageHero1Data } from './image-hero-1'
-import { Address, Transaction, VariantOption } from '@/payload-types'
+import { contactFormData, contactPageData } from './contact-page'
+import { homePageData } from './home-page'
+import { authorPageData } from './author-page'
+import { book1Data, book2Data, book3Data } from './products'
+import {
+  imageHeroData,
+  imageBook1Data,
+  imageBook2Data,
+  imageBook3Data,
+  imageAuthorData,
+  imageAuthorFullData,
+} from './images'
+import {
+  imageBlogHeroData,
+  imageInstrumentCelloData,
+  imageInstrumentFluteData,
+  imageInstrumentHarpData,
+  imageInstrumentViolinData,
+  imageStudioMixerData,
+  imageStudioConductorData,
+  imageStudioMicsData,
+} from './images-blog'
+import {
+  blogOrchestralHeartData,
+  blogDragonsLullabyData,
+  blogWritingWithMusicData,
+} from './blog-pages'
 
 const collections: CollectionSlug[] = [
   'categories',
@@ -25,53 +42,11 @@ const collections: CollectionSlug[] = [
   'transactions',
   'addresses',
   'orders',
-]
-
-const categories = ['Accessories', 'T-Shirts', 'Hats']
-
-const sizeVariantOptions = [
-  { label: 'Small', value: 'small' },
-  { label: 'Medium', value: 'medium' },
-  { label: 'Large', value: 'large' },
-  { label: 'X Large', value: 'xlarge' },
-]
-
-const colorVariantOptions = [
-  { label: 'Black', value: 'black' },
-  { label: 'White', value: 'white' },
+  'reviews',
 ]
 
 const globals: GlobalSlug[] = ['header', 'footer']
 
-const baseAddressUSData: Transaction['billingAddress'] = {
-  title: 'Dr.',
-  firstName: 'Otto',
-  lastName: 'Octavius',
-  phone: '1234567890',
-  company: 'Oscorp',
-  addressLine1: '123 Main St',
-  addressLine2: 'Suite 100',
-  city: 'New York',
-  state: 'NY',
-  postalCode: '10001',
-  country: 'US',
-}
-
-const baseAddressUKData: Transaction['billingAddress'] = {
-  title: 'Mr.',
-  firstName: 'Oliver',
-  lastName: 'Twist',
-  phone: '1234567890',
-  addressLine1: '48 Great Portland St',
-  city: 'London',
-  postalCode: 'W1W 7ND',
-  country: 'GB',
-}
-
-// Next.js revalidation errors are normal when seeding the database without a server running
-// i.e. running `yarn seed` locally instead of using the admin UI within an active app
-// The app is not running to revalidate the pages and so the API routes are not available
-// These error messages can be ignored: `Error hitting revalidate route for...`
 export const seed = async ({
   payload,
   req,
@@ -79,458 +54,186 @@ export const seed = async ({
   payload: Payload
   req: PayloadRequest
 }): Promise<void> => {
-  payload.logger.info('Seeding database...')
+  payload.logger.info('Seeding Melody & Myth database...')
 
-  // we need to clear the media directory before seeding
-  // as well as the collections and globals
-  // this is because while `yarn seed` drops the database
-  // the custom `/api/seed` endpoint does not
-  payload.logger.info(`— Clearing collections and globals...`)
+  // ─── Clear ────────────────────────────────────────────────────────────────
+  payload.logger.info('— Clearing collections and globals...')
 
-  // clear the database
   await Promise.all(
     globals.map((global) =>
       payload.updateGlobal({
         slug: global,
-        data: {
-          navItems: [],
-        },
+        data: { navItems: [] },
         depth: 0,
-        context: {
-          disableRevalidate: true,
-        },
+        context: { disableRevalidate: true },
       }),
     ),
   )
 
   for (const collection of collections) {
     await payload.db.deleteMany({ collection, req, where: {} })
-    if (payload.collections[collection].config.versions) {
+    if (payload.collections[collection]?.config?.versions) {
       await payload.db.deleteVersions({ collection, req, where: {} })
     }
   }
 
-  payload.logger.info(`— Seeding customer and customer data...`)
-
   await payload.delete({
     collection: 'users',
     depth: 0,
-    where: {
-      email: {
-        equals: 'customer@example.com',
-      },
-    },
+    where: { email: { equals: 'customer@example.com' } },
   })
 
-  payload.logger.info(`— Seeding media...`)
-
-  const [imageHatBuffer, imageTshirtBlackBuffer, imageTshirtWhiteBuffer, heroBuffer] =
-    await Promise.all([
-      fetchFileByURL(
-        'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/ecommerce/src/endpoints/seed/hat-logo.png',
-      ),
-      fetchFileByURL(
-        'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/ecommerce/src/endpoints/seed/tshirt-black.png',
-      ),
-      fetchFileByURL(
-        'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/ecommerce/src/endpoints/seed/tshirt-white.png',
-      ),
-      fetchFileByURL(
-        'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-hero1.webp',
-      ),
-    ])
+  // ─── Media ────────────────────────────────────────────────────────────────
+  payload.logger.info('— Seeding media...')
 
   const [
-    customer,
-    imageHat,
-    imageTshirtBlack,
-    imageTshirtWhite,
-    imageHero,
-    accessoriesCategory,
-    tshirtsCategory,
-    hatsCategory,
+    heroBuffer, book1Buffer, book2Buffer, book3Buffer,
+    authorBuffer, authorFullBuffer,
+    blogHeroBuffer, celloBuffer, fluteBuffer, harpBuffer,
+    violinBuffer, mixerBuffer, conductorBuffer, micsBuffer,
   ] = await Promise.all([
-    payload.create({
-      collection: 'users',
-      data: {
-        name: 'Customer',
-        email: 'customer@example.com',
-        password: 'password',
-        roles: ['customer'],
-      },
-    }),
-    payload.create({
-      collection: 'media',
-      data: imageHatData,
-      file: imageHatBuffer,
-    }),
-    payload.create({
-      collection: 'media',
-      data: imageTshirtBlackData,
-      file: imageTshirtBlackBuffer,
-    }),
-    payload.create({
-      collection: 'media',
-      data: imageTshirtWhiteData,
-      file: imageTshirtWhiteBuffer,
-    }),
-    payload.create({
-      collection: 'media',
-      data: imageHero1Data,
-      file: heroBuffer,
-    }),
-    ...categories.map((category) =>
-      payload.create({
-        collection: 'categories',
-        data: {
-          title: category,
-          slug: category,
-        },
-      }),
-    ),
+    fetchFileByPath('hero-midnight-symphony.jpg'),
+    fetchFileByPath('book-cover-crescendo.jpg'),
+    fetchFileByPath('book-cover-coral-cantata.jpg'),
+    fetchFileByPath('book-cover-echoes-gear.jpg'),
+    fetchFileByPath('author-portrait.jpg'),
+    fetchFileByPath('author-full.jpg'),
+    fetchFileByPath('blog-hero-orchestra.jpg'),
+    fetchFileByPath('instrument-cello.jpg'),
+    fetchFileByPath('instrument-flute.jpg'),
+    fetchFileByPath('instrument-harp.jpg'),
+    fetchFileByPath('instrument-violin.jpg'),
+    fetchFileByPath('studio-mixer.jpg'),
+    fetchFileByPath('studio-conductor.jpg'),
+    fetchFileByPath('studio-mics.jpg'),
   ])
 
-  payload.logger.info(`— Seeding variant types and options...`)
-
-  const sizeVariantType = await payload.create({
-    collection: 'variantTypes',
-    data: {
-      name: 'size',
-      label: 'Size',
-    },
-  })
-
-  const sizeVariantOptionsResults: VariantOption[] = []
-
-  for (const option of sizeVariantOptions) {
-    const result = await payload.create({
-      collection: 'variantOptions',
-      data: {
-        ...option,
-        variantType: sizeVariantType.id,
-      },
-    })
-    sizeVariantOptionsResults.push(result)
-  }
-
-  const [small, medium, large, xlarge] = sizeVariantOptionsResults
-
-  const colorVariantType = await payload.create({
-    collection: 'variantTypes',
-    data: {
-      name: 'color',
-      label: 'Color',
-    },
-  })
-
-  const [black, white] = await Promise.all(
-    colorVariantOptions.map((option) => {
-      return payload.create({
-        collection: 'variantOptions',
-        data: {
-          ...option,
-          variantType: colorVariantType.id,
-        },
-      })
-    }),
-  )
-
-  payload.logger.info(`— Seeding products...`)
-
-  const productHat = await payload.create({
-    collection: 'products',
-    depth: 0,
-    data: productHatData({
-      galleryImage: imageHat,
-      metaImage: imageHat,
-      variantTypes: [colorVariantType],
-      categories: [hatsCategory],
-      relatedProducts: [],
-    }),
-  })
-
-  const productTshirt = await payload.create({
-    collection: 'products',
-    depth: 0,
-    data: productTshirtData({
-      galleryImages: [
-        { image: imageTshirtBlack, variantOption: black },
-        { image: imageTshirtWhite, variantOption: white },
-      ],
-      metaImage: imageTshirtBlack,
-      contentImage: imageHero,
-      variantTypes: [colorVariantType, sizeVariantType],
-      categories: [tshirtsCategory],
-      relatedProducts: [productHat],
-    }),
-  })
-
-  let hoodieID: number | string = productTshirt.id
-
-  if (payload.db.defaultIDType === 'text') {
-    hoodieID = `"${hoodieID}"`
-  }
-
   const [
-    smallTshirtHoodieVariant,
-    mediumTshirtHoodieVariant,
-    largeTshirtHoodieVariant,
-    xlargeTshirtHoodieVariant,
-  ] = await Promise.all(
-    [small, medium, large, xlarge].map((variantOption) =>
-      payload.create({
-        collection: 'variants',
-        depth: 0,
-        data: productTshirtVariant({
-          product: productTshirt,
-          variantOptions: [variantOption, white],
-        }),
-      }),
-    ),
-  )
+    imageHero, imageBook1, imageBook2, imageBook3,
+    imageAuthor, imageAuthorFull,
+    imageBlogHero, imageCello, imageFlute, imageHarp,
+    imageViolin, imageMixer, imageConductor, imageMics,
+  ] = await Promise.all([
+    payload.create({ collection: 'media', data: imageHeroData, file: heroBuffer }),
+    payload.create({ collection: 'media', data: imageBook1Data, file: book1Buffer }),
+    payload.create({ collection: 'media', data: imageBook2Data, file: book2Buffer }),
+    payload.create({ collection: 'media', data: imageBook3Data, file: book3Buffer }),
+    payload.create({ collection: 'media', data: imageAuthorData, file: authorBuffer }),
+    payload.create({ collection: 'media', data: imageAuthorFullData, file: authorFullBuffer }),
+    payload.create({ collection: 'media', data: imageBlogHeroData, file: blogHeroBuffer }),
+    payload.create({ collection: 'media', data: imageInstrumentCelloData, file: celloBuffer }),
+    payload.create({ collection: 'media', data: imageInstrumentFluteData, file: fluteBuffer }),
+    payload.create({ collection: 'media', data: imageInstrumentHarpData, file: harpBuffer }),
+    payload.create({ collection: 'media', data: imageInstrumentViolinData, file: violinBuffer }),
+    payload.create({ collection: 'media', data: imageStudioMixerData, file: mixerBuffer }),
+    payload.create({ collection: 'media', data: imageStudioConductorData, file: conductorBuffer }),
+    payload.create({ collection: 'media', data: imageStudioMicsData, file: micsBuffer }),
+  ])
 
-  await Promise.all(
-    [small, medium, large, xlarge].map((variantOption) =>
-      payload.create({
-        collection: 'variants',
-        depth: 0,
-        data: productTshirtVariant({
-          product: productTshirt,
-          variantOptions: [variantOption, black],
-          ...(variantOption.value === 'medium' ? { inventory: 0 } : {}),
-        }),
-      }),
-    ),
-  )
+  // ─── Categories ───────────────────────────────────────────────────────────
+  payload.logger.info('— Seeding categories...')
 
-  payload.logger.info(`— Seeding contact form...`)
+  const [fantasyCategory, orchestralCategory, steampunkCategory, childrenCategory] =
+    await Promise.all([
+      payload.create({ collection: 'categories', data: { title: 'Fantasy', slug: 'fantasy' } }),
+      payload.create({ collection: 'categories', data: { title: 'Orchestral', slug: 'orchestral' } }),
+      payload.create({ collection: 'categories', data: { title: 'Steampunk', slug: 'steampunk' } }),
+      payload.create({ collection: 'categories', data: { title: 'Children', slug: 'children' } }),
+    ])
+
+  // ─── Customer ─────────────────────────────────────────────────────────────
+  payload.logger.info('— Seeding customer...')
+
+  const customer = await payload.create({
+    collection: 'users',
+    data: {
+      name: 'Melody Seeker',
+      email: 'customer@example.com',
+      password: 'password',
+      roles: ['customer'],
+    },
+  })
+
+  // ─── Products ─────────────────────────────────────────────────────────────
+  payload.logger.info('— Seeding products...')
+
+  const [product1, product2, product3] = await Promise.all([
+    payload.create({
+      collection: 'products',
+      data: book1Data({ coverImage: imageBook1, categories: [fantasyCategory, orchestralCategory, childrenCategory], relatedProducts: [] }),
+    }),
+    payload.create({
+      collection: 'products',
+      data: book2Data({ coverImage: imageBook2, categories: [fantasyCategory, orchestralCategory], relatedProducts: [] }),
+    }),
+    payload.create({
+      collection: 'products',
+      data: book3Data({ coverImage: imageBook3, categories: [steampunkCategory, orchestralCategory], relatedProducts: [] }),
+    }),
+  ])
+
+  await Promise.all([
+    payload.update({ collection: 'products', id: product1.id, data: { relatedProducts: [product2.id, product3.id] } }),
+    payload.update({ collection: 'products', id: product2.id, data: { relatedProducts: [product1.id, product3.id] } }),
+    payload.update({ collection: 'products', id: product3.id, data: { relatedProducts: [product1.id, product2.id] } }),
+  ])
+
+  // ─── Reviews ──────────────────────────────────────────────────────────────
+  payload.logger.info('— Seeding reviews...')
+
+  await Promise.all([
+    payload.create({ collection: 'reviews', data: { product: product1.id, author: customer.id, rating: 5, comment: 'An absolutely magical journey! The melodies that accompany each chapter made me feel like I was truly soaring through the clouds.', status: 'approved' } }),
+    payload.create({ collection: 'reviews', data: { product: product2.id, author: customer.id, rating: 5, comment: 'The Coral Cantata is breathtaking. The underwater world feels so alive and the music perfectly captures the mystery of the deep.', status: 'approved' } }),
+    payload.create({ collection: 'reviews', data: { product: product3.id, author: customer.id, rating: 4, comment: 'Echoes of the Gear surprised me with its depth. The steampunk setting paired with orchestral music is a combination I never knew I needed.', status: 'approved' } }),
+  ])
+
+  // ─── Contact form ─────────────────────────────────────────────────────────
+  payload.logger.info('— Seeding contact form...')
 
   const contactForm = await payload.create({
     collection: 'forms',
     depth: 0,
-    data: contactFormData(),
+    data: contactFormData() as any,
   })
 
-  payload.logger.info(`— Seeding pages...`)
+  // ─── Pages ────────────────────────────────────────────────────────────────
+  payload.logger.info('— Seeding pages...')
 
-  const [_, contactPage] = await Promise.all([
+  await Promise.all([
     payload.create({
-      collection: 'pages',
-      depth: 0,
-      data: homePageData({
-        contentImage: imageHero,
-        metaImage: imageHat,
-      }),
+      collection: 'pages', depth: 0,
+      data: homePageData({ heroImage: imageHero, book1: imageBook1, book2: imageBook2, book3: imageBook3, authorImage: imageAuthor, product1Id: product1.id, product2Id: product2.id, product3Id: product3.id }),
+    }),
+    payload.create({ collection: 'pages', depth: 0, data: authorPageData({ authorFullImage: imageAuthorFull }) }),
+    payload.create({ collection: 'pages', depth: 0, data: contactPageData({ contactForm }) }),
+
+    // Blog posts
+    payload.create({
+      collection: 'pages', depth: 0,
+      data: blogOrchestralHeartData({ heroImage: imageBlogHero, imageCello, imageFlute, imageHarp, imageViolin, imageMixer, imageConductor, imageMics }),
     }),
     payload.create({
-      collection: 'pages',
-      depth: 0,
-      data: contactPageData({
-        contactForm: contactForm,
-      }),
+      collection: 'pages', depth: 0,
+      data: blogDragonsLullabyData({ heroImage: imageBlogHero, imageCello, imageConductor }),
+    }),
+    payload.create({
+      collection: 'pages', depth: 0,
+      data: blogWritingWithMusicData({ heroImage: imageBlogHero, imageHarp, imageFlute }),
     }),
   ])
 
-  payload.logger.info(`— Seeding addresses...`)
-
-  const customerUSAddress = await payload.create({
-    collection: 'addresses',
-    depth: 0,
-    data: {
-      customer: customer.id,
-      ...(baseAddressUSData as Address),
-    },
-  })
-
-  const customerUKAddress = await payload.create({
-    collection: 'addresses',
-    depth: 0,
-    data: {
-      customer: customer.id,
-      ...(baseAddressUKData as Address),
-    },
-  })
-
-  payload.logger.info(`— Seeding transactions...`)
-
-  const pendingTransaction = await payload.create({
-    collection: 'transactions',
-    data: {
-      currency: 'USD',
-      customer: customer.id,
-      paymentMethod: 'stripe',
-      stripe: {
-        customerID: 'cus_123',
-        paymentIntentID: 'pi_123',
-      },
-      status: 'pending',
-      billingAddress: baseAddressUSData,
-    },
-  })
-
-  const succeededTransaction = await payload.create({
-    collection: 'transactions',
-    data: {
-      currency: 'USD',
-      customer: customer.id,
-      paymentMethod: 'stripe',
-      stripe: {
-        customerID: 'cus_123',
-        paymentIntentID: 'pi_123',
-      },
-      status: 'succeeded',
-      billingAddress: baseAddressUSData,
-    },
-  })
-
-  let succeededTransactionID: number | string = succeededTransaction.id
-
-  if (payload.db.defaultIDType === 'text') {
-    succeededTransactionID = `"${succeededTransactionID}"`
-  }
-
-  payload.logger.info(`— Seeding carts...`)
-
-  // This cart is open as it's created now
-  const openCart = await payload.create({
-    collection: 'carts',
-    data: {
-      customer: customer.id,
-      currency: 'USD',
-      items: [
-        {
-          product: productTshirt.id,
-          variant: mediumTshirtHoodieVariant.id,
-          quantity: 1,
-        },
-      ],
-    },
-  })
-
-  const oldTimestamp = new Date('2023-01-01T00:00:00Z').toISOString()
-
-  // Cart is abandoned because it was created long in the past
-  const abandonedCart = await payload.create({
-    collection: 'carts',
-    data: {
-      currency: 'USD',
-      createdAt: oldTimestamp,
-      items: [
-        {
-          product: productHat.id,
-          quantity: 1,
-        },
-      ],
-    },
-  })
-
-  // Cart is purchased because it has a purchasedAt date
-  const completedCart = await payload.create({
-    collection: 'carts',
-    data: {
-      customer: customer.id,
-      currency: 'USD',
-      purchasedAt: new Date().toISOString(),
-      subtotal: 7499,
-      items: [
-        {
-          product: productTshirt.id,
-          variant: smallTshirtHoodieVariant.id,
-          quantity: 1,
-        },
-        {
-          product: productTshirt.id,
-          variant: mediumTshirtHoodieVariant.id,
-          quantity: 1,
-        },
-      ],
-    },
-  })
-
-  let completedCartID: number | string = completedCart.id
-
-  if (payload.db.defaultIDType === 'text') {
-    completedCartID = `"${completedCartID}"`
-  }
-
-  payload.logger.info(`— Seeding orders...`)
-
-  const orderInCompleted = await payload.create({
-    collection: 'orders',
-    data: {
-      amount: 7499,
-      currency: 'USD',
-      customer: customer.id,
-      shippingAddress: baseAddressUSData,
-      items: [
-        {
-          product: productTshirt.id,
-          variant: smallTshirtHoodieVariant.id,
-          quantity: 1,
-        },
-        {
-          product: productTshirt.id,
-          variant: mediumTshirtHoodieVariant.id,
-          quantity: 1,
-        },
-      ],
-      status: 'completed',
-      transactions: [succeededTransaction.id],
-    },
-  })
-
-  const orderInProcessing = await payload.create({
-    collection: 'orders',
-    data: {
-      amount: 7499,
-      currency: 'USD',
-      customer: customer.id,
-      shippingAddress: baseAddressUSData,
-      items: [
-        {
-          product: productTshirt.id,
-          variant: smallTshirtHoodieVariant.id,
-          quantity: 1,
-        },
-        {
-          product: productTshirt.id,
-          variant: mediumTshirtHoodieVariant.id,
-          quantity: 1,
-        },
-      ],
-      status: 'processing',
-      transactions: [succeededTransaction.id],
-    },
-  })
-
-  payload.logger.info(`— Seeding globals...`)
+  // ─── Globals ──────────────────────────────────────────────────────────────
+  payload.logger.info('— Seeding globals...')
 
   await Promise.all([
     payload.updateGlobal({
       slug: 'header',
       data: {
         navItems: [
-          {
-            link: {
-              type: 'custom',
-              label: 'Home',
-              url: '/',
-            },
-          },
-          {
-            link: {
-              type: 'custom',
-              label: 'Shop',
-              url: '/shop',
-            },
-          },
-          {
-            link: {
-              type: 'custom',
-              label: 'Account',
-              url: '/account',
-            },
-          },
+          { link: { type: 'custom', label: 'The Library', url: '/shop' } },
+          { link: { type: 'custom', label: 'Musical Journey', url: '/the-orchestral-heart' } },
+          { link: { type: 'custom', label: 'About the Author', url: '/author' } },
+          { link: { type: 'custom', label: 'Contact', url: '/contact' } },
         ],
       },
     }),
@@ -538,36 +241,10 @@ export const seed = async ({
       slug: 'footer',
       data: {
         navItems: [
-          {
-            link: {
-              type: 'custom',
-              label: 'Admin',
-              url: '/admin',
-            },
-          },
-          {
-            link: {
-              type: 'custom',
-              label: 'Find my order',
-              url: '/find-order',
-            },
-          },
-          {
-            link: {
-              type: 'custom',
-              label: 'Source Code',
-              newTab: true,
-              url: 'https://github.com/payloadcms/payload/tree/main/templates/website',
-            },
-          },
-          {
-            link: {
-              type: 'custom',
-              label: 'Payload',
-              newTab: true,
-              url: 'https://payloadcms.com/',
-            },
-          },
+          { link: { type: 'custom', label: 'The Library', url: '/shop' } },
+          { link: { type: 'custom', label: 'Author', url: '/author' } },
+          { link: { type: 'custom', label: 'Find My Order', url: '/find-order' } },
+          { link: { type: 'custom', label: 'Contact', url: '/contact' } },
         ],
       },
     }),
@@ -576,22 +253,23 @@ export const seed = async ({
   payload.logger.info('Seeded database successfully!')
 }
 
-async function fetchFileByURL(url: string): Promise<File> {
-  const res = await fetch(url, {
-    credentials: 'include',
-    method: 'GET',
-  })
+async function fetchFileByPath(filename: string): Promise<File> {
+  try {
+    const fs = await import('fs')
+    const path = await import('path')
+    const { fileURLToPath } = await import('url')
+    const __dirname = path.dirname(fileURLToPath(import.meta.url))
+    const filePath = path.resolve(__dirname, 'images', filename)
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch file from ${url}, status: ${res.status}`)
-  }
+    if (fs.existsSync(filePath)) {
+      const data = fs.readFileSync(filePath)
+      const ext = filename.split('.').pop() ?? 'jpg'
+      const mimeMap: Record<string, string> = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' }
+      return { name: filename, data: Buffer.from(data), mimetype: mimeMap[ext] ?? 'image/jpeg', size: data.byteLength }
+    }
+  } catch { /* fall through */ }
 
-  const data = await res.arrayBuffer()
-
-  return {
-    name: url.split('/').pop() || `file-${Date.now()}`,
-    data: Buffer.from(data),
-    mimetype: `image/${url.split('.').pop()}`,
-    size: data.byteLength,
-  }
+  // 1x1 transparent PNG placeholder
+  const placeholder = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', 'base64')
+  return { name: filename, data: placeholder, mimetype: 'image/png', size: placeholder.byteLength }
 }
