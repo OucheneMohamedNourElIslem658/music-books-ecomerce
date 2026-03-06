@@ -8,6 +8,7 @@ import configPromise from '@payload-config'
 import { draftMode } from 'next/headers'
 import { getPayload } from 'payload'
 
+import { routing } from '@/i18n/routing'
 import type { Page } from '@/payload-types'
 import { notFound } from 'next/navigation'
 
@@ -25,31 +26,26 @@ export async function generateStaticParams() {
   })
 
   const params = pages.docs
-    ?.filter((doc) => {
-      return doc.slug !== 'home'
-    })
-    .map(({ slug }) => {
-      return { slug }
-    })
+    ?.filter((doc) => doc.slug !== 'home')
+    .flatMap(({ slug }) =>
+      routing.locales.map((locale) => ({ locale, slug: slug }))
+    )
 
   return params
 }
 
 type Args = {
   params: Promise<{
-    slug?: string
+    locale: string
+    slug: string
   }>
 }
 
 export default async function Page({ params }: Args) {
-  const { slug = 'home' } = await params
-  const url = '/' + slug
+  const { slug, locale } = await params
 
-  let page = await queryPageBySlug({
-    slug,
-  })
+  let page = await queryPageBySlug({ slug, locale })
 
-  // Remove this code once your website is seeded
   if (!page && slug === 'home') {
     page = homeStaticData() as Page
   }
@@ -69,16 +65,13 @@ export default async function Page({ params }: Args) {
 }
 
 export async function generateMetadata({ params }: Args): Promise<Metadata> {
-  const { slug = 'home' } = await params
-
-  const page = await queryPageBySlug({
-    slug,
-  })
+  const { slug, locale } = await params
+  const page = await queryPageBySlug({ slug, locale })
 
   return generateMeta({ doc: page })
 }
 
-const queryPageBySlug = async ({ slug }: { slug: string }) => {
+const queryPageBySlug = async ({ slug, locale }: { slug: string; locale: string }) => {
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config: configPromise })
@@ -87,6 +80,7 @@ const queryPageBySlug = async ({ slug }: { slug: string }) => {
     collection: 'pages',
     draft,
     limit: 1,
+    locale: locale as (typeof routing.locales)[number],
     overrideAccess: draft,
     pagination: false,
     where: {

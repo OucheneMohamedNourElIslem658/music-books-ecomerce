@@ -10,6 +10,7 @@
 //      with all data confirmOrder() needs
 //   4. Redirect to success or error page
 
+import { routing } from '@/i18n/routing'
 import { Cart } from '@/payload-types'
 import configPromise from '@payload-config'
 import { NextRequest, NextResponse } from 'next/server'
@@ -26,8 +27,11 @@ export async function GET(req: NextRequest) {
         process.env.NEXT_PUBLIC_APP_URL ||
         `${req.headers.get('x-forwarded-proto') || 'http'}://${req.headers.get('host')}`
 
+    const locale = searchParams.get('locale')
+    const safeLocale = routing.locales.includes(locale as any) ? locale : routing.defaultLocale
+
     if (!paypalOrderId) {
-        return NextResponse.redirect(`${appUrl}/checkout?error=missing_token`)
+        return NextResponse.redirect(`${appUrl}/${safeLocale}/checkout?error=missing_token`)
     }
 
     try {
@@ -44,7 +48,7 @@ export async function GET(req: NextRequest) {
 
         if (!transaction) {
             console.error(`[PayPal Return] No transaction found for order: ${paypalOrderId}`)
-            return NextResponse.redirect(`${appUrl}/checkout?error=transaction_not_found`)
+            return NextResponse.redirect(`${appUrl}/${safeLocale}/checkout?error=transaction_not_found`)
         }
 
         // Call the plugin's confirm-order endpoint (note the hyphen — not confirmOrder)
@@ -68,7 +72,7 @@ export async function GET(req: NextRequest) {
         if (!confirmRes.ok) {
             const body = await confirmRes.text()
             console.error(`[PayPal Return] confirm-order failed (${confirmRes.status}):`, body)
-            return NextResponse.redirect(`${appUrl}/checkout?error=capture_failed`)
+            return NextResponse.redirect(`${appUrl}/${safeLocale}/checkout?error=capture_failed`)
         }
 
         const result = await confirmRes.json()
@@ -77,10 +81,10 @@ export async function GET(req: NextRequest) {
         const orderId = result?.doc?.id ?? result?.orderID ?? ''
 
         return NextResponse.redirect(
-            `${appUrl}/orders/${orderId}`,
+            `${appUrl}/${safeLocale}/orders/${orderId}`,
         )
     } catch (err) {
         console.error('[PayPal Return] Unexpected error:', err)
-        return NextResponse.redirect(`${appUrl}/checkout?error=unexpected`)
+        return NextResponse.redirect(`${appUrl}/${safeLocale}/checkout?error=unexpected`)
     }
 }

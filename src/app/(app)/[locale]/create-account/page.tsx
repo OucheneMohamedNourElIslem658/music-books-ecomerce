@@ -1,24 +1,34 @@
 import type { Metadata } from 'next'
 
-import { RenderParams } from '@/components/RenderParams'
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
-import React from 'react'
-import { headers as getHeaders } from 'next/headers'
-import configPromise from '@payload-config'
-import { getPayload } from 'payload'
 import { CreateAccountForm } from '@/components/forms/CreateAccountForm'
-import { redirect } from 'next/navigation'
+import { RenderParams } from '@/components/RenderParams'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import { redirect } from '@/i18n/navigation'
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import configPromise from '@payload-config'
 import { UserPlusIcon } from 'lucide-react'
+import { headers as getHeaders } from 'next/headers'
+import { getPayload } from 'payload'
 
-export default async function CreateAccount() {
+interface Props {
+  params: Promise<{ locale: string }>
+}
+
+export default async function CreateAccount(
+  { params }: Props
+) {
   const headers = await getHeaders()
   const payload = await getPayload({ config: configPromise })
   const { user } = await payload.auth({ headers })
 
+  const { locale } = await params
+
   if (user) {
-    redirect(`/account?warning=${encodeURIComponent('You are already logged in.')}`)
+    redirect({
+      href: `/account?warning=${encodeURIComponent('You are already logged in.')}`,
+      locale,
+    })
   }
 
   return (

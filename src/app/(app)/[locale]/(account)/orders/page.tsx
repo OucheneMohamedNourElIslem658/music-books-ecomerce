@@ -5,20 +5,21 @@ import { OrderItem } from '@/components/OrderItem'
 import { PaginationController } from '@/components/Pagination/PaginationController'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { redirect } from '@/i18n/navigation'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import configPromise from '@payload-config'
 import { headers as getHeaders } from 'next/headers'
-import { redirect } from 'next/navigation'
 import { getPayload } from 'payload'
 
 const LIMIT = 10
 
 interface Props {
   searchParams: Promise<{ page?: string }>
+  params: Promise<{ locale: string }>
 }
 
 export default async function Orders(
-  { searchParams }: Props
+  { searchParams, params }: Props
 ) {
   const headers = await getHeaders()
   const payload = await getPayload({ config: configPromise })
@@ -29,8 +30,13 @@ export default async function Orders(
 
   let orders: Order[] | null = null
 
+  const { locale } = await params
+
   if (!user) {
-    redirect(`/login?warning=${encodeURIComponent('Please login to access your orders.')}`)
+    redirect({
+      href: `/login?warning=${encodeURIComponent('Please login to access your orders.')}`,
+      locale,
+    })
   }
 
   let totalPages = 1

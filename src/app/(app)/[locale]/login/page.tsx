@@ -4,19 +4,28 @@ import { LoginForm } from '@/components/forms/LoginForm'
 import { RenderParams } from '@/components/RenderParams'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { redirect } from '@/i18n/navigation'
 import configPromise from '@payload-config'
 import { LogInIcon } from 'lucide-react'
 import { headers as getHeaders } from 'next/headers'
-import { redirect } from 'next/navigation'
 import { getPayload } from 'payload'
 
-export default async function Login() {
+interface Props {
+  params: Promise<{ locale: string }>
+}
+
+export default async function Login({ params }: Props) {
   const headers = await getHeaders()
   const payload = await getPayload({ config: configPromise })
   const { user } = await payload.auth({ headers })
 
+  const { locale } = await params
+
   if (user) {
-    redirect(`/account?warning=${encodeURIComponent('You are already logged in.')}`)
+    redirect({
+      href: `/account?warning=${encodeURIComponent('You are already logged in.')}`,
+      locale,
+    })
   }
 
   return (
