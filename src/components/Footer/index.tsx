@@ -50,7 +50,7 @@ export async function Footer() {
           </Suspense>
 
           {/* Theme selector */}
-          <div className="md:ml-auto flex flex-col gap-4 items-end">
+          <div className="md:ml-auto flex gap-2">
             <LocaleSwitcher />
             <ThemeSelector />
           </div>

@@ -42,7 +42,7 @@ type Args = {
 }
 
 export default async function Page({ params }: Args) {
-  const { slug, locale } = await params
+  const { slug = 'home', locale } = await params
 
   let page = await queryPageBySlug({ slug, locale })
 
@@ -65,7 +65,7 @@ export default async function Page({ params }: Args) {
 }
 
 export async function generateMetadata({ params }: Args): Promise<Metadata> {
-  const { slug, locale } = await params
+  const { slug = 'home', locale } = await params
   const page = await queryPageBySlug({ slug, locale })
 
   return generateMeta({ doc: page })
