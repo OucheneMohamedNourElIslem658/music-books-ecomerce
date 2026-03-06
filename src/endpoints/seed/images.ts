@@ -23,3 +23,27 @@ export const imageAuthorData: RequiredDataFromCollectionSlug<'media'> = {
 export const imageAuthorFullData: RequiredDataFromCollectionSlug<'media'> = {
   alt: 'Author sitting in a study filled with antique books and musical instruments',
 }
+
+// ─── Audio / song media entries ───────────────────────────────────────────────
+// These are uploaded as media with mimeType audio/mpeg so the hero songGroup
+// upload filter (mimeType contains 'audio') will accept them.
+
+export const songMidnightSymphonyData: RequiredDataFromCollectionSlug<'media'> = {
+  alt: 'The Midnight Symphony - official book theme',
+}
+
+export const songCrescendoThemeData: RequiredDataFromCollectionSlug<'media'> = {
+  alt: 'Crescendo of the Clouds - main orchestral theme',
+}
+
+export const songCoralCantataData: RequiredDataFromCollectionSlug<'media'> = {
+  alt: 'The Coral Cantata - underwater leitmotif',
+}
+
+export const songEchoesThemeData: RequiredDataFromCollectionSlug<'media'> = {
+  alt: 'Echoes of the Gear - steampunk overture',
+}
+
+export const songDragonsLullabyData: RequiredDataFromCollectionSlug<'media'> = {
+  alt: "The Dragon's Lullaby - official book theme for the blog feature",
+}

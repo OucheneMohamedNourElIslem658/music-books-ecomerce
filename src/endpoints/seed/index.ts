@@ -1,16 +1,31 @@
-import type { CollectionSlug, GlobalSlug, Payload, PayloadRequest, File } from 'payload'
+import type { CollectionSlug, File, GlobalSlug, Payload, PayloadRequest } from 'payload'
 
-import { contactFormData, contactPageData } from './contact-page'
-import { homePageData } from './home-page'
 import { authorPageData } from './author-page'
-import { book1Data, book2Data, book3Data } from './products'
 import {
-  imageHeroData,
+  blogDragonsLullabyAR,
+  blogDragonsLullabyData,
+  blogDragonsLullabyPT,
+  blogOrchestralHeartAR,
+  blogOrchestralHeartData,
+  blogOrchestralHeartPT,
+  blogWritingWithMusicAR,
+  blogWritingWithMusicData,
+  blogWritingWithMusicPT,
+} from './blog-pages'
+import { contactFormData, contactPageAR, contactPageData, contactPagePT } from './contact-page'
+import { homePageData } from './home-page'
+import {
+  imageAuthorData,
+  imageAuthorFullData,
   imageBook1Data,
   imageBook2Data,
   imageBook3Data,
-  imageAuthorData,
-  imageAuthorFullData,
+  imageHeroData,
+  songCoralCantataData,
+  songCrescendoThemeData,
+  songDragonsLullabyData,
+  songEchoesThemeData,
+  songMidnightSymphonyData,
 } from './images'
 import {
   imageBlogHeroData,
@@ -18,15 +33,12 @@ import {
   imageInstrumentFluteData,
   imageInstrumentHarpData,
   imageInstrumentViolinData,
-  imageStudioMixerData,
   imageStudioConductorData,
   imageStudioMicsData,
+  imageStudioMixerData,
+  songOrchestralHeartData,
 } from './images-blog'
-import {
-  blogOrchestralHeartData,
-  blogDragonsLullabyData,
-  blogWritingWithMusicData,
-} from './blog-pages'
+import { book1Data, book2Data, book3Data } from './products'
 
 const collections: CollectionSlug[] = [
   'categories',
@@ -77,14 +89,14 @@ export const seed = async ({
     }
   }
 
-  await payload.delete({
-    collection: 'users',
-    depth: 0,
-    where: { email: { equals: 'customer@example.com' } },
-  })
+  await Promise.all([
+    payload.delete({ collection: 'users', depth: 0, where: { email: { equals: 'customer@example.com' } } }),
+    payload.delete({ collection: 'users', depth: 0, where: { email: { equals: 'aria@example.com' } } }),
+    payload.delete({ collection: 'users', depth: 0, where: { email: { equals: 'bastien@example.com' } } }),
+  ])
 
-  // ─── Media ────────────────────────────────────────────────────────────────
-  payload.logger.info('— Seeding media...')
+  // ─── Media — Images ───────────────────────────────────────────────────────
+  payload.logger.info('— Seeding media (images)...')
 
   const [
     heroBuffer, book1Buffer, book2Buffer, book3Buffer,
@@ -92,20 +104,20 @@ export const seed = async ({
     blogHeroBuffer, celloBuffer, fluteBuffer, harpBuffer,
     violinBuffer, mixerBuffer, conductorBuffer, micsBuffer,
   ] = await Promise.all([
-    fetchFileByPath('hero-midnight-symphony.jpg'),
-    fetchFileByPath('book-cover-crescendo.jpg'),
-    fetchFileByPath('book-cover-coral-cantata.jpg'),
-    fetchFileByPath('book-cover-echoes-gear.jpg'),
-    fetchFileByPath('author-portrait.jpg'),
-    fetchFileByPath('author-full.jpg'),
-    fetchFileByPath('blog-hero-orchestra.jpg'),
-    fetchFileByPath('instrument-cello.jpg'),
-    fetchFileByPath('instrument-flute.jpg'),
-    fetchFileByPath('instrument-harp.jpg'),
-    fetchFileByPath('instrument-violin.jpg'),
-    fetchFileByPath('studio-mixer.jpg'),
-    fetchFileByPath('studio-conductor.jpg'),
-    fetchFileByPath('studio-mics.jpg'),
+    fetchFileByPath('images', 'hero-midnight-symphony.jpg'),
+    fetchFileByPath('images', 'book-cover-crescendo.jpg'),
+    fetchFileByPath('images', 'book-cover-coral-cantata.jpg'),
+    fetchFileByPath('images', 'book-cover-echoes-gear.jpg'),
+    fetchFileByPath('images', 'author-portrait.jpg'),
+    fetchFileByPath('images', 'author-full.jpg'),
+    fetchFileByPath('images', 'blog-hero-orchestra.jpg'),
+    fetchFileByPath('images', 'instrument-cello.jpg'),
+    fetchFileByPath('images', 'instrument-flute.jpg'),
+    fetchFileByPath('images', 'instrument-harp.jpg'),
+    fetchFileByPath('images', 'instrument-violin.jpg'),
+    fetchFileByPath('images', 'studio-mixer.jpg'),
+    fetchFileByPath('images', 'studio-conductor.jpg'),
+    fetchFileByPath('images', 'studio-mics.jpg'),
   ])
 
   const [
@@ -130,6 +142,41 @@ export const seed = async ({
     payload.create({ collection: 'media', data: imageStudioMicsData, file: micsBuffer }),
   ])
 
+  // ─── Media — Audio ────────────────────────────────────────────────────────
+  payload.logger.info('— Seeding media (audio)...')
+
+  const [
+    audioMidnightBuffer,
+    audioCrescendoBuffer,
+    audioCoralBuffer,
+    audioEchoesBuffer,
+    audioDragonsBuffer,
+    audioOrchestralBuffer,
+  ] = await Promise.all([
+    fetchFileByPath('audios', 'theme-midnight-symphony.mp3'),
+    fetchFileByPath('audios', 'theme-crescendo-of-the-clouds.mp3'),
+    fetchFileByPath('audios', 'theme-coral-cantata.mp3'),
+    fetchFileByPath('audios', 'theme-echoes-of-the-gear.mp3'),
+    fetchFileByPath('audios', 'theme-dragons-lullaby.mp3'),
+    fetchFileByPath('audios', 'theme-orchestral-heart.mp3'),
+  ])
+
+  const [
+    songMidnightSymphony,
+    songCrescendoTheme,
+    songCoralCantata,
+    songEchoesTheme,
+    songDragonsLullaby,
+    songOrchestralHeart,
+  ] = await Promise.all([
+    payload.create({ collection: 'media', data: songMidnightSymphonyData, file: audioMidnightBuffer }),
+    payload.create({ collection: 'media', data: songCrescendoThemeData, file: audioCrescendoBuffer }),
+    payload.create({ collection: 'media', data: songCoralCantataData, file: audioCoralBuffer }),
+    payload.create({ collection: 'media', data: songEchoesThemeData, file: audioEchoesBuffer }),
+    payload.create({ collection: 'media', data: songDragonsLullabyData, file: audioDragonsBuffer }),
+    payload.create({ collection: 'media', data: songOrchestralHeartData, file: audioOrchestralBuffer }),
+  ])
+
   // ─── Categories ───────────────────────────────────────────────────────────
   payload.logger.info('— Seeding categories...')
 
@@ -141,18 +188,14 @@ export const seed = async ({
       payload.create({ collection: 'categories', data: { title: 'Children', slug: 'children' } }),
     ])
 
-  // ─── Customer ─────────────────────────────────────────────────────────────
-  payload.logger.info('— Seeding customer...')
+  // ─── Customers ────────────────────────────────────────────────────────────
+  payload.logger.info('— Seeding customers...')
 
-  const customer = await payload.create({
-    collection: 'users',
-    data: {
-      name: 'Melody Seeker',
-      email: 'customer@example.com',
-      password: 'password',
-      roles: ['customer'],
-    },
-  })
+  const [customer, customer2, customer3] = await Promise.all([
+    payload.create({ collection: 'users', data: { name: 'Melody Seeker', email: 'customer@example.com', password: 'password', roles: ['customer'] } }),
+    payload.create({ collection: 'users', data: { name: 'Aria Nightingale', email: 'aria@example.com', password: 'password', roles: ['customer'] } }),
+    payload.create({ collection: 'users', data: { name: 'Bastien Leclair', email: 'bastien@example.com', password: 'password', roles: ['customer'] } }),
+  ])
 
   // ─── Products ─────────────────────────────────────────────────────────────
   payload.logger.info('— Seeding products...')
@@ -172,53 +215,152 @@ export const seed = async ({
     }),
   ])
 
-  await Promise.all([
-    payload.update({ collection: 'products', id: product1.id, data: { relatedProducts: [product2.id, product3.id] } }),
-    payload.update({ collection: 'products', id: product2.id, data: { relatedProducts: [product1.id, product3.id] } }),
-    payload.update({ collection: 'products', id: product3.id, data: { relatedProducts: [product1.id, product2.id] } }),
-  ])
-
   // ─── Reviews ──────────────────────────────────────────────────────────────
   payload.logger.info('— Seeding reviews...')
 
-  await Promise.all([
-    payload.create({ collection: 'reviews', data: { product: product1.id, author: customer.id, rating: 5, comment: 'An absolutely magical journey! The melodies that accompany each chapter made me feel like I was truly soaring through the clouds.', status: 'approved' } }),
-    payload.create({ collection: 'reviews', data: { product: product2.id, author: customer.id, rating: 5, comment: 'The Coral Cantata is breathtaking. The underwater world feels so alive and the music perfectly captures the mystery of the deep.', status: 'approved' } }),
-    payload.create({ collection: 'reviews', data: { product: product3.id, author: customer.id, rating: 4, comment: 'Echoes of the Gear surprised me with its depth. The steampunk setting paired with orchestral music is a combination I never knew I needed.', status: 'approved' } }),
+  const [review1a, review1b, review2a, review2b, review3a, review3b] = await Promise.all([
+    payload.create({ collection: 'reviews', data: { product: product1.id, author: customer.id, rating: 5, comment: 'Soaring through the clouds has never felt so real.', status: 'approved' } }),
+    payload.create({ collection: 'reviews', data: { product: product1.id, author: customer2.id, rating: 4, comment: 'The orchestral score made every chapter feel cinematic.', status: 'approved' } }),
+    payload.create({ collection: 'reviews', data: { product: product2.id, author: customer.id, rating: 5, comment: 'The Coral Cantata is breathtaking.', status: 'approved' } }),
+    payload.create({ collection: 'reviews', data: { product: product2.id, author: customer3.id, rating: 5, comment: 'I read it twice. The music made the second read completely different.', status: 'approved' } }),
+    payload.create({ collection: 'reviews', data: { product: product3.id, author: customer2.id, rating: 4, comment: 'Echoes of the Gear surprised me with its depth.', status: 'approved' } }),
+    payload.create({ collection: 'reviews', data: { product: product3.id, author: customer3.id, rating: 5, comment: 'The steampunk setting with orchestral music is a combination I never knew I needed.', status: 'approved' } }),
   ])
+
+  // ─── Attach reviews + related products ───────────────────────────────────
+  await Promise.all([
+    payload.update({ collection: 'products', id: product1.id, data: { popularReviews: [review1a.id, review1b.id], relatedProducts: [product2.id, product3.id] } }),
+    payload.update({ collection: 'products', id: product2.id, data: { popularReviews: [review2a.id, review2b.id], relatedProducts: [product1.id, product3.id] } }),
+    payload.update({ collection: 'products', id: product3.id, data: { popularReviews: [review3a.id, review3b.id], relatedProducts: [product1.id, product2.id] } }),
+  ])
+
+  // ─── Variant types ────────────────────────────────────────────────────────
+  payload.logger.info('— Seeding variants...')
+
+  const langVariantType = await payload.create({ collection: 'variantTypes', data: { name: 'language', label: 'Language' } })
+  const sizeVariantType = await payload.create({ collection: 'variantTypes', data: { name: 'size', label: 'Edition' } })
+
+  const [langEN, langAR, langPT] = await Promise.all([
+    payload.create({ collection: 'variantOptions', data: { label: 'English', value: 'en', variantType: langVariantType.id } }),
+    payload.create({ collection: 'variantOptions', data: { label: 'Arabic', value: 'ar', variantType: langVariantType.id } }),
+    payload.create({ collection: 'variantOptions', data: { label: 'Portuguese', value: 'pt', variantType: langVariantType.id } }),
+  ])
+
+  const [sizeStandard, sizeDeluxe] = await Promise.all([
+    payload.create({ collection: 'variantOptions', data: { label: 'Standard (200 pages)', value: 'standard', variantType: sizeVariantType.id } }),
+    payload.create({ collection: 'variantOptions', data: { label: 'Deluxe (350 pages + Sheet Music)', value: 'deluxe', variantType: sizeVariantType.id } }),
+  ])
+
+  await Promise.all([
+    payload.create({ collection: 'variants', data: { product: product1, options: [langEN, sizeStandard], priceInUSD: 2400, priceInUSDEnabled: true, inventory: 100, _status: 'published' } }),
+    payload.create({ collection: 'variants', data: { product: product1, options: [langEN, sizeDeluxe], priceInUSD: 3800, priceInUSDEnabled: true, inventory: 50, _status: 'published' } }),
+    payload.create({ collection: 'variants', data: { product: product1, options: [langAR, sizeStandard], priceInUSD: 2200, priceInUSDEnabled: true, inventory: 80, _status: 'published' } }),
+    payload.create({ collection: 'variants', data: { product: product1, options: [langPT, sizeDeluxe], priceInUSD: 3600, priceInUSDEnabled: true, inventory: 40, _status: 'published' } }),
+  ])
+
+  await payload.update({
+    collection: 'products',
+    id: product1.id,
+    data: { enableVariants: true, variantTypes: [langVariantType.id, sizeVariantType.id] },
+  })
 
   // ─── Contact form ─────────────────────────────────────────────────────────
   payload.logger.info('— Seeding contact form...')
 
-  const contactForm = await payload.create({
-    collection: 'forms',
-    depth: 0,
-    data: contactFormData() as any,
-  })
+  const contactForm = await payload.create({ collection: 'forms', depth: 0, data: contactFormData() as any })
 
-  // ─── Pages ────────────────────────────────────────────────────────────────
-  payload.logger.info('— Seeding pages...')
+  // ─── Pages (EN) ───────────────────────────────────────────────────────────
+  payload.logger.info('— Seeding pages (EN)...')
+
+  const [homePage, authorPage, contactPage, blogOrchestral, blogDragons, blogWriting] =
+    await Promise.all([
+      payload.create({
+        collection: 'pages', depth: 0,
+        data: homePageData({
+          heroImage: imageHero, book1: imageBook1, book2: imageBook2, book3: imageBook3,
+          authorImage: imageAuthor, product1Id: product1.id, product2Id: product2.id, product3Id: product3.id,
+          // Hero song — The Midnight Symphony plays on the homepage hero
+          heroSong: songMidnightSymphony,
+        }),
+      }),
+      payload.create({ collection: 'pages', depth: 0, data: authorPageData({ authorFullImage: imageAuthorFull }) }),
+      payload.create({ collection: 'pages', depth: 0, data: contactPageData({ contactForm }) }),
+      payload.create({
+        collection: 'pages', depth: 0,
+        data: blogOrchestralHeartData({
+          heroImage: imageBlogHero, imageCello, imageFlute, imageHarp,
+          imageViolin, imageMixer, imageConductor, imageMics,
+          // Song plays in the hero of The Orchestral Heart blog post
+          heroSong: songOrchestralHeart,
+        }),
+      }),
+      payload.create({
+        collection: 'pages', depth: 0,
+        data: blogDragonsLullabyData({
+          heroImage: imageBlogHero, imageCello, imageConductor,
+          // The Dragon's Lullaby theme plays on its own blog post hero
+          heroSong: songDragonsLullaby,
+        }),
+      }),
+      payload.create({
+        collection: 'pages', depth: 0,
+        data: blogWritingWithMusicData({ heroImage: imageBlogHero, imageHarp, imageFlute }),
+      }),
+    ])
+
+  // ─── Pages — Arabic translations ──────────────────────────────────────────
+  payload.logger.info('— Seeding translations (AR)...')
 
   await Promise.all([
-    payload.create({
-      collection: 'pages', depth: 0,
-      data: homePageData({ heroImage: imageHero, book1: imageBook1, book2: imageBook2, book3: imageBook3, authorImage: imageAuthor, product1Id: product1.id, product2Id: product2.id, product3Id: product3.id }),
+    // payload.update({ collection: 'pages', id: homePage.id, locale: 'ar',
+    //   data: homePageAR({ heroImage: imageHero, authorImage: imageAuthor, heroSong: songMidnightSymphony, product1Id: product1.id, product2Id: product2.id, product3Id: product3.id }),
+    // }),
+    // payload.update({ collection: 'pages', id: authorPage.id, locale: 'ar',
+    //   data: authorPageAR(),
+    // }),
+    payload.update({
+      collection: 'pages', id: contactPage.id, locale: 'ar',
+      data: contactPageAR({ contactForm }),
     }),
-    payload.create({ collection: 'pages', depth: 0, data: authorPageData({ authorFullImage: imageAuthorFull }) }),
-    payload.create({ collection: 'pages', depth: 0, data: contactPageData({ contactForm }) }),
+    payload.update({
+      collection: 'pages', id: blogOrchestral.id, locale: 'ar',
+      data: blogOrchestralHeartAR({ heroImage: imageBlogHero, imageMixer, imageConductor, imageMics, heroSong: songOrchestralHeart }),
+    }),
+    payload.update({
+      collection: 'pages', id: blogDragons.id, locale: 'ar',
+      data: blogDragonsLullabyAR({ heroImage: imageBlogHero, imageCello, imageConductor, heroSong: songDragonsLullaby }),
+    }),
+    payload.update({
+      collection: 'pages', id: blogWriting.id, locale: 'ar',
+      data: blogWritingWithMusicAR({ heroImage: imageBlogHero, imageHarp, imageFlute }),
+    }),
+  ])
 
-    // Blog posts
-    payload.create({
-      collection: 'pages', depth: 0,
-      data: blogOrchestralHeartData({ heroImage: imageBlogHero, imageCello, imageFlute, imageHarp, imageViolin, imageMixer, imageConductor, imageMics }),
+  // ─── Pages — Portuguese translations ──────────────────────────────────────
+  payload.logger.info('— Seeding translations (PT)...')
+
+  await Promise.all([
+    // payload.update({ collection: 'pages', id: homePage.id, locale: 'pt',
+    //   data: homePagePT({ heroImage: imageHero, authorImage: imageAuthor, heroSong: songMidnightSymphony, product1Id: product1.id, product2Id: product2.id, product3Id: product3.id }),
+    // }),
+    // payload.update({ collection: 'pages', id: authorPage.id, locale: 'pt',
+    //   data: authorPagePT(),
+    // }),
+    payload.update({
+      collection: 'pages', id: contactPage.id, locale: 'pt',
+      data: contactPagePT({ contactForm }),
     }),
-    payload.create({
-      collection: 'pages', depth: 0,
-      data: blogDragonsLullabyData({ heroImage: imageBlogHero, imageCello, imageConductor }),
+    payload.update({
+      collection: 'pages', id: blogOrchestral.id, locale: 'pt',
+      data: blogOrchestralHeartPT({ heroImage: imageBlogHero, imageMixer, imageConductor, imageMics, heroSong: songOrchestralHeart }),
     }),
-    payload.create({
-      collection: 'pages', depth: 0,
-      data: blogWritingWithMusicData({ heroImage: imageBlogHero, imageHarp, imageFlute }),
+    payload.update({
+      collection: 'pages', id: blogDragons.id, locale: 'pt',
+      data: blogDragonsLullabyPT({ heroImage: imageBlogHero, imageCello, imageConductor, heroSong: songDragonsLullaby }),
+    }),
+    payload.update({
+      collection: 'pages', id: blogWriting.id, locale: 'pt',
+      data: blogWritingWithMusicPT({ heroImage: imageBlogHero, imageHarp, imageFlute }),
     }),
   ])
 
@@ -253,23 +395,39 @@ export const seed = async ({
   payload.logger.info('Seeded database successfully!')
 }
 
-async function fetchFileByPath(filename: string): Promise<File> {
+// ─── File loader ──────────────────────────────────────────────────────────────
+// Looks in src/endpoints/seed/{folder}/{filename}
+// Falls back to a silent placeholder so the seed never crashes on missing files.
+
+async function fetchFileByPath(folder: 'images' | 'audios', filename: string): Promise<File> {
   try {
     const fs = await import('fs')
     const path = await import('path')
     const { fileURLToPath } = await import('url')
     const __dirname = path.dirname(fileURLToPath(import.meta.url))
-    const filePath = path.resolve(__dirname, 'images', filename)
+    const filePath = path.resolve(__dirname, folder, filename)
 
     if (fs.existsSync(filePath)) {
       const data = fs.readFileSync(filePath)
-      const ext = filename.split('.').pop() ?? 'jpg'
-      const mimeMap: Record<string, string> = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' }
-      return { name: filename, data: Buffer.from(data), mimetype: mimeMap[ext] ?? 'image/jpeg', size: data.byteLength }
+      const ext = filename.split('.').pop() ?? ''
+      const mimeMap: Record<string, string> = {
+        jpg: 'image/jpeg', jpeg: 'image/jpeg',
+        png: 'image/png', webp: 'image/webp',
+        mp3: 'audio/mpeg', wav: 'audio/wav', ogg: 'audio/ogg',
+      }
+      return { name: filename, data: Buffer.from(data), mimetype: mimeMap[ext] ?? 'application/octet-stream', size: data.byteLength }
     }
   } catch { /* fall through */ }
 
-  // 1x1 transparent PNG placeholder
-  const placeholder = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', 'base64')
-  return { name: filename, data: placeholder, mimetype: 'image/png', size: placeholder.byteLength }
+  // Silent placeholder — 1x1 PNG for images, empty buffer for audio
+  const isAudio = folder === 'audios'
+  const placeholder = isAudio
+    ? Buffer.alloc(0)
+    : Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', 'base64')
+  return {
+    name: filename,
+    data: placeholder,
+    mimetype: isAudio ? 'audio/mpeg' : 'image/png',
+    size: placeholder.byteLength,
+  }
 }

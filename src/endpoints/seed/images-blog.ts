@@ -31,3 +31,9 @@ export const imageStudioConductorData: RequiredDataFromCollectionSlug<'media'> =
 export const imageStudioMicsData: RequiredDataFromCollectionSlug<'media'> = {
   alt: 'Microphones placed around studio instruments for 96kHz recording',
 }
+
+// ─── Blog audio ───────────────────────────────────────────────────────────────
+
+export const songOrchestralHeartData: RequiredDataFromCollectionSlug<'media'> = {
+  alt: 'The Orchestral Heart - behind the baton recording session audio',
+}
