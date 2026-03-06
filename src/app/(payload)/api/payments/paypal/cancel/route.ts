@@ -3,6 +3,7 @@
 // PayPal redirects here if the user clicks "Cancel" on paypal.com.
 // No payment was taken — just send them back to checkout.
 
+import { routing } from '@/i18n/routing'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
@@ -10,5 +11,8 @@ export async function GET(req: NextRequest) {
         process.env.NEXT_PUBLIC_APP_URL ||
         `${req.headers.get('x-forwarded-proto') || 'http'}://${req.headers.get('host')}`
 
-    return NextResponse.redirect(`${appUrl}/checkout?cancelled=paypal`)
+    const locale = req.nextUrl.searchParams.get('locale')
+    const safeLocale = routing.locales.includes(locale as any) ? locale : routing.defaultLocale
+
+    return NextResponse.redirect(`${appUrl}/${safeLocale}/checkout?cancelled=paypal`)
 }

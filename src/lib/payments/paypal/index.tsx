@@ -98,8 +98,10 @@ export const paypalAdapter = (args: PayPalAdapterArgs): PaymentAdapter => {
       process.env.NEXT_PUBLIC_APP_URL ||
       `${req.headers.get?.('x-forwarded-proto') || 'http'}://${req.headers.get?.('host') || 'localhost:3000'}`
 
-    const returnUrl = `${appUrl}/api/payments/paypal/return`
-    const cancelUrl = `${appUrl}/api/payments/paypal/cancel`
+    const locale = (data.locale || req.headers.get?.('x-next-intl-locale') || 'en') as string
+
+    const returnUrl = `${appUrl}/api/payments/paypal/return?locale=${locale}`
+    const cancelUrl = `${appUrl}/api/payments/paypal/cancel?locale=${locale}`
 
     const paypalClient = new Client({
       clientCredentialsAuthCredentials: {
@@ -196,6 +198,7 @@ export const paypalAdapter = (args: PayPalAdapterArgs): PaymentAdapter => {
           metadata: {
             customerEmail,
             cartId: String(cart.id),
+            locale,
           },
           shippingAddress,
           billingAddress,
@@ -315,7 +318,11 @@ export const paypalAdapter = (args: PayPalAdapterArgs): PaymentAdapter => {
       const order = await payload.create({
         collection: ordersSlug,
         data: {
-          items: transaction.cart?.items || [],
+          items: (transaction.cart?.items || []).map((item: any) => ({
+            product: typeof item.product === 'object' ? item.product.id : item.product,
+            variant: typeof item.variant === 'object' ? item.variant?.id : item.variant,
+            quantity: item.quantity,
+          })),
           shippingAddress: transaction.billingAddress,
           customer: customerId,
           customerEmail,

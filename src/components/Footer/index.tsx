@@ -7,6 +7,7 @@ import { Link } from '@/i18n/navigation'
 import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import { Suspense } from 'react'
+import { LocaleSwitcher } from '../LocaleSwitcher'
 
 const { COMPANY_NAME, SITE_NAME } = process.env
 
@@ -50,6 +51,7 @@ export async function Footer() {
 
           {/* Theme selector */}
           <div className="md:ml-auto flex flex-col gap-4 items-end">
+            <LocaleSwitcher />
             <ThemeSelector />
           </div>
 
