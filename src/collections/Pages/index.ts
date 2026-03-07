@@ -124,15 +124,6 @@ export const Pages: CollectionConfig = {
               ],
               required: true,
             },
-            {
-              name: 'hasSong',
-              type: 'checkbox',
-              label: 'Add Song',
-              defaultValue: false,
-              admin: {
-                description: 'Toggle to attach a song to this content',
-              },
-            },
           ],
           label: 'Content',
         },

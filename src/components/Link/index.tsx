@@ -61,7 +61,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
         appearance === 'default' &&
         'rounded-full font-bold px-6 py-4 text-base shadow-lg shadow-primary/20 h-auto',
         appearance === 'outline' &&
-        'rounded-full font-bold px-6 py-4 text-base border-border bg-card/50 backdrop-blur-sm h-auto hover:bg-card/80',
+        'rounded-full font-bold px-6 py-4 text-base border-border bg-card/50 backdrop-blur-sm h-auto hover:bg-card/80 text-secondary-foreground',
         className,
       )}
       size={size}

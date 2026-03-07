@@ -1,18 +1,19 @@
-import { CMSLink, CMSLinkType } from '@/components/Link'
-import type { Media } from '@/payload-types'
-import Image from 'next/image'
+'use client'
+import { CMSLink } from '@/components/Link'
+import { Media } from '@/components/Media'
+import { cn } from '@/utilities/cn'
 import type { DefaultDocumentIDType } from 'payload'
 import React from 'react'
 
 type LinkItem = {
-    link: CMSLinkType
+    link: any
     id?: string
 }
 
 export type LinkToPageBlockProps = {
     id?: DefaultDocumentIDType
     className?: string
-    image: Media | string
+    image: any
     title: string
     description?: string
     links?: LinkItem[]
@@ -23,55 +24,56 @@ export const LinkToPageBlock: React.FC<LinkToPageBlockProps> = ({
     title,
     description,
     links,
+    className,
 }) => {
-    const imageUrl = typeof image === 'string' ? image : (image?.url ?? '')
-    const imageAlt = typeof image === 'string' ? title : (image?.alt ?? title)
-
     return (
-        <div className='container'>
-            <div className="group flex items-center gap-8 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-white/10">
+        <div className={cn('container py-12', className)}>
+            <section className="relative bg-card/50 border border-border rounded-[2.5rem] p-8 md:p-10 overflow-hidden shadow-sm backdrop-blur-md transition-all duration-300">
+                {/* Background Texture Overlay */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_2px_2px,rgba(var(--foreground-rgb),0.02)_1px,transparent_0)] bg-[size:32px_32px] pointer-events-none opacity-20" />
 
-                {/* Portrait */}
-                <div className="relative shrink-0">
-                    <div className="absolute inset-0 rounded-full bg-primary/20 blur-xl transition-all duration-300 group-hover:bg-primary/40" />
-                    <div className="relative h-32 w-32 overflow-hidden rounded-full ring-2 ring-white/10 transition-all duration-300 group-hover:ring-primary/50">
-                        <Image
-                            src={imageUrl}
-                            alt={imageAlt}
-                            fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
+                <div className="relative z-10 flex flex-col gap-10 sm:flex-row sm:items-center">
+
+                    {/* Portrait Image with Gold Glow */}
+                    <div className="relative size-48 shrink-0 mx-auto sm:mx-0">
+                        <div className="absolute -inset-2 bg-accent-gold rounded-full blur opacity-20" />
+                        <div className="relative size-full overflow-hidden rounded-full border-4 border-border/10 shadow-2xl bg-muted">
+                            {image && (
+                                <Media
+                                    resource={image}
+                                    fill
+                                    imgClassName="object-cover object-center transition-transform duration-700 hover:scale-105"
+                                />
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Content Area */}
+                    <div className="flex flex-col gap-4 text-center sm:text-left flex-1">
+                        <h2 className="text-foreground text-3xl font-bold tracking-tight">
+                            {title}
+                        </h2>
+
+                        {description && (
+                            <p className="text-muted-foreground text-lg leading-relaxed max-w-2xl">
+                                {description}
+                            </p>
+                        )}
+
+                        {/* Achievement Links / Action Buttons */}
+                        {links && links.length > 0 && (
+                            <div className="flex flex-wrap gap-4 justify-center sm:justify-start mt-2">
+                                {links.map(({ link }, i) => (
+                                    <CMSLink
+                                        key={i}
+                                        {...link}
+                                    />
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
-
-                {/* Content */}
-                <div className="flex flex-col gap-3 min-w-0">
-                    <h3 className="text-xl font-bold text-white">{title}</h3>
-
-                    {description && (
-                        <p className="text-sm leading-relaxed text-white/60 line-clamp-3">
-                            {description}
-                        </p>
-                    )}
-
-                    {/* Links */}
-                    {links && links.length > 0 && (
-                        <div className="flex flex-wrap items-center gap-3 mt-2">
-                            {links.map(({ link, id }, i) => (
-                                <CMSLink
-                                    key={id ?? i}
-                                    {...link}
-                                    className={
-                                        i === 0
-                                            ? 'inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-bold text-white transition-all hover:bg-primary/80'
-                                            : 'inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-3 text-sm font-bold text-white backdrop-blur-sm transition-all hover:bg-white/20'
-                                    }
-                                />
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </div>
+            </section>
         </div>
     )
 }

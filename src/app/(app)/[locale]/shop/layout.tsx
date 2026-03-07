@@ -1,23 +1,35 @@
 import { Categories } from '@/components/layout/search/Categories'
 import { FilterList } from '@/components/layout/search/filter'
-import { Search } from '@/components/Search'
+import { ShopSearch } from '@/components/ShopSearch'
 import { sorting } from '@/lib/constants'
 import React, { Suspense } from 'react'
 
 export default function ShopLayout({ children }: { children: React.ReactNode }) {
   return (
-    <Suspense fallback={null}>
-      <div className="container flex flex-col gap-8 my-16 pb-4 ">
-        <Search className="mb-8" />
+    <div className="container py-6 md:py-16">
 
-        <div className="flex flex-col md:flex-row items-start justify-between gap-16 md:gap-4">
-          <div className="w-full flex-none flex flex-col gap-4 md:gap-8 basis-1/5">
+      {/* Filter Control Bar - Fully Responsive */}
+      <section className="mb-12">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between pb-8">
+          <div className="w-full lg:w-auto overflow-hidden mask-[linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
             <Categories />
-            <FilterList list={sorting} title="Sort by" />
           </div>
-          <div className="min-h-screen w-full">{children}</div>
+          <div className="flex items-center gap-5 shrink-0 w-full lg:w-auto justify-between lg:justify-end pt-6 lg:pt-0">
+            <ShopSearch />
+            <div className='flex gap-3 items-center'>
+              <span className="shrink-0 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Sort by:</span>
+              <FilterList list={sorting} />
+            </div>
+          </div>
         </div>
-      </div>
-    </Suspense>
+      </section>
+
+      {/* Main Content */}
+      <Suspense fallback={null}>
+        <div className="min-h-screen">
+          {children}
+        </div>
+      </Suspense>
+    </div>
   )
 }
