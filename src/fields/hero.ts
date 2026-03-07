@@ -86,7 +86,7 @@ export const hero: Field = {
       defaultValue: false,
       admin: {
         description: 'Toggle to attach a song to this content',
-        condition: (_, siblingData) => siblingData?.type !== 'authorHeader',
+        // condition: (_, siblingData) => siblingData?.type !== 'authorHeader',
       },
     },
     {
@@ -94,8 +94,7 @@ export const hero: Field = {
       type: 'group',
       label: 'Song',
       admin: {
-        condition: (_, siblingData) =>
-          siblingData?.type !== 'authorHeader' && Boolean(siblingData?.hasSong),
+        condition: (_, siblingData) => Boolean(siblingData?.hasSong),
       },
       fields: [
         {

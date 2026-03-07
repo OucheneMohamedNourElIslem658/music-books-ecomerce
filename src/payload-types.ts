@@ -540,6 +540,14 @@ export interface Page {
         title: string;
         quote?: string | null;
         image: number | Media;
+        /**
+         * Toggle to attach a song to this block
+         */
+        hasSong?: boolean | null;
+        songGroup?: {
+          title?: string | null;
+          song?: (number | null) | Media;
+        };
         links?:
           | {
               link: {
@@ -1381,6 +1389,13 @@ export interface PagesSelect<T extends boolean = true> {
               title?: T;
               quote?: T;
               image?: T;
+              hasSong?: T;
+              songGroup?:
+                | T
+                | {
+                    title?: T;
+                    song?: T;
+                  };
               links?:
                 | T
                 | {

@@ -1,12 +1,13 @@
 import React from 'react'
+import { LogoIcon } from '../icons/logo'
 
 export const Logo = () => {
   return (
-    /* eslint-disable @next/next/no-img-element */
-    <img
-      alt="Payload Logo"
-      className="max-w-37.5 invert dark:invert-0"
-      src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/payload/src/admin/assets/images/payload-logo-light.svg"
-    />
+    <div className="flex items-center gap-3">
+      <LogoIcon className="size-8" />
+      <span className="text-lg font-black tracking-tight uppercase text-foreground">
+        The Enchanted Bookshop
+      </span>
+    </div>
   )
 }

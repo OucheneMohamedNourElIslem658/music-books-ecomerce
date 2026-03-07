@@ -1,94 +1,110 @@
+'use client'
+import { cn } from '@/utilities/cn'
 import {
-    BookOpen,
-    Flame, Lightbulb,
-    Map,
-    Mic,
-    Music,
-    Pen, Piano,
-    Settings,
-    Star,
-    Target,
-    Trophy,
+  BookOpen,
+  CloudLightning,
+  Flame,
+  Lightbulb,
+  Map,
+  Mic,
+  Mic2,
+  Music,
+  Pen,
+  PenTool,
+  Piano,
+  Settings,
+  Star,
+  Target,
+  Trophy,
+  Zap,
 } from 'lucide-react'
 import type { DefaultDocumentIDType } from 'payload'
 import React from 'react'
 
 type HighlightItem = {
-    id?: string
-    icon?: string
-    title: string
-    description?: string
+  id?: string
+  icon?: string
+  title: string
+  description?: string
 }
 
 export type AuthorHighlightsBlockProps = {
-    id?: DefaultDocumentIDType
-    className?: string
-    title: string
-    icon?: string
-    items?: HighlightItem[]
+  id?: DefaultDocumentIDType
+  className?: string
+  title: string
+  icon?: string
+  items?: HighlightItem[]
 }
 
 const iconMap: Record<string, React.FC<{ className?: string }>> = {
-    settings: ({ className }) => <Settings className={className} />,
-    music: ({ className }) => <Music className={className} />,
-    book: ({ className }) => <BookOpen className={className} />,
-    star: ({ className }) => <Star className={className} />,
-    map: ({ className }) => <Map className={className} />,
-    target: ({ className }) => <Target className={className} />,
-    pen: ({ className }) => <Pen className={className} />,
-    piano: ({ className }) => <Piano className={className} />,
-    mic: ({ className }) => <Mic className={className} />,
-    fire: ({ className }) => <Flame className={className} />,
-    lightbulb: ({ className }) => <Lightbulb className={className} />,
-    trophy: ({ className }) => <Trophy className={className} />,
+  settings: ({ className }) => <Settings className={className} />,
+  music: ({ className }) => <Music className={className} />,
+  book: ({ className }) => <BookOpen className={className} />,
+  star: ({ className }) => <Star className={className} />,
+  map: ({ className }) => <Map className={className} />,
+  target: ({ className }) => <Target className={className} />,
+  pen: ({ className }) => <PenTool className={className} />,
+  piano: ({ className }) => <Piano className={className} />,
+  mic: ({ className }) => <Mic2 className={className} />,
+  fire: ({ className }) => <Flame className={className} />,
+  lightbulb: ({ className }) => <Lightbulb className={className} />,
+  trophy: ({ className }) => <Trophy className={className} />,
+  storm: ({ className }) => <CloudLightning className={className} />,
+  zap: ({ className }) => <Zap className={className} />,
+  ink_pen: ({ className }) => <Pen className={className} />,
+  settings_voice: ({ className }) => <Mic className={className} />,
 }
 
 export const AuthorHighlightsBlock: React.FC<AuthorHighlightsBlockProps> = ({
-    title,
-    icon = 'settings',
-    items,
+  title,
+  icon = 'storm',
+  items,
+  className,
 }) => {
-    if (!items || items.length === 0) return null
+  if (!items || items.length === 0) return null
 
-    const SectionIcon = iconMap[icon]
+  const SectionIcon = iconMap[icon] || CloudLightning
 
-    return (
-        <div className='container'>
-            <section className="w-full py-4">
-
-                {/* Section Header */}
-                <div className="flex items-center gap-3 mb-6">
-                    {SectionIcon && <SectionIcon className="h-5 w-5 text-primary" />}
-                    <h2 className="text-xl font-extrabold text-white">{title}</h2>
-                </div>
-
-                {/* Cards Grid */}
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {items.map((item, index) => {
-                        const CardIcon = iconMap[item.icon ?? 'star']
-
-                        return (
-                            <div
-                                key={item.id ?? index}
-                                className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-[#0f1623] p-6 transition-all duration-300 hover:border-primary/30 hover:bg-[#111827]"
-                            >
-                                {/* Icon */}
-                                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
-                                    {CardIcon && <CardIcon className="h-5 w-5 text-primary" />}
-                                </div>
-
-                                {/* Text */}
-                                <div className="flex flex-col gap-2">
-                                    <h3 className="text-base font-bold text-white">{item.title}</h3>
-                                    {item.description && (
-                                        <p className="text-sm leading-relaxed text-white/50">{item.description}</p>
-                                    )}
-                                </div>
-                            </div>
-                        )
-                    })}
-                </div>
-            </section>
+  return (
+    <div className={cn('container py-12', className)}>
+      <section className="w-full">
+        {/* Section Header */}
+        <div className="flex items-center gap-4 px-4 pb-8">
+          <SectionIcon className="size-8 text-primary" />
+          <h2 className="text-foreground text-3xl font-bold leading-tight tracking-tight">
+            {title}
+          </h2>
         </div>
-    )
+
+        {/* Harmonic Forge Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+          {items.map((item, index) => {
+            const CardIcon = iconMap[item.icon ?? 'star'] || Star
+
+            return (
+              <div
+                key={item.id ?? index}
+                className="bg-muted border border-border p-8 rounded-[2.5rem] hover:bg-muted/30 transition-all duration-500 group"
+              >
+                {/* Icon Container with large radius */}
+                <div className="w-14 h-14 bg-primary/20 rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform duration-500">
+                  <CardIcon className="size-7" />
+                </div>
+
+                {/* Content */}
+                <h3 className="text-foreground text-xl font-bold mb-3">
+                  {item.title}
+                </h3>
+                {item.description && (
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {item.description}
+                  </p>
+                )}
+              </div>
+            )
+          })}
+        </div>
+      </section>
+    </div>
+  )
 }

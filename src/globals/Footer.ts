@@ -1,16 +1,8 @@
-import type { GlobalConfig } from 'payload'
-
-
 import { link } from '@/fields/link'
-import { CustomTranslationsKeys } from '@/utilities/translations'
-import { TFunction } from 'node_modules/@payloadcms/translations/dist/types'
+import type { GlobalConfig } from 'payload'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
-  label: ({ t: defaultT }) => {
-    const t = defaultT as TFunction<CustomTranslationsKeys>
-    return t('general:footer:label')
-  },
   access: {
     read: () => true,
   },

@@ -7,59 +7,14 @@ type HomePageArgs = {
   book2: Media
   book3: Media
   authorImage: Media
-  product1Id: number | string
-  product2Id: number | string
-  product3Id: number | string
+  product1Id: number
+  product2Id: number
+  product3Id: number
   heroSong: Media
 }
 
-const makeRichText = (text: string) => ({
-  root: {
-    type: 'root' as const,
-    children: [
-      {
-        type: 'paragraph' as const,
-        children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text, version: 1 }],
-        direction: 'ltr' as const,
-        format: '' as const,
-        indent: 0,
-        textFormat: 0,
-        version: 1,
-      },
-    ],
-    direction: 'ltr' as const,
-    format: '' as const,
-    indent: 0,
-    version: 1,
-  },
-})
-
-const makeHeading = (text: string, tag: 'h1' | 'h2' | 'h3' = 'h1') => ({
-  root: {
-    type: 'root' as const,
-    children: [
-      {
-        type: 'heading' as const,
-        tag,
-        children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text, version: 1 }],
-        direction: 'ltr' as const,
-        format: '' as const,
-        indent: 0,
-        version: 1,
-      },
-    ],
-    direction: 'ltr' as const,
-    format: '' as const,
-    indent: 0,
-    version: 1,
-  },
-})
-
 export const homePageData = ({
   heroImage,
-  book1,
-  book2,
-  book3,
   authorImage,
   product1Id,
   product2Id,
@@ -177,20 +132,20 @@ export const homePageData = ({
     {
       blockType: 'authorHighlights',
       title: 'The Harmonic Forge',
-      icon: 'music',
+      icon: 'music' as const,
       items: [
         {
-          icon: 'pen',
+          icon: 'pen' as const,
           title: 'Ink & Inspiration',
           description: 'Every chapter begins with a melody. I write while listening to the specific motifs of my characters.',
         },
         {
-          icon: 'piano',
+          icon: 'piano' as const,
           title: 'The Lute\'s Lore',
           description: 'I use antique instruments to find the authentic voice of a fantasy world\'s folk music.',
         },
         {
-          icon: 'mic',
+          icon: 'mic' as const,
           title: 'Echoes of Magic',
           description: 'Vocal layers and choral arrangements provide the spiritual depth of the magical spells cast in-text.',
         },
@@ -231,9 +186,9 @@ export const homePageAR = ({
   heroImage: Media
   authorImage: Media
   heroSong: Media
-  product1Id: number | string
-  product2Id: number | string
-  product3Id: number | string
+  product1Id: number
+  product2Id: number
+  product3Id: number
 }) => ({
   title: 'الرئيسية',
   hero: {
@@ -296,6 +251,11 @@ export const homePageAR = ({
       link: { type: 'custom' as const, appearance: 'default' as const, label: 'انضم إلى المغامرة', url: '/contact' },
     },
   ],
+  meta: {
+    title: 'لحن وأسطورة | مغامرات موسيقية ساحرة',
+    description: 'تجربة رحلة سحرية حيث لكل فصل لحنه الخاص. كتب موسيقية للصغار والكبار.',
+    image: heroImage,
+  },
 })
 
 // ─── Portuguese translation ───────────────────────────────────────────────────
@@ -311,9 +271,9 @@ export const homePagePT = ({
   heroImage: Media
   authorImage: Media
   heroSong: Media
-  product1Id: number | string
-  product2Id: number | string
-  product3Id: number | string
+  product1Id: number
+  product2Id: number
+  product3Id: number
 }) => ({
   title: 'Início',
   hero: {
@@ -376,4 +336,9 @@ export const homePagePT = ({
       link: { type: 'custom' as const, appearance: 'default' as const, label: 'Juntar-me à Aventura', url: '/contact' },
     },
   ],
+  meta: {
+    title: 'Melodia & Mito | Aventuras Musicais Encantadas',
+    description: 'Experiencie uma jornada mágica onde cada capítulo tem a sua própria melodia. Livros musicais para jovens e jovens de coração.',
+    image: heroImage,
+  },
 })

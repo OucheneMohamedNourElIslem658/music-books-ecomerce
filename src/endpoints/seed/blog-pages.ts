@@ -60,10 +60,6 @@ type Blog1Args = {
 
 export const blogOrchestralHeartData = ({
   heroImage,
-  imageCello,
-  imageFlute,
-  imageHarp,
-  imageViolin,
   imageMixer,
   imageConductor,
   imageMics,
@@ -113,28 +109,28 @@ export const blogOrchestralHeartData = ({
     {
       blockType: 'authorHighlights',
       title: 'The Enchanted Armory',
-      icon: 'music',
+      icon: 'music' as const,
       items: [
         {
-          icon: 'music',
+          icon: 'music' as const,
           title: 'The Elder Cello',
           description:
             'String Section — Represents the voice of the Great Dragon Kings. Deep, resonant tones that shake the very foundations of the ancient halls.',
         },
         {
-          icon: 'music',
+          icon: 'music' as const,
           title: 'Silver-Wound Flute',
           description:
             'Woodwind Section — The whimsical melody of the Forest Nymphs. Each trill carries the memory of sunlit glades and dancing spirits.',
         },
         {
-          icon: 'music',
+          icon: 'music' as const,
           title: 'Celestial Harp',
           description:
             'Celestial Section — Evoking the starlit skies of the Astral Plains. Its crystalline arpeggios accompany every moment of wonder.',
         },
         {
-          icon: 'music',
+          icon: 'music' as const,
           title: 'Midnight Violin',
           description:
             'Lead Section — The mournful theme of the Fallen Kingdom. Its dark, soaring lines tell the story of loss and redemption.',
@@ -228,22 +224,22 @@ export const blogDragonsLullabyData = ({
     {
       blockType: 'authorHighlights',
       title: 'The Three Motifs',
-      icon: 'music',
+      icon: 'music' as const,
       items: [
         {
-          icon: 'music',
+          icon: 'music' as const,
           title: 'The Awakening',
           description:
             'The opening four bars — a gentle, rising phrase in D minor that introduces the Dragon before it is ever seen on the page.',
         },
         {
-          icon: 'fire',
+          icon: 'fire' as const,
           title: 'The Fury',
           description:
             'A thundering variation in the brass and low strings, reserved for the climactic battle scenes of Part III.',
         },
         {
-          icon: 'star',
+          icon: 'star' as const,
           title: 'The Farewell',
           description:
             'The closing reprise — the same four bars, now in D major, played solo on the Midnight Violin. A moment of pure catharsis.',
@@ -324,7 +320,7 @@ export const blogWritingWithMusicData = ({
       title: 'My Writing & Composing Rhythm',
       items: [
         {
-          icon: 'music',
+          icon: 'music' as const,
           isActive: false,
           title: 'Compose the Leitmotifs',
           year: 'Week 1',
@@ -333,7 +329,7 @@ export const blogWritingWithMusicData = ({
             'Before a single word, I sketch the main musical themes for each character and location on solo piano.',
         },
         {
-          icon: 'book',
+          icon: 'book' as const,
           isActive: false,
           title: 'Write the First Draft',
           year: 'Weeks 2–8',
@@ -342,7 +338,7 @@ export const blogWritingWithMusicData = ({
             'I write with the piano sketches on loop. The music dictates the pacing — fast passages for action, slow harmonics for reflection.',
         },
         {
-          icon: 'sparkles',
+          icon: 'sparkles' as const,
           isActive: false,
           title: 'Full Orchestration',
           year: 'Months 3–6',
@@ -351,7 +347,7 @@ export const blogWritingWithMusicData = ({
             'Once the draft is locked, the sketches are expanded into full orchestral arrangements that mirror the final narrative arc.',
         },
         {
-          icon: 'star',
+          icon: 'star' as const,
           isActive: true,
           title: 'Release Together',
           year: 'Launch Day',
@@ -431,6 +427,11 @@ export const blogOrchestralHeartAR = ({
       ],
     },
   ],
+  meta: {
+    title: 'القلب الأوركسترالي | الرحلة الموسيقية',
+    description: 'عيش سحر الكواليس في جلسات التسجيل. من الملاحظة الأولى المهموسة إلى الذروة الأخيرة الرعدية.',
+    image: heroImage,
+  },
 })
 
 export const blogOrchestralHeartPT = ({
@@ -478,6 +479,11 @@ export const blogOrchestralHeartPT = ({
       ],
     },
   ],
+  meta: {
+    title: 'O Coração Orquestral | Jornada Musical',
+    description: 'Experiencie a magia dos bastidores das nossas sessões de gravação. Da primeira nota sussurrada ao último crescendo atronador.',
+    image: heroImage,
+  },
 })
 
 // ─── Blog 2 translations ──────────────────────────────────────────────────────
@@ -526,6 +532,11 @@ export const blogDragonsLullabyAR = ({
       link: { type: 'custom' as const, appearance: 'default' as const, label: 'أرسل لي النوتة', url: '/contact' },
     },
   ],
+  meta: {
+    title: 'تهويدة التنين | خلف الموسيقى',
+    description: 'كيف ألّفنا الموضوع الرسمي المبهج للكتاب. رحلة عبر الدوافع اللحنية والأسطورة.',
+    image: heroImage,
+  },
 })
 
 export const blogDragonsLullabyPT = ({
@@ -572,6 +583,11 @@ export const blogDragonsLullabyPT = ({
       link: { type: 'custom' as const, appearance: 'default' as const, label: 'Enviar-me a Partitura', url: '/contact' },
     },
   ],
+  meta: {
+    title: 'A Cantiga do Dragão | Por Trás da Partitura',
+    description: 'Como compusemos o tema oficial assombrado do livro. Uma jornada pelo motivo, melodia e mito.',
+    image: heroImage,
+  },
 })
 
 // ─── Blog 3 translations ──────────────────────────────────────────────────────
@@ -618,6 +634,11 @@ export const blogWritingWithMusicAR = ({
       link: { type: 'custom' as const, appearance: 'default' as const, label: 'انضم إلى الزمالة', url: '/contact' },
     },
   ],
+  meta: {
+    title: 'الكتابة بالموسيقى: عمليتي الإبداعية',
+    description: 'كل كلمة أكتبها مشكّلة بالصوت. كيف أستخدم الموسيقى أداةً هيكليةً للسرد.',
+    image: heroImage,
+  },
 })
 
 export const blogWritingWithMusicPT = ({
@@ -662,4 +683,9 @@ export const blogWritingWithMusicPT = ({
       link: { type: 'custom' as const, appearance: 'default' as const, label: 'Juntar-me à Confraria', url: '/contact' },
     },
   ],
+  meta: {
+    title: 'Escrever com Música: O Meu Processo Criativo',
+    description: 'Cada palavra é moldada pelo som. Como uso a música como ferramenta estrutural de narrativa.',
+    image: heroImage,
+  },
 })

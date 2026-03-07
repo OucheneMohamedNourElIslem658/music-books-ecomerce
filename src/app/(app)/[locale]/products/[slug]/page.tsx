@@ -16,12 +16,12 @@ import { getPayload } from 'payload'
 import React, { Suspense } from 'react'
 
 type Args = {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string, locale: 'en' | 'ar' | 'pt' }>
 }
 
 export async function generateMetadata({ params }: Args): Promise<Metadata> {
-  const { slug } = await params
-  const product = await queryProductBySlug({ slug })
+  const { slug, locale = 'en' } = await params
+  const product = await queryProductBySlug({ slug, locale })
 
   if (!product) return notFound()
 
@@ -54,8 +54,8 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
 }
 
 export default async function ProductPage({ params }: Args) {
-  const { slug } = await params
-  const product = await queryProductBySlug({ slug })
+  const { slug, locale } = await params
+  const product = await queryProductBySlug({ slug, locale })
 
   if (!product) return notFound()
 
@@ -181,7 +181,7 @@ function RelatedProducts({ products }: { products: Product[] }) {
   )
 }
 
-const queryProductBySlug = async ({ slug }: { slug: string }) => {
+const queryProductBySlug = async ({ slug, locale }: { slug: string, locale: 'en' | 'ar' | 'pt' }) => {
   const { isEnabled: draft } = await draftMode()
   const payload = await getPayload({ config: configPromise })
 
@@ -192,6 +192,7 @@ const queryProductBySlug = async ({ slug }: { slug: string }) => {
     limit: 1,
     overrideAccess: draft,
     pagination: false,
+    locale,
     where: {
       and: [
         { slug: { equals: slug } },
