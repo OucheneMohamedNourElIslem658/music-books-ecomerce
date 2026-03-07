@@ -177,6 +177,10 @@ export const contactPageAR = ({ contactForm }: { contactForm: Form }) => ({
       },
     },
   ],
+  meta: {
+    title: 'تواصل مع برج المؤلف',
+    description: 'أرسل رسالة إلى المؤلف الموسيقي. ستُحمل رسالتك بضوء النجوم.',
+  },
 })
 
 // ─── Portuguese translation ───────────────────────────────────────────────────
@@ -220,4 +224,8 @@ export const contactPagePT = ({ contactForm }: { contactForm: Form }) => ({
       },
     },
   ],
+  meta: {
+    title: 'Contactar a Torre do Autor',
+    description: 'Envie uma mensagem ao Autor-Compositor. A sua mensagem será transportada pela luz das estrelas.',
+  },
 })

@@ -1,90 +1,59 @@
-import type { Footer } from '@/payload-types'
-
-import { FooterMenu } from '@/components/Footer/menu'
-import { LogoIcon } from '@/components/icons/logo'
-import { Separator } from '@/components/ui/separator'
+import { CMSLink } from '@/components/Link'
 import { Link } from '@/i18n/navigation'
-import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
 import { getCachedGlobal } from '@/utilities/getGlobals'
-import { Suspense } from 'react'
-import { LocaleSwitcher } from '../LocaleSwitcher'
+import { BookOpenText, Instagram, Music2, Twitter, Youtube } from 'lucide-react'
 
-const { COMPANY_NAME, SITE_NAME } = process.env
+const platformIcons: Record<string, any> = {
+  instagram: Instagram,
+  tiktok: Music2,
+  youtube: Youtube,
+  twitter: Twitter,
+}
 
 export async function Footer() {
-  const footer: Footer = await getCachedGlobal('footer', 1)()
-  const menu = footer.navItems || []
+  const footer = await getCachedGlobal('footer', 1)()
   const currentYear = new Date().getFullYear()
-  const copyrightDate = 2023 + (currentYear > 2023 ? `-${currentYear}` : '')
-  const copyrightName = COMPANY_NAME || SITE_NAME || ''
+
+  const links = footer.navItems || []
 
   return (
-    <footer className="text-sm text-muted-foreground">
-      <Separator />
+    <footer className="bg-card border-t border-border py-16 px-6 lg:px-20 transition-colors">
+      <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
 
-      <div className="container py-12">
-        <div className="flex w-full flex-col gap-6 text-sm md:flex-row md:gap-12">
-
-          {/* Logo */}
-          <div>
-            <Link
-              className="flex items-center gap-2 text-foreground hover:text-primary transition-colors md:pt-1"
-              href="/"
-            >
-              <LogoIcon className="w-6" />
-              <span className="sr-only">{SITE_NAME}</span>
-            </Link>
-          </div>
-
-          {/* Nav */}
-          <Suspense
-            fallback={
-              <div className="flex h-[188px] w-[200px] flex-col gap-2">
-                {Array.from({ length: 6 }).map((_, i) => (
-                  <div key={i} className="w-full h-6 animate-pulse rounded-lg bg-muted" />
-                ))}
-              </div>
-            }
-          >
-            <FooterMenu menu={menu} />
-          </Suspense>
-
-          {/* Theme selector */}
-          <div className="md:ml-auto flex gap-2">
-            <LocaleSwitcher />
-            <ThemeSelector />
-          </div>
-
+        {/* Column 1: Brand */}
+        <div className="flex flex-col gap-6">
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="text-primary transition-transform group-hover:scale-110 duration-300">
+              <BookOpenText className="size-8" />
+            </div>
+            <h2 className="text-lg font-black tracking-tight uppercase text-foreground">
+              The Enchanted Bookshop
+            </h2>
+          </Link>
+          <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
+            Creating immersive musical experiences that bring stories to life through the power of symphonic orchestration.
+          </p>
         </div>
+
+        <ul className="flex flex-col gap-4">
+          {links.map((item: any) => (
+            <li key={item.id}>
+              <CMSLink
+                {...item.link}
+                appearance="link"
+                className="text-muted-foreground hover:text-primary transition-colors text-sm font-medium p-0"
+              />
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <Separator />
-
-      {/* Bottom bar */}
-      <div className="py-6">
-        <div className="container flex w-full flex-col items-center gap-2 md:flex-row md:gap-0">
-          <p className="text-muted-foreground">
-            &copy; {copyrightDate} {copyrightName}
-            {copyrightName.length && !copyrightName.endsWith('.') ? '.' : ''} All rights reserved.
-          </p>
-
-          <Separator orientation="vertical" className="mx-4 hidden h-4 md:inline-block" />
-
-          <p className="text-muted-foreground">Designed in Michigan</p>
-
-          <p className="md:ml-auto">
-            <a
-              className="text-muted-foreground hover:text-primary transition-colors"
-              href="https://payloadcms.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Crafted by Payload
-            </a>
-          </p>
-        </div>
+      {/* Bottom Bar */}
+      <div className="max-w-[1400px] mx-auto pt-8 border-t border-border text-center">
+        <p className="text-xs text-muted-foreground/60 font-medium tracking-wide">
+          © {currentYear} The Enchanted Bookshop. All Spells Reserved by the Guild of Musical Bards.
+        </p>
       </div>
     </footer>
-
   )
 }

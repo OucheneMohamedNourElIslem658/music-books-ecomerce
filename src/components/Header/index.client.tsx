@@ -1,16 +1,14 @@
 'use client'
 import { Cart } from '@/components/Cart'
 import { OpenCartButton } from '@/components/Cart/OpenCart'
-import { CMSLink } from '@/components/Link'
 import { Link } from '@/i18n/navigation'
-import { Suspense } from 'react'
-
-import type { Header } from 'src/payload-types'
-import { MobileMenu } from './MobileMenu'
-
-import { LogoIcon } from '@/components/icons/logo'
 import { cn } from '@/utilities/cn'
+import { User } from 'lucide-react'
 import { usePathname } from 'next/navigation'
+import { Suspense } from 'react'
+import type { Header } from 'src/payload-types'
+import { Logo } from '../Logo/Logo'
+import { MobileMenu } from './MobileMenu'
 
 type Props = {
   header: Header
@@ -21,46 +19,66 @@ export function HeaderClient({ header }: Props) {
   const pathname = usePathname()
 
   return (
-    <div className="relative z-20 border-b">
-      <nav className="flex items-center md:items-end justify-between container pt-2">
-        <div className="block flex-none md:hidden">
-          <Suspense fallback={null}>
-            <MobileMenu menu={menu} />
-          </Suspense>
-        </div>
-        <div className="flex w-full items-end justify-between">
-          <div className="flex w-full items-end gap-6 md:w-1/3">
-            <Link className="flex w-full items-center justify-center pt-4 pb-4 md:w-auto" href="/">
-              <LogoIcon className="w-6 h-auto" />
-            </Link>
-            {menu.length ? (
-              <ul className="hidden gap-4 text-sm md:flex md:items-center">
-                {menu.map((item) => (
-                  <li key={item.id}>
-                    <CMSLink
-                      {...item.link}
-                      size={'clear'}
-                      className={cn('relative navLink', {
-                        active:
-                          item.link.url && item.link.url !== '/'
-                            ? pathname.includes(item.link.url)
-                            : false,
-                      })}
-                      appearance="nav"
-                    />
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-          </div>
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md px-6 py-4 lg:px-20">
+      <div className="max-w-[1400px] mx-auto flex items-center justify-between">
+        <div className="flex items-center gap-12">
+          {/* Logo & Title */}
+          <Link href="/" className="group">
+            <Logo />
+          </Link>
 
-          <div className="flex justify-end md:w-1/3 gap-4">
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-8">
+            {menu.map((item) => {
+              const href = item.link.type === 'reference'
+                ? (typeof item.link.reference?.value === 'object' ? `/${item.link.reference.value.slug}` : '#')
+                : (item.link.url ?? '#')
+
+              const isActive = href !== '/' ? pathname.includes(href) : pathname === '/'
+
+              return (
+                <Link
+                  key={item.id}
+                  href={href}
+                  className={cn(
+                    "text-sm font-bold transition-all hover:text-primary relative py-1 group/link",
+                    isActive ? "text-primary" : "text-muted-foreground"
+                  )}
+                >
+                  {item.link.label}
+                  <span className={cn(
+                    "absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-300",
+                    isActive ? "w-full" : "w-0 group-hover/link:w-full"
+                  )} />
+                </Link>
+              )
+            })}
+          </nav>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <Suspense fallback={<OpenCartButton />}>
               <Cart />
             </Suspense>
+
+            <Link
+              href="/account"
+              className="p-2 hover:bg-primary/10 rounded-full transition-colors text-muted-foreground hover:text-primary active:scale-95"
+            >
+              <User className="size-6" />
+            </Link>
+          </div>
+
+          {/* Mobile Menu Trigger */}
+          <div className="block lg:hidden">
+            <Suspense fallback={null}>
+              <MobileMenu menu={menu} />
+            </Suspense>
           </div>
         </div>
-      </nav>
-    </div>
+      </div>
+    </header>
   )
 }

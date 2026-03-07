@@ -1,6 +1,6 @@
 import type { CollectionSlug, File, GlobalSlug, Payload, PayloadRequest } from 'payload'
 
-import { authorPageData } from './author-page'
+import { authorPageAR, authorPageData, authorPagePT } from './author-page'
 import {
   blogDragonsLullabyAR,
   blogDragonsLullabyData,
@@ -13,7 +13,7 @@ import {
   blogWritingWithMusicPT,
 } from './blog-pages'
 import { contactFormData, contactPageAR, contactPageData, contactPagePT } from './contact-page'
-import { homePageData } from './home-page'
+import { homePageAR, homePageData, homePagePT } from './home-page'
 import {
   imageAuthorData,
   imageAuthorFullData,
@@ -38,7 +38,7 @@ import {
   imageStudioMixerData,
   songOrchestralHeartData,
 } from './images-blog'
-import { book1Data, book2Data, book3Data } from './products'
+import { book1AR, book1Data, book1PT, book2AR, book2Data, book2PT, book3AR, book3Data, book3PT } from './products'
 
 const collections: CollectionSlug[] = [
   'categories',
@@ -269,41 +269,43 @@ export const seed = async ({
 
   const contactForm = await payload.create({ collection: 'forms', depth: 0, data: contactFormData() as any })
 
-  // ─── Pages (EN) ───────────────────────────────────────────────────────────
-  payload.logger.info('— Seeding pages (EN)...')
+  // ─── Pages (EN) — created as the default locale ───────────────────────────
+  // IMPORTANT: EN must be created first so we get the document IDs, but then
+  // we re-apply it LAST after all other locales have been written.
+  // Payload writes the last locale update over any un-localised (shared) fields,
+  // so whichever locale is written last "wins" for those fields. By re-applying
+  // EN at the end every page is fully populated in the default locale.
+  payload.logger.info('— Seeding pages (EN — initial create for IDs)...')
 
   const [homePage, authorPage, contactPage, blogOrchestral, blogDragons, blogWriting] =
     await Promise.all([
       payload.create({
-        collection: 'pages', depth: 0,
+        collection: 'pages', depth: 0, locale: 'en',
         data: homePageData({
           heroImage: imageHero, book1: imageBook1, book2: imageBook2, book3: imageBook3,
           authorImage: imageAuthor, product1Id: product1.id, product2Id: product2.id, product3Id: product3.id,
-          // Hero song — The Midnight Symphony plays on the homepage hero
           heroSong: songMidnightSymphony,
         }),
       }),
-      payload.create({ collection: 'pages', depth: 0, data: authorPageData({ authorFullImage: imageAuthorFull }) }),
-      payload.create({ collection: 'pages', depth: 0, data: contactPageData({ contactForm }) }),
+      payload.create({ collection: 'pages', depth: 0, locale: 'en', data: authorPageData({ authorFullImage: imageAuthorFull }) }),
+      payload.create({ collection: 'pages', depth: 0, locale: 'en', data: contactPageData({ contactForm }) }),
       payload.create({
-        collection: 'pages', depth: 0,
+        collection: 'pages', depth: 0, locale: 'en',
         data: blogOrchestralHeartData({
           heroImage: imageBlogHero, imageCello, imageFlute, imageHarp,
           imageViolin, imageMixer, imageConductor, imageMics,
-          // Song plays in the hero of The Orchestral Heart blog post
           heroSong: songOrchestralHeart,
         }),
       }),
       payload.create({
-        collection: 'pages', depth: 0,
+        collection: 'pages', depth: 0, locale: 'en',
         data: blogDragonsLullabyData({
           heroImage: imageBlogHero, imageCello, imageConductor,
-          // The Dragon's Lullaby theme plays on its own blog post hero
           heroSong: songDragonsLullaby,
         }),
       }),
       payload.create({
-        collection: 'pages', depth: 0,
+        collection: 'pages', depth: 0, locale: 'en',
         data: blogWritingWithMusicData({ heroImage: imageBlogHero, imageHarp, imageFlute }),
       }),
     ])
@@ -311,60 +313,71 @@ export const seed = async ({
   // ─── Pages — Arabic translations ──────────────────────────────────────────
   payload.logger.info('— Seeding translations (AR)...')
 
-  await Promise.all([
-    // payload.update({ collection: 'pages', id: homePage.id, locale: 'ar',
-    //   data: homePageAR({ heroImage: imageHero, authorImage: imageAuthor, heroSong: songMidnightSymphony, product1Id: product1.id, product2Id: product2.id, product3Id: product3.id }),
-    // }),
-    // payload.update({ collection: 'pages', id: authorPage.id, locale: 'ar',
-    //   data: authorPageAR(),
-    // }),
-    payload.update({
-      collection: 'pages', id: contactPage.id, locale: 'ar',
-      data: contactPageAR({ contactForm }),
-    }),
-    payload.update({
-      collection: 'pages', id: blogOrchestral.id, locale: 'ar',
-      data: blogOrchestralHeartAR({ heroImage: imageBlogHero, imageMixer, imageConductor, imageMics, heroSong: songOrchestralHeart }),
-    }),
-    payload.update({
-      collection: 'pages', id: blogDragons.id, locale: 'ar',
-      data: blogDragonsLullabyAR({ heroImage: imageBlogHero, imageCello, imageConductor, heroSong: songDragonsLullaby }),
-    }),
-    payload.update({
-      collection: 'pages', id: blogWriting.id, locale: 'ar',
-      data: blogWritingWithMusicAR({ heroImage: imageBlogHero, imageHarp, imageFlute }),
-    }),
-  ])
+  await payload.update({ collection: 'pages', id: homePage.id, locale: 'ar', data: homePageAR({ heroImage: imageHero, authorImage: imageAuthor, heroSong: songMidnightSymphony, product1Id: product1.id, product2Id: product2.id, product3Id: product3.id }) })
+  await payload.update({ collection: 'pages', id: authorPage.id, locale: 'ar', data: authorPageAR({ authorFullImage: imageAuthorFull }) })
+  await payload.update({ collection: 'pages', id: contactPage.id, locale: 'ar', data: contactPageAR({ contactForm }) })
+  await payload.update({ collection: 'pages', id: blogOrchestral.id, locale: 'ar', data: blogOrchestralHeartAR({ heroImage: imageBlogHero, imageMixer, imageConductor, imageMics, heroSong: songOrchestralHeart }) })
+  await payload.update({ collection: 'pages', id: blogDragons.id, locale: 'ar', data: blogDragonsLullabyAR({ heroImage: imageBlogHero, imageCello, imageConductor, heroSong: songDragonsLullaby }) })
+  await payload.update({ collection: 'pages', id: blogWriting.id, locale: 'ar', data: blogWritingWithMusicAR({ heroImage: imageBlogHero, imageHarp, imageFlute }) })
+
+  // ─── Products — Arabic translations ───────────────────────────────────────
+  await payload.update({ collection: 'products', id: product1.id, locale: 'ar', data: book1AR() })
+  await payload.update({ collection: 'products', id: product2.id, locale: 'ar', data: book2AR() })
+  await payload.update({ collection: 'products', id: product3.id, locale: 'ar', data: book3AR() })
 
   // ─── Pages — Portuguese translations ──────────────────────────────────────
   payload.logger.info('— Seeding translations (PT)...')
 
-  await Promise.all([
-    // payload.update({ collection: 'pages', id: homePage.id, locale: 'pt',
-    //   data: homePagePT({ heroImage: imageHero, authorImage: imageAuthor, heroSong: songMidnightSymphony, product1Id: product1.id, product2Id: product2.id, product3Id: product3.id }),
-    // }),
-    // payload.update({ collection: 'pages', id: authorPage.id, locale: 'pt',
-    //   data: authorPagePT(),
-    // }),
-    payload.update({
-      collection: 'pages', id: contactPage.id, locale: 'pt',
-      data: contactPagePT({ contactForm }),
-    }),
-    payload.update({
-      collection: 'pages', id: blogOrchestral.id, locale: 'pt',
-      data: blogOrchestralHeartPT({ heroImage: imageBlogHero, imageMixer, imageConductor, imageMics, heroSong: songOrchestralHeart }),
-    }),
-    payload.update({
-      collection: 'pages', id: blogDragons.id, locale: 'pt',
-      data: blogDragonsLullabyPT({ heroImage: imageBlogHero, imageCello, imageConductor, heroSong: songDragonsLullaby }),
-    }),
-    payload.update({
-      collection: 'pages', id: blogWriting.id, locale: 'pt',
-      data: blogWritingWithMusicPT({ heroImage: imageBlogHero, imageHarp, imageFlute }),
-    }),
-  ])
+  await payload.update({ collection: 'pages', id: homePage.id, locale: 'pt', data: homePagePT({ heroImage: imageHero, authorImage: imageAuthor, heroSong: songMidnightSymphony, product1Id: product1.id, product2Id: product2.id, product3Id: product3.id }) })
+  await payload.update({ collection: 'pages', id: authorPage.id, locale: 'pt', data: authorPagePT({ authorFullImage: imageAuthorFull }) })
+  await payload.update({ collection: 'pages', id: contactPage.id, locale: 'pt', data: contactPagePT({ contactForm }) })
+  await payload.update({ collection: 'pages', id: blogOrchestral.id, locale: 'pt', data: blogOrchestralHeartPT({ heroImage: imageBlogHero, imageMixer, imageConductor, imageMics, heroSong: songOrchestralHeart }) })
+  await payload.update({ collection: 'pages', id: blogDragons.id, locale: 'pt', data: blogDragonsLullabyPT({ heroImage: imageBlogHero, imageCello, imageConductor, heroSong: songDragonsLullaby }) })
+  await payload.update({ collection: 'pages', id: blogWriting.id, locale: 'pt', data: blogWritingWithMusicPT({ heroImage: imageBlogHero, imageHarp, imageFlute }) })
 
-  // ─── Globals ──────────────────────────────────────────────────────────────
+  // ─── Products — Portuguese translations ────────────────────────────────────
+  await payload.update({ collection: 'products', id: product1.id, locale: 'pt', data: book1PT() })
+  await payload.update({ collection: 'products', id: product2.id, locale: 'pt', data: book2PT() })
+  await payload.update({ collection: 'products', id: product3.id, locale: 'pt', data: book3PT() })
+
+  // ─── Pages — English re-apply (must be LAST) ──────────────────────────────
+  // Re-writing EN after all other locales ensures the default locale is never
+  // left with empty strings from a subsequent locale update overwriting shared
+  // (non-localised) fields.
+  payload.logger.info('— Re-seeding pages (EN — final write to lock in default locale)...')
+
+  await payload.update({
+    collection: 'pages', id: homePage.id, locale: 'en',
+    data: homePageData({
+      heroImage: imageHero, book1: imageBook1, book2: imageBook2, book3: imageBook3,
+      authorImage: imageAuthor, product1Id: product1.id, product2Id: product2.id, product3Id: product3.id,
+      heroSong: songMidnightSymphony,
+    }),
+  })
+  await payload.update({ collection: 'pages', id: authorPage.id, locale: 'en', data: authorPageData({ authorFullImage: imageAuthorFull }) })
+  await payload.update({ collection: 'pages', id: contactPage.id, locale: 'en', data: contactPageData({ contactForm }) })
+  await payload.update({
+    collection: 'pages', id: blogOrchestral.id, locale: 'en',
+    data: blogOrchestralHeartData({
+      heroImage: imageBlogHero, imageCello, imageFlute, imageHarp,
+      imageViolin, imageMixer, imageConductor, imageMics,
+      heroSong: songOrchestralHeart,
+    }),
+  })
+  await payload.update({
+    collection: 'pages', id: blogDragons.id, locale: 'en',
+    data: blogDragonsLullabyData({
+      heroImage: imageBlogHero, imageCello, imageConductor,
+      heroSong: songDragonsLullaby,
+    }),
+  })
+  await payload.update({ collection: 'pages', id: blogWriting.id, locale: 'en', data: blogWritingWithMusicData({ heroImage: imageBlogHero, imageHarp, imageFlute }) })
+
+  // ─── Products — English re-apply ──────────────────────────────────────────
+  await payload.update({ collection: 'products', id: product1.id, locale: 'en', data: book1Data({ coverImage: imageBook1, categories: [fantasyCategory, orchestralCategory, childrenCategory], relatedProducts: [product2.id, product3.id], song: songCrescendoTheme }) })
+  await payload.update({ collection: 'products', id: product2.id, locale: 'en', data: book2Data({ coverImage: imageBook2, categories: [fantasyCategory, orchestralCategory], relatedProducts: [product1.id, product3.id], song: songCoralCantata }) })
+  await payload.update({ collection: 'products', id: product3.id, locale: 'en', data: book3Data({ coverImage: imageBook3, categories: [steampunkCategory, orchestralCategory], relatedProducts: [product1.id, product2.id], song: songEchoesTheme }) })
+
   payload.logger.info('— Seeding globals...')
 
   await Promise.all([

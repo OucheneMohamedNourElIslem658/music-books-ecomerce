@@ -58,7 +58,7 @@ export function CartModal() {
         {!cart || cart?.items?.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-4 flex-1 py-16 px-6 text-center">
             <div className="size-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-              <ShoppingCart className="size-7" />
+              <ShoppingCart className="size-10" />
             </div>
             <div>
               <p className="font-semibold text-foreground">Your cart is empty</p>
