@@ -4,6 +4,18 @@ export const PopularProducts: Block = {
   slug: 'threeItemGrid',
   fields: [
     {
+      name: 'title',
+      type: 'text',
+      label: 'Title',
+      localized: true,
+    },
+    {
+      name: 'description',
+      type: 'textarea',
+      label: 'Description',
+      localized: true,
+    },
+    {
       name: 'products',
       type: 'relationship',
       admin: {
@@ -11,8 +23,8 @@ export const PopularProducts: Block = {
       },
       hasMany: true,
       label: 'Products to show',
-      maxRows: 3,
-      minRows: 3,
+      maxRows: 8,
+      minRows: 1,
       relationTo: 'products',
     },
   ],

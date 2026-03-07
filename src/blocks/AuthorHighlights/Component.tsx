@@ -66,7 +66,7 @@ export const AuthorHighlightsBlock: React.FC<AuthorHighlightsBlockProps> = ({
   const SectionIcon = iconMap[icon] || CloudLightning
 
   return (
-    <div className={cn('container py-12', className)}>
+    <div className={cn('container py-10', className)}>
       <section className="w-full">
         {/* Section Header */}
         <div className="flex items-center gap-4 px-4 pb-8">

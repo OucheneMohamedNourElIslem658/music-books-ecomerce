@@ -131,7 +131,7 @@ export const hero: Field = {
       localized: true,
       admin: {
         description: "Small label above the title e.g. \"THE AUTHOR'S MANUSCRIPT\"",
-        condition: (_, siblingData) => siblingData?.type === 'authorHeader',
+        // condition: (_, siblingData) => siblingData?.type === 'authorHeader',
       },
     },
     {

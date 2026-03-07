@@ -26,7 +26,7 @@ const blockComponents = {
   cta: CallToActionBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
-  popularProducts: PopularProductsBlock,
+  threeItemGrid: PopularProductsBlock,
   reviewsBlock: ReviewsBlock,
   linkToPageBlock: LinkToPageBlock,
   authorOverview: AuthorOverviewBlock,

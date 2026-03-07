@@ -3,6 +3,7 @@ import { PaginationController } from '@/components/Pagination/PaginationControll
 import { ProductGridItem } from '@/components/ProductGridItem'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
+import { Search } from 'lucide-react'
 
 export const metadata = {
   description: 'Search for products in the store.',
@@ -15,15 +16,13 @@ type Props = {
   searchParams: Promise<SearchParams>
 }
 
-const LIMIT = 10
+const LIMIT = 12
 
 export default async function ShopPage({ searchParams }: Props) {
   const { q: searchValue, sort, category, page: pageParam } = await searchParams
   const payload = await getPayload({ config: configPromise })
 
   const page = Math.max(1, parseInt(pageParam ?? '1', 10))
-
-  let totalPages = 1
 
   const products = await payload.find({
     collection: 'products',
@@ -37,6 +36,8 @@ export default async function ShopPage({ searchParams }: Props) {
       gallery: true,
       categories: true,
       priceInUSD: true,
+      meta: true,
+      song: true,
     },
     ...(sort ? { sort } : { sort: 'title' }),
     ...(searchValue || category
@@ -56,42 +57,47 @@ export default async function ShopPage({ searchParams }: Props) {
 
   const resultsText = products.docs.length > 1 ? 'results' : 'result'
   const hasProducts = products.docs.length > 0
-  totalPages = products.totalPages
+  const totalPages = products.totalPages
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-10">
 
       {/* Search feedback */}
       {searchValue && (
-        <p className="text-sm text-muted-foreground">
-          {products.docs.length === 0 ? (
-            <>No products match <span className="font-semibold text-foreground">&quot;{searchValue}&quot;</span></>
-          ) : (
-            <>
-              Showing{' '}
-              <span className="font-semibold text-foreground">
-                {products.docs.length} {resultsText}
-              </span>{' '}
-              for <span className="font-semibold text-foreground">&quot;{searchValue}&quot;</span>
-            </>
-          )}
-        </p>
+        <div className="px-4 py-3 bg-primary/5 border border-primary/10 rounded-xl inline-flex self-start items-center gap-2">
+          <Search className="size-4 text-primary" />
+          <p className="text-sm font-medium">
+            {products.docs.length === 0 ? (
+              <>No magical tomes match <span className="font-bold text-primary">&quot;{searchValue}&quot;</span></>
+            ) : (
+              <>
+                Revealing{' '}
+                <span className="font-bold text-primary">
+                  {products.docs.length} {resultsText}
+                </span>{' '}
+                for <span className="font-bold text-primary">&quot;{searchValue}&quot;</span>
+              </>
+            )}
+          </p>
+        </div>
       )}
 
       {/* Empty state */}
       {!searchValue && !hasProducts && (
-        <div className="flex flex-col items-center justify-center py-24 gap-3 text-center">
-          <div className="size-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-            <span className="text-2xl">🔍</span>
+        <div className="flex flex-col items-center justify-center py-32 gap-6 text-center bg-card/20 rounded-[2.5rem] border border-dashed border-border">
+          <div className="size-20 rounded-full bg-primary/10 flex items-center justify-center text-primary shadow-inner">
+            <Search className="size-10" strokeWidth={1.5} />
           </div>
-          <p className="font-semibold text-foreground">No products found</p>
-          <p className="text-sm text-muted-foreground">Please try different filters.</p>
+          <div className="space-y-2">
+            <p className="text-2xl font-black text-foreground">No Enchantments Found</p>
+            <p className="text-muted-foreground max-w-xs mx-auto italic">The archives are silent. Please try adjusting your search or filters.</p>
+          </div>
         </div>
       )}
 
       {/* Product grid */}
       {hasProducts && (
-        <Grid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <Grid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-12">
           {products.docs.map((product) => (
             <ProductGridItem key={product.id} product={product} />
           ))}
@@ -99,7 +105,9 @@ export default async function ShopPage({ searchParams }: Props) {
       )}
 
       {totalPages > 1 && (
-        <PaginationController page={page} totalPages={totalPages} />
+        <div className="pt-12 border-t border-border mt-12">
+          <PaginationController page={page} totalPages={totalPages} />
+        </div>
       )}
     </div>
   )

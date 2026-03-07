@@ -656,10 +656,6 @@ export interface Page {
         blockType: 'featureShowcase';
       }
   )[];
-  /**
-   * Toggle to attach a song to this content
-   */
-  hasSong?: boolean | null;
   meta?: {
     title?: string | null;
     /**
@@ -682,6 +678,8 @@ export interface Page {
  * via the `definition` "PopularProductsBlock".
  */
 export interface PopularProductsBlock {
+  title?: string | null;
+  description?: string | null;
   products?: (number | Product)[] | null;
   id?: string | null;
   blockName?: string | null;
@@ -1483,7 +1481,6 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
       };
-  hasSong?: T;
   meta?:
     | T
     | {
@@ -1502,6 +1499,8 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "PopularProductsBlock_select".
  */
 export interface PopularProductsBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
   products?: T;
   id?: T;
   blockName?: T;

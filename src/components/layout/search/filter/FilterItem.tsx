@@ -1,12 +1,10 @@
 'use client'
 
+import { Link, usePathname } from '@/i18n/navigation'
 import type { SortFilterItem as SortFilterItemType } from '@/lib/constants'
-
-import { Link } from '@/i18n/navigation'
+import { cn } from '@/utilities/cn'
 import { createUrl } from '@/utilities/createUrl'
-import clsx from 'clsx'
-import { usePathname, useSearchParams } from 'next/navigation'
-
+import { useSearchParams } from 'next/navigation'
 import type { ListItem, PathFilterItem as PathFilterItemType } from '.'
 
 function PathFilterItem({ item }: { item: PathFilterItemType }) {
@@ -14,23 +12,21 @@ function PathFilterItem({ item }: { item: PathFilterItemType }) {
   const searchParams = useSearchParams()
   const active = pathname === item.path
   const newParams = new URLSearchParams(searchParams.toString())
-  const DynamicTag = active ? 'p' : Link
-
   newParams.delete('q')
 
   return (
-    <li className="mt-2 flex text-black dark:text-white" key={item.title}>
-      <DynamicTag
-        className={clsx(
-          'w-full text-sm underline-offset-4 hover:underline dark:hover:text-neutral-100',
-          {
-            'underline underline-offset-4': active,
-          },
+    <li className="flex w-full" key={item.title}>
+      <Link
+        className={cn(
+          'w-full rounded-lg px-4 py-2 text-sm font-medium transition-colors',
+          active
+            ? 'bg-primary text-primary-foreground font-bold'
+            : 'text-muted-foreground hover:bg-muted hover:text-foreground'
         )}
         href={createUrl(item.path, newParams)}
       >
         {item.title}
-      </DynamicTag>
+      </Link>
     </li>
   )
 }
@@ -47,19 +43,21 @@ function SortFilterItem({ item }: { item: SortFilterItemType }) {
       ...(item.slug && item.slug.length && { sort: item.slug }),
     }),
   )
-  const DynamicTag = active ? 'p' : Link
 
   return (
-    <li className="mt-2 flex text-sm text-black dark:text-white" key={item.title}>
-      <DynamicTag
-        className={clsx('w-full hover:underline hover:underline-offset-4', {
-          'underline underline-offset-4': active,
-        })}
+    <li className="flex w-full" key={item.title}>
+      <Link
+        className={cn(
+          'w-full rounded-lg px-4 py-2 text-sm font-medium transition-colors',
+          active
+            ? 'bg-primary text-primary-foreground font-bold'
+            : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+        )}
         href={href}
         prefetch={!active ? false : undefined}
       >
         {item.title}
-      </DynamicTag>
+      </Link>
     </li>
   )
 }
