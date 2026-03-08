@@ -1,12 +1,12 @@
 'use client'
-import type { Media, PopularProductsBlock as PopularProductsBlockProps, Product, Category } from '@/payload-types'
+import { Media as MediaComponent } from '@/components/Media'
+import { SongPreview } from '@/components/SongPreview'
 import { Link } from '@/i18n/navigation'
+import type { Category, Media, PopularProductsBlock as PopularProductsBlockProps, Product } from '@/payload-types'
+import { cn } from '@/utilities/cn'
+import { Play } from 'lucide-react'
 import type { DefaultDocumentIDType } from 'payload'
 import React from 'react'
-import { Media as MediaComponent } from '@/components/Media'
-import { Play } from 'lucide-react'
-import { cn } from '@/utilities/cn'
-import { SongPreview } from '@/components/SongPreview'
 
 export const PopularProductsBlock: React.FC<
   PopularProductsBlockProps & {
@@ -42,12 +42,12 @@ export const PopularProductsBlock: React.FC<
             const image = product.meta?.image as Media
 
             return (
-              <div 
+              <div
                 key={product.id || index}
                 className="group relative flex flex-col gap-4"
               >
                 {/* Book Card Visual */}
-                <Link 
+                <Link
                   href={`/products/${product.slug}`}
                   className="relative aspect-[3/4] overflow-hidden rounded-[2rem] border border-border/10 bg-card shadow-lg transition-all duration-500 hover:-translate-y-2 hover:border-primary/50 group/card"
                 >
@@ -78,7 +78,7 @@ export const PopularProductsBlock: React.FC<
                         {product.meta.description}
                       </p>
                     )}
-                    
+
                     {/* Play Icon Decorative */}
                     <div className="mt-6 size-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/30 transform translate-y-8 opacity-0 group-hover/card:translate-y-0 group-hover/card:opacity-100 transition-all duration-500 delay-200">
                       <Play className="size-6 fill-current" />
@@ -89,9 +89,9 @@ export const PopularProductsBlock: React.FC<
                 {/* Optional Song Preview Widget below if product has song */}
                 {product.song && (
                   <div className="px-2">
-                    <SongPreview 
-                      song={product.song} 
-                      title={product.title} 
+                    <SongPreview
+                      song={product.song}
+                      title={product.title}
                       thumbnail={image}
                       className="bg-card/20 border-border/5"
                     />

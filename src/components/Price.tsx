@@ -4,65 +4,61 @@ import React, { useMemo } from 'react'
 
 type BaseProps = {
   className?: string
-  currencyCodeClassName?: string
   as?: 'span' | 'p'
 }
 
-type PriceFixed = {
+type PriceFixed = BaseProps & {
   amount: number
   currencyCode?: string
   highestAmount?: never
   lowestAmount?: never
 }
 
-type PriceRange = {
+type PriceRange = BaseProps & {
   amount?: never
   currencyCode?: string
   highestAmount: number
   lowestAmount: number
 }
 
-type Props = BaseProps & (PriceFixed | PriceRange)
+type Props = PriceFixed | PriceRange
 
-export const Price = ({
+export const Price: React.FC<Props & React.ComponentProps<'p'>> = ({
   amount,
   className,
   highestAmount,
   lowestAmount,
   currencyCode: currencyCodeFromProps,
-  as = 'p',
-}: Props & React.ComponentProps<'p'>) => {
+  as: Element = 'p',
+}) => {
   const { formatCurrency, supportedCurrencies } = useCurrency()
 
-  const Element = as
+  const currency = useMemo(
+    () => supportedCurrencies.find((c) => c.code === currencyCodeFromProps),
+    [currencyCodeFromProps, supportedCurrencies],
+  )
 
-  const currencyToUse = useMemo(() => {
-    if (currencyCodeFromProps) {
-      return supportedCurrencies.find((currency) => currency.code === currencyCodeFromProps)
-    }
-    return undefined
-  }, [currencyCodeFromProps, supportedCurrencies])
+  const fmt = (value: number) => formatCurrency(value, { currency })
 
+  // Fixed price
   if (typeof amount === 'number') {
     return (
       <Element className={className} suppressHydrationWarning>
-        {formatCurrency(amount, { currency: currencyToUse })}
+        {fmt(amount)}
       </Element>
     )
   }
 
-  if (highestAmount && highestAmount !== lowestAmount) {
-    return (
-      <Element className={className} suppressHydrationWarning>
-        {`${formatCurrency(lowestAmount, { currency: currencyToUse })} - ${formatCurrency(highestAmount, { currency: currencyToUse })}`}
-      </Element>
-    )
-  }
+  // Range price
+  if (typeof lowestAmount === 'number') {
+    const label =
+      highestAmount && highestAmount !== lowestAmount
+        ? `${fmt(lowestAmount)} – ${fmt(highestAmount)}`
+        : fmt(lowestAmount)
 
-  if (lowestAmount) {
     return (
       <Element className={className} suppressHydrationWarning>
-        {`${formatCurrency(lowestAmount, { currency: currencyToUse })}`}
+        {label}
       </Element>
     )
   }

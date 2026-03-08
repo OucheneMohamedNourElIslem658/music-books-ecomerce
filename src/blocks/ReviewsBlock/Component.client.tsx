@@ -79,12 +79,13 @@ export const ReviewsBlockClient: React.FC<Props> = ({
   if (!reviews?.length) return null
 
   return (
-    <section className="container py-12 md:py-24">
+    <section className="container">
       {/* Header */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
-        <h2 className="text-foreground text-3xl md:text-4xl font-bold tracking-tight">
-          {heading}
-        </h2>
+        <div className="flex items-center gap-4">
+          <h2 className="text-3xl font-bold">{heading}</h2>
+          <div className="h-1 w-24 bg-primary rounded-full"></div>
+        </div>
         <Link
           href={`/products/${slug}/reviews`}
           className="text-primary font-bold flex items-center gap-2 hover:underline transition-all group"

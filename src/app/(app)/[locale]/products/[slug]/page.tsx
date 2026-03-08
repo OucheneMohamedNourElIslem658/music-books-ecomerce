@@ -1,14 +1,13 @@
 import type { Media, Product } from '@/payload-types'
 
 import { RenderBlocks } from '@/blocks/RenderBlocks'
-import { GridTileImage } from '@/components/Grid/tile'
+import { Grid } from '@/components/Grid'
+import { ProductGridItem } from '@/components/ProductGridItem'
 import { Gallery } from '@/components/product/Gallery'
 import { ProductDescription } from '@/components/product/ProductDescription'
-import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
 import { Link } from '@/i18n/navigation'
 import configPromise from '@payload-config'
-import { ChevronLeftIcon } from 'lucide-react'
+import { ChevronRightIcon } from 'lucide-react'
 import { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
@@ -109,27 +108,34 @@ export default async function ProductPage({ params }: Args) {
 
       <div className="container py-8 flex flex-col gap-8">
 
-        {/* Back button */}
-        <Button asChild variant="ghost" size="sm" className="self-start">
-          <Link href="/shop">
-            <ChevronLeftIcon className="mr-1 h-4 w-4" />
-            All Products
+        {/* Breadcrumbs */}
+        <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+          <Link className="hover:text-primary transition-colors" href="/">
+            Home
           </Link>
-        </Button>
+          <ChevronRightIcon className="h-3 w-3" />
+          <Link className="hover:text-primary transition-colors" href="/shop">
+            Musical Books
+          </Link>
+          <ChevronRightIcon className="h-3 w-3" />
+          <span className="text-foreground font-medium truncate">
+            {product.title}
+          </span>
+        </nav>
 
-        {/* Product card */}
-        <div className="bg-card border border-border rounded-xl p-8 md:py-12 flex flex-col lg:flex-row gap-12">
-          <div className="h-full w-full basis-full lg:basis-1/2">
+        {/* Product info section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-20">
+          <div className="w-full">
             <Suspense
               fallback={
-                <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden rounded-xl bg-muted animate-pulse" />
+                <div className="relative aspect-4/5 w-full overflow-hidden rounded-xl bg-muted animate-pulse" />
               }
             >
               {Boolean(gallery?.length) && <Gallery gallery={gallery} song={product.song} />}
             </Suspense>
           </div>
 
-          <div className="basis-full lg:basis-1/2">
+          <div className="w-full">
             <ProductDescription product={product} />
           </div>
         </div>
@@ -151,32 +157,17 @@ function RelatedProducts({ products }: { products: Product[] }) {
   if (!products.length) return null
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex items-center gap-3">
-        <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground shrink-0">
-          Related Products
-        </p>
-        <Separator className="flex-1" />
+    <div className="container flex flex-col gap-12 border-border">
+      <div className="flex items-center gap-4">
+        <h2 className="text-3xl font-bold">Related Enchantments</h2>
+        <div className="h-1 w-24 bg-primary rounded-full"></div>
       </div>
 
-      <ul className="flex w-full gap-4 overflow-x-auto pb-2">
+      <Grid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-12">
         {products.map((product) => (
-          <li
-            className="aspect-square w-full flex-none min-[475px]:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5"
-            key={product.id}
-          >
-            <Link className="relative h-full w-full" href={`/products/${product.slug}`}>
-              <GridTileImage
-                label={{
-                  amount: product.priceInUSD!,
-                  title: product.title,
-                }}
-                media={product.meta?.image as Media}
-              />
-            </Link>
-          </li>
+          <ProductGridItem key={product.id} product={product} />
         ))}
-      </ul>
+      </Grid>
     </div>
   )
 }
