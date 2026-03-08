@@ -320,6 +320,18 @@ export interface Product {
    */
   averageRating?: number | null;
   /**
+   * Count of approved reviews per star (1–5)
+   */
+  ratingDistribution?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
   generateSlug?: boolean | null;
@@ -946,7 +958,6 @@ export interface MediaBlock {
  */
 export interface ReviewsBlock {
   heading?: string | null;
-  displayMode?: ('grid' | 'list' | 'carousel') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'reviewsBlock';
@@ -1810,6 +1821,7 @@ export interface ProductsSelect<T extends boolean = true> {
   categories?: T;
   reviewCount?: T;
   averageRating?: T;
+  ratingDistribution?: T;
   generateSlug?: T;
   slug?: T;
   updatedAt?: T;
@@ -1882,7 +1894,6 @@ export interface MediaBlockSelect<T extends boolean = true> {
  */
 export interface ReviewsBlockSelect<T extends boolean = true> {
   heading?: T;
-  displayMode?: T;
   id?: T;
   blockName?: T;
 }

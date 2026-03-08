@@ -14,15 +14,5 @@ export const ReviewsBlock: Block = {
       defaultValue: 'Customer Reviews',
       localized: true,
     },
-    {
-      name: 'displayMode',
-      type: 'select',
-      defaultValue: 'grid',
-      options: [
-        { label: 'Grid', value: 'grid' },
-        { label: 'List', value: 'list' },
-        { label: 'Carousel', value: 'carousel' },
-      ],
-    },
   ],
 }
