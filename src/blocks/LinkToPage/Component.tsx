@@ -27,7 +27,7 @@ export const LinkToPageBlock: React.FC<LinkToPageBlockProps> = ({
     className,
 }) => {
     return (
-        <div className={cn('container py-12', className)}>
+        <div className={cn('container', className)}>
             <section className="relative bg-card/50 border border-border rounded-[2.5rem] p-8 md:p-10 overflow-hidden shadow-sm backdrop-blur-md transition-all duration-300">
                 {/* Background Texture Overlay */}
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_2px_2px,rgba(var(--foreground-rgb),0.02)_1px,transparent_0)] bg-[size:32px_32px] pointer-events-none opacity-20" />

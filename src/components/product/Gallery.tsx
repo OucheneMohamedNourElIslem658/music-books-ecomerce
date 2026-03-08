@@ -1,20 +1,20 @@
 'use client'
 
-import type { Product } from '@/payload-types'
+import type { Media as MediaType, Product } from '@/payload-types'
 
 import { Media } from '@/components/Media'
-import { GridTileImage } from '@/components/Grid/tile'
 import { Button } from '@/components/ui/button'
+import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 import {
   Dialog,
   DialogContent,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { Play } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
-import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 import { DefaultDocumentIDType } from 'payload'
-import { Music2Icon } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
+import { AudioPlayer } from '../AudioPlayer'
 
 type Props = {
   gallery: NonNullable<Product['gallery']>
@@ -27,8 +27,8 @@ export const Gallery: React.FC<Props> = ({ gallery, song }) => {
   const [api, setApi] = React.useState<CarouselApi>()
   const [audioOpen, setAudioOpen] = useState(false)
 
-  const audioUrl =
-    song && typeof song === 'object' && song.url ? song.url : null
+  const songData = song && typeof song === 'object' ? (song as MediaType) : null
+  const audioUrl = songData?.url || null
 
   useEffect(() => {
     if (!api) return
@@ -57,57 +57,65 @@ export const Gallery: React.FC<Props> = ({ gallery, song }) => {
   }, [searchParams, api, gallery])
 
   return (
-    <div>
+    <div className="flex flex-col gap-8">
       {/* Main image + song button */}
-      <div className="relative w-full overflow-hidden mb-8">
-        <Media
-          resource={gallery[current].image}
-          className="w-full"
-          imgClassName="w-full rounded-lg"
-        />
+      <div className="relative group">
+        <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full scale-75 -z-10"></div>
+        <div className="relative rounded-xl overflow-hidden shadow-2xl aspect-[4/5] bg-muted transition-transform duration-500 group-hover:scale-[1.02]">
+          <Media
+            resource={gallery[current].image}
+            fill
+            imgClassName="object-cover"
+          />
+        </div>
 
         {audioUrl && (
-          <Button
-            size="sm"
-            variant="secondary"
-            className="absolute bottom-3 right-3 rounded-full gap-2 shadow-md backdrop-blur-sm bg-background/80 hover:bg-background"
-            onClick={() => setAudioOpen(true)}
-          >
-            <Music2Icon className="size-4" />
-            Play Song
-          </Button>
+          <div className="absolute bottom-8 right-8">
+            <Button
+              size="lg"
+              className="flex items-center gap-4 bg-primary hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95 group/btn"
+              onClick={() => setAudioOpen(true)}
+            >
+              <Play className="size-5 fill-current" />
+              <span>Magic Play (Listen to Score)</span>
+            </Button>
+          </div>
         )}
       </div>
 
       {/* Thumbnail carousel */}
-      <Carousel setApi={setApi} className="w-full" opts={{ align: 'start', loop: false }}>
-        <CarouselContent>
-          {gallery.map((item, i) => {
-            if (typeof item.image !== 'object') return null
+      {gallery.length > 1 && (
+        <Carousel setApi={setApi} className="w-full" opts={{ align: 'start', loop: false }}>
+          <CarouselContent className="-ml-4">
+            {gallery.map((item, i) => {
+              if (typeof item.image !== 'object') return null
 
-            return (
-              <CarouselItem
-                className="basis-1/5"
-                key={`${item.image.id}-${i}`}
-                onClick={() => setCurrent(i)}
-              >
-                <GridTileImage active={i === current} media={item.image} />
-              </CarouselItem>
-            )
-          })}
-        </CarouselContent>
-      </Carousel>
+              return (
+                <CarouselItem
+                  className="basis-1/4 sm:basis-1/5 pl-4 cursor-pointer"
+                  key={`${item.image.id}-${i}`}
+                  onClick={() => setCurrent(i)}
+                >
+                  <div className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-colors ${i === current ? 'border-primary' : 'border-transparent hover:border-primary/50'}`}>
+                    <Media resource={item.image} fill imgClassName="object-cover" />
+                  </div>
+                </CarouselItem>
+              )
+            })}
+          </CarouselContent>
+        </Carousel>
+      )}
 
       {/* Audio player dialog */}
       {audioUrl && (
         <Dialog open={audioOpen} onOpenChange={setAudioOpen}>
-          <DialogContent className="sm:max-w-sm flex items-center justify-center">
+          <DialogContent className="p-0 bg-transparent border-none shadow-none">
             <DialogTitle className="sr-only">Song Player</DialogTitle>
-            <audio
-              src={audioUrl}
-              controls
-              autoPlay
-              className="w-full"
+            <AudioPlayer
+              url={audioUrl}
+              title={songData?.filename || 'Enchanted Melody'}
+              thumbnail={gallery[0].image}
+              onClose={() => setAudioOpen(false)}
             />
           </DialogContent>
         </Dialog>

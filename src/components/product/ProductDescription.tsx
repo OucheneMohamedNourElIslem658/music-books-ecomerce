@@ -1,124 +1,121 @@
 'use client'
 import type { Product, Variant } from '@/payload-types'
 
-import { RichText } from '@/components/RichText'
 import { AddToCart } from '@/components/Cart/AddToCart'
 import { Price } from '@/components/Price'
-import React, { Suspense } from 'react'
-
-import { VariantSelector } from './VariantSelector'
-import { useCurrency } from '@payloadcms/plugin-ecommerce/client/react'
+import { RichText } from '@/components/RichText'
 import { StockIndicator } from '@/components/product/StockIndicator'
-import { CreateReviewModal } from '../reviews/CreateReviewModel'
-import StarRating from '../reviews/StarRating'
+import { VariantSelector } from '@/components/product/VariantSelector'
+import { CreateReviewModal } from '@/components/reviews/CreateReviewModel'
+import StarRating from '@/components/reviews/StarRating'
 import { useAuth } from '@/providers/Auth'
+import { useCurrency } from '@payloadcms/plugin-ecommerce/client/react'
+import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 
 export function ProductDescription({ product }: { product: Product }) {
   const { currency } = useCurrency()
   const { user } = useAuth()
+  const searchParams = useSearchParams()
 
-  let amount = 0,
-    lowestAmount = 0,
-    highestAmount = 0
   const priceField = `priceIn${currency.code}` as keyof Product
+  const variantPriceField = `priceIn${currency.code}` as keyof Variant
   const hasVariants = product.enableVariants && Boolean(product.variants?.docs?.length)
 
-  if (hasVariants) {
-    const priceField = `priceIn${currency.code}` as keyof Variant
-    const variantsOrderedByPrice = product.variants?.docs
-      ?.filter((variant) => variant && typeof variant === 'object')
-      .sort((a, b) => {
-        if (
-          typeof a === 'object' &&
-          typeof b === 'object' &&
-          priceField in a &&
-          priceField in b &&
-          typeof a[priceField] === 'number' &&
-          typeof b[priceField] === 'number'
-        ) {
-          return a[priceField] - b[priceField]
-        }
-        return 0
-      }) as Variant[]
+  const selectedVariantId = searchParams.get('variant')
+  const selectedVariant = selectedVariantId
+    ? (product.variants?.docs?.find(
+      (v) => typeof v === 'object' && String(v.id) === selectedVariantId,
+    ) as Variant | undefined)
+    : undefined
 
-    const lowestVariant = variantsOrderedByPrice[0][priceField]
-    const highestVariant = variantsOrderedByPrice[variantsOrderedByPrice.length - 1][priceField]
-    if (
-      variantsOrderedByPrice &&
-      typeof lowestVariant === 'number' &&
-      typeof highestVariant === 'number'
-    ) {
-      lowestAmount = lowestVariant
-      highestAmount = highestVariant
-    }
-  } else if (product[priceField] && typeof product[priceField] === 'number') {
-    amount = product[priceField]
+  let priceProps: React.ComponentProps<typeof Price>
+
+  if (selectedVariant && typeof selectedVariant[variantPriceField] === 'number') {
+    priceProps = { amount: selectedVariant[variantPriceField] as number }
+  } else if (hasVariants) {
+    const prices = (product.variants?.docs ?? [])
+      .filter((v): v is Variant => typeof v === 'object' && typeof v[variantPriceField] === 'number')
+      .map((v) => v[variantPriceField] as number)
+      .sort((a, b) => a - b)
+
+    priceProps = prices.length > 0
+      ? { lowestAmount: prices[0]!, highestAmount: prices[prices.length - 1]! }
+      : { amount: (product[priceField] as number) ?? 0 }
+  } else {
+    priceProps = { amount: (product[priceField] as number) ?? 0 }
   }
-  
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-        <h1 className="text-2xl font-medium">{product.title}</h1>
-        <div className="uppercase font-mono">
-          {hasVariants ? (
-            <Price highestAmount={highestAmount} lowestAmount={lowestAmount} />
-          ) : (
-            <Price amount={amount} />
-          )}
-        </div>
+
+      {/* Title + tagline */}
+      <div>
+        <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-2">{product.title}</h1>
+        {product.meta?.description && (
+          <p className="text-xl text-muted-foreground italic">{product.meta.description}</p>
+        )}
       </div>
 
+      {/* Rating */}
       {(product.averageRating || product.reviewCount) ? (
         <div className="flex items-center gap-2">
-          {product.averageRating ? (
-            <>
-              <StarRating rating={product.averageRating} />
-              <span className="text-sm font-medium">{product.averageRating.toFixed(1)}</span>
-            </>
-          ) : null}
+          {product.averageRating ? <StarRating rating={product.averageRating} /> : null}
           {product.reviewCount ? (
-            <span className="text-sm text-muted-foreground">
-              ({product.reviewCount} {product.reviewCount === 1 ? 'review' : 'reviews'})
+            <span className="text-sm font-medium">
+              ({product.reviewCount} {product.reviewCount === 1 ? 'Magical Review' : 'Magical Reviews'})
             </span>
           ) : null}
         </div>
       ) : null}
 
+      {/* Description */}
       {product.description ? (
-        <RichText className="" data={product.description} enableGutter={false} />
+        <div className="text-lg leading-relaxed text-muted-foreground">
+          <RichText data={product.description} enableGutter={false} />
+        </div>
       ) : null}
-      <hr />
+
+      {/* Price */}
+      <div className="text-4xl font-bold text-primary">
+        <Price {...priceProps} />
+      </div>
+
+      {/* Variant selector */}
       {hasVariants && (
-        <>
-          <Suspense fallback={null}>
-            <VariantSelector product={product} />
-          </Suspense>
-          <hr />
-        </>
+        <Suspense fallback={null}>
+          <VariantSelector product={product} />
+        </Suspense>
       )}
-      <div className="flex items-center justify-between">
-        <Suspense fallback={null}>
-          <StockIndicator product={product} />
-        </Suspense>
-      </div>
-      <div className="flex items-center justify-between">
-        <Suspense fallback={null}>
-          <AddToCart product={product} />
-        </Suspense>
-      </div>
 
-      <hr />
+      {/* Add to cart + review trigger */}
+      <div className="flex flex-wrap gap-4">
+        <div className="flex-1 min-w-[200px]">
+          <Suspense fallback={null}>
+            <AddToCart product={product} />
+          </Suspense>
+        </div>
 
-      <div className="flex items-center justify-between">
+        {/* Heart button opens the review modal when logged in, otherwise just decorative */}
         {user && (
           <CreateReviewModal
             productID={product.id}
             buttonText="Leave a Review"
             modalTitle={`Review ${product.title}`}
+            trigger={
+              <button className="w-16 h-16 flex items-center justify-center rounded-full border border-border hover:bg-accent-gold/10 hover:border-accent-gold/50 transition-all hover:scale-105 active:scale-95 group">
+                <span className="material-symbols-outlined">history_edu</span>
+              </button>
+            }
           />
         )}
       </div>
+
+      {/* Stock */}
+      <Suspense fallback={null}>
+        <StockIndicator product={product} />
+      </Suspense>
+
     </div>
   )
 }
