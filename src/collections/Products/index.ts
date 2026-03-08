@@ -228,7 +228,8 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
       relationTo: 'categories',
     },
 
-    // Virtual fields — never stored in DB, computed on read
+    // ─── Virtual fields ────────────────────────────────────────────────────────
+
     {
       name: 'reviewCount',
       type: 'number',
@@ -262,6 +263,7 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
         ],
       },
     },
+
     {
       name: 'averageRating',
       type: 'number',
@@ -287,13 +289,10 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
                 pagination: false,
                 depth: 0,
               })
-
               const reviews = result.docs
               if (!reviews.length) return null
-
               const average =
                 reviews.reduce((sum, r) => sum + (r.rating ?? 0), 0) / reviews.length
-
               return Math.round(average * 10) / 10
             } catch {
               return null
@@ -302,6 +301,52 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
         ],
       },
     },
+
+    // Returns { 1: number, 2: number, 3: number, 4: number, 5: number }
+    // e.g. { 1: 2, 2: 0, 3: 1, 4: 5, 5: 12 }
+    {
+      name: 'ratingDistribution',
+      type: 'json',
+      virtual: true,
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+        description: 'Count of approved reviews per star (1–5)',
+      },
+      hooks: {
+        afterRead: [
+          async ({ req, data }) => {
+            if (!data?.id) return null
+            try {
+              const result = await req.payload.find({
+                collection: 'reviews',
+                where: {
+                  and: [
+                    { product: { equals: data.id } },
+                    { status: { equals: 'approved' } },
+                  ],
+                },
+                pagination: false,
+                depth: 0,
+                select: { rating: true },
+              })
+
+              const distribution: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+              for (const review of result.docs) {
+                const star = review.rating
+                if (star >= 1 && star <= 5) {
+                  distribution[star]++
+                }
+              }
+              return distribution
+            } catch {
+              return null
+            }
+          },
+        ],
+      },
+    },
+
     slugField(),
   ],
 })

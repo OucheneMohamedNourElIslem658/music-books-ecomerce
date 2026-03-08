@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4c025",
+                        "background-light": "#f8f8f5",
+                        "royal-blue": "#002366",
+                        "parchment": "#fdfaf1",
+                        "ink": "#1a1a1a",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .filigree-border {
+            border: 12px solid transparent;
+            border-image: url('https://placeholder.pics/svg/100/f4c025/ffffff?text=❀') 30 round;
+        }
+        .scroll-effect {
+            background: linear-gradient(to right, #fdfaf1 0%, #f5f0e1 5%, #fdfaf1 10%, #fdfaf1 90%, #f5f0e1 95%, #fdfaf1 100%);
+            box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-background-light font-display text-royal-blue selection:bg-primary/30">
+<div class="relative min-h-screen w-full flex flex-col bg-parchment overflow-x-hidden filigree-border">
+<!-- Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-primary/20 bg-parchment/80 backdrop-blur-sm px-6 md:px-20 py-4 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="text-primary size-8">
+<span class="material-symbols-outlined text-4xl">auto_stories</span>
+</div>
+<h2 class="text-royal-blue text-xl font-bold leading-tight tracking-tight">The Royal Musical Archive</h2>
+</div>
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-royal-blue/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-widest" href="#">Bookshelf</a>
+<a class="text-royal-blue/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-widest" href="#">Gallery</a>
+<a class="text-primary text-sm font-semibold uppercase tracking-widest border-b-2 border-primary" href="#">Testimonies</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<label class="hidden md:flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-full h-full border border-primary/30 bg-white/50">
+<div class="text-primary flex items-center justify-center pl-4">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent focus:ring-0 placeholder:text-royal-blue/40 px-3 text-base" placeholder="Search the scrolls..." value=""/>
+</div>
+</label>
+<button class="flex items-center justify-center rounded-full size-10 bg-primary text-royal-blue shadow-lg hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">auto_fix_high</span>
+</button>
+</div>
+</header>
+<main class="max-w-7xl mx-auto w-full px-6 py-12 flex-1">
+<!-- Hero & Summary Section -->
+<div class="flex flex-col lg:flex-row justify-between items-start gap-12 mb-16">
+<div class="max-w-xl">
+<h1 class="text-royal-blue text-6xl font-black italic leading-none mb-4">Reader's Testimonies</h1>
+<p class="text-royal-blue/70 text-xl font-medium leading-relaxed italic">
+                        "A collection of magical whispers, echoing through the halls of time. Every note a story, every story a legacy."
+                    </p>
+<div class="mt-8 flex flex-wrap gap-4">
+<button class="flex items-center gap-2 px-8 py-3 bg-primary text-royal-blue rounded-full font-bold shadow-xl hover:bg-primary/90 transition-all border-2 border-primary/20">
+<span class="material-symbols-outlined">edit_note</span>
+                            Write a Testimony
+                        </button>
+</div>
+</div>
+<!-- Magic Stars Summary Card -->
+<div class="bg-white/40 border-2 border-primary/30 rounded-xl p-8 backdrop-blur-md shadow-2xl relative overflow-hidden flex flex-col items-center min-w-[320px]">
+<div class="absolute -top-4 -right-4 text-primary/10 select-none">
+<span class="material-symbols-outlined text-9xl">star</span>
+</div>
+<p class="text-royal-blue text-7xl font-black mb-2">4.9</p>
+<div class="flex gap-1 mb-4 text-primary">
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star_half</span>
+</div>
+<p class="text-royal-blue/60 font-semibold mb-6 uppercase tracking-tighter">1,240 Enraptured Souls</p>
+<div class="w-full space-y-3">
+<div class="grid grid-cols-[20px_1fr_40px] items-center gap-3">
+<span class="text-xs font-bold">5</span>
+<div class="h-2 bg-royal-blue/10 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 80%"></div>
+</div>
+<span class="text-xs font-bold text-right">80%</span>
+</div>
+<div class="grid grid-cols-[20px_1fr_40px] items-center gap-3">
+<span class="text-xs font-bold">4</span>
+<div class="h-2 bg-royal-blue/10 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 16%"></div>
+</div>
+<span class="text-xs font-bold text-right">16%</span>
+</div>
+<div class="grid grid-cols-[20px_1fr_40px] items-center gap-3">
+<span class="text-xs font-bold">3</span>
+<div class="h-2 bg-royal-blue/10 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 2%"></div>
+</div>
+<span class="text-xs font-bold text-right">2%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Filters -->
+<div class="flex flex-wrap gap-4 mb-12 items-center bg-royal-blue/5 p-4 rounded-xl border border-primary/10">
+<span class="material-symbols-outlined text-primary">filter_list</span>
+<button class="flex items-center gap-2 px-4 py-2 bg-white border border-primary/20 rounded-lg text-sm font-bold shadow-sm hover:border-primary">
+                    Book Title <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white border border-primary/20 rounded-lg text-sm font-bold shadow-sm hover:border-primary">
+                    Rating <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white border border-primary/20 rounded-lg text-sm font-bold shadow-sm hover:border-primary">
+                    Chronology <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<div class="flex-1"></div>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-primary/20 text-royal-blue rounded-full text-xs font-bold">The Golden Lyre</span>
+<span class="px-3 py-1 bg-royal-blue/10 text-royal-blue/60 rounded-full text-xs font-bold">5 Stars</span>
+</div>
+</div>
+<!-- Review Grid (Styled as Scrolls/Letters) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+<!-- Review 1: Scroll Style -->
+<div class="scroll-effect rounded-sm p-8 flex flex-col gap-4 relative border-x-2 border-primary/10">
+<div class="absolute -top-3 -left-3 rotate-12">
+<span class="material-symbols-outlined text-primary text-3xl">push_pin</span>
+</div>
+<div class="flex justify-between items-start">
+<div class="flex gap-0.5 text-primary">
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+</div>
+<span class="text-[10px] uppercase font-bold tracking-widest text-royal-blue/40">12 Oct 1892</span>
+</div>
+<p class="text-royal-blue text-lg leading-relaxed italic font-medium">
+                        "The way the melody leaped off the pages of 'The Golden Lyre' felt like true magic. I've never read a book that could be heard so clearly in the soul."
+                    </p>
+<div class="mt-4 pt-4 border-t border-primary/10 flex items-center gap-3">
+<div class="size-10 rounded-full bg-primary/20 border border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a young woman with a vintage aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsZ4heJddw1c_CZvAsSwdR8HnlAE_Lwtul98VZbnVofz7sw4XQrtDYyicddmhL681YtXZGwJ1ZuRzNkk_qzxz44jd03VKifwFOmESCYSy_gqdSWKRCMVMMplf1VOuzXUSD2QbLK0WJVCdQz2O347tVZcUNxj2rfyegxve_allIZnn8fdanwHcAKo6hHmBkHjejPCn5os56T0meRDC-Tl1fLk589SO9mpOynzOCOopIYOA2zjiVC83Y86lvVT7AMuoNQI3Bg8dQ883-"/>
+</div>
+<div>
+<h4 class="text-sm font-bold uppercase tracking-tighter">Lady Elena of Aurelia</h4>
+<p class="text-[10px] font-medium text-royal-blue/50">Reader of 'The Golden Lyre'</p>
+</div>
+</div>
+</div>
+<!-- Review 2: Letter Style -->
+<div class="bg-[#fffdf7] rounded-sm p-8 shadow-md border-b-4 border-primary/30 flex flex-col gap-4 relative">
+<div class="absolute -top-3 left-1/2 -translate-x-1/2">
+<span class="material-symbols-outlined text-primary text-2xl">shield_lock</span>
+</div>
+<div class="flex justify-between items-start mt-4">
+<div class="flex gap-0.5 text-primary">
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+</div>
+<span class="text-[10px] uppercase font-bold tracking-widest text-royal-blue/40">3 Sept 1892</span>
+</div>
+<p class="text-royal-blue text-lg leading-relaxed italic font-medium">
+                        "A masterpiece of musical literature. 'Symphony of Stars' didn't just tell a story; it conducted an orchestra of emotions within me. Truly adventurous!"
+                    </p>
+<div class="mt-4 pt-4 border-t border-primary/10 flex items-center gap-3">
+<div class="size-10 rounded-full bg-primary/20 border border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a man with a scholarly expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkEDhsvrMBZdxzW3BY5r0lnRd0aRL-C8QZ0jPODK8mlgpvFmHCrQnc-pTQKziDe0p2-z_3AqY6zRxiKfCOPZFd1UVbvenZRZb_MkXxjrofhyBMEngMNCHDnF5n8Wp0lp7dWCJ6sJ2ixPuvO3kSUKnPZcr361I32-JvbZRSHerBQ5EhhBv4wD6hOZktYGoVte9XfHLl3q7vbKckPDeyWnS_d4fx1M0hYk9y5J-AHf2J-_eiPYy8wnNnNyAZ74NXKR-IHIzstwreKFzJ"/>
+</div>
+<div>
+<h4 class="text-sm font-bold uppercase tracking-tighter">Professor Silas Penhaligon</h4>
+<p class="text-[10px] font-medium text-royal-blue/50">Scholar of 'Symphony of Stars'</p>
+</div>
+</div>
+</div>
+<!-- Review 3: Parchment Scrap -->
+<div class="bg-parchment shadow-inner border border-primary/20 rounded-lg p-8 flex flex-col gap-4 relative -rotate-1 hover:rotate-0 transition-transform">
+<div class="absolute top-2 right-2">
+<span class="material-symbols-outlined text-primary/30 text-4xl">music_note</span>
+</div>
+<div class="flex justify-between items-start">
+<div class="flex gap-0.5 text-primary">
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg">star</span>
+</div>
+<span class="text-[10px] uppercase font-bold tracking-widest text-royal-blue/40">24 Aug 1892</span>
+</div>
+<p class="text-royal-blue text-lg leading-relaxed italic font-medium">
+                        "Whimsical, daring, and deeply moving. Every chapter felt like a new movement in a grand concerto. I wait impatiently for the next volume!"
+                    </p>
+<div class="mt-4 pt-4 border-t border-primary/10 flex items-center gap-3">
+<div class="size-10 rounded-full bg-primary/20 border border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a young adventurer in classic attire" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB99I_3shKBzQUqYBMHUv3IqamZvcygsc2FJziZLsY-tIWTHAsL9j4l9us7BF3GDn6p1aSivsOyBtEBjJDPWJ3AUVTIIn9vNy6k4ts-JXeDwLfmtURvARxT_k_XFpryLQvfUC578xK5KTFDryXBfH6XKLJcwDDn7xosMcqp_dZo6qWbXvOjloMBHQc1orWFFXPsR7atq28YVscqSeQZqexGXGU-UA8tNqKUZg_9ZMgB3U1n5i4GXh2q8171Hc35smp8GRJl-45TFxMj"/>
+</div>
+<div>
+<h4 class="text-sm font-bold uppercase tracking-tighter">Clara the Dreamer</h4>
+<p class="text-[10px] font-medium text-royal-blue/50">Voyager of 'Royal Lullabies'</p>
+</div>
+</div>
+</div>
+<!-- Review 4: Tattered Map Fragment -->
+<div class="bg-[#f0e8d0] rounded-sm p-8 shadow-lg border border-primary/10 flex flex-col gap-4 relative rotate-1">
+<div class="absolute -bottom-4 -right-2 text-primary/20">
+<span class="material-symbols-outlined text-6xl">explore</span>
+</div>
+<div class="flex justify-between items-start">
+<div class="flex gap-0.5 text-primary">
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+</div>
+<span class="text-[10px] uppercase font-bold tracking-widest text-royal-blue/40">15 July 1892</span>
+</div>
+<p class="text-royal-blue text-lg leading-relaxed italic font-medium">
+                        "Uncovering the secrets of the Royal Archive through these books has been the adventure of a lifetime. The prose is as rhythmic as a waltz."
+                    </p>
+<div class="mt-4 pt-4 border-t border-primary/10 flex items-center gap-3">
+<div class="size-10 rounded-full bg-primary/20 border border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of an explorer in a vintage hat" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFBdwdFEjLnG7T9zeqaO8Klw4-pkv1C_Hve0lpzUG1SfDNOExMGxkLnyfFBsY_gDMPviUnqhOmtadlD2dBKs1gUy0tF_tSpQf0i7FWN7Xp_b2Sa9cMYo8R9UqM6c64TOqW8h_ySv8CnrEcGfhdU_Ao7rX0r_kcpzPw3ZEezUlbUl8RrRU38oHW9BkTa9xo8keDeMlH6G7TmNu1utbbgZW3ZsEpGj5Qd2KoKEui0HqUDKNJbQuD8RGH8JqpUrbWBK7xG6a41coIedID"/>
+</div>
+<div>
+<h4 class="text-sm font-bold uppercase tracking-tighter">Captain Thorne</h4>
+<p class="text-[10px] font-medium text-royal-blue/50">Reader of 'The Archival Echo'</p>
+</div>
+</div>
+</div>
+<!-- Review 5: Gold Foil Letter -->
+<div class="bg-white rounded-xl p-8 shadow-2xl border-2 border-primary/40 flex flex-col gap-4 relative">
+<div class="absolute -top-4 right-8 bg-primary text-royal-blue px-3 py-1 rounded-full text-[10px] font-black uppercase shadow-lg">Royal Choice</div>
+<div class="flex justify-between items-start">
+<div class="flex gap-0.5 text-primary">
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+</div>
+<span class="text-[10px] uppercase font-bold tracking-widest text-royal-blue/40">20 June 1892</span>
+</div>
+<p class="text-royal-blue text-lg leading-relaxed italic font-bold">
+                        "Simply divine! This author has captured the sound of starlight itself. Every library in the kingdom should house these treasures."
+                    </p>
+<div class="mt-4 pt-4 border-t border-primary/10 flex items-center gap-3">
+<div class="size-10 rounded-full bg-primary/20 border border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a royal dignitary" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvfDoZ5R9g3RIwRFhTjJGgqo1sPdK221fTOgwKdM7Llv2qO7IiekUJp4xTR59HkVK1vSBljY5v9UOiiBrkh4E0gYMImIuNs6DpC36Wu2058xv2UwGFYdAKQhi50H-wyd_pRiUbKFZGIRVnYKfmIxTMikNZ9xrYB6lpIxTSAAWj5PEu441mq_5UcPqON_KxLQGPSJeZoxLtyOsy10Me0I5rSiuOtC8dMU9Cjrsgx1PEdHaXZMHkO29Eqd-PGKmZ9dpHpEOWo1JpmzuW"/>
+</div>
+<div>
+<h4 class="text-sm font-bold uppercase tracking-tighter">Duchess of Highnote</h4>
+<p class="text-[10px] font-medium text-royal-blue/50">Patron of 'The Archive'</p>
+</div>
+</div>
+</div>
+<!-- Review 6: Simple Postcard -->
+<div class="bg-[#fcf8ef] rounded-lg p-8 shadow-lg border border-primary/5 flex flex-col gap-4 relative">
+<div class="absolute top-4 right-4">
+<span class="material-symbols-outlined text-primary/40">mail</span>
+</div>
+<div class="flex justify-between items-start">
+<div class="flex gap-0.5 text-primary">
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg">star</span>
+</div>
+<span class="text-[10px] uppercase font-bold tracking-widest text-royal-blue/40">10 May 1892</span>
+</div>
+<p class="text-royal-blue text-lg leading-relaxed italic font-medium">
+                        "Enchanting. Whimsical. A delightful escape that reminds us why music is the strongest form of magic we possess."
+                    </p>
+<div class="mt-4 pt-4 border-t border-primary/10 flex items-center gap-3">
+<div class="size-10 rounded-full bg-primary/20 border border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a smiling young reader" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKAiKN8XlnfEjHaq0lU-xH61BIJUgPHGy7O4T-RuBCcFyAE8BX5MRmAFRzF_lZq6U-e9paa4CdEjz38vnzwG9Eddb0aOvcgHjQK7lCaC5x9gt7RBU_GlqndBiPrhJ4HaJsRX-Qa1pQSR5umTEpz526NrJmXozP4l6a5zHy7jX8Lfw6Ak9oZqiYQau6AHyJasBA69CSs-llwXQwWm5g3Ou1mvPP3uOnwWwOcmarWOwYYgY5fNslDQ0toPqW_eumFqjZEi1jnQ2No6o9"/>
+</div>
+<div>
+<h4 class="text-sm font-bold uppercase tracking-tighter">Master Barnaby</h4>
+<p class="text-[10px] font-medium text-royal-blue/50">Reader of 'The Golden Lyre'</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Load More Magic -->
+<div class="flex justify-center mt-20">
+<button class="px-10 py-4 border-2 border-primary text-royal-blue rounded-full font-bold uppercase tracking-widest hover:bg-primary transition-all flex items-center gap-3">
+<span class="material-symbols-outlined">history_edu</span>
+                    Consult Further Archives
+                </button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="mt-20 border-t-2 border-primary/20 bg-royal-blue text-parchment p-12 text-center">
+<div class="flex items-center justify-center gap-4 mb-6">
+<span class="material-symbols-outlined text-primary text-4xl">auto_stories</span>
+<span class="text-2xl font-black italic tracking-tighter">The Royal Musical Archive</span>
+</div>
+<p class="max-w-md mx-auto text-parchment/60 italic mb-8">
+                Preserving the melodies of the past for the dreamers of the future.
+            </p>
+<div class="flex justify-center gap-8 mb-8">
+<a class="hover:text-primary transition-colors uppercase text-xs font-bold tracking-widest" href="#">Library</a>
+<a class="hover:text-primary transition-colors uppercase text-xs font-bold tracking-widest" href="#">Symphonies</a>
+<a class="hover:text-primary transition-colors uppercase text-xs font-bold tracking-widest" href="#">The Author</a>
+</div>
+<p class="text-[10px] uppercase tracking-[0.2em] font-medium text-parchment/30">
+                © 1892 The Royal Conservatory of Literary Arts. All Rights Reserved.
+            </p>
+</footer>
+</div>
+</body></html>
