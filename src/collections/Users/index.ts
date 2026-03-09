@@ -6,6 +6,7 @@ import { adminOrSelf } from '@/access/adminOrSelf'
 import { publicAccess } from '@/access/publicAccess'
 import { checkRole } from '@/access/utilities'
 
+import { emailTemplates } from '@/utilities/emailTemplates'
 import { CustomTranslationsKeys } from '@/utilities/translations'
 import { TFunction } from 'node_modules/@payloadcms/translations/dist/types'
 import { ensureFirstUserIsAdmin } from './hooks/ensureFirstUserIsAdmin'
@@ -36,12 +37,14 @@ export const Users: CollectionConfig = {
   },
   auth: {
     tokenExpiration: 1209600,
-    verify: true,
+    // verify: true,
     forgotPassword: {
-      generateEmailHTML: (args) => {
-        const token = args?.token ?? ''
-        return `<a href="${process.env.NEXT_PUBLIC_SERVER_URL}/reset-password?token=${token}">Reset your password</a>`
-      },
+      generateEmailHTML: (args) => emailTemplates.forgotPassword(args?.token ?? ''),
+      generateEmailSubject: () => emailTemplates.subjects.forgotPassword,
+    },
+    verify: {
+      generateEmailHTML: (args) => emailTemplates.verify(args?.token ?? ''),
+      generateEmailSubject: () => emailTemplates.subjects.verify,
     },
   },
   fields: [
