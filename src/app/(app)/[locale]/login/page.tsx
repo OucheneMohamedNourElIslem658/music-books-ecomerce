@@ -2,13 +2,11 @@ import type { Metadata } from 'next'
 
 import { LoginForm } from '@/components/forms/LoginForm'
 import { RenderParams } from '@/components/RenderParams'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
 import { redirect } from '@/i18n/navigation'
 import configPromise from '@payload-config'
-import { LogInIcon } from 'lucide-react'
 import { headers as getHeaders } from 'next/headers'
 import { getPayload } from 'payload'
+import { AuthLayout } from '@/components/layout/AuthLayout'
 
 interface Props {
   params: Promise<{ locale: string }>
@@ -29,43 +27,13 @@ export default async function Login({ params }: Props) {
   }
 
   return (
-    <div className="container py-12">
-      <div className="max-w-md mx-auto">
-        <RenderParams />
-
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                <LogInIcon className="size-5" />
-              </div>
-              <div>
-                <CardTitle className="text-xl font-semibold text-foreground">Log in</CardTitle>
-                <CardDescription className="text-muted-foreground">
-                  Welcome back. Sign in to your account.
-                </CardDescription>
-              </div>
-            </div>
-            <Separator className="mt-4" />
-          </CardHeader>
-
-          <CardContent className="flex flex-col gap-6">
-            {/* <p className="text-sm text-muted-foreground">
-              To create your account,{' '}
-              <Link
-                href="/create-account"
-                className="text-primary hover:no-underline underline-offset-4 underline"
-              >
-                sign up and create a new account
-              </Link>
-              .
-            </p> */}
-
-            <LoginForm />
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+    <AuthLayout
+      title="The Gatekeeper's Portal"
+      description="Whisper your credentials to enter the ancient library of melodies."
+    >
+      <RenderParams />
+      <LoginForm />
+    </AuthLayout>
   )
 }
 

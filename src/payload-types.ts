@@ -281,7 +281,11 @@ export interface Product {
     };
     [k: string]: unknown;
   } | null;
-  song?: (number | null) | Media;
+  songGroup?: {
+    title?: string | null;
+    description?: string | null;
+    song?: (number | null) | Media;
+  };
   gallery?:
     | {
         image: number | Media;
@@ -1787,7 +1791,13 @@ export interface VariantOptionsSelect<T extends boolean = true> {
 export interface ProductsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
-  song?: T;
+  songGroup?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        song?: T;
+      };
   gallery?:
     | T
     | {

@@ -8,19 +8,24 @@ export default function ShopLayout({ children }: { children: React.ReactNode }) 
   return (
     <div className="container py-6 md:py-16">
 
-      {/* Filter Control Bar - Fully Responsive */}
+      {/* Filter Control Bar */}
       <section className="mb-12">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between pb-8">
-          <div className="w-full lg:w-auto overflow-hidden mask-[linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+
+          <div className="w-full lg:w-auto">
             <Categories />
           </div>
+
           <div className="flex items-center gap-5 shrink-0 w-full lg:w-auto justify-between lg:justify-end pt-6 lg:pt-0">
             <ShopSearch />
-            <div className='flex gap-3 items-center'>
-              <span className="shrink-0 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Sort by:</span>
+            <div className="flex gap-3 items-center">
+              <span className="shrink-0 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
+                Sort by:
+              </span>
               <FilterList list={sorting} />
             </div>
           </div>
+
         </div>
       </section>
 
