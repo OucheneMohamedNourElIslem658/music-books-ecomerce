@@ -15,13 +15,9 @@ export function GlobalAudioPlayer() {
 
     const [visible, setVisible] = useState(false)
 
-    // Animate in when pinned
     useEffect(() => {
-        if (pinned) {
-            requestAnimationFrame(() => setVisible(true))
-        } else {
-            setVisible(false)
-        }
+        if (pinned) requestAnimationFrame(() => setVisible(true))
+        else setVisible(false)
     }, [!!pinned])
 
     if (!pinned) return null
@@ -38,11 +34,17 @@ export function GlobalAudioPlayer() {
             'fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-2xl transition-all duration-500',
             visible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0',
         )}>
-            {/* Pill container */}
-            <div data-theme="dark" className="bg-slate-900/90 backdrop-blur-xl border border-white/10 rounded-full shadow-2xl shadow-black/40 glow-primary overflow-hidden">
-
-                {/* Progress bar — sits at very top of pill, hairline thin */}
-                <div className="h-[2px] w-full bg-white/10">
+            {/* Pill */}
+            <div className="
+        bg-white/90 dark:bg-slate-900/90
+        border border-black/10 dark:border-white/10
+        backdrop-blur-xl rounded-full
+        shadow-2xl shadow-black/10 dark:shadow-black/40
+        overflow-hidden
+        [box-shadow:0_0_20px_rgba(var(--primary-rgb,43,108,238),0.2)]
+      ">
+                {/* Progress bar */}
+                <div className="h-[2px] w-full bg-black/10 dark:bg-white/10">
                     <div
                         className="h-full bg-primary transition-all duration-300"
                         style={{ width: `${pinnedProgress}%` }}
@@ -55,7 +57,7 @@ export function GlobalAudioPlayer() {
                     {pinned.sourceSlug ? (
                         <Link
                             href={`/products/${pinned.sourceSlug}`}
-                            className="size-12 rounded-full overflow-hidden shrink-0 border border-white/10 relative block"
+                            className="size-12 rounded-full overflow-hidden shrink-0 border border-black/10 dark:border-white/10 relative block"
                         >
                             {pinned.thumbnail ? (
                                 <Media resource={pinned.thumbnail} fill imgClassName="object-cover" />
@@ -66,7 +68,7 @@ export function GlobalAudioPlayer() {
                             )}
                         </Link>
                     ) : (
-                        <div className="size-12 rounded-full overflow-hidden shrink-0 border border-white/10 relative">
+                        <div className="size-12 rounded-full overflow-hidden shrink-0 border border-black/10 dark:border-white/10 relative">
                             {pinned.thumbnail ? (
                                 <Media resource={pinned.thumbnail} fill imgClassName="object-cover" />
                             ) : (
@@ -82,10 +84,10 @@ export function GlobalAudioPlayer() {
                         <p className="text-[10px] font-bold text-primary uppercase tracking-tighter truncate">
                             Now Playing
                         </p>
-                        <p className="text-sm font-bold text-white truncate">
+                        <p className="text-sm font-bold text-slate-900 dark:text-white truncate">
                             {pinned.title}
                             {pinned.sourceTitle && (
-                                <span className="text-white/40 font-normal"> — {pinned.sourceTitle}</span>
+                                <span className="text-slate-500 dark:text-white/40 font-normal"> — {pinned.sourceTitle}</span>
                             )}
                         </p>
                     </div>
@@ -102,16 +104,13 @@ export function GlobalAudioPlayer() {
                                         'w-[3px] bg-primary rounded-full',
                                         isPinnedPlaying ? 'animate-waveform' : 'opacity-30',
                                     )}
-                                    style={{
-                                        height: `${h * 16}%`,
-                                        animationDelay: `${i * 0.1}s`,
-                                    }}
+                                    style={{ height: `${h * 16}%`, animationDelay: `${i * 0.1}s` }}
                                 />
                             ))}
                         </div>
 
                         {/* Time */}
-                        <span className="hidden md:block text-[10px] font-mono text-white/40 tabular-nums">
+                        <span className="hidden md:block text-[10px] font-mono text-slate-400 dark:text-white/40 tabular-nums">
                             {fmt(currentTime)} / {fmt(pinnedDuration)}
                         </span>
 
@@ -125,11 +124,10 @@ export function GlobalAudioPlayer() {
                                 : <Play className="size-4 fill-current translate-x-0.5" />}
                         </button>
 
-                        {/* Close / Unpin */}
+                        {/* Unpin */}
                         <button
                             onClick={unpin}
-                            className="text-white/40 hover:text-white transition-colors"
-                            title="Unpin"
+                            className="text-slate-400 dark:text-white/40 hover:text-slate-700 dark:hover:text-white transition-colors"
                         >
                             <X className="size-5" />
                         </button>
@@ -137,11 +135,10 @@ export function GlobalAudioPlayer() {
                 </div>
             </div>
 
-            {/* Clickable seek overlay — invisible, sits over the progress line */}
+            {/* Seek range */}
             <input
                 type="range"
-                min="0"
-                max="100"
+                min="0" max="100"
                 value={pinnedProgress}
                 onChange={e => seekPinned(Number(e.target.value))}
                 className="absolute top-0 left-0 w-full h-[6px] opacity-0 cursor-pointer"
