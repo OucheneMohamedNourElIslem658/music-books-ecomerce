@@ -1,12 +1,7 @@
 'use client'
 
 import { FormError } from '@/components/forms/FormError'
-import { FormItem } from '@/components/forms/FormItem'
 import { Message } from '@/components/Message'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Separator } from '@/components/ui/separator'
 import { Link } from '@/i18n/navigation'
 import { useAuth } from '@/providers/Auth'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -50,57 +45,82 @@ export const LoginForm: React.FC = () => {
   )
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
       <Message error={error} />
 
-      <div className="flex flex-col gap-4">
-        <FormItem>
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            type="email"
-            {...register('email', { required: 'Email is required.' })}
-          />
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-2">
+          <label className="text-[#4a3728] text-sm font-bold uppercase tracking-wider pl-1 font-display" htmlFor="email">
+            Chronicler Name
+          </label>
+          <div className="relative">
+            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#8a7241]">
+              person_book
+            </span>
+            <input
+              id="email"
+              type="email"
+              {...register('email', { required: 'Email is required.' })}
+              className="w-full bg-white/50 border-2 border-[#d9cdab] rounded-xl py-4 pl-12 pr-4 text-[#4a3728] placeholder-[#a69671] focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-sans"
+              placeholder="Enter your email"
+            />
+          </div>
           {errors.email && <FormError message={errors.email.message} />}
-        </FormItem>
+        </div>
 
-        <FormItem>
-          <Label htmlFor="password">Password</Label>
-          <Input
-            id="password"
-            type="password"
-            {...register('password', { required: 'Please provide a password.' })}
-          />
+        <div className="flex flex-col gap-2">
+          <label className="text-[#4a3728] text-sm font-bold uppercase tracking-wider pl-1 font-display" htmlFor="password">
+            Secret Key
+          </label>
+          <div className="relative">
+            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#8a7241]">
+              key
+            </span>
+            <input
+              id="password"
+              type="password"
+              {...register('password', { required: 'Please provide a password.' })}
+              className="w-full bg-white/50 border-2 border-[#d9cdab] rounded-xl py-4 pl-12 pr-12 text-[#4a3728] placeholder-[#a69671] focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-sans"
+              placeholder="Enter your secret key"
+            />
+          </div>
           {errors.password && <FormError message={errors.password.message} />}
-        </FormItem>
+        </div>
       </div>
 
-      <p className="text-sm text-muted-foreground">
-        Forgot your password?{' '}
-        <Link
-          href={`/forgot-password${allParams}`}
-          className="text-primary hover:no-underline underline-offset-4 underline"
-        >
-          Click here to reset it
-        </Link>
-      </p>
+      <Link
+        href={`/forgot-password${allParams}`}
+        className="text-xs font-bold shrink-0 text-primary uppercase tracking-tighter hover:underline font-display flex justify-end"
+      >
+        Lost the Key?
+      </Link>
 
-      <Separator />
-
-      <div className="flex gap-3">
-        <Button asChild variant="outline" size="lg" className="flex-1 rounded-full">
-          <Link href={`/create-account${allParams}`}>
-            Create account
-          </Link>
-        </Button>
-        <Button
-          className="flex-1 rounded-full"
-          disabled={isSubmitting}
-          size="lg"
+      {/* Login Button - The Wax Seal */}
+      <div className="flex justify-center pt-8 pb-10">
+        <button
+          className="wax-seal group relative flex h-24 w-24 items-center justify-center rounded-full bg-primary text-white border-4 border-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
           type="submit"
+          disabled={isSubmitting}
         >
-          {isSubmitting ? 'Signing in…' : 'Continue'}
-        </Button>
+          <div className="absolute inset-0 rounded-full border-2 border-white/30 scale-90"></div>
+          <span className="material-symbols-outlined text-4xl group-hover:scale-110 transition-transform">
+            {isSubmitting ? 'hourglass_empty' : 'lock_open'}
+          </span>
+          {/* Button Label */}
+          <div className="absolute -bottom-8 whitespace-nowrap text-[#4a3728] font-bold text-sm tracking-[0.2em] uppercase font-display">
+            {isSubmitting ? 'Unsealing...' : 'Unseal Portal'}
+          </div>
+        </button>
+      </div>
+
+      <div className="mt-8 w-full text-center border-t border-[#d9cdab] pt-6">
+        <p className="text-[#6d5b4b] text-sm font-display">Not yet a member of our world?</p>
+        <Link
+          className="inline-block mt-2 text-primary font-bold magical-glow hover:scale-105 transition-transform font-display"
+          href={`/create-account${allParams}`}
+        >
+          Join the Guild <span className="ml-1">→</span>
+        </Link>
       </div>
     </form>
   )

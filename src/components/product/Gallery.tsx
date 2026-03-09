@@ -5,11 +5,7 @@ import type { Media as MediaType, Product } from '@/payload-types'
 import { Media } from '@/components/Media'
 import { Button } from '@/components/ui/button'
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel'
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { Play } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 import { DefaultDocumentIDType } from 'payload'
@@ -18,7 +14,7 @@ import { AudioPlayer } from '../AudioPlayer'
 
 type Props = {
   gallery: NonNullable<Product['gallery']>
-  song?: Product['song']
+  song?: Product['songGroup']
 }
 
 export const Gallery: React.FC<Props> = ({ gallery, song }) => {
@@ -27,26 +23,14 @@ export const Gallery: React.FC<Props> = ({ gallery, song }) => {
   const [api, setApi] = React.useState<CarouselApi>()
   const [audioOpen, setAudioOpen] = useState(false)
 
-  const songData = song && typeof song === 'object' ? (song as MediaType) : null
-  const audioUrl = songData?.url || null
-
-  useEffect(() => {
-    if (!api) return
-  }, [api])
-
   useEffect(() => {
     const values = Array.from(searchParams.values())
-
     if (values && api) {
       const index = gallery.findIndex((item) => {
         if (!item.variantOption) return false
-
         let variantID: DefaultDocumentIDType
-
-        if (typeof item.variantOption === 'object') {
-          variantID = item.variantOption.id
-        } else variantID = item.variantOption
-
+        if (typeof item.variantOption === 'object') variantID = item.variantOption.id
+        else variantID = item.variantOption
         return Boolean(values.find((value) => value === String(variantID)))
       })
       if (index !== -1) {
@@ -60,20 +44,16 @@ export const Gallery: React.FC<Props> = ({ gallery, song }) => {
     <div className="flex flex-col gap-8">
       {/* Main image + song button */}
       <div className="relative group">
-        <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full scale-75 -z-10"></div>
+        <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full scale-75 -z-10" />
         <div className="relative rounded-xl overflow-hidden shadow-2xl aspect-[4/5] bg-muted transition-transform duration-500 group-hover:scale-[1.02]">
-          <Media
-            resource={gallery[current].image}
-            fill
-            imgClassName="object-cover"
-          />
+          <Media resource={gallery[current].image} fill imgClassName="object-cover" />
         </div>
 
-        {audioUrl && (
+        {song && (
           <div className="absolute bottom-8 right-8">
             <Button
               size="lg"
-              className="flex items-center gap-4 bg-primary hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95 group/btn"
+              className="flex items-center gap-4 bg-primary hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95"
               onClick={() => setAudioOpen(true)}
             >
               <Play className="size-5 fill-current" />
@@ -89,7 +69,6 @@ export const Gallery: React.FC<Props> = ({ gallery, song }) => {
           <CarouselContent className="-ml-4">
             {gallery.map((item, i) => {
               if (typeof item.image !== 'object') return null
-
               return (
                 <CarouselItem
                   className="basis-1/4 sm:basis-1/5 pl-4 cursor-pointer"
@@ -106,15 +85,18 @@ export const Gallery: React.FC<Props> = ({ gallery, song }) => {
         </Carousel>
       )}
 
-      {/* Audio player dialog */}
-      {audioUrl && (
+      {/* Audio player dialog — constrained to viewport, no overflow */}
+      {song && (
         <Dialog open={audioOpen} onOpenChange={setAudioOpen}>
-          <DialogContent className="p-0 bg-transparent border-none shadow-none">
-            <DialogTitle className="sr-only">Song Player</DialogTitle>
+          <DialogContent
+            className="p-0 border-none bg-transparent shadow-none w-[calc(100vw-2rem)] max-w-lg"
+            showCloseButton={false}
+          >
+            <DialogTitle className="sr-only">Audio Player</DialogTitle>
             <AudioPlayer
-              url={audioUrl}
-              title={songData?.filename || 'Enchanted Melody'}
-              thumbnail={gallery[0].image}
+              audio={song.song as MediaType}
+              title={song.title || (song.song as MediaType).filename}
+              description={song.description}
               onClose={() => setAudioOpen(false)}
             />
           </DialogContent>

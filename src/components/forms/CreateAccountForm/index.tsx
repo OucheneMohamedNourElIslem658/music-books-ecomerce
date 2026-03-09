@@ -62,71 +62,97 @@ export const CreateAccountForm: React.FC = () => {
   )
 
   return (
-    <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
-
-      {/* <p className="text-sm text-muted-foreground">
-        If you already have an account,{' '}
-        <Link
-          href="/login"
-          className="text-primary hover:no-underline underline-offset-4 underline"
-        >
-          log in instead
-        </Link>
-        .
-      </p> */}
-
+    <form className="w-full space-y-6" onSubmit={handleSubmit(onSubmit)}>
       <Message error={error} />
 
-      <div className="flex flex-col gap-4">
-        <FormItem>
-          <Label htmlFor="email">Email Address</Label>
-          <Input
-            id="email"
-            {...register('email', { required: 'Email is required.' })}
-            type="email"
-          />
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-2">
+          <label className="text-[#4a3728] text-sm font-bold uppercase tracking-wider pl-1 font-display" htmlFor="email">
+            Chronicler Email
+          </label>
+          <div className="relative">
+            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#8a7241]">
+              mail
+            </span>
+            <input
+              id="email"
+              {...register('email', { required: 'Email is required.' })}
+              type="email"
+              className="w-full bg-white/50 border-2 border-[#d9cdab] rounded-xl py-4 pl-12 pr-4 text-[#4a3728] placeholder-[#a69671] focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-sans"
+              placeholder="Enter your email"
+            />
+          </div>
           {errors.email && <FormError message={errors.email.message} />}
-        </FormItem>
+        </div>
 
-        <FormItem>
-          <Label htmlFor="password">New Password</Label>
-          <Input
-            id="password"
-            {...register('password', { required: 'Password is required.' })}
-            type="password"
-          />
+        <div className="flex flex-col gap-2">
+          <label className="text-[#4a3728] text-sm font-bold uppercase tracking-wider pl-1 font-display" htmlFor="password">
+            Secret Key
+          </label>
+          <div className="relative">
+            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#8a7241]">
+              key
+            </span>
+            <input
+              id="password"
+              {...register('password', { required: 'Password is required.' })}
+              type="password"
+              className="w-full bg-white/50 border-2 border-[#d9cdab] rounded-xl py-4 pl-12 pr-4 text-[#4a3728] placeholder-[#a69671] focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-sans"
+              placeholder="Create your secret key"
+            />
+          </div>
           {errors.password && <FormError message={errors.password.message} />}
-        </FormItem>
+        </div>
 
-        <FormItem>
-          <Label htmlFor="passwordConfirm">Confirm Password</Label>
-          <Input
-            id="passwordConfirm"
-            {...register('passwordConfirm', {
-              required: 'Please confirm your password.',
-              validate: (value) => value === password.current || 'The passwords do not match',
-            })}
-            type="password"
-          />
+        <div className="flex flex-col gap-2">
+          <label className="text-[#4a3728] text-sm font-bold uppercase tracking-wider pl-1 font-display" htmlFor="passwordConfirm">
+            Confirm Secret Key
+          </label>
+          <div className="relative">
+            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#8a7241]">
+              enhanced_encryption
+            </span>
+            <input
+              id="passwordConfirm"
+              {...register('passwordConfirm', {
+                required: 'Please confirm your password.',
+                validate: (value) => value === password.current || 'The passwords do not match',
+              })}
+              type="password"
+              className="w-full bg-white/50 border-2 border-[#d9cdab] rounded-xl py-4 pl-12 pr-4 text-[#4a3728] placeholder-[#a69671] focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-sans"
+              placeholder="Confirm your secret key"
+            />
+          </div>
           {errors.passwordConfirm && <FormError message={errors.passwordConfirm.message} />}
-        </FormItem>
+        </div>
       </div>
 
-      <Separator />
-
-      <div className="flex gap-3">
-        <Button asChild variant="outline" className="flex-1 rounded-full">
-          <Link href={`/login${allParams}`}>Log in instead</Link>
-        </Button>
-        <Button
-          disabled={loading}
+      <div className="flex justify-center pt-8 pb-10">
+        <button
+          className="wax-seal group relative flex h-24 w-24 items-center justify-center rounded-full bg-primary text-white border-4 border-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
           type="submit"
-          className="flex-1 rounded-full"
+          disabled={loading}
         >
-          {loading ? 'Creating account…' : 'Create Account'}
-        </Button>
+          <div className="absolute inset-0 rounded-full border-2 border-white/30 scale-90"></div>
+          <span className="material-symbols-outlined text-4xl group-hover:scale-110 transition-transform">
+            {loading ? 'hourglass_empty' : 'person_add'}
+          </span>
+          {/* Button Label */}
+          <div className="absolute -bottom-8 whitespace-nowrap text-[#4a3728] font-bold text-sm tracking-[0.2em] uppercase font-display">
+            {loading ? 'Enlisting...' : 'Join Guild'}
+          </div>
+        </button>
       </div>
 
+      <div className="mt-8 w-full text-center border-t border-[#d9cdab] pt-6">
+        <p className="text-[#6d5b4b] text-sm font-display">Already a member of our world?</p>
+        <Link
+          className="inline-block mt-2 text-primary font-bold magical-glow hover:scale-105 transition-transform font-display"
+          href={`/login${allParams}`}
+        >
+          Return to Portal <span className="ml-1">→</span>
+        </Link>
+      </div>
     </form>
   )
 }

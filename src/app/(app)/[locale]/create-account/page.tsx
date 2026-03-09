@@ -2,14 +2,12 @@ import type { Metadata } from 'next'
 
 import { CreateAccountForm } from '@/components/forms/CreateAccountForm'
 import { RenderParams } from '@/components/RenderParams'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
 import { redirect } from '@/i18n/navigation'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import configPromise from '@payload-config'
-import { UserPlusIcon } from 'lucide-react'
 import { headers as getHeaders } from 'next/headers'
 import { getPayload } from 'payload'
+import { AuthLayout } from '@/components/layout/AuthLayout'
 
 interface Props {
   params: Promise<{ locale: string }>
@@ -32,34 +30,14 @@ export default async function CreateAccount(
   }
 
   return (
-    <div className="container py-12">
-      <div className="max-w-md mx-auto">
-        <RenderParams />
-
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                <UserPlusIcon className="size-5" />
-              </div>
-              <div>
-                <CardTitle className="text-xl font-semibold text-foreground">
-                  Create Account
-                </CardTitle>
-                <CardDescription className="text-muted-foreground">
-                  Sign up to start shopping and track your orders.
-                </CardDescription>
-              </div>
-            </div>
-            <Separator className="mt-4" />
-          </CardHeader>
-
-          <CardContent>
-            <CreateAccountForm />
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+    <AuthLayout
+      title="Enlist in the Guild"
+      description="Join our fellowship of readers and melodiists to unlock the full library of wonders."
+      sealText="Guild Seal"
+    >
+      <RenderParams />
+      <CreateAccountForm />
+    </AuthLayout>
   )
 }
 

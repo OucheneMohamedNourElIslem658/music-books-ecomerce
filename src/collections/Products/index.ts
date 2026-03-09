@@ -79,15 +79,37 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
               required: false,
             },
             {
+              name: 'songGroup',
+              type: 'group',
               label: 'Song',
-              name: 'song',
-              type: 'upload',
-              relationTo: 'media',
-              filterOptions: {
-                mimeType: {
-                  contains: 'audio',
-                },
+              admin: {
+                condition: (_, siblingData) => Boolean(siblingData?.hasSong),
               },
+              fields: [
+                {
+                  name: 'title',
+                  type: 'text',
+                  label: 'Song Title',
+                  localized: true,
+                },
+                {
+                  name: 'description',
+                  type: 'text',
+                  label: 'Song Description',
+                  localized: true,
+                },
+                {
+                  label: 'Song',
+                  name: 'song',
+                  type: 'upload',
+                  relationTo: 'media',
+                  filterOptions: {
+                    mimeType: {
+                      contains: 'audio',
+                    },
+                  },
+                },
+              ],
             },
             {
               name: 'gallery',

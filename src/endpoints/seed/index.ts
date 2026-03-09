@@ -203,15 +203,15 @@ export const seed = async ({
   const [product1, product2, product3] = await Promise.all([
     payload.create({
       collection: 'products',
-      data: book1Data({ coverImage: imageBook1, categories: [fantasyCategory, orchestralCategory, childrenCategory], relatedProducts: [] }),
+      data: book1Data({ coverImage: imageBook1, categories: [fantasyCategory, orchestralCategory, childrenCategory], relatedProducts: [], song: songCrescendoTheme }),
     }),
     payload.create({
       collection: 'products',
-      data: book2Data({ coverImage: imageBook2, categories: [fantasyCategory, orchestralCategory], relatedProducts: [] }),
+      data: book2Data({ coverImage: imageBook2, categories: [fantasyCategory, orchestralCategory], relatedProducts: [], song: songCoralCantata }),
     }),
     payload.create({
       collection: 'products',
-      data: book3Data({ coverImage: imageBook3, categories: [steampunkCategory, orchestralCategory], relatedProducts: [] }),
+      data: book3Data({ coverImage: imageBook3, categories: [steampunkCategory, orchestralCategory], relatedProducts: [], song: songEchoesTheme }),
     }),
   ])
 

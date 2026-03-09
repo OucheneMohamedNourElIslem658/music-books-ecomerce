@@ -24,9 +24,9 @@ import { Pages } from '@/collections/Pages'
 import { Users } from '@/collections/Users'
 import { Footer } from '@/globals/Footer'
 import { Header } from '@/globals/Header'
+import { Reviews } from './collections/Reviews'
 import { plugins } from './plugins'
 import { customTranslations } from './utilities/translations'
-import { Reviews } from './collections/Reviews'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)

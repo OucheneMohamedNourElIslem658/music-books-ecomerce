@@ -1,4 +1,6 @@
-import { Spline_Sans, Newsreader } from "next/font/google"
+import { GlobalAudioPlayer } from "@/components/GlobalAudioPlayer"
+import { AudioProvider } from "@/providers/AudioProvider"
+import { Newsreader, Spline_Sans } from "next/font/google"
 import type { ReactNode } from 'react'
 import './globals.css'
 
@@ -37,7 +39,10 @@ export default async function AppLayout({
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
       </head>
       <body>
-        {children}
+        <AudioProvider>
+          {children}
+          <GlobalAudioPlayer />
+        </AudioProvider>
       </body>
     </html>
   )
