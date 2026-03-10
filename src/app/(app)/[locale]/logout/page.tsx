@@ -7,9 +7,7 @@ import { LogoutPage } from './LogoutPage'
 
 export default async function Logout() {
   return (
-    <div className="container max-w-lg my-16">
-      <LogoutPage />
-    </div>
+    <LogoutPage />
   )
 }
 

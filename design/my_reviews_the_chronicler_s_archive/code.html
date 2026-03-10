@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Archives of Acquisition | My Testimonies</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee", // Glowing blue
+                        "accent": "#d4af37", // Gold
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0a0c12",
+                        "card-bg": "#161b26",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Spline Sans', sans-serif;
+        }
+        .magical-glow {
+            box-shadow: 0 0 15px rgba(43, 108, 238, 0.3);
+        }
+        .gold-border {
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 dark:border-slate-800 px-6 py-4 sticky top-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md z-50">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">auto_stories</span>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-tight">The Archives of Acquisition</h2>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<label class="hidden md:flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-xl h-full bg-slate-100 dark:bg-slate-800 gold-border">
+<div class="text-slate-500 flex items-center justify-center pl-4">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent focus:ring-0 text-sm placeholder:text-slate-500" placeholder="Search the scrolls..." value=""/>
+</div>
+</label>
+<div class="flex gap-2">
+<button class="flex size-10 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary" data-alt="Avatar of the Master Librarian" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAbsmpWHOeljbBVv75C2rbyyqmQJv9vGiMLZb2t3btZyOemkjebLnA_QlP9_lks0xoN4atCmB8pVrCJ8hOYQWHZcwlwNyAi01GmiQyIEX7gUeT8rYP_tFwirEyAbwFelgUOnapZYhskLkFStYVh4j9h22hb8hU3ay6Z9L1lb9yaSLqa7fHG50vkpad7Nyfele8iLhdZMNABGfH4pYujUumI6ZkGsqE1Chm0xa-i5hbQoiu6_igVKpm4vcBCIhURFVSjkl1d_9MgNJTP");'></div>
+</div>
+</div>
+</header>
+<main class="flex-1 flex flex-col max-w-5xl mx-auto w-full px-4 md:px-8 py-8">
+<!-- Profile & Breadcrumbs -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+<div class="flex gap-4 items-center">
+<div class="bg-primary/10 p-3 rounded-2xl gold-border">
+<span class="material-symbols-outlined text-primary text-4xl">castle</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-2xl font-bold">Master Librarian</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Seeker of Lost Artifacts • Level 42 Mage</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-white font-semibold text-sm magical-glow">
+<span class="material-symbols-outlined text-sm">add</span>
+                            New Acquisition
+                        </button>
+</div>
+</div>
+<!-- Tabs Navigation -->
+<nav class="flex border-b border-slate-200 dark:border-slate-800 mb-8 overflow-x-auto whitespace-nowrap no-scrollbar">
+<a class="flex flex-col items-center border-b-2 border-primary text-primary px-6 pb-4" href="#">
+<span class="font-bold text-sm uppercase tracking-widest">Active Scrolls</span>
+</a>
+<a class="flex flex-col items-center border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 px-6 pb-4" href="#">
+<span class="font-bold text-sm uppercase tracking-widest">Past Deeds</span>
+</a>
+<a class="flex flex-col items-center border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 px-6 pb-4" href="#">
+<span class="font-bold text-sm uppercase tracking-widest">Vanished Items</span>
+</a>
+</nav>
+<!-- Section Header -->
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-accent">history_edu</span>
+                        My Testimonies
+                    </h2>
+<span class="text-xs text-slate-500 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full uppercase tracking-widest font-bold">3 Total</span>
+</div>
+<!-- Review List -->
+<div class="grid gap-6">
+<!-- Order Card 1 -->
+<div class="group flex flex-col md:flex-row gap-6 bg-card-bg rounded-xl p-6 gold-border hover:border-primary/50 transition-all duration-300 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-8xl">auto_fix_high</span>
+</div>
+<div class="w-full md:w-48 h-32 bg-slate-800 rounded-lg overflow-hidden shrink-0 border border-slate-700">
+<div class="w-full h-full bg-center bg-cover transition-transform duration-500 group-hover:scale-110" data-alt="The Symphony of Shadows" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDF2L_Erz585fqug-cLZE3Ei6HqU6WFnIDQFEZokDyO5BNEpQCUluT__xKLUD7KOlaDSq56yeOf8DDcCRLaRpvj-7Kel9fJo7NT_j6asvrFqGwDH-g4THaoBwL03UvfN1rRFkTxWfuV3U8Rcx9oRadDfgs3ofYP0nL2zTjEzjw5FrN7O-O3VSjXDUvN6qbx8Dd7aYfDWcRwrCBIprBLslBCOh2OnnxrvOnuNaSe7aZJflDUBK1E74szjrXb0fl1Wawt-LZ18rqVkgOF");'></div>
+</div>
+<div class="flex flex-col flex-1 justify-between gap-4">
+<div>
+<div class="flex items-center gap-3 mb-1">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-primary/20 text-primary border border-primary/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] animate-pulse">sync</span> 14th of Frostfall
+                                    </span>
+<span class="text-slate-500 text-xs font-medium italic">"A masterpiece of dark acoustics..."</span>
+</div>
+<h3 class="text-lg font-bold text-slate-100">The Symphony of Shadows</h3>
+<p class="text-slate-400 text-sm mt-1">Masterpiece of dark acoustics and forbidden melodies.</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-100 text-sm font-semibold transition-colors">
+<span class="material-symbols-outlined text-sm">edit_note</span>
+                                    Edit Scroll
+                                </button>
+</div>
+</div>
+<div class="flex flex-col items-end justify-center md:border-l border-slate-700 md:pl-8 min-w-[120px]">
+<span class="text-slate-400 text-xs uppercase tracking-tighter">Rating</span>
+<div class="flex text-accent">
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg">star_half</span>
+</div>
+</div>
+</div>
+<!-- Order Card 2 -->
+<div class="group flex flex-col md:flex-row gap-6 bg-card-bg rounded-xl p-6 gold-border hover:border-primary/50 transition-all duration-300 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-8xl">verified_user</span>
+</div>
+<div class="w-full md:w-48 h-32 bg-slate-800 rounded-lg overflow-hidden shrink-0 border border-slate-700">
+<div class="w-full h-full bg-center bg-cover transition-transform duration-500 group-hover:scale-110" data-alt="Celestial Harmonics" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB6dNGykn3pc_bmotDAiyXudEx-TzbXA3_g2C2Ogw2wTgU_yfYEf949gOEkqjl-W4S0EHaBWugI8Ewt6HMdZH0zWIRcxxoQw_1_T-Dl5MJDIjQRWHxL2ijSYDfZDWrBy3NnCPkRZW6j_2nC_LHPabwzSIKFIAmnDBoqUelcDbkeT4ULhM4wk91qwxfVNyEL5rNXU-6slqq8nbvJpzScdJhIUV-p7YXOlshFMw_P3x4fKXB3BjenH_4MjiqrLrK38Gt6TqfAIjSnF9gX");'></div>
+</div>
+<div class="flex flex-col flex-1 justify-between gap-4">
+<div>
+<div class="flex items-center gap-3 mb-1">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-accent/20 text-accent border border-accent/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">auto_awesome</span> 3rd of Sun's Height
+                                    </span>
+<span class="text-slate-500 text-xs font-medium italic">"Glows with light of stars..."</span>
+</div>
+<h3 class="text-lg font-bold text-slate-100">Celestial Harmonics</h3>
+<p class="text-slate-400 text-sm mt-1">Music that transcends the physical realm.</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-100 text-sm font-semibold transition-colors">
+<span class="material-symbols-outlined text-sm">edit_note</span>
+                                    Edit Scroll
+                                </button>
+</div>
+</div>
+<div class="flex flex-col items-end justify-center md:border-l border-slate-700 md:pl-8 min-w-[120px]">
+<span class="text-slate-400 text-xs uppercase tracking-tighter">Rating</span>
+<div class="flex text-accent">
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+</div>
+</div>
+</div>
+<!-- Order Card 3 -->
+<div class="group flex flex-col md:flex-row gap-6 bg-card-bg rounded-xl p-6 gold-border hover:border-primary/50 transition-all duration-300 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-8xl">local_shipping</span>
+</div>
+<div class="w-full md:w-48 h-32 bg-slate-800 rounded-lg overflow-hidden shrink-0 border border-slate-700">
+<div class="w-full h-full bg-center bg-cover transition-transform duration-500 group-hover:scale-110" data-alt="Forbidden Lullabies" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBve0Zt4mUDZsd6WPX4dohXvpnZM4jfyO1N3tQywVzU4ft8GESiPzFSALa0FS1sv6Sk8MOyAt6-EqCkuwdU8ZjeNlkdxttKMdVBkYFxbHPBu7O4kAWNosqF4dUbS-SdGV3HMh9S2hddH5f1a2bWDJiRRZ3fSEhZPj3ApUoljiJ3iRTtRLxuilrQPZCXhg4Y9FPdxLTJGpK2j4LC2z9pD9njKwgwa5hFoVGCFvvyVIO7n30LQu6jHSMiEcbl7ev2jONqsYnTJTJku-P0");'></div>
+</div>
+<div class="flex flex-col flex-1 justify-between gap-4">
+<div>
+<div class="flex items-center gap-3 mb-1">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-primary/20 text-primary border border-primary/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">flight_takeoff</span> 28th of Morning Star
+                                    </span>
+<span class="text-slate-500 text-xs font-medium italic">"Resonance was inconsistent..."</span>
+</div>
+<h3 class="text-lg font-bold text-slate-100">Forbidden Lullabies</h3>
+<p class="text-slate-400 text-sm mt-1">Arrangements felt a bit uninspired.</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-100 text-sm font-semibold transition-colors">
+<span class="material-symbols-outlined text-sm">edit_note</span>
+                                    Edit Scroll
+                                </button>
+</div>
+</div>
+<div class="flex flex-col items-end justify-center md:border-l border-slate-700 md:pl-8 min-w-[120px]">
+<span class="text-slate-400 text-xs uppercase tracking-tighter">Rating</span>
+<div class="flex text-accent">
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg fill-1">star</span>
+<span class="material-symbols-outlined text-lg text-slate-600">star</span>
+<span class="material-symbols-outlined text-lg text-slate-600">star</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Summary -->
+<footer class="mt-12 py-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-slate-500 text-sm italic">"Acquiring the impossible, one scroll at a time."</p>
+<div class="flex gap-4">
+<a class="text-primary hover:underline text-sm font-medium" href="#">Contact Librarian</a>
+<a class="text-primary hover:underline text-sm font-medium" href="#">Archive Policy</a>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

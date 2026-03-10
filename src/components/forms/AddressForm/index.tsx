@@ -1,11 +1,10 @@
 'use client'
 
-import React, { useCallback } from 'react'
-import { useForm } from 'react-hook-form'
+import { FormError } from '@/components/forms/FormError'
+import { FormItem } from '@/components/forms/FormItem'
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
 import {
   Select,
   SelectContent,
@@ -13,14 +12,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useAddresses } from '@payloadcms/plugin-ecommerce/client/react'
-import { defaultCountries as supportedCountries } from '@payloadcms/plugin-ecommerce/client/react'
 import { Address, Config } from '@/payload-types'
-import { titles } from './constants'
+import { defaultCountries as supportedCountries, useAddresses } from '@payloadcms/plugin-ecommerce/client/react'
+import { Loader2, Save } from 'lucide-react'
 import { deepMergeSimple } from 'payload/shared'
-import { FormError } from '@/components/forms/FormError'
-import { FormItem } from '@/components/forms/FormItem'
-import { Shield, Phone, Building, Compass, Send, Trash2 } from 'lucide-react'
+import React, { useCallback } from 'react'
+import { useForm } from 'react-hook-form'
+import { titles } from './constants'
 
 type AddressFormValues = {
   title?: string | null
@@ -43,246 +41,143 @@ type Props = {
   skipSubmission?: boolean
 }
 
-export const AddressForm: React.FC<Props> = ({
-  addressID,
-  initialData,
-  callback,
-  skipSubmission,
-}) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    setValue,
-  } = useForm<AddressFormValues>({
-    defaultValues: initialData,
-  })
+const L = ({ children }: { children: React.ReactNode }) => (
+  <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
+    {children}
+  </Label>
+)
+
+export const AddressForm: React.FC<Props> = ({ addressID, initialData, callback, skipSubmission }) => {
+  const { register, handleSubmit, formState: { errors, isSubmitting }, setValue } =
+    useForm<AddressFormValues>({ defaultValues: initialData })
 
   const { createAddress, updateAddress } = useAddresses()
 
-  const onSubmit = useCallback(
-    async (data: AddressFormValues) => {
-      const newData = deepMergeSimple(initialData || {}, data)
+  const onSubmit = useCallback(async (data: AddressFormValues) => {
+    const newData = deepMergeSimple(initialData || {}, data)
+    if (!skipSubmission) {
+      if (addressID) await updateAddress(addressID, newData)
+      else await createAddress(newData)
+    }
+    if (callback) callback(newData)
+  }, [initialData, skipSubmission, callback, addressID, updateAddress, createAddress])
 
-      if (!skipSubmission) {
-        if (addressID) {
-          await updateAddress(addressID, newData)
-        } else {
-          await createAddress(newData)
-        }
-      }
-
-      if (callback) callback(newData)
-    },
-    [initialData, skipSubmission, callback, addressID, updateAddress, createAddress],
-  )
-
-  const labelClasses = "text-accent-gold text-[10px] font-black uppercase tracking-[0.2em] px-1 mb-2 block"
-  const inputClasses = "w-full bg-secondary/30 border-border/50 rounded-xl px-6 py-6 text-foreground focus-visible:ring-primary focus-visible:ring-offset-0 transition-all font-medium placeholder:text-muted-foreground/50"
+  const inputCls = "h-9 rounded-lg border-border bg-background/60 text-sm placeholder:text-muted-foreground/40 focus-visible:ring-primary transition-all"
+  const selectTriggerCls = "h-9 rounded-lg border-border bg-background/60 text-sm focus:ring-primary transition-all"
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
 
-      {/* Identity Row */}
-      <div className="space-y-6">
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="title" className={labelClasses}>Identity & Title</Label>
-          <div className="relative group">
-            <div className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none group-focus-within:text-primary transition-colors">
-              <Shield size={18} />
-            </div>
-            <Select
-              onValueChange={(value) => setValue('title', value, { shouldValidate: true })}
-              defaultValue={initialData?.title || ''}
-            >
-              <SelectTrigger id="title" className="w-full bg-secondary/30 border-border/50 rounded-xl pl-14 pr-6 py-6 text-foreground focus:ring-primary focus:ring-offset-0 transition-all font-medium h-auto">
-                <SelectValue placeholder="e.g. Archmage, Grand Traveler" />
-              </SelectTrigger>
-              <SelectContent>
-                {titles.map((title) => (
-                  <SelectItem key={title} value={title}>{title}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          {errors.title && <FormError message={errors.title.message} />}
-        </div>
+      {/* Title */}
+      <FormItem>
+        <L>Title <span className="text-muted-foreground/50 normal-case font-medium tracking-normal">— optional</span></L>
+        <Select onValueChange={(v) => setValue('title', v)} defaultValue={initialData?.title || ''}>
+          <SelectTrigger className={selectTriggerCls}>
+            <SelectValue placeholder="Select a title" />
+          </SelectTrigger>
+          <SelectContent>
+            {titles.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}
+          </SelectContent>
+        </Select>
+      </FormItem>
 
-        {/* Name Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="firstName" className={labelClasses}>First Name</Label>
-            <Input
-              id="firstName"
-              autoComplete="given-name"
-              {...register('firstName', { required: 'First name is required.' })}
-              className={inputClasses}
-              placeholder="Given Name"
-            />
-            {errors.firstName && <FormError message={errors.firstName.message} />}
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="lastName" className={labelClasses}>Last Name</Label>
-            <Input
-              id="lastName"
-              autoComplete="family-name"
-              {...register('lastName', { required: 'Last name is required.' })}
-              className={inputClasses}
-              placeholder="House / Surname"
-            />
-            {errors.lastName && <FormError message={errors.lastName.message} />}
-          </div>
-        </div>
-
-        {/* Contact & Company */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="phone" className={labelClasses}>Magical Frequency (Phone)</Label>
-            <div className="relative group">
-              <div className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none group-focus-within:text-primary transition-colors">
-                <Phone size={18} />
-              </div>
-              <Input 
-                type="tel" 
-                id="phone" 
-                autoComplete="mobile tel" 
-                {...register('phone')} 
-                className={`${inputClasses} pl-14`}
-                placeholder="+1 (555) 000-0000"
-              />
-            </div>
-            {errors.phone && <FormError message={errors.phone.message} />}
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="company" className={labelClasses}>Guild / Company</Label>
-            <div className="relative group">
-              <div className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none group-focus-within:text-primary transition-colors">
-                <Building size={18} />
-              </div>
-              <Input 
-                id="company" 
-                autoComplete="organization" 
-                {...register('company')} 
-                className={`${inputClasses} pl-14`}
-                placeholder="Arcane Institution"
-              />
-            </div>
-            {errors.company && <FormError message={errors.company.message} />}
-          </div>
-        </div>
+      {/* Name */}
+      <div className="grid grid-cols-2 gap-3">
+        <FormItem>
+          <L>First Name</L>
+          <Input id="firstName" autoComplete="given-name" placeholder="First name"
+            {...register('firstName', { required: 'Required.' })} className={inputCls} />
+          {errors.firstName && <FormError message={errors.firstName.message} />}
+        </FormItem>
+        <FormItem>
+          <L>Last Name</L>
+          <Input id="lastName" autoComplete="family-name" placeholder="Last name"
+            {...register('lastName', { required: 'Required.' })} className={inputCls} />
+          {errors.lastName && <FormError message={errors.lastName.message} />}
+        </FormItem>
       </div>
 
-      <Separator className="bg-border/30" />
-
-      {/* Address fields */}
-      <div className="space-y-6">
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="addressLine1" className={labelClasses}>Destination Coordinates (Address Line 1)</Label>
-          <div className="relative group">
-            <div className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none group-focus-within:text-primary transition-colors">
-              <Compass size={18} />
-            </div>
-            <Input
-              id="addressLine1"
-              autoComplete="address-line1"
-              {...register('addressLine1', { required: 'Address line 1 is required.' })}
-              className={`${inputClasses} pl-14`}
-              placeholder="Street name and number"
-            />
-          </div>
-          {errors.addressLine1 && <FormError message={errors.addressLine1.message} />}
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="addressLine2" className={labelClasses}>Suite / Tower / Chamber (Address Line 2)</Label>
-          <Input 
-            id="addressLine2" 
-            autoComplete="address-line2" 
-            {...register('addressLine2')} 
-            className={inputClasses}
-            placeholder="Apartment, suite, unit, etc."
-          />
-          {errors.addressLine2 && <FormError message={errors.addressLine2.message} />}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="city" className={labelClasses}>City</Label>
-            <Input
-              id="city"
-              autoComplete="address-level2"
-              {...register('city', { required: 'City is required.' })}
-              className={inputClasses}
-              placeholder="City"
-            />
-            {errors.city && <FormError message={errors.city.message} />}
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="state" className={labelClasses}>State / Realm</Label>
-            <Input 
-              id="state" 
-              autoComplete="address-level1" 
-              {...register('state')} 
-              className={inputClasses}
-              placeholder="State"
-            />
-            {errors.state && <FormError message={errors.state.message} />}
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="postalCode" className={labelClasses}>Zip Code</Label>
-            <Input
-              id="postalCode"
-              {...register('postalCode', { required: 'Postal code is required.' })}
-              className={inputClasses}
-              placeholder="Postal Code"
-            />
-            {errors.postalCode && <FormError message={errors.postalCode.message} />}
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="country" className={labelClasses}>Universal Domain (Country)</Label>
-          <Select
-            onValueChange={(value) => setValue('country', value, { shouldValidate: true })}
-            defaultValue={initialData?.country || ''}
-          >
-            <SelectTrigger id="country" className="w-full bg-secondary/30 border-border/50 rounded-xl px-6 py-6 text-foreground focus:ring-primary focus:ring-offset-0 transition-all font-medium h-auto">
-              <SelectValue placeholder="Select Domain" />
-            </SelectTrigger>
-            <SelectContent>
-              {supportedCountries.map((country) => {
-                const value = typeof country === 'string' ? country : country.value
-                const label =
-                  typeof country === 'string'
-                    ? country
-                    : typeof country.label === 'string'
-                      ? country.label
-                      : value
-                return (
-                  <SelectItem key={value} value={value}>{label}</SelectItem>
-                )
-              })}
-            </SelectContent>
-          </Select>
-          {errors.country && <FormError message={errors.country.message} />}
-        </div>
+      {/* Phone + Company */}
+      <div className="grid grid-cols-2 gap-3">
+        <FormItem>
+          <L>Phone <span className="text-muted-foreground/50 normal-case font-medium tracking-normal">— optional</span></L>
+          <Input type="tel" id="phone" autoComplete="tel" placeholder="+1 555 000 0000"
+            {...register('phone')} className={inputCls} />
+        </FormItem>
+        <FormItem>
+          <L>Company <span className="text-muted-foreground/50 normal-case font-medium tracking-normal">— optional</span></L>
+          <Input id="company" autoComplete="organization" placeholder="Company name"
+            {...register('company')} className={inputCls} />
+        </FormItem>
       </div>
 
-      <div className="pt-6 flex gap-4">
-        <Button 
-          type="submit" 
-          disabled={isSubmitting}
-          className="flex-[2] bg-primary hover:bg-primary/90 text-primary-foreground font-black py-8 rounded-2xl transition-all flex items-center justify-center gap-3 shadow-lg shadow-primary/20 uppercase tracking-widest text-sm"
-        >
-          <Send size={18} />
-          {isSubmitting ? 'Finalizing...' : addressID ? 'CONFIRM REVISIONS' : 'CONFIRM DESTINATION'}
+      <div className="h-px bg-border" />
+
+      {/* Address Line 1 */}
+      <FormItem>
+        <L>Address Line 1</L>
+        <Input id="addressLine1" autoComplete="address-line1" placeholder="Street address"
+          {...register('addressLine1', { required: 'Address is required.' })} className={inputCls} />
+        {errors.addressLine1 && <FormError message={errors.addressLine1.message} />}
+      </FormItem>
+
+      {/* Address Line 2 */}
+      <FormItem>
+        <L>Address Line 2 <span className="text-muted-foreground/50 normal-case font-medium tracking-normal">— optional</span></L>
+        <Input id="addressLine2" autoComplete="address-line2" placeholder="Apartment, suite, unit…"
+          {...register('addressLine2')} className={inputCls} />
+      </FormItem>
+
+      {/* City / State / Zip */}
+      <div className="grid grid-cols-3 gap-3">
+        <FormItem>
+          <L>City</L>
+          <Input id="city" autoComplete="address-level2" placeholder="City"
+            {...register('city', { required: 'Required.' })} className={inputCls} />
+          {errors.city && <FormError message={errors.city.message} />}
+        </FormItem>
+        <FormItem>
+          <L>State</L>
+          <Input id="state" autoComplete="address-level1" placeholder="State"
+            {...register('state')} className={inputCls} />
+        </FormItem>
+        <FormItem>
+          <L>Postal Code</L>
+          <Input id="postalCode" placeholder="ZIP"
+            {...register('postalCode', { required: 'Required.' })} className={inputCls} />
+          {errors.postalCode && <FormError message={errors.postalCode.message} />}
+        </FormItem>
+      </div>
+
+      {/* Country */}
+      <FormItem>
+        <L>Country</L>
+        <Select onValueChange={(v) => setValue('country', v, { shouldValidate: true })}
+          defaultValue={initialData?.country || ''}>
+          <SelectTrigger className={selectTriggerCls}>
+            <SelectValue placeholder="Select country" />
+          </SelectTrigger>
+          <SelectContent>
+            {supportedCountries.map((country) => {
+              const value = typeof country === 'string' ? country : country.value
+              const label = typeof country === 'string' ? country : typeof country.label === 'string' ? country.label : value
+              return <SelectItem key={value} value={value}>{label}</SelectItem>
+            })}
+          </SelectContent>
+        </Select>
+        {errors.country && <FormError message={errors.country.message} />}
+      </FormItem>
+
+      {/* Submit */}
+      <div className="pt-1">
+        <Button type="submit" disabled={isSubmitting}
+          className="w-full h-10 rounded-full font-black uppercase tracking-widest text-xs shadow-md shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+          {isSubmitting
+            ? <><Loader2 className="size-3.5 animate-spin mr-2" /> Saving…</>
+            : <><Save className="size-3.5 mr-2" />{addressID ? 'Save Changes' : 'Add Address'}</>
+          }
         </Button>
       </div>
-
     </form>
   )
 }

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee",
+                        "accent-gold": "#d4af37",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .magical-glow {
+            box-shadow: 0 0 20px rgba(43, 108, 238, 0.3);
+        }
+        .wax-seal {
+            background: radial-gradient(circle at 30% 30%, #f1c40f, #d4af37);
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.4), inset -2px -2px 4px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        .wax-seal::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 9999px;
+        }
+        .particles {
+            background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 px-6 md:px-10 py-4 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8 flex items-center justify-center bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-primary">auto_stories</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-xl font-bold leading-tight tracking-tight">Author's Realm</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">Books</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">About</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">World</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">Journal</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="hidden sm:flex min-w-[100px] cursor-pointer items-center justify-center rounded-full h-10 px-5 bg-primary text-white text-sm font-bold transition-transform hover:scale-105 active:scale-95">
+                Contact
+            </button>
+<button class="md:hidden text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<main class="flex-grow flex items-center justify-center p-6 relative overflow-hidden">
+<!-- Magical Background Elements -->
+<div class="absolute inset-0 particles opacity-30 pointer-events-none"></div>
+<div class="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="max-w-4xl w-full flex flex-col items-center text-center space-y-8 relative z-10">
+<!-- Illustration Area -->
+<div class="relative w-full max-w-md aspect-square mb-4">
+<div class="absolute inset-0 bg-gradient-to-b from-transparent to-background-dark/20 rounded-xl"></div>
+<img class="w-full h-full object-cover rounded-xl shadow-2xl grayscale-[20%] sepia-[10%]" data-alt="A whimsical character looking at a floating empty pedestal in a magical library" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBslfNsCwFUuF354Jry31ZFNYW4zz8OykR1OBbLoQcoY29cgASadWD4CgGcjLvMmmheluLli1H4HfeoCIlY8CDJql_QK13p1GaUKGQBPkb9tbrZKKSQW5FobEUwSp9KGH2VIzEQmwFCa5KJKyiyr0U1vPBX8VCdmbw0xm3Ow5HYVAtaGQ5EFBOjI9ywPZR-69CZjW0i8h0BcNGtvvj3XgqrSP5xU2DwY2Ey8Y1FbObaeLYa_Ii--mkjazQx09EBUi81v1BVUmz2-xLh"/>
+<!-- Floating Pedestal Overlay Graphic -->
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<div class="w-32 h-40 border-4 border-dashed border-primary/40 rounded-lg flex items-center justify-center animate-pulse">
+<span class="material-symbols-outlined text-primary/40 text-6xl">menu_book</span>
+</div>
+<div class="mt-4 w-40 h-4 bg-primary/20 rounded-full blur-md"></div>
+</div>
+</div>
+<!-- Text Content -->
+<div class="space-y-4">
+<h1 class="text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tight">
+                    Lost in the <span class="text-primary italic">Ether</span>
+</h1>
+<p class="text-xl md:text-2xl text-slate-600 dark:text-slate-400 font-medium max-w-lg mx-auto leading-relaxed">
+                    It seems this chapter has vanished into the mist.
+                </p>
+</div>
+<!-- Action Area -->
+<div class="flex flex-col items-center gap-6 pt-8">
+<a class="wax-seal group flex items-center gap-3 px-8 py-4 rounded-full text-slate-900 font-extrabold text-lg transition-all hover:scale-110 active:scale-95" href="#">
+<span class="material-symbols-outlined text-slate-900">castle</span>
+                    Return to the Kingdom
+                </a>
+<div class="flex flex-col items-center gap-3">
+<p class="text-sm font-bold text-primary/60 uppercase tracking-widest">Perhaps these scrolls will help?</p>
+<div class="flex gap-4">
+<button class="p-3 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="p-3 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">map</span>
+</button>
+<button class="p-3 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="p-8 text-center border-t border-slate-200 dark:border-slate-800">
+<p class="text-slate-500 dark:text-slate-500 text-sm">
+            © 2024 Author's Realm. All myths and legends reserved.
+        </p>
+</footer>
+</body></html>

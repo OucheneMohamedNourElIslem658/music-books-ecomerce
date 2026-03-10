@@ -1,9 +1,9 @@
 'use client'
 
-import React from 'react'
-import { useAddresses } from '@payloadcms/plugin-ecommerce/client/react'
 import { AddressItem } from '@/components/addresses/AddressItem'
+import { useAddresses } from '@payloadcms/plugin-ecommerce/client/react'
 import { MapIcon } from 'lucide-react'
+import React from 'react'
 
 export const AddressListing: React.FC = () => {
   const { addresses } = useAddresses()
@@ -20,7 +20,7 @@ export const AddressListing: React.FC = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-8">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
       {addresses.map((address) => (
         <AddressItem key={address.id} address={address} />
       ))}
