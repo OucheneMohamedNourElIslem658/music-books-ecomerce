@@ -3,11 +3,10 @@ import type { Metadata } from 'next'
 
 import { OrderItem } from '@/components/OrderItem'
 import { PaginationController } from '@/components/Pagination/PaginationController'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
 import { redirect } from '@/i18n/navigation'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import configPromise from '@payload-config'
+import { History } from 'lucide-react'
 import { headers as getHeaders } from 'next/headers'
 import { getPayload } from 'payload'
 
@@ -54,7 +53,6 @@ export default async function Orders(
           equals: user?.id,
         },
       },
-
     })
 
     orders = ordersResult?.docs || []
@@ -62,30 +60,46 @@ export default async function Orders(
   } catch (error) { }
 
   return (
-    <div className="w-full mx-auto px-4 pb-10 flex flex-col gap-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl font-semibold">Orders</CardTitle>
-          <Separator />
-        </CardHeader>
+    <main className="flex-1 flex flex-col max-w-5xl mx-auto w-full px-4 md:px-8">
+      {/* Section Header */}
+      <div className="flex items-center justify-between mb-8 px-2">
+        <h2 className="text-xl font-black uppercase tracking-widest flex items-center gap-3">
+          <History className="text-accent-gold" size={24} />
+          Active Acquisitions
+        </h2>
+        {orders && orders.length > 0 && (
+          <span className="text-[10px] text-muted-foreground bg-secondary px-4 py-1.5 rounded-full uppercase tracking-widest font-black border border-border">
+            {orders.length} {orders.length === 1 ? 'Pending' : 'Pending'}
+          </span>
+        )}
+      </div>
 
-        <CardContent>
-          {(!orders || !Array.isArray(orders) || orders.length === 0) ? (
-            <p className="text-muted-foreground text-sm">You have no orders.</p>
-          ) : (
-            <ul className="flex flex-col gap-6">
-              {orders.map((order) => (
-                <li key={order.id}>
-                  <OrderItem order={order} />
-                </li>
-              ))}
-            </ul>
-          )}
-        </CardContent>
-      </Card>
+      {/* Orders List */}
+      <div className="flex flex-col gap-6">
+        {(!orders || !Array.isArray(orders) || orders.length === 0) ? (
+          <div className="bg-card/30 p-12 rounded-2xl border border-dashed border-border flex flex-col items-center justify-center text-center gap-4">
+            <div className="p-4 bg-secondary rounded-full">
+              <History size={48} className="text-muted-foreground" />
+            </div>
+            <p className="text-muted-foreground font-bold uppercase tracking-widest">No orders found in the archives.</p>
+          </div>
+        ) : (
+          <ul className="flex flex-col gap-6">
+            {orders.map((order) => (
+              <li key={order.id}>
+                <OrderItem order={order} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
 
-      {totalPages == 1 && (<PaginationController page={page} totalPages={totalPages} />)}
-    </div>
+      {totalPages > 1 && (
+        <div className="mt-12">
+          <PaginationController page={page} totalPages={totalPages} />
+        </div>
+      )}
+    </main>
   )
 }
 

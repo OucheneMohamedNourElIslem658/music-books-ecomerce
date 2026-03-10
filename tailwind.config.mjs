@@ -161,10 +161,6 @@ export default {
           '20%': { opacity: 1 },
           '100% ': { opacity: 0.2 },
         },
-        'progress-indeterminate': {
-          '0%': { transform: 'translateX(-100%)' },
-          '100%': { transform: 'translateX(210%)' },
-        },
       },
       animation: {
         in: 'in 0.2s ease-out',
@@ -179,7 +175,6 @@ export default {
         blink: 'blink 1.4s both infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'progress-indeterminate': 'progress-indeterminate 1.5s ease-in-out infinite',
       },
     },
   },

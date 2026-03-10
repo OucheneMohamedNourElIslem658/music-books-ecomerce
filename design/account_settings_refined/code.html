@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Chronicler's Ledger - Account Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Spline Sans", sans-serif;
+        }
+        .obsidian-texture {
+            background-image: radial-gradient(circle at 2px 2px, rgba(43, 108, 238, 0.05) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+        .mystic-card {
+            background: rgba(16, 22, 34, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(43, 108, 238, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+        }
+        .mystic-card:hover {
+            border-color: rgba(43, 108, 238, 0.4);
+            box-shadow: 0 0 20px rgba(43, 108, 238, 0.1);
+        }
+        .glow-input:focus {
+            box-shadow: 0 0 15px rgba(43, 108, 238, 0.3);
+            border-color: #2b6cee;
+            outline: none;
+        }
+        .danger-glow:hover {
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 obsidian-texture min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-72 bg-slate-900/50 dark:bg-background-dark border-r border-slate-200 dark:border-primary/10 flex flex-col p-6 gap-8">
+<div class="flex items-center gap-3 px-2">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-white">auto_stories</span>
+</div>
+<div>
+<h1 class="font-display font-bold text-lg leading-tight">The Chronicler</h1>
+<p class="text-xs text-slate-500 dark:text-slate-400">Master of the Ledger</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-medium">Chronicles</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">shield_with_heart</span>
+<span class="font-medium">Relics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-medium">Allies</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded bg-primary/20 text-primary" href="#">
+<span class="material-symbols-outlined">settings_account_box</span>
+<span class="font-medium">Ledger</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">lock</span>
+<span class="font-medium">Sanctum</span>
+</a>
+</nav>
+<div class="mt-auto">
+<div class="p-4 rounded-xl bg-primary/5 border border-primary/10">
+<p class="text-xs text-slate-400 mb-3">Mystical Capacity</p>
+<div class="w-full bg-slate-800 rounded-full h-1.5 mb-3">
+<div class="bg-primary h-1.5 rounded-full" style="width: 65%"></div>
+</div>
+<button class="w-full py-2 bg-primary text-white rounded-full text-sm font-bold shadow-lg shadow-primary/30">View Sanctum</button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto p-8 lg:p-12">
+<div class="max-w-4xl mx-auto space-y-10 pb-20">
+<!-- Header Section -->
+<div class="space-y-2">
+<h1 class="text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                        The Chronicler's Ledger
+                    </h1>
+<p class="text-slate-500 dark:text-slate-400 text-lg">
+                        Manage your mystical identity and notification oracles across the realms.
+                    </p>
+</div>
+<!-- Seal of Identity Section -->
+<section class="mystic-card p-8 rounded-xl flex flex-col md:flex-row items-center gap-8">
+<div class="relative group">
+<div class="w-32 h-32 rounded-full border-4 border-primary/30 p-1 flex items-center justify-center overflow-hidden">
+<img alt="Profile" class="w-full h-full object-cover rounded-full" data-alt="Mystical portrait of a dark-haired sorcerer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzJwED9TH7CNVgTQn4AZInkMrKk9P29s09kYG71FWuXk21ckSWO2a4KR7YEMwBtERqhLHLX5g5oPAlrg32ogGe3xC0uYT7MQ4akqb7lTBTCd_g01mjmq4pq0csxlVaEpJynr-jrMaZUvW9eqPv8Li4a-Kl4AH4bTRm_JKxYRY0OIAjYyuYNuBtH7NKkOSXx8zyClj54f5IcuXU5VA0ITpI_pi4sKAUobny-SMPzIgBUZuH0nxrG3vh1xuNBe_iw0uviCo-Zk10qq8I"/>
+</div>
+<div class="absolute -bottom-1 -right-1 bg-primary w-8 h-8 rounded-full border-2 border-background-dark flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-white">verified</span>
+</div>
+</div>
+<div class="flex-1 text-center md:text-left space-y-4">
+<div>
+<h2 class="text-2xl font-bold dark:text-white">Seal of Identity</h2>
+<p class="text-slate-400">Rank: Senior Archivist of the Eternal Library</p>
+</div>
+<div class="flex flex-wrap justify-center md:justify-start gap-3">
+<button class="px-6 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-full text-sm font-semibold transition-all border border-slate-700">
+                                Replace Seal
+                            </button>
+<button class="px-6 py-2 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 rounded-full text-sm font-semibold transition-all">
+                                Remove Seal
+                            </button>
+</div>
+</div>
+</section>
+<!-- Personal Mandates (Form Fields) -->
+<section class="space-y-6">
+<div class="flex items-center gap-2 px-2">
+<span class="material-symbols-outlined text-primary">edit_note</span>
+<h2 class="text-2xl font-bold dark:text-white">Personal Mandates</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-sm font-medium text-slate-400 px-1">Chronicle Name</label>
+<input class="w-full bg-slate-900/50 border border-slate-700/50 rounded-lg px-4 py-3 text-white glow-input transition-all" type="text" value="Alistair Thorne"/>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-medium text-slate-400 px-1">Communication Beacon (Email)</label>
+<input class="w-full bg-slate-900/50 border border-slate-700/50 rounded-lg px-4 py-3 text-white glow-input transition-all" type="email" value="alistair.thorne@chroniclers.arc"/>
+</div>
+<div class="md:col-span-2 space-y-2">
+<label class="text-sm font-medium text-slate-400 px-1">Biography of Deeds</label>
+<textarea class="w-full bg-slate-900/50 border border-slate-700/50 rounded-lg px-4 py-3 text-white glow-input transition-all resize-none" placeholder="Describe your journey through the ancient scrolls..." rows="5">Keeper of the Seventh Tome, Alistair has traversed the Void Fields to recover the lost inscriptions of the Elder Scribes. Currently focused on translating the Whispers of the Dark Moon.</textarea>
+</div>
+</div>
+</section>
+<!-- Notification Oracles -->
+<section class="mystic-card p-8 rounded-xl space-y-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">notifications_active</span>
+<h2 class="text-2xl font-bold dark:text-white">Notification Oracles</h2>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-4 bg-slate-800/30 rounded-lg border border-primary/5">
+<div>
+<p class="font-semibold text-slate-100">Mystical Updates</p>
+<p class="text-sm text-slate-500">Receive alerts when new relics are discovered in your vicinity.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between p-4 bg-slate-800/30 rounded-lg border border-primary/5">
+<div>
+<p class="font-semibold text-slate-100">Chronicle Whispers</p>
+<p class="text-sm text-slate-500">Get notified via email about changes to your shared chronicles.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</section>
+<!-- Action Button -->
+<div class="flex justify-end pt-6">
+<button class="bg-primary hover:bg-primary/80 text-white px-10 py-4 rounded-full font-bold text-lg shadow-xl shadow-primary/30 flex items-center gap-3 transition-transform active:scale-95">
+<span class="material-symbols-outlined">save</span>
+                        Update Ledger
+                    </button>
+</div>
+<!-- Banish Section -->
+<section class="mt-20 border-t border-slate-800 pt-10">
+<div class="mystic-card danger-glow p-8 rounded-xl border-red-500/20 bg-red-500/5">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="space-y-1">
+<h3 class="text-xl font-bold text-red-400 flex items-center gap-2">
+<span class="material-symbols-outlined">skull</span>
+                                    Banish Account
+                                </h3>
+<p class="text-slate-400 max-w-md">Once you excommunicate this account, all records will be struck from the eternal scrolls. This ritual cannot be undone.</p>
+</div>
+<button class="px-8 py-3 bg-red-900/20 hover:bg-red-600 hover:text-white border border-red-500/30 text-red-500 rounded-full font-bold transition-all whitespace-nowrap">
+                                Excommunicate Account
+                            </button>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

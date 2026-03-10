@@ -2,26 +2,19 @@ import type { Metadata } from 'next'
 
 import { AccountForm } from '@/components/forms/AccountForm'
 import { OrderItem } from '@/components/OrderItem'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
 import { Link, redirect } from '@/i18n/navigation'
 import { Order } from '@/payload-types'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import configPromise from '@payload-config'
-import { PackageIcon, SettingsIcon } from 'lucide-react'
+import { Edit3, Package } from 'lucide-react'
 import { headers as getHeaders } from 'next/headers.js'
-// import { redirect } from 'next/navigation'
 import { getPayload } from 'payload'
 
 interface AccountPageProps {
   params: Promise<{ locale: string }>
 }
 
-
-export default async function AccountPage(
-  { params }: AccountPageProps
-) {
+export default async function AccountPage({ params }: AccountPageProps) {
   const headers = await getHeaders()
   const payload = await getPayload({ config: configPromise })
   const { user } = await payload.auth({ headers })
@@ -40,7 +33,7 @@ export default async function AccountPage(
   try {
     const ordersResult = await payload.find({
       collection: 'orders',
-      limit: 5,
+      limit: 3,
       user,
       overrideAccess: false,
       pagination: false,
@@ -55,49 +48,41 @@ export default async function AccountPage(
   } catch (error) { }
 
   return (
-    <div className="w-full mx-auto px-4 pb-10 flex flex-col gap-6">
+    <div className="space-y-12">
+      {/* Header Section */}
+      <div className="space-y-3">
+        <h1 className="text-4xl lg:text-5xl font-black tracking-tight">
+          The Chronicler&apos;s Ledger
+        </h1>
+        <p className="text-muted-foreground text-lg font-medium">
+          Manage your mystical identity and notification oracles across the realms.
+        </p>
+      </div>
 
-      {/* Account Settings */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center gap-3">
-            <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
-              <SettingsIcon className="size-5" />
-            </div>
-            <div>
-              <CardTitle className="text-xl font-semibold">Account Settings</CardTitle>
-              <CardDescription>Manage your profile and preferences</CardDescription>
-            </div>
-          </div>
-          <Separator className="mt-4" />
-        </CardHeader>
-        <CardContent>
+      {/* Personal Mandates (Form Fields) */}
+      <section className="space-y-8">
+        <div className="flex items-center gap-3 px-2">
+          <Edit3 className="text-primary" size={24} />
+          <h2 className="text-2xl font-black uppercase tracking-widest">Personal Mandates</h2>
+        </div>
+        <div className="bg-card/30 p-8 rounded-2xl border border-border shadow-sm">
           <AccountForm />
-        </CardContent>
-      </Card>
+        </div>
+      </section>
 
-      {/* Recent Orders */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center gap-3">
-            <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
-              <PackageIcon className="size-5" />
+      {/* Recent Orders Section */}
+      <section className="space-y-8">
+        <div className="flex items-center gap-3 px-2">
+          <Package className="text-primary" size={24} />
+          <h2 className="text-2xl font-black uppercase tracking-widest">Recent Acquisitions</h2>
+        </div>
+        <div className="flex flex-col gap-6">
+          {!orders || orders.length === 0 ? (
+            <div className="bg-card/20 p-12 rounded-2xl border border-dashed border-border text-center">
+              <p className="text-muted-foreground font-bold uppercase tracking-widest">No recent scrolls found in the archives.</p>
             </div>
-            <div>
-              <CardTitle className="text-xl font-semibold">Recent Orders</CardTitle>
-              <CardDescription>
-                Your most recent orders. As you place more, they will appear here.
-              </CardDescription>
-            </div>
-          </div>
-          <Separator className="mt-4" />
-        </CardHeader>
-
-        <CardContent className="flex flex-col gap-6">
-          {(!orders || !Array.isArray(orders) || orders.length === 0) ? (
-            <p className="text-sm text-muted-foreground">You have no orders.</p>
           ) : (
-            <ul className="flex flex-col gap-4">
+            <ul className="flex flex-col gap-6">
               {orders.map((order) => (
                 <li key={order.id}>
                   <OrderItem order={order} />
@@ -105,22 +90,25 @@ export default async function AccountPage(
               ))}
             </ul>
           )}
-
-          <Button asChild variant="outline" className="self-start rounded-full">
-            <Link href="/orders">View all orders</Link>
-          </Button>
-        </CardContent>
-      </Card>
-
+          {orders && orders.length > 0 && (
+            <Link
+              href="/orders"
+              className="self-start px-8 py-3 bg-secondary hover:bg-primary hover:text-primary-foreground rounded-full text-xs font-black uppercase tracking-widest transition-all border border-border shadow-sm"
+            >
+              Examine All Scrolls
+            </Link>
+          )}
+        </div>
+      </section>
     </div>
   )
 }
 
 export const metadata: Metadata = {
-  description: 'Create an account or log in to your existing account.',
+  description: 'Manage your account settings and mystical identity.',
   openGraph: mergeOpenGraph({
-    title: 'Account',
+    title: 'The Chronicler\'s Ledger',
     url: '/account',
   }),
-  title: 'Account',
+  title: 'The Chronicler\'s Ledger',
 }

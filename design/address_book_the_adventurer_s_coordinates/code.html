@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee",
+                        "gold": "#d4af37",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>.parchment-texture {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuD4MlCOUsZZULs2WXbkZ6XlMltxQDMAMjjV3swyx6zgbDEIvBpFN-_lEx33rH5pi8WKQBU0Pzrbu1M9SXQ-MswdbUMEQAu5MSMMB6yI9wzoMnui9PnBFfJB9fSYRAEVMX7lm-3LvLK-Hj8S6z9MnHc6DnWmfxJkI6D2qCRotCKd9mp2LbiqEk9581l1j1Qw-fo7WH17Ocb9-emo4kl9KMb7TvcA2xpEX_NpNtqWmXQ0rbS3M3LaF86qCRrwy4rB1-vSAkrjLAAX0BiI);
+    background-color: rgba(255, 255, 255, 0.03)
+    }
+.glowing-primary {
+    box-shadow: 0 0 15px rgba(43, 108, 238, 0.4)
+    }
+.gold-border {
+    border: 1px solid rgba(212, 175, 55, 0.3)
+    }</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-white/10 px-10 py-4 bg-background-dark/50 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-gold">
+<div class="size-6 flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">auto_awesome</span>
+</div>
+<h2 class="text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em]">The Adventurer's Coordinates</h2>
+</div>
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-slate-400 hover:text-gold transition-colors text-sm font-medium" href="#">Realms</a>
+<a class="text-slate-100 border-b-2 border-gold pb-1 text-sm font-medium" href="#">Map</a>
+<a class="text-slate-400 hover:text-gold transition-colors text-sm font-medium" href="#">Log</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<label class="hidden sm:flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-xl h-full bg-slate-800/50 border border-white/5">
+<div class="text-slate-400 flex items-center justify-center pl-4">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent focus:ring-0 text-slate-100 placeholder:text-slate-500 text-base" placeholder="Search realms..." value=""/>
+</div>
+</label>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-full size-10 bg-slate-800/50 border border-white/10 text-slate-300 hover:text-gold transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-gold/50" data-alt="Avatar of a hooded fantasy explorer" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBwMv51IaVUTzC2L_jUg7jXahKuEI5ZuPql4XJnErbk2vMJdwucnwWKrpUkMknS6CLYY2MJ_VqJcCNbNRNU4aQI8Rq75T5T7gfGoyh0mtM8jgOAw19xLj8WrGcYzWgFXT5aY0Yy_T-CbAB-cDIvYgumahqfbjzmbZpd3Ac-fPowx1lRYlvENux5apq8kJwNFiqs-dNXpQWElZj49dEM-_J5rvsZAH1vOEGMb9Pab7nwT_tOGUqGDSaJ7Hon6t3iL6IAY6n1a3e_44xA");'></div>
+</div>
+</div>
+</header>
+<main class="flex flex-1 justify-center py-10 px-4 sm:px-10 lg:px-40">
+<div class="layout-content-container flex flex-col max-w-[1200px] flex-1">
+<!-- Sidebar + Main Content Layout -->
+<div class="flex flex-col lg:flex-row gap-8">
+<!-- Left Sidebar -->
+<aside class="w-full lg:w-64 flex flex-col gap-6">
+<div class="flex flex-col gap-3 p-4 bg-slate-800/20 rounded-xl border border-white/5">
+<div class="flex gap-4 items-center">
+<div class="bg-primary/20 rounded-full p-2 border border-primary/30 text-primary">
+<span class="material-symbols-outlined">explore</span>
+</div>
+<div class="flex flex-col">
+<h3 class="text-slate-100 text-base font-bold">Wayfinder Jace</h3>
+<p class="text-slate-400 text-xs">Level 42 Master Mapper</p>
+</div>
+</div>
+<div class="w-full bg-slate-700/30 rounded-full h-1.5 mt-2">
+<div class="bg-primary h-1.5 rounded-full w-3/4 glowing-primary"></div>
+</div>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800/40 text-slate-400 hover:text-slate-100 transition-all" href="#">
+<span class="material-symbols-outlined">castle</span>
+<span class="font-medium">Home Portal</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white shadow-lg glowing-primary transition-all" href="#">
+<span class="material-symbols-outlined">location_on</span>
+<span class="font-medium">Coordinates</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800/40 text-slate-400 hover:text-slate-100 transition-all" href="#">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="font-medium">Ancient Relics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800/40 text-slate-400 hover:text-slate-100 transition-all" href="#">
+<span class="material-symbols-outlined">settings_suggest</span>
+<span class="font-medium">Arcane Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col gap-8">
+<!-- Page Header -->
+<div class="flex flex-wrap items-center justify-between gap-4">
+<div class="flex flex-col gap-1">
+<h1 class="text-slate-100 text-4xl font-black tracking-tight">Mystical Addresses</h1>
+<p class="text-slate-400 text-lg">Manage your teleportation and delivery waypoints across the known realms.</p>
+</div>
+<button class="flex items-center gap-3 px-6 py-3 rounded-full bg-slate-800/80 border border-primary/40 text-slate-100 hover:bg-slate-800 transition-all group">
+<div class="size-8 rounded-full bg-primary/20 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all shadow-[0_0_10px_rgba(43,108,238,0.3)]">
+<span class="material-symbols-outlined text-xl">add</span>
+</div>
+<span class="font-bold">Add a new address</span>
+</button>
+</div>
+<!-- Address List -->
+<div class="grid grid-cols-1 gap-6">
+<!-- Address Card 1 -->
+<div class="@container">
+<div class="parchment-texture gold-border flex flex-col items-stretch justify-start rounded-xl @xl:flex-row @xl:items-start overflow-hidden group hover:bg-white/5 transition-all">
+<div class="w-full @xl:w-64 bg-center bg-no-repeat aspect-video @xl:aspect-square bg-cover transition-transform group-hover:scale-105 duration-500" data-alt="Illustration of a peak with volcanic activity" data-location="Fire Domain" style='background-image: url("https://placeholder.pics/svg/300");'></div>
+<div class="flex w-full grow flex-col justify-center gap-4 p-6">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-gold text-xs font-bold uppercase tracking-widest mb-1">Primary Sanctuary</p>
+<h3 class="text-slate-100 text-2xl font-bold">The Dragon's Lair</h3>
+</div>
+<div class="size-10 rounded-full bg-slate-900/50 flex items-center justify-center border border-white/5">
+<span class="material-symbols-outlined text-gold">star</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 border-l-2 border-gold/20 pl-4 py-1">
+<div class="flex items-center gap-2 text-slate-300">
+<span class="material-symbols-outlined text-sm">map</span>
+<p class="text-base">Peak of Mount Ember, Fire Domain</p>
+</div>
+<div class="flex items-center gap-2 text-slate-400">
+<span class="material-symbols-outlined text-sm">person</span>
+<p class="text-sm italic">Recipient: Ignis the Bold</p>
+</div>
+</div>
+<div class="flex items-center gap-4 mt-2">
+<button class="flex-1 sm:flex-none px-6 py-2 rounded-full bg-primary text-white text-sm font-bold shadow-lg glowing-primary hover:brightness-110 transition-all">
+                                                    Edit Coordinates
+                                                </button>
+<button class="size-9 rounded-full bg-slate-800/50 flex items-center justify-center text-slate-400 hover:text-red-400 transition-colors">
+<span class="material-symbols-outlined text-xl">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Address Card 2 -->
+<div class="@container">
+<div class="parchment-texture gold-border flex flex-col items-stretch justify-start rounded-xl @xl:flex-row @xl:items-start overflow-hidden group hover:bg-white/5 transition-all">
+<div class="w-full @xl:w-64 bg-center bg-no-repeat aspect-video @xl:aspect-square bg-cover transition-transform group-hover:scale-105 duration-500" data-alt="Ethereal glowing forest with silent cabin" data-location="Elfwood Forest" style='background-image: url("https://placeholder.pics/svg/300");'></div>
+<div class="flex w-full grow flex-col justify-center gap-4 p-6">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-gold text-xs font-bold uppercase tracking-widest mb-1">Secret Outpost</p>
+<h3 class="text-slate-100 text-2xl font-bold">Whispering Woods Cabin</h3>
+</div>
+<div class="size-10 rounded-full bg-slate-900/50 flex items-center justify-center border border-white/5">
+<span class="material-symbols-outlined text-slate-500 hover:text-gold transition-colors">star</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 border-l-2 border-gold/20 pl-4 py-1">
+<div class="flex items-center gap-2 text-slate-300">
+<span class="material-symbols-outlined text-sm">map</span>
+<p class="text-base">Grove of Silence, Elfwood Forest</p>
+</div>
+<div class="flex items-center gap-2 text-slate-400">
+<span class="material-symbols-outlined text-sm">person</span>
+<p class="text-sm italic">Recipient: Elara Moonshade</p>
+</div>
+</div>
+<div class="flex items-center gap-4 mt-2">
+<button class="flex-1 sm:flex-none px-6 py-2 rounded-full bg-primary text-white text-sm font-bold shadow-lg glowing-primary hover:brightness-110 transition-all">
+                                                    Edit Coordinates
+                                                </button>
+<button class="size-9 rounded-full bg-slate-800/50 flex items-center justify-center text-slate-400 hover:text-red-400 transition-colors">
+<span class="material-symbols-outlined text-xl">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Teleport Selection -->
+<div class="mt-8 flex flex-col gap-4">
+<h2 class="text-slate-100 text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">bolt</span>
+                                        Recent Teleports
+                                    </h2>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="flex flex-col items-center gap-3 p-4 rounded-xl bg-slate-800/40 border border-white/5 hover:border-gold/30 transition-all cursor-pointer group">
+<div class="size-12 rounded-full bg-slate-900 flex items-center justify-center text-gold group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">waves</span>
+</div>
+<span class="text-sm font-medium text-slate-300">Blue Lagoon</span>
+</div>
+<div class="flex flex-col items-center gap-3 p-4 rounded-xl bg-slate-800/40 border border-white/5 hover:border-gold/30 transition-all cursor-pointer group">
+<div class="size-12 rounded-full bg-slate-900 flex items-center justify-center text-gold group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">landscape</span>
+</div>
+<span class="text-sm font-medium text-slate-300">Stone Peaks</span>
+</div>
+<div class="flex flex-col items-center gap-3 p-4 rounded-xl bg-slate-800/40 border border-white/5 hover:border-gold/30 transition-all cursor-pointer group">
+<div class="size-12 rounded-full bg-slate-900 flex items-center justify-center text-gold group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">brightness_high</span>
+</div>
+<span class="text-sm font-medium text-slate-300">Sun Citadel</span>
+</div>
+<div class="flex flex-col items-center gap-3 p-4 rounded-xl bg-slate-800/40 border border-white/5 hover:border-gold/30 transition-all cursor-pointer group">
+<div class="size-12 rounded-full bg-slate-900 flex items-center justify-center text-gold group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">ac_unit</span>
+</div>
+<span class="text-sm font-medium text-slate-300">Ice Vault</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Stats Bar -->
+<footer class="mt-auto border-t border-white/10 bg-background-dark/80 backdrop-blur px-10 py-6">
+<div class="flex flex-wrap justify-between items-center gap-6 max-w-[1200px] mx-auto w-full">
+<div class="flex items-center gap-8">
+<div class="flex flex-col">
+<span class="text-slate-500 text-xs font-bold uppercase tracking-widest">Total Realms</span>
+<span class="text-slate-100 text-xl font-black">12 Discovery</span>
+</div>
+<div class="flex flex-col">
+<span class="text-slate-500 text-xs font-bold uppercase tracking-widest">Active Waypoints</span>
+<span class="text-slate-100 text-xl font-black">42 Portal Keys</span>
+</div>
+</div>
+<div class="flex gap-4">
+<p class="text-slate-400 text-sm italic">"The star is your compass, the heart is your map."</p>
+</div>
+</div>
+</footer>
+</div>
+</div>
+</body></html>

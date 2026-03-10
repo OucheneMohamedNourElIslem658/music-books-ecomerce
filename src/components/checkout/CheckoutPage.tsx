@@ -64,7 +64,7 @@ function StepIndicator({ current }: { current: number }) {
         <div className="flex gap-12">
           {STEPS.map((step, i) => {
             const Icon = step.icon
-            const isCurrent = i === current
+            const isCurrent = i <= current
 
             return (
               <div
@@ -72,7 +72,7 @@ function StepIndicator({ current }: { current: number }) {
                 className={`flex flex-col items-center gap-2 pb-4 border-b-2 transition-all duration-300 ${isCurrent ? 'border-primary text-primary' : 'border-transparent text-muted-foreground'
                   }`}
               >
-                <Icon size={24} className={isCurrent ? 'animate-pulse' : ''} />
+                <Icon size={24} className={isCurrent && i === current ? 'animate-pulse' : ''} />
                 <span className="text-xs font-bold uppercase tracking-widest">{step.label}</span>
               </div>
             )
@@ -90,11 +90,11 @@ function Section({ children, title, icon: Icon, className = '', stepNumber }: { 
       <div className="flex items-center justify-between px-2">
         <h3 className="text-xl font-bold flex items-center gap-3">
           {stepNumber && (
-            <span className="w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center font-bold">
+            <span className="w-8 h-8 rounded-full bg-primary text-primary-foreground text-sm flex items-center justify-center font-bold">
               {stepNumber}
             </span>
           )}
-          {Icon && <Icon size={20} className="text-primary" />}
+          {Icon && <Icon size={24} className="text-primary" />}
           {title}
         </h3>
       </div>
@@ -310,7 +310,7 @@ export const CheckoutPage: React.FC = () => {
                         {isVariant ? variant.options?.map((o: any) => typeof o === 'object' ? o.label : null).filter(Boolean).join(', ') : 'Standard Edition'}
                       </p>
                       <div className="flex items-center gap-2 mt-2 text-primary text-sm font-medium">
-                        <Sparkles size={16} />
+                        <Wand2 size={16} />
                         Enchanted Artifact
                       </div>
                     </div>
@@ -327,8 +327,8 @@ export const CheckoutPage: React.FC = () => {
               })}
             </div>
 
-            <Button asChild variant="ghost" className="flex items-center justify-center gap-2 py-8 border-2 border-dashed border-border rounded-xl text-muted-foreground hover:text-primary hover:border-primary/50 transition-all">
-              <Link href="/shop">
+            <Button asChild variant="ghost" className="flex items-center justify-center gap-2 py-8 border-2 border-dashed border-border rounded-xl text-muted-foreground hover:text-primary hover:border-primary/50 transition-all h-auto">
+              <Link href="/shop" className="flex items-center gap-2">
                 <Plus size={20} />
                 <span className="font-bold">Add another Artifact to the Satchel</span>
               </Link>
@@ -338,22 +338,22 @@ export const CheckoutPage: React.FC = () => {
           {/* ── Contact Section ───────────────────────────────────────────── */}
           <Section title="Contact Info" stepNumber={1} icon={BookOpen}>
             {user ? (
-              <div className="flex items-center justify-between p-4 bg-secondary/30 rounded-xl">
+              <div className="flex items-center justify-between p-6 bg-secondary/30 rounded-xl border border-border/50">
                 <div>
-                  <p className="font-medium">{user.email}</p>
+                  <p className="font-bold text-lg">{user.email}</p>
                   <p className="text-sm text-muted-foreground">Signed in as Adventurer</p>
                 </div>
-                <Link href="/logout" className="text-sm text-primary font-medium hover:underline">
+                <Link href="/logout" className="text-sm text-primary font-bold hover:underline">
                   Log out
                 </Link>
               </div>
             ) : (
               <div className="flex flex-col gap-6">
                 <div className="flex gap-4">
-                  <Button asChild variant="outline" className="flex-1 rounded-full">
+                  <Button asChild variant="outline" className="flex-1 rounded-full py-6 font-bold">
                     <Link href="/login">Log in</Link>
                   </Button>
-                  <Button asChild variant="ghost" className="flex-1 rounded-full">
+                  <Button asChild variant="ghost" className="flex-1 rounded-full py-6 font-bold">
                     <Link href="/create-account">Create account</Link>
                   </Button>
                 </div>
@@ -362,13 +362,13 @@ export const CheckoutPage: React.FC = () => {
                   <div className="absolute inset-0 flex items-center">
                     <div className="w-full border-t border-border" />
                   </div>
-                  <div className="relative flex justify-center text-xs">
-                    <span className="bg-background px-4 text-muted-foreground uppercase tracking-widest font-bold">or continue as guest</span>
+                  <div className="relative flex justify-center text-[10px]">
+                    <span className="bg-background px-4 text-muted-foreground uppercase tracking-widest font-black">or continue as guest</span>
                   </div>
                 </div>
 
                 <FormItem>
-                  <Label htmlFor="email" className="ml-1 text-xs font-bold uppercase tracking-widest text-muted-foreground">Email address</Label>
+                  <Label htmlFor="email" className="ml-1 text-[10px] font-black uppercase tracking-widest text-muted-foreground">Email address</Label>
                   <div className="flex gap-3 mt-2">
                     <Input
                       disabled={!emailEditable}
@@ -384,7 +384,7 @@ export const CheckoutPage: React.FC = () => {
                       <Button
                         disabled={!email}
                         onClick={(e) => { e.preventDefault(); setEmailEditable(false) }}
-                        className="rounded-full px-8 shrink-0"
+                        className="rounded-full px-8 shrink-0 h-auto font-bold"
                       >
                         Continue
                       </Button>
@@ -392,7 +392,7 @@ export const CheckoutPage: React.FC = () => {
                       <Button
                         onClick={() => setEmailEditable(true)}
                         variant="ghost"
-                        className="rounded-full shrink-0 text-muted-foreground"
+                        className="rounded-full shrink-0 text-muted-foreground font-bold"
                       >
                         Edit
                       </Button>
@@ -407,7 +407,7 @@ export const CheckoutPage: React.FC = () => {
           <Section title="Delivery Details" stepNumber={2} icon={Bird} className={!contactComplete ? 'opacity-50 pointer-events-none' : ''}>
             {/* Billing */}
             <div className="mb-8">
-              <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4 ml-1">Billing Address</p>
+              <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 ml-1">Billing Address</p>
               {billingAddress ? (
                 <div className="flex items-start justify-between gap-4 p-5 bg-secondary/30 rounded-xl border border-border/50">
                   <AddressItem address={billingAddress} />
@@ -416,7 +416,7 @@ export const CheckoutPage: React.FC = () => {
                     size="sm"
                     disabled={Boolean(paymentData)}
                     onClick={(e) => { e.preventDefault(); setBillingAddress(undefined) }}
-                    className="text-primary font-medium"
+                    className="text-primary font-bold"
                   >
                     Change
                   </Button>
@@ -433,23 +433,23 @@ export const CheckoutPage: React.FC = () => {
             </div>
 
             {/* Shipping Toggle */}
-            <div className="flex gap-3 items-center py-4 border-t border-border">
+            <div className="flex gap-3 items-center py-6 border-t border-border">
               <Checkbox
                 id="shippingTheSameAsBilling"
                 checked={billingAddressSameAsShipping}
                 disabled={Boolean(paymentData || (!user && (!email || Boolean(emailEditable))))}
                 onCheckedChange={(state) => setBillingAddressSameAsShipping(state as boolean)}
-                className="rounded-md"
+                className="rounded-md size-5"
               />
-              <Label htmlFor="shippingTheSameAsBilling" className="cursor-pointer text-sm font-medium">
+              <Label htmlFor="shippingTheSameAsBilling" className="cursor-pointer text-sm font-bold">
                 Our owls should deliver to the same address
               </Label>
             </div>
 
             {/* Shipping (if different) */}
             {!billingAddressSameAsShipping && (
-              <div className="mt-8 pt-4 border-t border-border">
-                <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4 ml-1">Shipping Address</p>
+              <div className="mt-8 pt-6 border-t border-border">
+                <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 ml-1">Shipping Address</p>
                 {shippingAddress ? (
                   <div className="flex items-start justify-between gap-4 p-5 bg-secondary/30 rounded-xl border border-border/50">
                     <AddressItem address={shippingAddress} />
@@ -458,7 +458,7 @@ export const CheckoutPage: React.FC = () => {
                       size="sm"
                       disabled={Boolean(paymentData)}
                       onClick={(e) => { e.preventDefault(); setShippingAddress(undefined) }}
-                      className="text-primary font-medium"
+                      className="text-primary font-bold"
                     >
                       Change
                     </Button>
@@ -486,7 +486,7 @@ export const CheckoutPage: React.FC = () => {
                     {paymentMethods.map((method) => (
                       <label
                         key={method.name}
-                        className={`flex items-center gap-4 p-5 rounded-xl border cursor-pointer transition-all duration-300 ${selectedPaymentMethod?.name === method.name
+                        className={`flex items-center gap-4 p-6 rounded-xl border cursor-pointer transition-all duration-300 ${selectedPaymentMethod?.name === method.name
                           ? 'border-primary bg-primary/5 ring-1 ring-primary'
                           : 'border-border hover:border-primary/40 hover:bg-secondary/50'
                           }`}
@@ -498,19 +498,19 @@ export const CheckoutPage: React.FC = () => {
                           checked={selectedPaymentMethod?.name === method.name}
                           onChange={() => handlePaymentMethodSelect(method)}
                           disabled={!canGoToPayment}
-                          className="accent-primary size-4"
+                          className="accent-primary size-5"
                         />
                         <div className="flex flex-col">
-                          <span className="font-bold text-sm uppercase tracking-wider">{method.label ?? method.name}</span>
-                          <span className="text-xs text-muted-foreground">Secure Portal</span>
+                          <span className="font-black text-xs uppercase tracking-widest">{method.label ?? method.name}</span>
+                          <span className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Secure Portal</span>
                         </div>
                       </label>
                     ))}
                   </div>
                 )}
 
-                <Button
-                  className="w-full py-8 rounded-full text-lg font-bold glow-primary transform hover:scale-[1.01] transition-all"
+                {/* <Button
+                  className="w-full py-8 rounded-full text-lg font-black glow-primary transform hover:scale-[1.01] transition-all uppercase tracking-widest"
                   disabled={!canGoToPayment || isProcessingPayment || !selectedPaymentMethod}
                   onClick={handleGoToPayment}
                   size="lg"
@@ -526,7 +526,7 @@ export const CheckoutPage: React.FC = () => {
                       <ArrowRight size={20} />
                     </span>
                   )}
-                </Button>
+                </Button> */}
               </div>
             )}
 
@@ -536,7 +536,7 @@ export const CheckoutPage: React.FC = () => {
                 <Message error={error} />
                 <Button
                   variant="outline"
-                  className="rounded-full self-start px-6"
+                  className="rounded-full self-start px-8 py-6 font-bold"
                   onClick={(e) => {
                     e.preventDefault()
                     setError(null)
@@ -553,16 +553,16 @@ export const CheckoutPage: React.FC = () => {
             <Suspense fallback={<LoadingSpinner />}>
               {paymentData?.['clientSecret'] && selectedPaymentMethod?.name === 'stripe' && (
                 <div className="mt-2">
-                  {error && <p className="text-sm text-destructive mb-6 font-medium bg-destructive/10 p-4 rounded-xl">{error}</p>}
+                  {error && <p className="text-sm text-destructive mb-6 font-bold bg-destructive/10 p-5 rounded-xl border border-destructive/20">{error}</p>}
                   <Elements
                     options={{
                       appearance: {
                         theme: theme === 'dark' ? 'night' : 'stripe',
                         variables: {
                           borderRadius: '16px',
-                          colorPrimary: '#3b82f6',
+                          colorPrimary: '#2b6cee',
                           colorBackground: theme === 'dark' ? '#1a1f2e' : '#ffffff',
-                          colorText: theme === 'dark' ? '#ffffff' : '#1e293b',
+                          colorText: theme === 'dark' ? '#ffffff' : '#101622',
                           fontFamily: 'Spline Sans, sans-serif',
                         },
                       },
@@ -577,7 +577,7 @@ export const CheckoutPage: React.FC = () => {
                     />
                     <Button
                       variant="ghost"
-                      className="mt-8 text-muted-foreground rounded-full w-full"
+                      className="mt-8 text-muted-foreground rounded-full w-full font-bold"
                       onClick={handleCancelPayment}
                     >
                       ← Choose a different payment method
@@ -588,13 +588,13 @@ export const CheckoutPage: React.FC = () => {
 
               {paymentData && selectedPaymentMethod?.name === 'paypal' && !paymentData['clientSecret'] && (
                 <div className="flex flex-col gap-6 mt-2">
-                  <div className="rounded-xl border border-primary/20 bg-primary/5 p-6 text-sm text-primary font-medium flex gap-3 items-center">
-                    <Sparkles className="shrink-0" size={20} />
+                  <div className="rounded-xl border border-primary/20 bg-primary/5 p-6 text-sm text-primary font-bold flex gap-4 items-center">
+                    <Sparkles className="shrink-0" size={24} />
                     The portal is ready. You&apos;ll be redirected to PayPal to complete your tribute securely.
                   </div>
                   <Button
                     size="lg"
-                    className="w-full py-8 rounded-full font-bold text-lg"
+                    className="w-full py-8 rounded-full font-black text-lg uppercase tracking-widest"
                     onClick={() => {
                       if (paymentData.approvalUrl) {
                         window.location.href = paymentData.approvalUrl as string
@@ -605,7 +605,7 @@ export const CheckoutPage: React.FC = () => {
                   </Button>
                   <Button
                     variant="ghost"
-                    className="text-muted-foreground rounded-full"
+                    className="text-muted-foreground rounded-full font-bold"
                     onClick={handleCancelPayment}
                   >
                     ← Choose a different payment method
@@ -618,7 +618,7 @@ export const CheckoutPage: React.FC = () => {
 
         {/* ── Right Column: Quest Summary ──────────────────────────────────── */}
         <div className="lg:col-span-1 lg:sticky lg:top-28">
-          <div className="bg-card p-8 rounded-2xl border border-border shadow-sm flex flex-col gap-6">
+          <div className="bg-card p-8 rounded-2xl border border-border shadow-sm flex flex-col gap-8">
             <h3 className="text-xl font-bold flex items-center gap-3">
               <History className="text-primary" size={24} />
               Quest Log
@@ -626,29 +626,43 @@ export const CheckoutPage: React.FC = () => {
 
             <div className="space-y-4">
               <div className="flex justify-between text-muted-foreground">
-                <span className="text-sm">Artifact Subtotal</span>
+                <span className="text-sm font-medium">Artifact Subtotal</span>
                 <Price amount={cart.subtotal || 0} className="text-foreground font-bold" />
               </div>
               <div className="flex justify-between text-muted-foreground">
-                <span className="text-sm">Owl Delivery (Priority)</span>
-                <span className="text-foreground font-bold">Gratis</span>
+                <span className="text-sm font-medium">Owl Delivery (Priority)</span>
+                <span className="text-foreground font-bold uppercase text-xs tracking-widest">Gratis</span>
               </div>
               <div className="flex justify-between text-muted-foreground">
-                <span className="text-sm">Kingdom Tax</span>
+                <span className="text-sm font-medium">Kingdom Tax</span>
                 <Price amount={0} className="text-foreground font-bold" />
               </div>
               <div className="pt-6 border-t border-border flex justify-between items-end">
-                <span className="text-lg font-bold">Total Tribute</span>
+                <span className="text-lg font-black uppercase tracking-widest">Total Tribute</span>
                 <div className="text-right">
                   <Price amount={cart.subtotal || 0} className="text-3xl font-black text-primary" />
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1 font-bold">Due at Finale</p>
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1 font-black">Due at Finale</p>
                 </div>
               </div>
             </div>
 
+            {/* Promo Scroll */}
+            {/* <div className="mt-2">
+              <label className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-3 ml-1">Promo Scroll</label>
+              <div className="relative">
+                <Input 
+                  className="w-full bg-secondary/50 border-none rounded-full py-6 px-6 focus-visible:ring-primary text-sm font-medium placeholder:text-muted-foreground/50" 
+                  placeholder="Enter ancient code..." 
+                />
+                <Button className="absolute right-2 top-1.5 h-auto text-[10px] font-black uppercase tracking-widest px-6 py-2.5 rounded-full hover:bg-primary/90 transition-colors">
+                  Apply
+                </Button>
+              </div>
+            </div> */}
+
             {!paymentData && (
               <Button
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-8 rounded-full flex items-center justify-center gap-3 transition-all transform hover:scale-[1.02] glow-primary mt-4"
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-black py-8 rounded-full flex items-center justify-center gap-3 transition-all transform hover:scale-[1.02] glow-primary mt-2 uppercase tracking-widest"
                 onClick={handleGoToPayment}
                 disabled={!canGoToPayment || isProcessingPayment || !!paymentData}
               >
@@ -656,12 +670,12 @@ export const CheckoutPage: React.FC = () => {
                 <ArrowRight size={20} />
               </Button>)}
 
-            <div className="flex flex-col items-center gap-2 mt-2">
-              <div className="flex items-center gap-2 text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
-                <Lock size={12} />
+            <div className="flex flex-col items-center gap-3 mt-2">
+              <div className="flex items-center gap-2 text-[10px] text-muted-foreground font-black uppercase tracking-widest">
+                <Lock size={12} className="text-primary" />
                 Secure Magic Encryption
               </div>
-              <p className="text-center text-[10px] text-muted-foreground/60 px-4">
+              <p className="text-center text-[10px] text-muted-foreground/60 px-6 leading-relaxed uppercase tracking-tighter">
                 Your quest is protected by 256-bit mystical wards.
               </p>
             </div>
