@@ -2,8 +2,8 @@ import { Grid } from '@/components/Grid'
 import { PaginationController } from '@/components/Pagination/PaginationController'
 import { ProductGridItem } from '@/components/ProductGridItem'
 import configPromise from '@payload-config'
-import { getPayload } from 'payload'
 import { Search } from 'lucide-react'
+import { getPayload } from 'payload'
 
 export const metadata = {
   description: 'Search for products in the store.',

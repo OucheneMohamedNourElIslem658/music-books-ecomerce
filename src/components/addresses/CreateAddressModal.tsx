@@ -1,20 +1,18 @@
 'use client'
 
+import { AddressForm } from '@/components/forms/AddressForm'
 import { Button } from '@/components/ui/button'
-import React, { useState } from 'react'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from '@/components/ui/dialog'
-import { AddressForm } from '@/components/forms/AddressForm'
 import { Address } from '@/payload-types'
+import { MapPin, Plus } from 'lucide-react'
 import { DefaultDocumentIDType } from 'payload'
-import { Plus, BookOpen, X } from 'lucide-react'
-import { cn } from '@/utilities/cn'
+import React, { useState } from 'react'
 
 type Props = {
   addressID?: DefaultDocumentIDType
@@ -30,60 +28,59 @@ type Props = {
 export const CreateAddressModal: React.FC<Props> = ({
   addressID,
   initialData,
-  buttonText = 'Add a new address',
-  modalTitle = 'Chart a New Course',
+  buttonText = 'Add Address',
+  modalTitle,
   callback,
   skipSubmission,
   disabled,
   className,
 }) => {
   const [open, setOpen] = useState(false)
-
-  const closeModal = () => setOpen(false)
+  const isEditing = Boolean(addressID)
+  const title = modalTitle ?? (isEditing ? 'Edit Address' : 'New Address')
 
   const handleCallback = (data: Partial<Address>) => {
-    closeModal()
+    setOpen(false)
     if (callback) callback(data)
   }
-
-  const isEditing = Boolean(addressID)
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild disabled={disabled}>
         {className ? (
-          <Button variant="ghost" className={className}>
-            {buttonText}
+          <Button variant="ghost" className={className}>{buttonText}</Button>
+        ) : isEditing ? (
+          <Button variant="ghost" size="sm"
+            className="text-xs text-muted-foreground hover:text-primary rounded-lg h-8 px-3">
+            Edit
           </Button>
         ) : (
-          <button className="flex items-center gap-4 px-8 py-4 rounded-full bg-secondary/80 border border-primary/20 text-foreground hover:bg-secondary transition-all group shadow-sm active:scale-95">
-            <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all shadow-[0_0_15px_rgba(43,108,238,0.2)]">
-              <Plus size={20} />
-            </div>
-            <span className="font-black text-xs uppercase tracking-widest">{buttonText}</span>
-          </button>
+          <Button variant="outline" size="sm"
+            className="rounded-full gap-2 border-dashed hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-all">
+            <Plus className="size-3.5" />
+            <span className="text-xs font-bold">{buttonText}</span>
+          </Button>
         )}
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-2xl bg-background border-border/50 p-0 overflow-hidden rounded-3xl shadow-2xl">
-        {/* Themed Header */}
-        <div className="border-b border-border/50 px-10 py-8 bg-secondary/20 relative">
-          <div className="flex items-center gap-5 relative z-10">
-            <div className="size-14 flex items-center justify-center bg-primary/10 rounded-2xl text-accent-gold shadow-sm">
-              <BookOpen size={28} />
-            </div>
-            <div>
-              <DialogTitle className="text-2xl font-black tracking-tight text-foreground uppercase italic leading-none mb-2">
-                {modalTitle}
-              </DialogTitle>
-              <DialogDescription className="text-muted-foreground text-sm font-medium">
-                Where shall the magical winds carry your artifacts?
-              </DialogDescription>
-            </div>
+      <DialogContent className="sm:max-w-lg rounded-2xl border-border bg-background p-0 overflow-hidden shadow-xl">
+        {/* Header */}
+        <div className="flex items-center gap-3 px-6 py-5 border-b border-border">
+          <div className="size-9 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0">
+            <MapPin className="size-4" />
+          </div>
+          <div>
+            <DialogTitle className="text-sm font-black uppercase tracking-widest text-foreground leading-none">
+              {title}
+            </DialogTitle>
+            <DialogDescription className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] font-medium mt-0.5">
+              {isEditing ? 'Update delivery address' : 'Save a delivery address'}
+            </DialogDescription>
           </div>
         </div>
 
-        <div className="px-10 py-10 max-h-[80vh] overflow-y-auto no-scrollbar">
+        {/* Form */}
+        <div className="px-6 py-6 max-h-[75vh] overflow-y-auto">
           <AddressForm
             addressID={addressID}
             initialData={initialData}
@@ -91,9 +88,6 @@ export const CreateAddressModal: React.FC<Props> = ({
             skipSubmission={skipSubmission}
           />
         </div>
-
-        {/* Footer Decoration */}
-        <div className="h-2 bg-gradient-to-r from-transparent via-accent-gold/30 to-transparent" />
       </DialogContent>
     </Dialog>
   )

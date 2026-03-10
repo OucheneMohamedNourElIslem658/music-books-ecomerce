@@ -7,6 +7,7 @@ import { Price } from '@/components/Price'
 import { AddressItem } from '@/components/addresses/AddressItem'
 import { Separator } from '@/components/ui/separator'
 import { Link } from '@/i18n/navigation'
+import { formatDateTime } from '@/utilities/formatDateTime'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import configPromise from '@payload-config'
 import { Castle, ChevronLeft, CreditCard, History, Map, Package, Printer } from 'lucide-react'
@@ -95,10 +96,10 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
         <div className="flex flex-col gap-3 relative z-10">
           <span className="text-primary text-[10px] font-black uppercase tracking-[0.2em]">Order Confirmed</span>
           <h1 className="text-3xl md:text-4xl font-black leading-tight tracking-tight">#{order.id}</h1>
-          {/* <p className="text-muted-foreground text-sm font-medium">Scribed on the {formatDateTime({ date: order.createdAt, format: 'do of MMMM, yyyy' })}</p> */}
+          <p className="text-muted-foreground text-sm font-medium">Scribed on the {formatDateTime({ date: order.createdAt })}</p>
         </div>
         <div className="bg-primary/10 border border-primary/20 px-8 py-3 rounded-full relative z-10">
-          <OrderStatus status={order.status || 'pending'} className="font-black uppercase text-xs tracking-widest text-primary" />
+          <OrderStatus status={order.status as 'processing' | 'completed' | 'cancelled' | 'refunded'} className="font-black uppercase text-xs tracking-widest text-primary" />
         </div>
       </div>
 
@@ -150,7 +151,7 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
                       <p className="text-primary text-[10px] font-black uppercase tracking-widest">Enchanted Artifact</p>
                       <h4 className="text-xl font-bold leading-tight">{product.title}</h4>
                       <p className="text-muted-foreground text-sm line-clamp-2">
-                        {isVariant ? variant.options?.map((o: any) => typeof o === 'object' ? o.label : null).filter(Boolean).join(', ') : 'Standard Edition'}
+                        {isVariant ? variant?.options?.map((o: any) => typeof o === 'object' ? o.label : null).filter(Boolean).join(', ') : 'Standard Edition'}
                       </p>
                     </div>
                     <div className="flex items-center justify-between mt-4">

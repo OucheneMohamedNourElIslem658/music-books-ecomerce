@@ -1,0 +1,123 @@
+<html class="dark"><head>
+<meta charset="utf-8"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#2b6cee",
+            "background-light": "#f6f6f8",
+            "background-dark": "#101622",
+            "accent-gold": "#d4af37",
+          },
+          fontFamily: {
+            "display": ["Spline Sans", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      font-family: "Spline Sans", sans-serif;
+    }
+    .glowing-border {
+      box-shadow: 0 0 15px rgba(43, 108, 238, 0.3);
+    }
+    .gold-shimmer {
+      background: linear-gradient(45deg, #d4af37 0%, #f9e29c 50%, #d4af37 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- TopNavBar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 px-6 md:px-20 py-4 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-3xl">auto_stories</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">The Magical Archives</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-slate-700 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Books</a>
+<a class="text-slate-700 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Lore</a>
+<a class="text-slate-700 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Map</a>
+</nav>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-full h-10 px-6 bg-primary text-white text-sm font-bold transition-transform hover:scale-105 active:scale-95 shadow-lg shadow-primary/20">
+<span class="truncate">Login</span>
+</button>
+</div>
+</header>
+<!-- Main Content Container -->
+<main class="flex-1 flex flex-col items-center justify-center px-6 py-12">
+<div class="max-w-[800px] w-full flex flex-col items-center text-center">
+<!-- Illustration Section -->
+<div class="relative w-full aspect-video md:aspect-[21/9] rounded-xl overflow-hidden mb-12 group glowing-border">
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent z-10"></div>
+<div class="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
+<div class="w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-700 group-hover:scale-105" data-alt="A quiet magical library at night with glowing blue sparks" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDnWalvKEHzaOxg1PCB5dnvt1C87T9iZf70d2yeMSEvcJaVurEuvWiuNWJ23kQHJG-6rv4cgctRc_TUjz4ZufMorYl6BFpPci2nitEBP3OuvV10b5Po76Plx4eiBTgLG9hnz7f8deOyVsKRN8pMx4ulgVSsk40pg3OXtDE0k6N4N9YwxRECTQ0ZfTKDSeG6Oq86-HzBiu5h2TuWWdndTTkofijS9oTxl2lqG1OPFca0gSfTKDDjLZ-7lAJIY_JUD4FJ2VKcafzfpxw7");'>
+</div>
+<!-- Overlay Icon -->
+<div class="absolute inset-0 flex items-center justify-center z-20">
+<div class="bg-background-dark/60 backdrop-blur-md p-6 rounded-full border border-primary/30">
+<span class="material-symbols-outlined text-6xl text-primary animate-pulse">lock_person</span>
+</div>
+</div>
+</div>
+<!-- Text Content -->
+<div class="space-y-4 max-w-2xl">
+<div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold tracking-widest uppercase mb-2">
+<span class="material-symbols-outlined text-sm">verified_user</span> Session Ended
+            </div>
+<h1 class="text-slate-900 dark:text-slate-100 text-4xl md:text-5xl font-bold tracking-tight">
+              The Gates are <span class="gold-shimmer">Closed</span>
+</h1>
+<p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed pt-2">
+              Safe travels, adventurer. You have been successfully logged out of the enchanted realm. Your progress has been etched into the eternal scrolls and the archives are now resting.
+            </p>
+<!-- Action Buttons -->
+<div class="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+<button class="flex min-w-[200px] cursor-pointer items-center justify-center rounded-full h-14 px-8 bg-primary text-white text-lg font-bold transition-all hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 active:scale-95">
+<span class="truncate">Return to the Kingdom</span>
+</button>
+<button class="flex min-w-[200px] cursor-pointer items-center justify-center rounded-full h-14 px-8 bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-lg font-bold transition-all hover:bg-slate-300 dark:hover:bg-slate-700 active:scale-95 border border-slate-300 dark:border-slate-700">
+<span class="truncate">Explore Public Lore</span>
+</button>
+</div>
+</div>
+<!-- Decorative Footer Elements -->
+<div class="mt-20 flex items-center gap-4 text-slate-400 dark:text-slate-600">
+<div class="h-px w-12 bg-current"></div>
+<span class="material-symbols-outlined">auto_fix_high</span>
+<div class="h-px w-12 bg-current"></div>
+</div>
+</div>
+</main>
+<!-- Minimal Footer -->
+<footer class="px-6 md:px-20 py-10 border-t border-slate-200 dark:border-slate-800 text-center">
+<p class="text-slate-500 dark:text-slate-500 text-sm font-medium">
+          © 2024 The Magical Archives. All spells and stories reserved.
+        </p>
+<div class="flex justify-center gap-6 mt-4">
+<a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">share</span></a>
+<a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">policy</span></a>
+<a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">help</span></a>
+</div>
+</footer>
+</div>
+</div>
+<!-- Decorative glow spots -->
+<div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent-gold/5 rounded-full blur-[120px] pointer-events-none"></div>
+</body></html>

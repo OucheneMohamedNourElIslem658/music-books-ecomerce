@@ -3,7 +3,8 @@ import { OrderStatus } from '@/components/OrderStatus'
 import { Price } from '@/components/Price'
 import { Link } from '@/i18n/navigation'
 import { Order } from '@/payload-types'
-import { FileText, Map as MapIcon, Sparkles } from 'lucide-react'
+import { formatDateTime } from '@/utilities/formatDateTime'
+import { FileText, Sparkles } from 'lucide-react'
 
 type Props = {
   order: Order
@@ -37,12 +38,12 @@ export const OrderItem: React.FC<Props> = ({ order }) => {
       </div>
 
       {/* Details Section */}
-      <div className="flex flex-col flex-1 justify-between gap-6 relative z-10">
+      <div className="flex flex-col flex-1 justify-between relative z-10">
         <div>
           <div className="flex flex-wrap items-center gap-4 mb-3">
             {order.status && <OrderStatus status={order.status} />}
             <span className="text-muted-foreground text-[10px] font-black uppercase tracking-widest">
-              {/* Scribed: {formatDateTime({ date: order.createdAt, format: 'do of MMMM' })} */}
+              Scribed: {formatDateTime({ date: order.createdAt })}
             </span>
           </div>
           <h3 className="text-xl font-bold leading-tight">
@@ -59,6 +60,18 @@ export const OrderItem: React.FC<Props> = ({ order }) => {
         </div>
 
         <div className="flex items-center gap-6">
+          {order.shippingAddress?.addressLine1 && (
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <FileText size={12} />
+              <span className="text-xs font-medium">
+                {order.shippingAddress.addressLine1}
+                {order.shippingAddress.city && `, ${order.shippingAddress.city}`}
+              </span>
+            </div>
+          )}
+        </div>
+
+        <div className="flex items-center gap-6">
           <Link
             href={`/orders/${order.id}`}
             className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground text-foreground text-xs font-black uppercase tracking-widest transition-all"
@@ -66,10 +79,6 @@ export const OrderItem: React.FC<Props> = ({ order }) => {
             <FileText size={14} />
             View Scroll
           </Link>
-          <button className="text-accent-gold hover:text-accent-gold/80 text-xs font-black uppercase tracking-widest flex items-center gap-2 transition-colors">
-            {order.status === 'processing' ? 'Locate Courier' : 'View Ritual'}
-            <MapIcon size={14} />
-          </button>
         </div>
       </div>
 
