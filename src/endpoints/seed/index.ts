@@ -71,16 +71,10 @@ export const seed = async ({
   // ─── Clear ────────────────────────────────────────────────────────────────
   payload.logger.info('— Clearing collections and globals...')
 
-  await Promise.all(
-    globals.map((global) =>
-      payload.updateGlobal({
-        slug: global,
-        data: { navItems: [] },
-        depth: 0,
-        context: { disableRevalidate: true },
-      }),
-    ),
-  )
+  await Promise.all([
+    payload.updateGlobal({ slug: 'header', data: { navItems: [] }, depth: 0, context: { disableRevalidate: true } }),
+    payload.updateGlobal({ slug: 'footer', data: { groups: [], socials: [] }, depth: 0, context: { disableRevalidate: true } }),
+  ])
 
   for (const collection of collections) {
     await payload.db.deleteMany({ collection, req, where: {} })
@@ -395,12 +389,56 @@ export const seed = async ({
     payload.updateGlobal({
       slug: 'footer',
       data: {
-        navItems: [
-          { link: { type: 'custom', label: 'The Library', url: '/shop' } },
-          { link: { type: 'custom', label: 'Author', url: '/author' } },
-          { link: { type: 'custom', label: 'Find My Order', url: '/find-order' } },
-          { link: { type: 'custom', label: 'Contact', url: '/contact' } },
+        tagline: 'Creating immersive musical experiences that bring stories to life through the power of symphonic orchestration.',
+        groups: [
+          {
+            label: 'The Archive',
+            links: [
+              { link: { type: 'custom', label: 'All Books', url: '/shop' } },
+              { link: { type: 'custom', label: 'Crescendo of the Clouds', url: '/products/crescendo-of-the-clouds' } },
+              { link: { type: 'custom', label: 'The Coral Cantata', url: '/products/the-coral-cantata' } },
+              { link: { type: 'custom', label: 'Echoes of the Gear', url: '/products/echoes-of-the-gear' } },
+            ],
+          },
+          {
+            label: 'The Chronicler',
+            links: [
+              { link: { type: 'custom', label: 'About the Author', url: '/author' } },
+              { link: { type: 'custom', label: 'Musical Journey', url: '/the-orchestral-heart' } },
+              { link: { type: 'custom', label: 'Blog', url: '/blog' } },
+              { link: { type: 'custom', label: 'Contact', url: '/contact' } },
+            ],
+          },
+          {
+            label: 'Your Account',
+            links: [
+              { link: { type: 'custom', label: 'Account Settings', url: '/account' } },
+              { link: { type: 'custom', label: 'Orders', url: '/orders' } },
+              { link: { type: 'custom', label: 'Addresses', url: '/account/addresses' } },
+              { link: { type: 'custom', label: 'Find My Order', url: '/find-order' } },
+            ],
+          },
+          {
+            label: 'Legal',
+            links: [
+              { link: { type: 'custom', label: 'Privacy Policy', url: '/privacy' } },
+              { link: { type: 'custom', label: 'Terms of Service', url: '/terms' } },
+              { link: { type: 'custom', label: 'Refund Policy', url: '/refunds' } },
+            ],
+          },
         ],
+        socials: [
+          { platform: 'instagram', url: 'https://instagram.com/melodymyth' },
+          { platform: 'twitter', url: 'https://twitter.com/melodymyth' },
+          { platform: 'youtube', url: 'https://youtube.com/@melodymyth' },
+          { platform: 'discord', url: 'https://discord.gg/melodymyth' },
+        ],
+        newsletter: {
+          enabled: true,
+          heading: 'Join the Mythos',
+          subheading: 'Receive lore, releases and rare scrolls directly to your sanctum. Join 15,000+ Seekers of Magic.',
+        },
+        copyright: `© ${new Date().getFullYear()} Melody & Myth. All Spells Reserved by the Guild of Musical Bards.`,
       },
     }),
   ])

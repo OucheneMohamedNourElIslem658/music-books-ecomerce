@@ -31,7 +31,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
                 </div>
                 <div className="min-w-0">
                   <p className="text-sm font-black text-foreground truncate">{user?.name || 'Wayfinder'}</p>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                  <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
                     {user?.email}
                   </p>
                 </div>
