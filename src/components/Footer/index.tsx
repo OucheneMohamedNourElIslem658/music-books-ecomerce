@@ -1,95 +1,122 @@
 import { CMSLink } from '@/components/Link'
+import { LocaleSwitcher } from '@/components/LocaleSwitcher'
 import { Link } from '@/i18n/navigation'
 import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
 import { getCachedGlobal } from '@/utilities/getGlobals'
-import { BookOpenText } from 'lucide-react'
-import { LocaleSwitcher } from '../LocaleSwitcher'
+import {
+  Facebook,
+  Instagram,
+  Linkedin,
+  Music2,
+  Twitter,
+  Youtube
+} from 'lucide-react'
+
+const SOCIAL_ICONS: Record<string, React.ElementType> = {
+  instagram: Instagram,
+  twitter: Twitter,
+  facebook: Facebook,
+  youtube: Youtube,
+  discord: Music2,
+  pinterest: Music2,
+  linkedin: Linkedin,
+  tiktok: Music2,
+}
 
 export async function Footer() {
-  const footer = await getCachedGlobal('footer', 1)()
+  const footer = await getCachedGlobal('footer', 4)()
+  const { tagline, groups, socials, copyright } = footer
   const currentYear = new Date().getFullYear()
-
-  const links = footer.navItems || []
-
-  // 4 links per column, spills into a second column beyond that
-  const col1 = links.slice(0, 4)
-  const col2 = links.slice(4)
-
   return (
-    <footer className="bg-card border-t border-border py-16 px-6 lg:px-20 transition-colors">
-      <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+    <footer className="border-t border-border bg-card/40 mt-auto">
+      {/* Main grid */}
+      <div className="container py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-12">
 
-        {/* Brand */}
-        <div className="flex flex-col gap-6">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="text-primary transition-transform group-hover:scale-110 duration-300">
-              <BookOpenText className="size-8" />
+          {/* Brand */}
+          <div className="flex flex-col gap-5">
+            <Link href="/" className="flex items-center gap-2 w-fit group">
+              <span className="text-accent-gold text-xl">✦</span>
+              <span className="font-black text-base text-foreground uppercase tracking-widest">
+                Melody & Myth
+              </span>
+            </Link>
+
+            {tagline && (
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {tagline}
+              </p>
+            )}
+
+            {/* Socials */}
+            {socials?.length > 0 && (
+              <div className="flex items-center gap-2 flex-wrap">
+                {socials.map((social: any, i: number) => {
+                  const Icon = SOCIAL_ICONS[social.platform] ?? Music2
+                  return (
+                    <a
+                      key={i}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.platform}
+                      className="size-9 rounded-xl border border-border bg-background/60 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all"
+                    >
+                      <Icon className="size-4" />
+                    </a>
+                  )
+                })}
+              </div>
+            )}
+
+            {/* Theme + locale */}
+            <div className="flex items-center gap-3 mt-auto pt-2">
+              <LocaleSwitcher />
+              <ThemeSelector />
             </div>
-            <h2 className="text-lg font-black tracking-tight uppercase text-foreground">
-              The Enchanted Bookshop
-            </h2>
-          </Link>
-          <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
-            Creating immersive musical experiences that bring stories to life through the power of symphonic orchestration.
-          </p>
-        </div>
+          </div>
 
-        {/* Nav links — single column when ≤4 items, splits into two columns beyond that */}
-        {col2.length === 0 ? (
-          // Single column
-          <ul className="flex flex-col gap-4">
-            {col1.map((item: any) => (
-              <li key={item.id}>
-                <CMSLink
-                  {...item.link}
-                  appearance="link"
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm font-medium p-0"
-                />
-              </li>
-            ))}
-          </ul>
-        ) : (
-          // Two columns
-          <>
-            <ul className="flex flex-col gap-4">
-              {col1.map((item: any) => (
-                <li key={item.id}>
-                  <CMSLink
-                    {...item.link}
-                    appearance="link"
-                    className="text-muted-foreground hover:text-primary transition-colors text-sm font-medium p-0"
-                  />
-                </li>
+          {/* Dynamic link groups */}
+          {groups?.length > 0 && (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
+              {groups.map((group: any, i: number) => (
+                <div key={i} className="flex flex-col gap-3">
+                  <p className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground border-b border-border pb-2">
+                    {group.label}
+                  </p>
+                  <ul className="flex flex-col gap-2">
+                    {group.links?.map((item: any, j: number) => (
+                      <li key={j}>
+                        <CMSLink
+                          {...item.link}
+                          appearance="link"
+                          className="text-sm text-muted-foreground hover:text-foreground transition-colors p-0 font-medium"
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
-            </ul>
-            <ul className="flex flex-col gap-4">
-              {col2.map((item: any) => (
-                <li key={item.id}>
-                  <CMSLink
-                    {...item.link}
-                    appearance="link"
-                    className="text-muted-foreground hover:text-primary transition-colors text-sm font-medium p-0"
-                  />
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-
-        {/* Theme + locale — always last column */}
-        <div className="flex gap-4 lg:col-start-4">
-          <LocaleSwitcher />
-          <ThemeSelector />
+            </div>
+          )}
         </div>
-
       </div>
 
       {/* Bottom bar */}
-      <div className="max-w-[1400px] mx-auto pt-8 border-t border-border text-center">
-        <p className="text-xs text-muted-foreground/60 font-medium tracking-wide">
-          © {currentYear} The Enchanted Bookshop. All Spells Reserved by the Guild of Musical Bards.
-        </p>
+      <div className="border-t border-border">
+        <div className="container py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-[10px] text-muted-foreground uppercase tracking-widest">
+            {copyright ?? `© ${currentYear} Melody & Myth. All rights reserved.`}
+          </p>
+          <div className="flex items-center gap-1.5">
+            <span className="text-accent-gold text-xs">✦</span>
+            <span className="text-[10px] text-muted-foreground uppercase tracking-widest">
+              Crafted with magic
+            </span>
+          </div>
+        </div>
       </div>
+
     </footer>
   )
 }
