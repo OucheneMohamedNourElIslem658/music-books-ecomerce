@@ -3,23 +3,27 @@
 import React from 'react'
 import { useAddresses } from '@payloadcms/plugin-ecommerce/client/react'
 import { AddressItem } from '@/components/addresses/AddressItem'
+import { MapIcon } from 'lucide-react'
 
 export const AddressListing: React.FC = () => {
   const { addresses } = useAddresses()
 
   if (!addresses || addresses.length === 0) {
-    return <p>No addresses found.</p>
+    return (
+      <div className="bg-card/20 p-16 rounded-3xl border border-dashed border-border flex flex-col items-center justify-center text-center gap-4">
+        <div className="p-4 bg-secondary rounded-full">
+          <MapIcon size={48} className="text-muted-foreground" />
+        </div>
+        <p className="text-muted-foreground font-bold uppercase tracking-widest">No mystical coordinates found in your records.</p>
+      </div>
+    )
   }
 
   return (
-    <div>
-      <ul className="flex flex-col gap-8">
-        {addresses.map((address) => (
-          <li key={address.id} className="border-b pb-8 last:border-none">
-            <AddressItem address={address} />
-          </li>
-        ))}
-      </ul>
+    <div className="grid grid-cols-1 gap-8">
+      {addresses.map((address) => (
+        <AddressItem key={address.id} address={address} />
+      ))}
     </div>
   )
 }

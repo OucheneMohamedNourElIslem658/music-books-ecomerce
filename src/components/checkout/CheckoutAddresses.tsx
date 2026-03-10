@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/dialog'
 import { Address } from '@/payload-types'
 import { useAddresses } from '@payloadcms/plugin-ecommerce/client/react'
+import { Package } from 'lucide-react'
 import { useState } from 'react'
 
 type Props = {
@@ -31,8 +32,8 @@ export const CheckoutAddresses: React.FC<Props> = ({
 
   if (!addresses || addresses.length === 0) {
     return (
-      <div>
-        <p>No addresses found. Please add an address.</p>
+      <div className="flex flex-col gap-6 items-center justify-center p-12 border-2 border-dashed border-border rounded-2xl bg-secondary/10">
+        <p className="text-muted-foreground font-medium text-center">No addresses found in your quest log. Please add an address to proceed.</p>
 
         <CreateAddressModal />
       </div>
@@ -41,10 +42,12 @@ export const CheckoutAddresses: React.FC<Props> = ({
 
   return (
     <div className="flex flex-col gap-8">
-      <div>
-        <h3 className="text-xl font-medium mb-2">{heading}</h3>
-        <p className="text-muted-foreground">{description}</p>
-      </div>
+      {heading && (
+        <div>
+          <h3 className="text-xl font-bold mb-2">{heading}</h3>
+          <p className="text-muted-foreground text-sm">{description}</p>
+        </div>
+      )}
       <AddressesModal setAddress={setAddress} />
     </div>
   )
@@ -62,27 +65,33 @@ const AddressesModal: React.FC<Props> = ({ setAddress }) => {
   const { addresses } = useAddresses()
 
   if (!addresses || addresses.length === 0) {
-    return <p>No addresses found. Please add an address.</p>
+    return <p className="text-muted-foreground">No addresses found. Please add an address.</p>
   }
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button variant={'outline'}>{'Select an address'}</Button>
+        <Button variant={'outline'} className="rounded-full px-8 py-6 font-bold border-primary/20 hover:bg-primary/5 transition-all">
+          {'Select an address'}
+        </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-w-2xl rounded-2xl border-border bg-background">
         <DialogHeader>
-          <DialogTitle>{'Select an address'}</DialogTitle>
+          <DialogTitle className="text-2xl font-bold flex items-center gap-3">
+            <Package className="text-primary" size={24} />
+            {'Select an address'}
+          </DialogTitle>
         </DialogHeader>
 
-        <div className="flex flex-col gap-12">
-          <ul className="flex flex-col gap-8">
+        <div className="flex flex-col gap-10 mt-6">
+          <ul className="flex flex-col gap-6">
             {addresses.map((address) => (
-              <li key={address.id} className="border-b pb-8 last:border-none">
+              <li key={address.id} className="p-6 rounded-xl border border-border bg-secondary/20 hover:border-primary/50 transition-colors">
                 <AddressItem
                   address={address}
                   beforeActions={
                     <Button
+                      className="rounded-full px-6 font-bold"
                       onClick={(e) => {
                         e.preventDefault()
                         setAddress(address)
@@ -97,7 +106,9 @@ const AddressesModal: React.FC<Props> = ({ setAddress }) => {
             ))}
           </ul>
 
-          <CreateAddressModal />
+          <div className="pt-6 border-t border-border">
+            <CreateAddressModal />
+          </div>
         </div>
       </DialogContent>
     </Dialog>

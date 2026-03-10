@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chart a New Course - Magical Address Entry</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee",
+                        "gold": "#d4af37",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0a0c12",
+                        "parchment": "#1c1f27",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>body {
+    background-image: radial-gradient(circle at 20% 30%, rgba(43, 108, 238, 0.15) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.05) 0%, transparent 40%), url(https://lh3.googleusercontent.com/aida-public/AB6AXuARQ4sVPSu3j4vTTZP9oRYZ4piYF_Qwj0XRqgo--iKyBji8duW96zDmV9D7a-g1KjlW1vcHyZ4Z_shZtq_lG4VWofG4BLee-FUvCYug-PZQcuD5Zdmq5zhxL8xU_TZYRvwQ__aPtW8woe7EN4_UAM6_1msJFo1ZiQ9vJw41v4_qgOfkqC6mYmTMaZ1EEtLLVdf7O3Xqj9vSenq5e34ZiGNlYYJHZMfIr6lyaSTsm7JQxOU2m7mVJqshcJ9CPKkzDOgohyYaqfcfq3Ye);
+    background-size: cover;
+    background-attachment: fixed
+    }
+.parchment-glow {
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5), 0 0 2px rgba(212, 175, 55, 0.3)
+    }
+.gold-border {
+    border: 1px solid rgba(212, 175, 55, 0.4)
+    }
+.gold-border-focus:focus-within {
+    border-color: #d4af37;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2)
+    }</style>
+</head>
+<body class="bg-background-dark font-display text-slate-100 min-h-screen flex items-center justify-center p-4">
+<!-- Modal Backdrop -->
+<div class="fixed inset-0 bg-background-dark/80 backdrop-blur-md z-0"></div>
+<!-- Main Container -->
+<div class="relative z-10 w-full max-w-2xl bg-parchment parchment-glow gold-border rounded-xl overflow-hidden flex flex-col">
+<!-- Header -->
+<header class="flex items-center justify-between border-b border-white/10 px-8 py-6 bg-white/5">
+<div class="flex items-center gap-4">
+<div class="size-10 flex items-center justify-center bg-primary/20 rounded-full text-gold">
+<span class="material-symbols-outlined text-3xl">auto_stories</span>
+</div>
+<div>
+<h1 class="text-2xl font-black tracking-tight text-white uppercase italic">Chart a New Course</h1>
+<p class="text-slate-400 text-sm">Where shall the magical winds carry your artifacts?</p>
+</div>
+</div>
+<button class="flex items-center justify-center size-10 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</header>
+<!-- Form Content -->
+<div class="px-8 py-10 overflow-y-auto max-h-[80vh] custom-scrollbar">
+<form class="space-y-6">
+<!-- Title Row -->
+<div class="flex flex-col gap-2">
+<label class="text-gold text-xs font-bold uppercase tracking-widest px-1">Identity &amp; Title</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 material-symbols-outlined">shield</span>
+<input class="w-full bg-background-dark/50 border-white/10 rounded-lg py-4 pl-12 pr-4 text-white focus:ring-primary focus:border-primary placeholder:text-slate-600 gold-border-focus transition-all" placeholder="e.g. Archmage, Grand Traveler" type="text"/>
+</div>
+</div>
+<!-- Name Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex flex-col gap-2">
+<label class="text-gold text-xs font-bold uppercase tracking-widest px-1">First Name</label>
+<input class="w-full bg-background-dark/50 border-white/10 rounded-lg py-4 px-4 text-white focus:ring-primary focus:border-primary placeholder:text-slate-600 gold-border-focus transition-all" placeholder="Given Name" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-gold text-xs font-bold uppercase tracking-widest px-1">Last Name</label>
+<input class="w-full bg-background-dark/50 border-white/10 rounded-lg py-4 px-4 text-white focus:ring-primary focus:border-primary placeholder:text-slate-600 gold-border-focus transition-all" placeholder="House / Surname" type="text"/>
+</div>
+</div>
+<!-- Contact & Company -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex flex-col gap-2">
+<label class="text-gold text-xs font-bold uppercase tracking-widest px-1">Magical Frequency (Phone)</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 material-symbols-outlined text-sm">call</span>
+<input class="w-full bg-background-dark/50 border-white/10 rounded-lg py-4 pl-12 pr-4 text-white focus:ring-primary focus:border-primary placeholder:text-slate-600 gold-border-focus transition-all" placeholder="+1 (555) 000-0000" type="tel"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-gold text-xs font-bold uppercase tracking-widest px-1">Guild / Company</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 material-symbols-outlined text-sm">domain</span>
+<input class="w-full bg-background-dark/50 border-white/10 rounded-lg py-4 pl-12 pr-4 text-white focus:ring-primary focus:border-primary placeholder:text-slate-600 gold-border-focus transition-all" placeholder="Arcane Institution" type="text"/>
+</div>
+</div>
+</div>
+<!-- Address Lines -->
+<div class="space-y-4">
+<div class="flex flex-col gap-2">
+<label class="text-gold text-xs font-bold uppercase tracking-widest px-1">Destination Coordinates (Address Line 1)</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 material-symbols-outlined">explore</span>
+<input class="w-full bg-background-dark/50 border-white/10 rounded-lg py-4 pl-12 pr-4 text-white focus:ring-primary focus:border-primary placeholder:text-slate-600 gold-border-focus transition-all" placeholder="Street name and number" type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-gold text-xs font-bold uppercase tracking-widest px-1">Suite / Tower / Chamber (Address Line 2)</label>
+<input class="w-full bg-background-dark/50 border-white/10 rounded-lg py-4 px-4 text-white focus:ring-primary focus:border-primary placeholder:text-slate-600 gold-border-focus transition-all" placeholder="Apartment, suite, unit, etc." type="text"/>
+</div>
+</div>
+<!-- Map Placeholder -->
+<div class="mt-6 overflow-hidden rounded-lg gold-border h-32 relative group">
+<img class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="Ancient style map with nautical compass" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBj8zXQsOA_NvIOab1M1XGh2DS9Xa7Z4khPRnfj6hVjLY0YOwzGN3LKJPWD_6ze3OwWh5BbTSbVz2ZXNFwO724G4dbxl57--a0DYJkJHWkNoa1jmpx63GbQwzIKw3-fLFJ7P_PovtdUpbyb4F7TnoOk_Mly4puw0cCScvgsWncB1ENsNZ_u3InlMwS1fA8XSOTBfx1_-WzNJPU6b_2hyHWEXvuyzTOiaJVYLefLqUIivPrdhRQoZRGBtmChKkCyAcPOX30nDXmYF8sn"/>
+<div class="absolute inset-0 flex items-center justify-center bg-background-dark/40">
+<span class="text-white font-bold tracking-widest uppercase text-xs flex items-center gap-2">
+<span class="material-symbols-outlined animate-pulse">location_on</span>
+                            Mapping Astral Coordinates
+                        </span>
+</div>
+</div>
+<!-- Action Button -->
+<div class="pt-6 flex gap-4">
+<button class="flex-1 bg-transparent border border-white/10 hover:border-white/20 text-slate-300 font-bold py-4 rounded-lg transition-all" type="button">
+                        Discard Scroll
+                    </button>
+<button class="flex-[2] bg-primary hover:bg-primary/80 text-white font-black py-4 rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20" type="submit">
+<span class="material-symbols-outlined">send</span>
+                        CONFIRM DESTINATION
+                    </button>
+</div>
+</form>
+</div>
+<!-- Footer Decoration -->
+<div class="h-2 bg-gradient-to-r from-transparent via-gold/40 to-transparent"></div>
+</div>
+</body></html>

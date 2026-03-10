@@ -1,19 +1,15 @@
 import type { Order } from '@/payload-types'
 import type { Metadata } from 'next'
 
+import { Media } from '@/components/Media'
 import { OrderStatus } from '@/components/OrderStatus'
 import { Price } from '@/components/Price'
-import { ProductItem } from '@/components/ProductItem'
 import { AddressItem } from '@/components/addresses/AddressItem'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { Link } from '@/i18n/navigation'
-import { formatDateTime } from '@/utilities/formatDateTime'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import configPromise from '@payload-config'
-import { ChevronLeft } from 'lucide-react'
+import { Castle, ChevronLeft, CreditCard, History, Map, Package, Printer } from 'lucide-react'
 import { headers as getHeaders } from 'next/headers.js'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
@@ -82,122 +78,170 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
   if (!order) notFound()
 
   return (
-    <div className="w-full mx-auto px-4 pb-10 flex flex-col gap-6">
+    <main className="max-w-5xl mx-auto w-full px-4 md:px-6 flex flex-col gap-10">
+      {/* Back Button & Breadcrumb */}
+      {user && (
+        <Link href="/orders" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-xs font-black uppercase tracking-widest group">
+          <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+          Back to Archives
+        </Link>
+      )}
 
-      {/* Header row */}
-      <div className="flex items-center justify-between gap-4">
-        {user ? (
-          <Button asChild variant="ghost" size="sm">
-            <Link href="/orders">
-              <ChevronLeft className="mr-1 h-4 w-4" />
-              All Orders
-            </Link>
-          </Button>
-        ) : (
-          <div />
-        )}
-
-        <Badge variant="secondary" className="font-mono tracking-widest uppercase text-xs px-3 py-1">
-          Order #{order.id}
-        </Badge>
+      {/* Order Header Section */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 p-6 md:p-8 bg-card/30 rounded-2xl border border-border relative overflow-hidden">
+        <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
+          <History size={120} />
+        </div>
+        <div className="flex flex-col gap-3 relative z-10">
+          <span className="text-primary text-[10px] font-black uppercase tracking-[0.2em]">Order Confirmed</span>
+          <h1 className="text-3xl md:text-4xl font-black leading-tight tracking-tight">#{order.id}</h1>
+          {/* <p className="text-muted-foreground text-sm font-medium">Scribed on the {formatDateTime({ date: order.createdAt, format: 'do of MMMM, yyyy' })}</p> */}
+        </div>
+        <div className="bg-primary/10 border border-primary/20 px-8 py-3 rounded-full relative z-10">
+          <OrderStatus status={order.status || 'pending'} className="font-black uppercase text-xs tracking-widest text-primary" />
+        </div>
       </div>
 
-      {/* Main card */}
-      <Card>
-        <CardHeader className="pb-0">
-          {/* Meta row */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div className="flex flex-col gap-1">
-              <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                Order Date
-              </p>
-              <p className="text-base font-medium">
-                <time dateTime={order.createdAt}>
-                  {formatDateTime({ date: order.createdAt, format: 'MMMM dd, yyyy' })}
-                </time>
-              </p>
-            </div>
+      {/* Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        {/* Main Content: Items */}
+        <div className="lg:col-span-2 flex flex-col gap-8">
+          <h3 className="text-xl font-black uppercase tracking-widest px-2 flex items-center gap-3">
+            <Package className="text-primary" size={24} />
+            Manifest of Enchanted Goods
+          </h3>
 
-            <div className="flex flex-col gap-1">
-              <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                Total
-              </p>
-              {order.amount && (
-                <Price className="text-base font-medium" amount={order.amount} />
-              )}
-            </div>
+          <div className="flex flex-col gap-4">
+            {order.items?.map((item, index) => {
+              if (typeof item.product !== 'object' || !item.product) return null
+              const { product, quantity, variant } = item
 
-            {order.status && (
-              <div className="flex flex-col gap-1">
-                <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                  Status
-                </p>
-                <OrderStatus className="text-sm" status={order.status} />
-              </div>
-            )}
-          </div>
-        </CardHeader>
+              let image = product.gallery?.[0]?.image || product.meta?.image
+              let price = product.priceInUSD
 
-        <CardContent className="flex flex-col gap-8 pt-8">
-
-          {/* Items */}
-          {order.items && order.items.length > 0 && (
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-3">
-                <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                  Items
-                </p>
-                <Separator className="flex-1" />
-              </div>
-              <ul className="flex flex-col gap-6">
-                {order.items.map((item, index) => {
-                  if (typeof item.product === 'string') return null
-                  if (!item.product || typeof item.product !== 'object') {
-                    return (
-                      <li key={index}>
-                        <p className="text-sm text-muted-foreground">
-                          This item is no longer available.
-                        </p>
-                      </li>
-                    )
-                  }
-
-                  const variant =
-                    item.variant && typeof item.variant === 'object'
-                      ? item.variant
-                      : undefined
-
-                  return (
-                    <li key={item.id}>
-                      <ProductItem
-                        product={item.product}
-                        quantity={item.quantity}
-                        variant={variant}
-                      />
-                    </li>
+              const isVariant = Boolean(variant) && typeof variant === 'object'
+              if (isVariant) {
+                price = variant?.priceInUSD
+                const imageVariant = product.gallery?.find((g: any) => {
+                  if (!g.variantOption) return false
+                  const optId = typeof g.variantOption === 'object' ? g.variantOption.id : g.variantOption
+                  return variant?.options?.some((o: any) =>
+                    typeof o === 'object' ? o.id === optId : o === optId
                   )
-                })}
-              </ul>
-            </div>
-          )}
+                })
+                if (imageVariant && typeof imageVariant.image !== 'string') {
+                  image = imageVariant.image
+                }
+              }
 
-          {/* Shipping address */}
-          {order.shippingAddress && (
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-3">
-                <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                  Shipping Address
-                </p>
-                <Separator className="flex-1" />
+              return (
+                <div key={index} className="flex flex-col sm:flex-row items-stretch justify-between gap-6 rounded-2xl bg-card/30 p-6 border border-border hover:border-primary/50 transition-all shadow-sm">
+                  <div className="w-full sm:w-40 bg-secondary rounded-xl shrink-0 overflow-hidden border border-border relative h-48 sm:h-40">
+                    {image && typeof image !== 'string' ? (
+                      <Media fill imgClassName="object-cover" resource={image} />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+                        <Package size={32} />
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex flex-col justify-between flex-grow py-1">
+                    <div className="flex flex-col gap-2">
+                      <p className="text-primary text-[10px] font-black uppercase tracking-widest">Enchanted Artifact</p>
+                      <h4 className="text-xl font-bold leading-tight">{product.title}</h4>
+                      <p className="text-muted-foreground text-sm line-clamp-2">
+                        {isVariant ? variant.options?.map((o: any) => typeof o === 'object' ? o.label : null).filter(Boolean).join(', ') : 'Standard Edition'}
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between mt-4">
+                      <div className="flex flex-col">
+                        <span className="text-muted-foreground text-[10px] font-black uppercase tracking-widest">Quantity</span>
+                        <span className="font-bold">{quantity} Scroll{quantity > 1 ? 's' : ''}</span>
+                      </div>
+                      <div className="flex flex-col text-right">
+                        <span className="text-muted-foreground text-[10px] font-black uppercase tracking-widest">Gold Value</span>
+                        {typeof price === 'number' && (
+                          <Price amount={price * (quantity || 1)} className="text-primary font-black text-xl" />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Order Summary */}
+          <div className="bg-card/30 rounded-2xl p-6 md:p-8 border border-border space-y-4">
+            <div className="flex justify-between text-muted-foreground font-medium">
+              <span className="text-sm">Arcane Subtotal</span>
+              <Price amount={order.amount || 0} className="text-foreground" />
+            </div>
+            <div className="flex justify-between text-muted-foreground font-medium">
+              <span className="text-sm">Ritual Tax</span>
+              <Price amount={0} className="text-foreground" />
+            </div>
+            <div className="flex justify-between text-muted-foreground font-medium">
+              <span className="text-sm">Messenger Owl Fee</span>
+              <span className="text-success font-black uppercase text-xs tracking-widest">Gratis</span>
+            </div>
+            <Separator className="bg-border/50" />
+            <div className="pt-2 flex justify-between items-center">
+              <span className="text-base md:text-lg font-black uppercase tracking-widest">Total Investment</span>
+              <Price amount={order.amount || 0} className="text-primary text-2xl md:text-3xl font-black" />
+            </div>
+          </div>
+        </div>
+
+        {/* Sidebar: Shipping & Payment */}
+        <div className="flex flex-col gap-8">
+          <h3 className="text-xl font-black uppercase tracking-widest px-2 flex items-center gap-3">
+            <Map size={24} className="text-primary" />
+            Destination
+          </h3>
+
+          {/* Destination Card */}
+          <div className="bg-card/30 rounded-2xl border border-border overflow-hidden shadow-sm">
+            <div className="h-24 bg-primary/5 relative">
+              <div className="absolute inset-0 opacity-10 flex items-center justify-center">
+                <Castle size={80} />
               </div>
-              {/* @ts-expect-error - some kind of type hell */}
-              <AddressItem address={order.shippingAddress} hideActions />
             </div>
-          )}
+            <div className="p-8 -mt-12 relative flex flex-col gap-6">
+              <div className="flex items-center justify-center rounded-2xl bg-primary shadow-lg shrink-0 size-16 ring-4 ring-background">
+                <Castle size={32} className="text-primary-foreground" />
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-black uppercase tracking-widest text-xs text-muted-foreground">Delivery Point</p>
+                {order.shippingAddress && (
+                  /* @ts-expect-error - type mismatch */
+                  <AddressItem address={order.shippingAddress} hideActions />
+                )}
+              </div>
+              <button className="w-full py-4 bg-secondary hover:bg-primary hover:text-primary-foreground rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all border border-border">
+                View in Crystal Ball
+              </button>
+            </div>
+          </div>
 
-        </CardContent>
-      </Card>
-    </div>
+          {/* Payment Method */}
+          <div className="bg-card/30 rounded-2xl p-6 border border-border flex items-center gap-4">
+            <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+              <CreditCard size={24} />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-muted-foreground text-[10px] font-black uppercase tracking-widest">Essence Source</span>
+              <span className="font-bold text-sm">Arcane Vault •••• 1337</span>
+            </div>
+          </div>
+
+          <button className="w-full py-5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl font-black text-sm uppercase tracking-widest shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-3 group">
+            <Printer size={20} className="group-hover:scale-110 transition-transform" />
+            Print Scroll
+          </button>
+        </div>
+      </div>
+    </main>
   )
 }
 
