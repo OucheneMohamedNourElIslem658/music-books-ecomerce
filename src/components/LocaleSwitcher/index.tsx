@@ -3,9 +3,9 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { usePathname, useRouter } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
+import { Languages } from 'lucide-react'
 import { useLocale } from 'next-intl'
 import { useTransition } from 'react'
-import { Languages } from 'lucide-react'
 
 export function LocaleSwitcher() {
   const locale = useLocale()
@@ -25,7 +25,7 @@ export function LocaleSwitcher() {
       onValueChange={(value) => switchLocale(value as (typeof routing.locales)[number])}
       disabled={isPending}
     >
-      <SelectTrigger className="w-auto bg-primary/5 hover:bg-primary/10 transition-colors gap-2 px-4 h-10 rounded-full border-none text-muted-foreground hover:text-primary">
+      <SelectTrigger className="w-auto bg-primary/5 hover:bg-primary/10 transition-colors gap-2 px-4 h-8 rounded-full border-none text-muted-foreground hover:text-primary">
         <Languages className="size-4" />
         <SelectValue placeholder="Language" />
       </SelectTrigger>
