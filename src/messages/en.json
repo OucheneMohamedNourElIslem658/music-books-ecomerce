@@ -1,3 +1,177 @@
 {
-    "greeting": "Hello"
+    "greeting": "Hello",
+    "addresses": {
+        "title": "Mystical Addresses",
+        "description": "Manage your teleportation and delivery waypoints across the known realms.",
+        "addNew": "Add a new address",
+        "noAddresses": "No mystical coordinates found in your records.",
+        "edit": "Edit",
+        "editAddress": "Edit Address",
+        "newAddress": "New Address",
+        "updateDeliveryAddress": "Update delivery address",
+        "saveDeliveryAddress": "Save a delivery address",
+        "waypointSanctuary": "Waypoint Sanctuary",
+        "namelessOutpost": "Nameless Outpost",
+        "recipient": "Recipient: {name}",
+        "editCoordinates": "Edit Coordinates",
+        "reviseMap": "Revise the Map",
+        "metadata": {
+            "title": "Addresses",
+            "description": "Manage your addresses."
+        },
+        "form": {
+            "title": "Title",
+            "optional": "optional",
+            "selectTitle": "Select a title",
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "phone": "Phone",
+            "company": "Company",
+            "addressLine1": "Address Line 1",
+            "addressLine2": "Address Line 2",
+            "city": "City",
+            "state": "State",
+            "postalCode": "Postal Code",
+            "zip": "ZIP",
+            "country": "Country",
+            "selectCountry": "Select country",
+            "required": "Required.",
+            "addressRequired": "Address is required.",
+            "saving": "Saving...",
+            "saveChanges": "Save Changes",
+            "addAddress": "Add Address",
+            "firstNamePlaceholder": "First name",
+            "lastNamePlaceholder": "Last name",
+            "companyPlaceholder": "Company name",
+            "streetAddressPlaceholder": "Street address",
+            "apartmentPlaceholder": "Apartment, suite, unit..."
+        },
+        "auth": {
+            "loginWarning": "Please login to access your account settings."
+        }
+    },
+    "reviews": {
+        "title": "My Testimonies",
+        "subtitle": "The chronicler's archive of acquisitions",
+        "total": "{count} Total",
+        "newAcquisition": "New Acquisition",
+        "empty": "You have not recorded any testimonies yet.",
+        "rating": "Rating",
+        "unknownArtifact": "Unknown Artifact",
+        "auth": {
+            "loginWarning": "Please login to access your reviews."
+        },
+        "metadata": {
+            "title": "Reviews",
+            "description": "Your reviews."
+        }
+    },
+    "account": {
+        "title": "The Chronicler's Ledger",
+        "description": "Manage your mystical identity and notification oracles across the realms.",
+        "personalMandates": "Personal Mandates",
+        "recentAcquisitions": "Recent Acquisitions",
+        "noOrders": "No recent scrolls found in the archives.",
+        "examineAll": "Examine All Scrolls",
+        "auth": {
+            "loginWarning": "Please login to access your account settings."
+        },
+        "metadata": {
+            "title": "The Chronicler's Ledger",
+            "description": "Manage your account settings and mystical identity."
+        },
+        "form": {
+            "description": "Update your chronicle details or access the sanctum to change your wards.",
+            "changePassword": "Change Passwords",
+            "chronicleName": "Chronicle Name",
+            "namePlaceholder": "Name your legend...",
+            "emailLabel": "Communication Beacon (Email)",
+            "emailPlaceholder": "adventurer@tales.com",
+            "securityWards": "Reinforce Security Wards",
+            "cancelRitual": "Cancel Ritual",
+            "newSecurityKey": "New Security Key",
+            "newWardPlaceholder": "Enter new ward...",
+            "confirmSecurityKey": "Confirm Security Key",
+            "confirmWardPlaceholder": "Re-enter ward...",
+            "updateSuccess": "Successfully updated the eternal ledger.",
+            "updateError": "The ritual encountered an error.",
+            "loginError": "You must be logged in to view this page.",
+            "nameRequired": "Please provide a name.",
+            "emailRequired": "Please provide an email.",
+            "passwordRequired": "Please provide a new password.",
+            "confirmPasswordRequired": "Please confirm your new password.",
+            "passwordMismatch": "The passwords do not match",
+            "processing": "Processing...",
+            "reinforceWards": "Reinforce Wards",
+            "updateLedger": "Update Ledger"
+        }
+    },
+    "orderItem": {
+        "scribed": "Scribed: {date}",
+        "orderArchive": "Order Archive #{id}",
+        "moreArtifacts": "& {count} more artifacts",
+        "orderID": "Order ID: {id}",
+        "sentVia": "Sent via {method}",
+        "viewScroll": "View Scroll",
+        "goldValue": "Gold Value",
+        "methods": {
+            "processing": "Phoenix Express",
+            "delivery": "Owl Delivery"
+        }
+    },
+    "orders": {
+        "title": "Active Acquisitions",
+        "pending": "{count} {count, plural, =1 {Pending} other {Pending}}",
+        "empty": "No orders found in the archives.",
+        "auth": {
+            "loginWarning": "Please login to access your orders."
+        },
+        "metadata": {
+            "title": "Orders",
+            "description": "Your orders."
+        }
+    },
+    "orderDetail": {
+        "back": "Back to Archives",
+        "confirmed": "Order Confirmed",
+        "scribed": "Scribed on the {date}",
+        "manifest": "Manifest of Enchanted Goods",
+        "artifact": "Enchanted Artifact",
+        "standardEdition": "Standard Edition",
+        "quantity": "Quantity",
+        "scrolls": "{count} {count, plural, =1 {Scroll} other {Scrolls}}",
+        "goldValue": "Gold Value",
+        "subtotal": "Arcane Subtotal",
+        "tax": "Ritual Tax",
+        "fee": "Messenger Owl Fee",
+        "gratis": "Gratis",
+        "total": "Total Investment",
+        "destination": "Destination",
+        "deliveryPoint": "Delivery Point",
+        "viewCrystalBall": "View in Crystal Ball",
+        "essenceSource": "Essence Source",
+        "arcaneVault": "Arcane Vault •••• {last4}",
+        "print": "Print Scroll",
+        "metadata": {
+            "title": "Order {id}",
+            "description": "Order details for order {id}."
+        }
+    },
+    "orderStatus": {
+        "processing": "Teleporting",
+        "completed": "Artifact Acquired",
+        "cancelled": "Vanished",
+        "refunded": "Gold Returned",
+        "pending": "Pending"
+    },
+    "accountLayout": {
+        "wayfinder": "Wayfinder"
+    },
+    "accountNav": {
+        "homePortal": "Home Portal",
+        "coordinates": "Coordinates",
+        "acquisitions": "Acquisitions",
+        "whispers": "Whispers",
+        "banishSession": "Banish Session"
+    }
 }

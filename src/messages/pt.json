@@ -1,3 +1,177 @@
 {
-    "greeting": "Olá"
+    "greeting": "Olá",
+    "addresses": {
+        "title": "Endereços Místicos",
+        "description": "Gerencie seus pontos de teletransporte e entrega em todos os reinos conhecidos.",
+        "addNew": "Adicionar um novo endereço",
+        "noAddresses": "Nenhuma coordenada mística encontrada em seus registros.",
+        "edit": "Editar",
+        "editAddress": "Editar Endereço",
+        "newAddress": "Novo Endereço",
+        "updateDeliveryAddress": "Atualizar endereço de entrega",
+        "saveDeliveryAddress": "Salvar um endereço de entrega",
+        "waypointSanctuary": "Santuário do Ponto de Passagem",
+        "namelessOutpost": "Posto Avançado Sem Nome",
+        "recipient": "Destinatário: {name}",
+        "editCoordinates": "Editar Coordenadas",
+        "reviseMap": "Revisar o Mapa",
+        "metadata": {
+            "title": "Endereços",
+            "description": "Gerencie seus endereços."
+        },
+        "form": {
+            "title": "Título",
+            "optional": "opcional",
+            "selectTitle": "Selecione um título",
+            "firstName": "Nome",
+            "lastName": "Sobrenome",
+            "phone": "Telefone",
+            "company": "Empresa",
+            "addressLine1": "Endereço Linha 1",
+            "addressLine2": "Endereço Linha 2",
+            "city": "Cidade",
+            "state": "Estado",
+            "postalCode": "Código Postal",
+            "zip": "CEP",
+            "country": "País",
+            "selectCountry": "Selecione o país",
+            "required": "Obrigatório.",
+            "addressRequired": "Endereço é obrigatório.",
+            "saving": "Salvando...",
+            "saveChanges": "Salvar Alterações",
+            "addAddress": "Adicionar Endereço",
+            "firstNamePlaceholder": "Primeiro nome",
+            "lastNamePlaceholder": "Sobrenome",
+            "companyPlaceholder": "Nome da empresa",
+            "streetAddressPlaceholder": "Endereço",
+            "apartmentPlaceholder": "Apartamento, suíte, unidade…"
+        },
+        "auth": {
+            "loginWarning": "Por favor, faça login para acessar as configurações da sua conta."
+        }
+    },
+    "reviews": {
+        "title": "Meus Testemunhos",
+        "subtitle": "O arquivo do cronista de aquisições",
+        "total": "{count} Total",
+        "newAcquisition": "Nova Aquisição",
+        "empty": "Você ainda não registrou nenhum testemunho.",
+        "rating": "Avaliação",
+        "unknownArtifact": "Artefato Desconhecido",
+        "auth": {
+            "loginWarning": "Por favor, faça login para acessar suas avaliações."
+        },
+        "metadata": {
+            "title": "Avaliações",
+            "description": "Suas avaliações."
+        }
+    },
+    "account": {
+        "title": "O Livro do Cronista",
+        "description": "Gerencie sua identidade mística e oráculos de notificação em todos os reinos.",
+        "personalMandates": "Mandatos Pessoais",
+        "recentAcquisitions": "Aquisições Recentes",
+        "noOrders": "Nenhum pergaminho recente encontrado nos arquivos.",
+        "examineAll": "Examinar Todos os Pergaminhos",
+        "auth": {
+            "loginWarning": "Por favor, faça login para acessar as configurações da sua conta."
+        },
+        "metadata": {
+            "title": "O Livro do Cronista",
+            "description": "Gerencie as configurações da sua conta e identidade mística."
+        },
+        "form": {
+            "description": "Atualize os detalhes da sua crônica ou acesse o santuário para alterar suas proteções.",
+            "changePassword": "Alterar Senhas",
+            "chronicleName": "Nome da Crônica",
+            "namePlaceholder": "Nomeie sua lenda...",
+            "emailLabel": "Farol de Comunicação (E-mail)",
+            "emailPlaceholder": "adventurer@tales.com",
+            "securityWards": "Reforçar Proteções de Segurança",
+            "cancelRitual": "Cancelar Ritual",
+            "newSecurityKey": "Nova Chave de Segurança",
+            "newWardPlaceholder": "Digite a nova proteção...",
+            "confirmSecurityKey": "Confirmar Chave de Segurança",
+            "confirmWardPlaceholder": "Digite novamente a proteção...",
+            "updateSuccess": "Livro eterno atualizado com sucesso.",
+            "updateError": "O ritual encontrou um erro.",
+            "loginError": "Você deve estar logado para visualizar esta página.",
+            "nameRequired": "Por favor, forneça um nome.",
+            "emailRequired": "Por favor, forneça um e-mail.",
+            "passwordRequired": "Por favor, forneça uma nova senha.",
+            "confirmPasswordRequired": "Por favor, confirme sua nova senha.",
+            "passwordMismatch": "As senhas não coincidem",
+            "processing": "Processando...",
+            "reinforceWards": "Reforçar Proteções",
+            "updateLedger": "Atualizar Livro"
+        }
+    },
+    "orderItem": {
+        "scribed": "Inscrito em: {date}",
+        "orderArchive": "Arquivo de Pedidos #{id}",
+        "moreArtifacts": "& {count} mais artefatos",
+        "orderID": "ID do Pedido: {id}",
+        "sentVia": "Enviado via {method}",
+        "viewScroll": "Ver Pergaminho",
+        "goldValue": "Valor em Ouro",
+        "methods": {
+            "processing": "Fênix Express",
+            "delivery": "Entrega por Coruja"
+        }
+    },
+    "orders": {
+        "title": "Aquisições Ativas",
+        "pending": "{count} {count, plural, =1 {Pendente} other {Pendentes}}",
+        "empty": "Nenhum pedido encontrado nos arquivos.",
+        "auth": {
+            "loginWarning": "Por favor, faça login para acessar seus pedidos."
+        },
+        "metadata": {
+            "title": "Pedidos",
+            "description": "Seus pedidos."
+        }
+    },
+    "orderDetail": {
+        "back": "Voltar para os Arquivos",
+        "confirmed": "Pedido Confirmado",
+        "scribed": "Inscrito em {date}",
+        "manifest": "Manifesto de Bens Encantados",
+        "artifact": "Artefato Encantado",
+        "standardEdition": "Edição Padrão",
+        "quantity": "Quantidade",
+        "scrolls": "{count} {count, plural, =1 {Pergaminho} other {Pergaminhos}}",
+        "goldValue": "Valor em Ouro",
+        "subtotal": "Subtotal Arcano",
+        "tax": "Imposto de Ritual",
+        "fee": "Taxa da Coruja Mensageira",
+        "gratis": "Grátis",
+        "total": "Investimento Total",
+        "destination": "Destino",
+        "deliveryPoint": "Ponto de Entrega",
+        "viewCrystalBall": "Ver na Bola de Cristal",
+        "essenceSource": "Fonte de Essência",
+        "arcaneVault": "Cofre Arcano •••• {last4}",
+        "print": "Imprimir Pergaminho",
+        "metadata": {
+            "title": "Pedido {id}",
+            "description": "Detalhes do pedido para o pedido {id}."
+        }
+    },
+    "orderStatus": {
+        "processing": "Teletransportando",
+        "completed": "Artefato Adquirido",
+        "cancelled": "Desaparecido",
+        "refunded": "Ouro Devolvido",
+        "pending": "Pendente"
+    },
+    "accountLayout": {
+        "wayfinder": "Guia de Caminho"
+    },
+    "accountNav": {
+        "homePortal": "Portal Inicial",
+        "coordinates": "Coordenadas",
+        "acquisitions": "Aquisições",
+        "whispers": "Sussurros",
+        "banishSession": "Encerrar Sessão"
+    }
 }

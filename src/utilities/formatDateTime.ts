@@ -1,16 +1,16 @@
-import { format } from 'date-fns'
 
 type Props = {
   date: string
-  format?: string
+  locale?: string
+  format?: Intl.DateTimeFormatOptions
 }
 
-export const formatDateTime = ({ date, format: formatFromProps }: Props): string => {
+export const formatDateTime = ({ date, locale, format: formatOptions }: Props): string => {
   if (!date) return ''
 
-  const dateFormat = formatFromProps ?? 'dd/MM/yyyy'
-
-  const formattedDate = format(new Date(date), dateFormat)
-
-  return formattedDate
+  return new Intl.DateTimeFormat(locale, formatOptions ?? {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(new Date(date))
 }

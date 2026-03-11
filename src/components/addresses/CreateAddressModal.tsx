@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/dialog'
 import { Address } from '@/payload-types'
 import { MapPin, Plus } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { DefaultDocumentIDType } from 'payload'
 import React, { useState } from 'react'
 
@@ -38,6 +39,8 @@ export const CreateAddressModal: React.FC<Props> = ({
   const [open, setOpen] = useState(false)
   const isEditing = Boolean(addressID)
   const title = modalTitle ?? (isEditing ? 'Edit Address' : 'New Address')
+
+  const t = useTranslations("addresses")
 
   const handleCallback = (data: Partial<Address>) => {
     setOpen(false)

@@ -5,6 +5,7 @@ import { CreateAddressModal } from '@/components/addresses/CreateAddressModal'
 import { redirect } from '@/i18n/navigation'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import configPromise from '@payload-config'
+import { getTranslations } from 'next-intl/server'
 import { headers as getHeaders } from 'next/headers.js'
 import { getPayload } from 'payload'
 
@@ -18,9 +19,11 @@ export default async function AddressesPage({ params }: AddressesPageProps) {
   const { user } = await payload.auth({ headers })
   const { locale } = await params
 
+  const t = await getTranslations("addresses")
+
   if (!user) {
     redirect({
-      href: `/login?warning=${encodeURIComponent('Please login to access your account settings.')}`,
+      href: `/login?warning=${encodeURIComponent(t('auth.loginWarning'))}`,
       locale,
     })
   }
@@ -29,14 +32,14 @@ export default async function AddressesPage({ params }: AddressesPageProps) {
     <div className="flex flex-col gap-10">
       <div className="flex flex-wrap items-center justify-between gap-6 px-2">
         <div className="flex flex-col gap-2">
-          <h1 className="text-4xl lg:text-5xl font-black tracking-tight">Mystical Addresses</h1>
+          <h1 className="text-4xl lg:text-5xl font-black tracking-tight">{t('title')}</h1>
           <p className="text-muted-foreground text-lg font-medium">
-            Manage your teleportation and delivery waypoints across the known realms.
+            {t('description')}
           </p>
         </div>
 
         <CreateAddressModal
-          buttonText="Add a new address"
+          buttonText={t('addNew')}
           className="px-6 lg:px-8 py-2 lg:py-2.5 rounded-full bg-primary text-primary-foreground text-xs font-black uppercase tracking-widest shadow-lg shadow-primary/20 hover:brightness-110 transition-all border-none h-auto"
         />
       </div>
@@ -46,10 +49,14 @@ export default async function AddressesPage({ params }: AddressesPageProps) {
       </div>
     </div>
   )
-}
+  }
 
-export const metadata: Metadata = {
-  description: 'Manage your addresses.',
-  openGraph: mergeOpenGraph({ title: 'Addresses', url: '/account/addresses' }),
-  title: 'Addresses',
-}
+  export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("addresses")
+
+  return {
+    description: t('metadata.description'),
+    openGraph: mergeOpenGraph({ title: t('metadata.title'), url: '/account/addresses' }),
+    title: t('metadata.title'),
+  }
+  }

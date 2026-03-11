@@ -15,10 +15,12 @@ import { headers as getHeaders } from 'next/headers.js'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 
+import { getTranslations } from 'next-intl/server'
+
 export const dynamic = 'force-dynamic'
 
 type PageProps = {
-  params: Promise<{ id: string }>
+  params: Promise<{ id: string; locale: string }>
   searchParams: Promise<{ email?: string }>
 }
 
@@ -27,8 +29,9 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
   const payload = await getPayload({ config: configPromise })
   const { user } = await payload.auth({ headers })
 
-  const { id } = await params
+  const { id, locale } = await params
   const { email = '' } = await searchParams
+  const t = await getTranslations('orderDetail')
 
   let order: Order | null = null
 
@@ -60,8 +63,7 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
       },
     })
 
-    const canAccessAsGuest =
-      !user && email && orderResult?.customerEmail === email
+    const canAccessAsGuest = !user && email && orderResult?.customerEmail === email
     const canAccessAsUser =
       user &&
       orderResult &&
@@ -82,9 +84,12 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
     <main className="max-w-5xl mx-auto w-full px-4 md:px-6 flex flex-col gap-10">
       {/* Back Button & Breadcrumb */}
       {user && (
-        <Link href="/orders" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-xs font-black uppercase tracking-widest group">
+        <Link
+          href="/orders"
+          className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-xs font-black uppercase tracking-widest group"
+        >
           <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-          Back to Archives
+          {t('back')}
         </Link>
       )}
 
@@ -94,12 +99,21 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
           <History size={120} />
         </div>
         <div className="flex flex-col gap-3 relative z-10">
-          <span className="text-primary text-[10px] font-black uppercase tracking-[0.2em]">Order Confirmed</span>
-          <h1 className="text-3xl md:text-4xl font-black leading-tight tracking-tight">#{order.id}</h1>
-          <p className="text-muted-foreground text-sm font-medium">Scribed on the {formatDateTime({ date: order.createdAt })}</p>
+          <span className="text-primary text-[10px] font-black uppercase tracking-[0.2em]">
+            {t('confirmed')}
+          </span>
+          <h1 className="text-3xl md:text-4xl font-black leading-tight tracking-tight">
+            #{order.id}
+          </h1>
+          <p className="text-muted-foreground text-sm font-medium">
+            {t('scribed', { date: formatDateTime({ date: order.createdAt, locale }) })}
+          </p>
         </div>
         <div className="bg-primary/10 border border-primary/20 px-8 py-3 rounded-full relative z-10">
-          <OrderStatus status={order.status as 'processing' | 'completed' | 'cancelled' | 'refunded'} className="font-black uppercase text-xs tracking-widest text-primary" />
+          <OrderStatus
+            status={order.status as 'processing' | 'completed' | 'cancelled' | 'refunded'}
+            className="font-black uppercase text-xs tracking-widest text-primary"
+          />
         </div>
       </div>
 
@@ -109,7 +123,7 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
         <div className="lg:col-span-2 flex flex-col gap-8">
           <h3 className="text-xl font-black uppercase tracking-widest px-2 flex items-center gap-3">
             <Package className="text-primary" size={24} />
-            Manifest of Enchanted Goods
+            {t('manifest')}
           </h3>
 
           <div className="flex flex-col gap-4">
@@ -125,9 +139,10 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
                 price = variant?.priceInUSD
                 const imageVariant = product.gallery?.find((g: any) => {
                   if (!g.variantOption) return false
-                  const optId = typeof g.variantOption === 'object' ? g.variantOption.id : g.variantOption
+                  const optId =
+                    typeof g.variantOption === 'object' ? g.variantOption.id : g.variantOption
                   return variant?.options?.some((o: any) =>
-                    typeof o === 'object' ? o.id === optId : o === optId
+                    typeof o === 'object' ? o.id === optId : o === optId,
                   )
                 })
                 if (imageVariant && typeof imageVariant.image !== 'string') {
@@ -136,7 +151,10 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
               }
 
               return (
-                <div key={index} className="flex flex-col sm:flex-row items-stretch justify-between gap-6 rounded-2xl bg-card/30 p-6 border border-border hover:border-primary/50 transition-all shadow-sm">
+                <div
+                  key={index}
+                  className="flex flex-col sm:flex-row items-stretch justify-between gap-6 rounded-2xl bg-card/30 p-6 border border-border hover:border-primary/50 transition-all shadow-sm"
+                >
                   <div className="w-full sm:w-40 bg-secondary rounded-xl shrink-0 overflow-hidden border border-border relative h-48 sm:h-40">
                     {image && typeof image !== 'string' ? (
                       <Media fill imgClassName="object-cover" resource={image} />
@@ -148,21 +166,35 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
                   </div>
                   <div className="flex flex-col justify-between flex-grow py-1">
                     <div className="flex flex-col gap-2">
-                      <p className="text-primary text-[10px] font-black uppercase tracking-widest">Enchanted Artifact</p>
+                      <p className="text-primary text-[10px] font-black uppercase tracking-widest">
+                        {t('artifact')}
+                      </p>
                       <h4 className="text-xl font-bold leading-tight">{product.title}</h4>
                       <p className="text-muted-foreground text-sm line-clamp-2">
-                        {isVariant ? variant?.options?.map((o: any) => typeof o === 'object' ? o.label : null).filter(Boolean).join(', ') : 'Standard Edition'}
+                        {isVariant
+                          ? variant?.options
+                            ?.map((o: any) => (typeof o === 'object' ? o.label : null))
+                            .filter(Boolean)
+                            .join(', ')
+                          : t('standardEdition')}
                       </p>
                     </div>
                     <div className="flex items-center justify-between mt-4">
                       <div className="flex flex-col">
-                        <span className="text-muted-foreground text-[10px] font-black uppercase tracking-widest">Quantity</span>
-                        <span className="font-bold">{quantity} Scroll{quantity > 1 ? 's' : ''}</span>
+                        <span className="text-muted-foreground text-[10px] font-black uppercase tracking-widest">
+                          {t('quantity')}
+                        </span>
+                        <span className="font-bold">{t('scrolls', { count: quantity })}</span>
                       </div>
                       <div className="flex flex-col text-right">
-                        <span className="text-muted-foreground text-[10px] font-black uppercase tracking-widest">Gold Value</span>
+                        <span className="text-muted-foreground text-[10px] font-black uppercase tracking-widest">
+                          {t('goldValue')}
+                        </span>
                         {typeof price === 'number' && (
-                          <Price amount={price * (quantity || 1)} className="text-primary font-black text-xl" />
+                          <Price
+                            amount={price * (quantity || 1)}
+                            className="text-primary font-black text-xl"
+                          />
                         )}
                       </div>
                     </div>
@@ -175,21 +207,28 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
           {/* Order Summary */}
           <div className="bg-card/30 rounded-2xl p-6 md:p-8 border border-border space-y-4">
             <div className="flex justify-between text-muted-foreground font-medium">
-              <span className="text-sm">Arcane Subtotal</span>
+              <span className="text-sm">{t('subtotal')}</span>
               <Price amount={order.amount || 0} className="text-foreground" />
             </div>
             <div className="flex justify-between text-muted-foreground font-medium">
-              <span className="text-sm">Ritual Tax</span>
+              <span className="text-sm">{t('tax')}</span>
               <Price amount={0} className="text-foreground" />
             </div>
             <div className="flex justify-between text-muted-foreground font-medium">
-              <span className="text-sm">Messenger Owl Fee</span>
-              <span className="text-success font-black uppercase text-xs tracking-widest">Gratis</span>
+              <span className="text-sm">{t('fee')}</span>
+              <span className="text-success font-black uppercase text-xs tracking-widest">
+                {t('gratis')}
+              </span>
             </div>
             <Separator className="bg-border/50" />
             <div className="pt-2 flex justify-between items-center">
-              <span className="text-base md:text-lg font-black uppercase tracking-widest">Total Investment</span>
-              <Price amount={order.amount || 0} className="text-primary text-2xl md:text-3xl font-black" />
+              <span className="text-base md:text-lg font-black uppercase tracking-widest">
+                {t('total')}
+              </span>
+              <Price
+                amount={order.amount || 0}
+                className="text-primary text-2xl md:text-3xl font-black"
+              />
             </div>
           </div>
         </div>
@@ -198,7 +237,7 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
         <div className="flex flex-col gap-8">
           <h3 className="text-xl font-black uppercase tracking-widest px-2 flex items-center gap-3">
             <Map size={24} className="text-primary" />
-            Destination
+            {t('destination')}
           </h3>
 
           {/* Destination Card */}
@@ -213,14 +252,16 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
                 <Castle size={32} className="text-primary-foreground" />
               </div>
               <div className="flex flex-col gap-2">
-                <p className="font-black uppercase tracking-widest text-xs text-muted-foreground">Delivery Point</p>
+                <p className="font-black uppercase tracking-widest text-xs text-muted-foreground">
+                  {t('deliveryPoint')}
+                </p>
                 {order.shippingAddress && (
                   /* @ts-expect-error - type mismatch */
                   <AddressItem address={order.shippingAddress} hideActions />
                 )}
               </div>
               <button className="w-full py-4 bg-secondary hover:bg-primary hover:text-primary-foreground rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all border border-border">
-                View in Crystal Ball
+                {t('viewCrystalBall')}
               </button>
             </div>
           </div>
@@ -231,14 +272,16 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
               <CreditCard size={24} />
             </div>
             <div className="flex flex-col">
-              <span className="text-muted-foreground text-[10px] font-black uppercase tracking-widest">Essence Source</span>
-              <span className="font-bold text-sm">Arcane Vault •••• 1337</span>
+              <span className="text-muted-foreground text-[10px] font-black uppercase tracking-widest">
+                {t('essenceSource')}
+              </span>
+              <span className="font-bold text-sm">{t('arcaneVault', { last4: '1337' })}</span>
             </div>
           </div>
 
           <button className="w-full py-5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl font-black text-sm uppercase tracking-widest shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-3 group">
             <Printer size={20} className="group-hover:scale-110 transition-transform" />
-            Print Scroll
+            {t('print')}
           </button>
         </div>
       </div>
@@ -248,9 +291,11 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params
+  const t = await getTranslations('orderDetail')
+
   return {
-    description: `Order details for order ${id}.`,
-    openGraph: mergeOpenGraph({ title: `Order ${id}`, url: `/orders/${id}` }),
-    title: `Order ${id}`,
+    description: t('metadata.description', { id }),
+    openGraph: mergeOpenGraph({ title: t('metadata.title', { id }), url: `/orders/${id}` }),
+    title: t('metadata.title', { id }),
   }
 }
