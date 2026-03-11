@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"
+'use client'
 
 import { Media } from '@/components/Media'
 import { Message } from '@/components/Message'
@@ -19,38 +19,52 @@ import { AddressItem } from '@/components/addresses/AddressItem'
 import { CreateAddressModal } from '@/components/addresses/CreateAddressModal'
 import { CheckoutAddresses } from '@/components/checkout/CheckoutAddresses'
 import { CheckoutForm } from '@/components/forms/CheckoutForm'
-import { FormItem } from '@/components/forms/FormItem'
 import { LoadingSpinner } from '@/components/LoadingSpinner'
 import { Checkbox } from '@/components/ui/checkbox'
+import { FormItem } from '@/components/forms/FormItem'
 import { Address } from '@/payload-types'
 import { useAddresses, useCart, usePayments } from '@payloadcms/plugin-ecommerce/client/react'
 import { PaymentAdapterClient } from '@payloadcms/plugin-ecommerce/types'
-import { ArrowRight, Bird, BookOpen, History, Lock, Package, Plus, ShoppingBag, Sparkles, Wand2 } from 'lucide-react'
+import {
+  ArrowRight,
+  Bird,
+  BookOpen,
+  History,
+  Lock,
+  Package,
+  Plus,
+  ShoppingBag,
+  Sparkles,
+  Wand2,
+} from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 
 const apiKey = `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`
 const stripe = loadStripe(apiKey)
 
-// Step indicator
-const STEPS = [
-  { label: 'Packing', icon: Package },
-  { label: 'Owl Delivery', icon: Wand2 },
-  { label: 'The Finale', icon: Sparkles },
-] as const
-
 function StepIndicator({ current }: { current: number }) {
+  const t = useTranslations('checkout')
+  const STEPS = [
+    { label: t('packing'), icon: Package },
+    { label: t('owlDelivery'), icon: Wand2 },
+    { label: t('theFinale'), icon: Sparkles },
+  ] as const
+
   const progress = ((current + 1) / STEPS.length) * 100
-  const stepTitles = ['Packing the Satchel', 'Preparing for Owl Delivery', 'The Grand Finale']
+  const stepTitles = t.raw('stepTitles') as string[]
 
   return (
     <div className="mb-12">
       <div className="flex flex-col gap-4 max-w-2xl mx-auto mb-10">
         <div className="flex justify-between items-end">
           <div>
-            <h2 className="text-2xl font-bold">Finalizing the Quest</h2>
-            <p className="text-muted-foreground text-sm mt-1">Current Step: {stepTitles[current]}</p>
+            <h2 className="text-2xl font-bold">{t('finalizingQuest')}</h2>
+            <p className="text-muted-foreground text-sm mt-1">
+              {t('currentStep', { step: stepTitles[current] })}
+            </p>
           </div>
-          <p className="text-primary font-bold text-lg">{Math.round(progress)}%</p>
+          <p className="text-primary font-bold text-lg">{Math.round(progress)}</p>
         </div>
         <div className="h-3 w-full bg-secondary rounded-full overflow-hidden">
           <div
@@ -69,8 +83,9 @@ function StepIndicator({ current }: { current: number }) {
             return (
               <div
                 key={step.label}
-                className={`flex flex-col items-center gap-2 pb-4 border-b-2 transition-all duration-300 ${isCurrent ? 'border-primary text-primary' : 'border-transparent text-muted-foreground'
-                  }`}
+                className={`flex flex-col items-center gap-2 pb-4 border-b-2 transition-all duration-300 ${
+                  isCurrent ? 'border-primary text-primary' : 'border-transparent text-muted-foreground'
+                }`}
               >
                 <Icon size={24} className={isCurrent && i === current ? 'animate-pulse' : ''} />
                 <span className="text-xs font-bold uppercase tracking-widest">{step.label}</span>
@@ -84,7 +99,19 @@ function StepIndicator({ current }: { current: number }) {
 }
 
 // Section wrapper
-function Section({ children, title, icon: Icon, className = '', stepNumber }: { children: React.ReactNode; title: string; icon?: any; className?: string; stepNumber?: number }) {
+function Section({
+  children,
+  title,
+  icon: Icon,
+  className = '',
+  stepNumber,
+}: {
+  children: React.ReactNode
+  title: string
+  icon?: any
+  className?: string
+  stepNumber?: number
+}) {
   return (
     <div className={`bg-card/50 p-8 rounded-2xl border border-border flex flex-col gap-6 ${className}`}>
       <div className="flex items-center justify-between px-2">
@@ -98,14 +125,13 @@ function Section({ children, title, icon: Icon, className = '', stepNumber }: { 
           {title}
         </h3>
       </div>
-      <div className="px-2">
-        {children}
-      </div>
+      <div className="px-2">{children}</div>
     </div>
   )
 }
 
 export const CheckoutPage: React.FC = () => {
+  const t = useTranslations('checkout')
   const { user } = useAuth()
   const router = useRouter()
   const { cart } = useCart()
@@ -122,7 +148,9 @@ export const CheckoutPage: React.FC = () => {
   const [billingAddressSameAsShipping, setBillingAddressSameAsShipping] = useState(true)
   const [isProcessingPayment, setProcessingPayment] = useState(false)
 
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentAdapterClient | null>(null)
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentAdapterClient | null>(
+    null,
+  )
   const initiatingRef = useRef(false)
 
   useEffect(() => {
@@ -168,7 +196,7 @@ export const CheckoutPage: React.FC = () => {
           fetch(`/api/transactions/${tx.id}`, { method: 'DELETE' }),
         ),
       )
-    } catch { }
+    } catch {}
   }, [cart?.id])
 
   const initiatePaymentIntent = useCallback(
@@ -193,13 +221,20 @@ export const CheckoutPage: React.FC = () => {
           setPaymentData(result)
         }
       } catch (err) {
-        const errorData = err instanceof Error ? (() => {
-          try { return JSON.parse(err.message) } catch { return {} }
-        })() : {}
+        const errorData =
+          err instanceof Error
+            ? (() => {
+                try {
+                  return JSON.parse(err.message)
+                } catch {
+                  return {}
+                }
+              })()
+            : {}
 
-        let errorMessage = 'An error occurred while initiating payment.'
+        let errorMessage = t('paymentError')
         if (errorData?.cause?.code === 'OutOfStock') {
-          errorMessage = 'One or more items in your cart are out of stock.'
+          errorMessage = t('outOfStockError')
         }
 
         setError(errorMessage)
@@ -209,7 +244,16 @@ export const CheckoutPage: React.FC = () => {
         initiatingRef.current = false
       }
     },
-    [billingAddress, billingAddressSameAsShipping, shippingAddress, email, paymentData, initiatePayment, deletePendingTransactions],
+    [
+      billingAddress,
+      billingAddressSameAsShipping,
+      shippingAddress,
+      email,
+      paymentData,
+      initiatePayment,
+      deletePendingTransactions,
+      t,
+    ],
   )
 
   const handlePaymentMethodSelect = (method: PaymentAdapterClient) => {
@@ -237,7 +281,9 @@ export const CheckoutPage: React.FC = () => {
     return (
       <div className="py-24 w-full flex flex-col items-center justify-center gap-6">
         <LoadingSpinner />
-        <p className="text-muted-foreground text-sm tracking-wide animate-pulse">Processing your payment…</p>
+        <p className="text-muted-foreground text-sm tracking-wide animate-pulse">
+          {t('processingPayment')}
+        </p>
       </div>
     )
   }
@@ -248,10 +294,10 @@ export const CheckoutPage: React.FC = () => {
         <div className="p-4 bg-secondary rounded-full">
           <ShoppingBag size={48} className="text-muted-foreground" />
         </div>
-        <p className="text-2xl font-bold">Your Satchel is Empty</p>
-        <p className="text-muted-foreground max-w-xs">It seems you haven&apos;t added any enchanted artifacts to your satchel yet.</p>
+        <p className="text-2xl font-bold">{t('emptySatchel')}</p>
+        <p className="text-muted-foreground max-w-xs">{t('emptySatchelNote')}</p>
         <Button asChild variant="outline" className="mt-4 rounded-full px-8">
-          <Link href="/shop">Continue the Quest</Link>
+          <Link href="/shop">{t('continueQuest')}</Link>
         </Button>
       </div>
     )
@@ -264,12 +310,13 @@ export const CheckoutPage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
         {/* ── Left Column: Items & Forms ───────────────────────────────────── */}
         <div className="lg:col-span-2 flex flex-col gap-10">
-
           {/* Enchanted Items Section */}
           <div className="flex flex-col gap-6">
             <div className="flex items-center justify-between px-4">
-              <h3 className="text-xl font-bold">Your Enchanted Items</h3>
-              <span className="text-muted-foreground text-sm">{cart.items?.length} Artifacts Found</span>
+              <h3 className="text-xl font-bold">{t('enchantedItems')}</h3>
+              <span className="text-muted-foreground text-sm">
+                {t('artifactsFound', { count: cart.items?.length })}
+              </span>
             </div>
 
             <div className="flex flex-col gap-4">
@@ -286,9 +333,10 @@ export const CheckoutPage: React.FC = () => {
                   price = variant?.priceInUSD
                   const imageVariant = product.gallery?.find((g: any) => {
                     if (!g.variantOption) return false
-                    const optId = typeof g.variantOption === 'object' ? g.variantOption.id : g.variantOption
+                    const optId =
+                      typeof g.variantOption === 'object' ? g.variantOption.id : g.variantOption
                     return variant?.options?.some((o: any) =>
-                      typeof o === 'object' ? o.id === optId : o === optId
+                      typeof o === 'object' ? o.id === optId : o === optId,
                     )
                   })
                   if (imageVariant && typeof imageVariant.image !== 'string') {
@@ -297,7 +345,10 @@ export const CheckoutPage: React.FC = () => {
                 }
 
                 return (
-                  <div key={index} className="bg-card/50 p-6 rounded-xl border border-border flex flex-wrap md:flex-nowrap items-center gap-6 group hover:border-primary/50 transition-colors">
+                  <div
+                    key={index}
+                    className="bg-card/50 p-6 rounded-xl border border-border flex flex-wrap md:flex-nowrap items-center gap-6 group hover:border-primary/50 transition-colors"
+                  >
                     <div className="relative size-24 shrink-0 rounded-lg overflow-hidden border border-border">
                       {image && typeof image !== 'string' && (
                         <Media fill imgClassName="object-cover" resource={image} />
@@ -307,16 +358,21 @@ export const CheckoutPage: React.FC = () => {
                     <div className="flex-1 min-w-50">
                       <h4 className="text-lg font-bold leading-tight">{product.title}</h4>
                       <p className="text-muted-foreground text-sm mt-1">
-                        {isVariant ? variant.options?.map((o: any) => typeof o === 'object' ? o.label : null).filter(Boolean).join(', ') : 'Standard Edition'}
+                        {isVariant
+                          ? variant.options
+                              ?.map((o: any) => (typeof o === 'object' ? o.label : null))
+                              .filter(Boolean)
+                              .join(', ')
+                          : t('standardEdition')}
                       </p>
                       <div className="flex items-center gap-2 mt-2 text-primary text-sm font-medium">
                         <Wand2 size={16} />
-                        Enchanted Artifact
+                        {t('enchantedArtifact')}
                       </div>
                     </div>
                     <div className="flex items-center gap-8 w-full md:w-auto justify-between md:justify-end">
                       <div className="flex items-center gap-3 bg-secondary p-1.5 rounded-full">
-                        <span className="text-sm font-bold px-4">Qty: {quantity}</span>
+                        <span className="text-sm font-bold px-4">{t('qty', { count: quantity })}</span>
                       </div>
                       {typeof price === 'number' && (
                         <Price amount={price * quantity} className="text-xl font-bold" />
@@ -327,34 +383,38 @@ export const CheckoutPage: React.FC = () => {
               })}
             </div>
 
-            <Button asChild variant="ghost" className="flex items-center justify-center gap-2 py-8 border-2 border-dashed border-border rounded-xl text-muted-foreground hover:text-primary hover:border-primary/50 transition-all h-auto">
+            <Button
+              asChild
+              variant="ghost"
+              className="flex items-center justify-center gap-2 py-8 border-2 border-dashed border-border rounded-xl text-muted-foreground hover:text-primary hover:border-primary/50 transition-all h-auto"
+            >
               <Link href="/shop" className="flex items-center gap-2">
                 <Plus size={20} />
-                <span className="font-bold">Add another Artifact to the Satchel</span>
+                <span className="font-bold">{t('addAnother')}</span>
               </Link>
             </Button>
           </div>
 
           {/* ── Contact Section ───────────────────────────────────────────── */}
-          <Section title="Contact Info" stepNumber={1} icon={BookOpen}>
+          <Section title={t('contactInfo')} stepNumber={1} icon={BookOpen}>
             {user ? (
               <div className="flex justify-between p-6 bg-secondary/30 rounded-xl border border-border/50 sm:flex-row sm:items-center flex-col items-end">
-                <div className='w-full'>
+                <div className="w-full">
                   <p className="font-bold text-lg">{user.email}</p>
-                  <p className="text-sm text-muted-foreground">Signed in as Adventurer</p>
+                  <p className="text-sm text-muted-foreground">{t('signedInAs')}</p>
                 </div>
                 <Link href="/logout" className="text-sm text-primary font-bold hover:underline">
-                  Log out
+                  {t('logOut')}
                 </Link>
               </div>
             ) : (
               <div className="flex flex-col gap-6">
                 <div className="flex gap-4">
                   <Button asChild variant="outline" className="flex-1 rounded-full py-6 font-bold">
-                    <Link href="/login">Log in</Link>
+                    <Link href="/login">{t('logIn')}</Link>
                   </Button>
                   <Button asChild variant="ghost" className="flex-1 rounded-full py-6 font-bold">
-                    <Link href="/create-account">Create account</Link>
+                    <Link href="/create-account">{t('createAccount')}</Link>
                   </Button>
                 </div>
 
@@ -363,12 +423,19 @@ export const CheckoutPage: React.FC = () => {
                     <div className="w-full border-t border-border" />
                   </div>
                   <div className="relative flex justify-center text-[10px]">
-                    <span className="bg-background px-4 text-muted-foreground uppercase tracking-widest font-black">or continue as guest</span>
+                    <span className="bg-background px-4 text-muted-foreground uppercase tracking-widest font-black">
+                      {t('orContinueAsGuest')}
+                    </span>
                   </div>
                 </div>
 
                 <FormItem>
-                  <Label htmlFor="email" className="ml-1 text-[10px] font-black uppercase tracking-widest text-muted-foreground">Email address</Label>
+                  <Label
+                    htmlFor="email"
+                    className="ml-1 text-[10px] font-black uppercase tracking-widest text-muted-foreground"
+                  >
+                    {t('emailAddress')}
+                  </Label>
                   <div className="flex gap-3 mt-2">
                     <Input
                       disabled={!emailEditable}
@@ -383,10 +450,13 @@ export const CheckoutPage: React.FC = () => {
                     {emailEditable ? (
                       <Button
                         disabled={!email}
-                        onClick={(e) => { e.preventDefault(); setEmailEditable(false) }}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          setEmailEditable(false)
+                        }}
                         className="rounded-full px-8 shrink-0 h-auto font-bold"
                       >
-                        Continue
+                        {t('continue')}
                       </Button>
                     ) : (
                       <Button
@@ -394,7 +464,7 @@ export const CheckoutPage: React.FC = () => {
                         variant="ghost"
                         className="rounded-full shrink-0 text-muted-foreground font-bold"
                       >
-                        Edit
+                        {t('edit')}
                       </Button>
                     )}
                   </div>
@@ -404,10 +474,17 @@ export const CheckoutPage: React.FC = () => {
           </Section>
 
           {/* ── Address Section ───────────────────────────────────────────── */}
-          <Section title="Delivery Details" stepNumber={2} icon={Bird} className={!contactComplete ? 'opacity-50 pointer-events-none' : ''}>
+          <Section
+            title={t('deliveryDetails')}
+            stepNumber={2}
+            icon={Bird}
+            className={!contactComplete ? 'opacity-50 pointer-events-none' : ''}
+          >
             {/* Billing */}
             <div className="mb-8">
-              <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 ml-1">Billing Address</p>
+              <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 ml-1">
+                {t('billingAddress')}
+              </p>
               {billingAddress ? (
                 <div className="flex items-start justify-between gap-4 p-5 bg-secondary/30 rounded-xl border border-border/50">
                   <AddressItem address={billingAddress} />
@@ -415,10 +492,13 @@ export const CheckoutPage: React.FC = () => {
                     variant="ghost"
                     size="sm"
                     disabled={Boolean(paymentData)}
-                    onClick={(e) => { e.preventDefault(); setBillingAddress(undefined) }}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      setBillingAddress(undefined)
+                    }}
                     className="text-primary font-bold"
                   >
-                    Change
+                    {t('change')}
                   </Button>
                 </div>
               ) : user ? (
@@ -442,14 +522,16 @@ export const CheckoutPage: React.FC = () => {
                 className="rounded-md size-5"
               />
               <Label htmlFor="shippingTheSameAsBilling" className="cursor-pointer text-sm font-bold">
-                Our owls should deliver to the same address
+                {t('shippingSameAsBilling')}
               </Label>
             </div>
 
             {/* Shipping (if different) */}
             {!billingAddressSameAsShipping && (
               <div className="mt-8 pt-6 border-t border-border">
-                <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 ml-1">Shipping Address</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 ml-1">
+                  {t('shippingAddress')}
+                </p>
                 {shippingAddress ? (
                   <div className="flex items-start justify-between gap-4 p-5 bg-secondary/30 rounded-xl border border-border/50">
                     <AddressItem address={shippingAddress} />
@@ -457,14 +539,21 @@ export const CheckoutPage: React.FC = () => {
                       variant="ghost"
                       size="sm"
                       disabled={Boolean(paymentData)}
-                      onClick={(e) => { e.preventDefault(); setShippingAddress(undefined) }}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        setShippingAddress(undefined)
+                      }}
                       className="text-primary font-bold"
                     >
-                      Change
+                      {t('change')}
                     </Button>
                   </div>
                 ) : user ? (
-                  <CheckoutAddresses heading="" description="Where shall the owls fly?" setAddress={setShippingAddress} />
+                  <CheckoutAddresses
+                    heading=""
+                    description={t('whereShallOwlsFly')}
+                    setAddress={setShippingAddress}
+                  />
                 ) : (
                   <CreateAddressModal
                     callback={(address) => setShippingAddress(address)}
@@ -477,7 +566,12 @@ export const CheckoutPage: React.FC = () => {
           </Section>
 
           {/* ── Payment Section ───────────────────────────────────────────── */}
-          <Section title="The Finale" stepNumber={3} icon={Sparkles} className={!canGoToPayment ? 'opacity-50 pointer-events-none' : ''}>
+          <Section
+            title={t('theFinale')}
+            stepNumber={3}
+            icon={Sparkles}
+            className={!canGoToPayment ? 'opacity-50 pointer-events-none' : ''}
+          >
             {!paymentData && (
               <div className="flex flex-col gap-6">
                 {/* Method selector */}
@@ -486,10 +580,11 @@ export const CheckoutPage: React.FC = () => {
                     {paymentMethods.map((method) => (
                       <label
                         key={method.name}
-                        className={`flex items-center gap-4 p-6 rounded-xl border cursor-pointer transition-all duration-300 ${selectedPaymentMethod?.name === method.name
-                          ? 'border-primary bg-primary/5 ring-1 ring-primary'
-                          : 'border-border hover:border-primary/40 hover:bg-secondary/50'
-                          }`}
+                        className={`flex items-center gap-4 p-6 rounded-xl border cursor-pointer transition-all duration-300 ${
+                          selectedPaymentMethod?.name === method.name
+                            ? 'border-primary bg-primary/5 ring-1 ring-primary'
+                            : 'border-border hover:border-primary/40 hover:bg-secondary/50'
+                        }`}
                       >
                         <input
                           type="radio"
@@ -501,32 +596,17 @@ export const CheckoutPage: React.FC = () => {
                           className="accent-primary size-5"
                         />
                         <div className="flex flex-col">
-                          <span className="font-black text-xs uppercase tracking-widest">{method.label ?? method.name}</span>
-                          <span className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Secure Portal</span>
+                          <span className="font-black text-xs uppercase tracking-widest">
+                            {method.label ?? method.name}
+                          </span>
+                          <span className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">
+                            {t('securePortal')}
+                          </span>
                         </div>
                       </label>
                     ))}
                   </div>
                 )}
-
-                {/* <Button
-                  className="w-full py-8 rounded-full text-lg font-black glow-primary transform hover:scale-[1.01] transition-all uppercase tracking-widest"
-                  disabled={!canGoToPayment || isProcessingPayment || !selectedPaymentMethod}
-                  onClick={handleGoToPayment}
-                  size="lg"
-                >
-                  {isProcessingPayment ? (
-                    <span className="flex items-center gap-3">
-                      <LoadingSpinner className="h-5 w-5" />
-                      Invoking Payment…
-                    </span>
-                  ) : (
-                    <span className="flex items-center gap-3">
-                      Prepare for {selectedPaymentMethod?.label ?? selectedPaymentMethod?.name ?? 'Payment'}
-                      <ArrowRight size={20} />
-                    </span>
-                  )}
-                </Button> */}
               </div>
             )}
 
@@ -544,7 +624,7 @@ export const CheckoutPage: React.FC = () => {
                     router.refresh()
                   }}
                 >
-                  Try again
+                  {t('tryAgain')}
                 </Button>
               </div>
             )}
@@ -553,7 +633,11 @@ export const CheckoutPage: React.FC = () => {
             <Suspense fallback={<LoadingSpinner />}>
               {paymentData?.['clientSecret'] && selectedPaymentMethod?.name === 'stripe' && (
                 <div className="mt-2">
-                  {error && <p className="text-sm text-destructive mb-6 font-bold bg-destructive/10 p-5 rounded-xl border border-destructive/20">{error}</p>}
+                  {error && (
+                    <p className="text-sm text-destructive mb-6 font-bold bg-destructive/10 p-5 rounded-xl border border-destructive/20">
+                      {error}
+                    </p>
+                  )}
                   <Elements
                     options={{
                       appearance: {
@@ -580,38 +664,40 @@ export const CheckoutPage: React.FC = () => {
                       className="mt-8 text-muted-foreground rounded-full w-full font-bold"
                       onClick={handleCancelPayment}
                     >
-                      ← Choose a different payment method
+                      ← {t('chooseDifferentMethod')}
                     </Button>
                   </Elements>
                 </div>
               )}
 
-              {paymentData && selectedPaymentMethod?.name === 'paypal' && !paymentData['clientSecret'] && (
-                <div className="flex flex-col gap-6 mt-2">
-                  <div className="rounded-xl border border-primary/20 bg-primary/5 p-6 text-sm text-primary font-bold flex gap-4 items-center">
-                    <Sparkles className="shrink-0" size={24} />
-                    The portal is ready. You&apos;ll be redirected to PayPal to complete your tribute securely.
+              {paymentData &&
+                selectedPaymentMethod?.name === 'paypal' &&
+                !paymentData['clientSecret'] && (
+                  <div className="flex flex-col gap-6 mt-2">
+                    <div className="rounded-xl border border-primary/20 bg-primary/5 p-6 text-sm text-primary font-bold flex gap-4 items-center">
+                      <Sparkles className="shrink-0" size={24} />
+                      {t('paypalRedirect')}
+                    </div>
+                    <Button
+                      size="lg"
+                      className="w-full py-8 rounded-full font-black text-lg uppercase tracking-widest"
+                      onClick={() => {
+                        if (paymentData.approvalUrl) {
+                          window.location.href = paymentData.approvalUrl as string
+                        }
+                      }}
+                    >
+                      {t('continueToPaypal')} <ArrowRight className="ml-2" size={20} />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="text-muted-foreground rounded-full font-bold"
+                      onClick={handleCancelPayment}
+                    >
+                      ← {t('chooseDifferentMethod')}
+                    </Button>
                   </div>
-                  <Button
-                    size="lg"
-                    className="w-full py-8 rounded-full font-black text-lg uppercase tracking-widest"
-                    onClick={() => {
-                      if (paymentData.approvalUrl) {
-                        window.location.href = paymentData.approvalUrl as string
-                      }
-                    }}
-                  >
-                    Continue to PayPal <ArrowRight className="ml-2" size={20} />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    className="text-muted-foreground rounded-full font-bold"
-                    onClick={handleCancelPayment}
-                  >
-                    ← Choose a different payment method
-                  </Button>
-                </div>
-              )}
+                )}
             </Suspense>
           </Section>
         </div>
@@ -621,44 +707,36 @@ export const CheckoutPage: React.FC = () => {
           <div className="bg-card p-8 rounded-2xl border border-border shadow-sm flex flex-col gap-8">
             <h3 className="text-xl font-bold flex items-center gap-3">
               <History className="text-primary" size={24} />
-              Quest Log
+              {t('questLog')}
             </h3>
 
             <div className="space-y-4">
               <div className="flex justify-between text-muted-foreground">
-                <span className="text-sm font-medium">Artifact Subtotal</span>
+                <span className="text-sm font-medium">{t('artifactSubtotal')}</span>
                 <Price amount={cart.subtotal || 0} className="text-foreground font-bold" />
               </div>
               <div className="flex justify-between text-muted-foreground">
-                <span className="text-sm font-medium">Owl Delivery (Priority)</span>
-                <span className="text-foreground font-bold uppercase text-xs tracking-widest">Gratis</span>
+                <span className="text-sm font-medium">{t('deliveryPriority')}</span>
+                <span className="text-foreground font-bold uppercase text-xs tracking-widest">
+                  {t('gratis')}
+                </span>
               </div>
               <div className="flex justify-between text-muted-foreground">
-                <span className="text-sm font-medium">Kingdom Tax</span>
+                <span className="text-sm font-medium">{t('kingdomTax')}</span>
                 <Price amount={0} className="text-foreground font-bold" />
               </div>
               <div className="pt-6 border-t border-border flex justify-between items-end">
-                <span className="text-lg font-black uppercase tracking-widest">Total Tribute</span>
+                <span className="text-lg font-black uppercase tracking-widest">
+                  {t('totalTribute')}
+                </span>
                 <div className="text-right">
                   <Price amount={cart.subtotal || 0} className="text-3xl font-black text-primary" />
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1 font-black">Due at Finale</p>
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1 font-black">
+                    {t('dueAtFinale')}
+                  </p>
                 </div>
               </div>
             </div>
-
-            {/* Promo Scroll */}
-            {/* <div className="mt-2">
-              <label className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-3 ml-1">Promo Scroll</label>
-              <div className="relative">
-                <Input 
-                  className="w-full bg-secondary/50 border-none rounded-full py-6 px-6 focus-visible:ring-primary text-sm font-medium placeholder:text-muted-foreground/50" 
-                  placeholder="Enter ancient code..." 
-                />
-                <Button className="absolute right-2 top-1.5 h-auto text-[10px] font-black uppercase tracking-widest px-6 py-2.5 rounded-full hover:bg-primary/90 transition-colors">
-                  Apply
-                </Button>
-              </div>
-            </div> */}
 
             {!paymentData && (
               <Button
@@ -666,17 +744,18 @@ export const CheckoutPage: React.FC = () => {
                 onClick={handleGoToPayment}
                 disabled={!canGoToPayment || isProcessingPayment || !!paymentData}
               >
-                <span>Embark on Checkout</span>
+                <span>{t('embarkOnCheckout')}</span>
                 <ArrowRight size={20} />
-              </Button>)}
+              </Button>
+            )}
 
             <div className="flex flex-col items-center gap-3 mt-2">
               <div className="flex items-center gap-2 text-[10px] text-muted-foreground font-black uppercase tracking-widest">
                 <Lock size={12} className="text-primary" />
-                Secure Magic Encryption
+                {t('secureMagicEncryption')}
               </div>
               <p className="text-center text-[10px] text-muted-foreground/60 px-6 leading-relaxed uppercase tracking-tighter">
-                Your quest is protected by 256-bit mystical wards.
+                {t('protectedByWards')}
               </p>
             </div>
           </div>
@@ -685,9 +764,9 @@ export const CheckoutPage: React.FC = () => {
           <div className="mt-6 bg-primary/10 p-6 rounded-2xl border border-primary/20 flex items-start gap-4">
             <Bird className="text-primary shrink-0" size={32} />
             <div>
-              <h4 className="font-bold text-sm">Owl Delivery Note</h4>
+              <h4 className="font-bold text-sm">{t('owlDeliveryNote')}</h4>
               <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                Our swiftest owls are currently resting for the night. Deliveries will commence at the first light of dawn.
+                {t('owlRestingNote')}
               </p>
             </div>
           </div>

@@ -5,13 +5,17 @@ import React, { Fragment } from 'react'
 
 import { CheckoutPage } from '@/components/checkout/CheckoutPage'
 
-export default function Checkout() {
+import { getTranslations } from 'next-intl/server'
+
+export default async function Checkout() {
+  const t = await getTranslations('checkout')
+
   return (
     <div className="container min-h-[90vh] flex">
       {!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY && (
         <div>
           <Fragment>
-            {'To enable checkout, you must '}
+            {t('stripeError')}{' '}
             <a
               href="https://dashboard.stripe.com/test/apikeys"
               rel="noopener noreferrer"
@@ -32,18 +36,22 @@ export default function Checkout() {
         </div>
       )}
 
-      <h1 className="sr-only">Checkout</h1>
+      <h1 className="sr-only">{t('title')}</h1>
 
       <CheckoutPage />
     </div>
   )
 }
 
-export const metadata: Metadata = {
-  description: 'Checkout.',
-  openGraph: mergeOpenGraph({
-    title: 'Checkout',
-    url: '/checkout',
-  }),
-  title: 'Checkout',
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('checkout')
+
+  return {
+    description: t('metadata.description'),
+    openGraph: mergeOpenGraph({
+      title: t('metadata.title'),
+      url: '/checkout',
+    }),
+    title: t('metadata.title'),
+  }
 }
