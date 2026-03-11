@@ -1,5 +1,10 @@
 {
     "greeting": "مرحبا",
+    "search": {
+        "placeholder": "ابحث في الأرشيفات المسحورة...",
+        "clear": "مسح البحث",
+        "submit": "استدعاء البحث"
+    },
     "addresses": {
         "title": "العناوين السحرية",
         "description": "قم بإدارة نقاط الانتقال الآني والتوصيل عبر العوالم المعروفة.",
@@ -442,5 +447,68 @@
             "updateReview": "تحديث المراجعة",
             "submitReview": "إرسال المراجعة"
         }
+    },
+    "chronicles": {
+        "metadata": {
+            "title": "السجلات",
+            "description": "تصفح أحدث السجلات والجولات والتوقيعات."
+        },
+        "latestNews": "آخر الأخبار",
+        "sectionTitle": "أحدث السجلات",
+        "noResults": "لا توجد سجلات تطابق",
+        "showing": "عرض",
+        "resultsFor": "نتائج لـ",
+        "emptyTitle": "لم يتم العثور على سجلات",
+        "emptyDescription": "الأرشيفات صامتة. يرجى محاولة تعديل بحثك أو الفلاتر.",
+        "readProclamation": "قراءة البيان",
+        "sidebar": {
+            "messengerTitle": "رسول الأنباء",
+            "messengerDescription": "كن أول من يستلم الإعلانات عن الجولات والفصول السرية والهدايا السحرية.",
+            "emailPlaceholder": "عنوانك الرسمى (البريد الإلكتروني)",
+            "joinService": "الانضمام إلى الخدمة",
+            "privacyNote": "بالانضمام، توافق على Scrolls of Privacy في المملكة.",
+            "recentlyInscribed": "دُوِّن مؤخراً",
+            "archiveEntry": "سجل الأرشيف",
+            "socialScrolls": "لفائف اجتماعية"
+        }
+    },
+    "shop": {
+        "metadata": {
+            "title": "المتجر",
+            "description": "ابحث عن المنتجات في المتجر."
+        },
+        "layout": {
+            "sortBy": "ترتيب حسب:",
+            "allRealms": "جميع العوالم"
+        },
+        "filter": {
+            "sort": {
+                "alphabetical": "أبجدياً أ-ي",
+                "latest": "أحدث الوصولات",
+                "priceLowHigh": "السعر: من الأقل إلى الأعلى",
+                "priceHighLow": "السعر: من الأعلى إلى الأقل"
+            }
+        },
+        "search": {
+            "placeholder": "ابحث في الأرشيفات المسحورة...",
+            "clear": "مسح البحث",
+            "noMagicalTomes": "لا توجد كتب سحرية تطابق <bold>\"{searchValue}\"</bold>",
+            "revealing": "كشف عن <bold>{count} {count, plural, =1 {نتيجة} other {نتائج}}</bold> لـ <bold>\"{searchValue}\"</bold>"
+        },
+        "empty": {
+            "title": "لم يتم العثور على تمائم",
+            "description": "الأرشيفات صامتة. يرجى محاولة تعديل بحثك أو الفلاتر."
+        }
+    },
+    "notFound": {
+        "metadata": {
+            "title": "غير موجود",
+            "description": "الصفحة غير موجودة."
+        },
+        "title": "ضائع في <italic>الأثير</italic>",
+        "description": "يبدو أن هذا الفصل قد تلاشى في الضباب.",
+        "returnHome": "العودة إلى المملكة",
+        "helpText": "ربما ستساعد هذه اللفائف؟",
+        "imageAlt": "ضائع في الأثير"
     }
 }

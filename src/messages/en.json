@@ -1,5 +1,10 @@
 {
     "greeting": "Hello",
+    "search": {
+        "placeholder": "Search the enchanted archives...",
+        "clear": "Clear search",
+        "submit": "Invoke Search"
+    },
     "addresses": {
         "title": "Mystical Addresses",
         "description": "Manage your teleportation and delivery waypoints across the known realms.",
@@ -442,5 +447,68 @@
             "updateReview": "Update Review",
             "submitReview": "Submit Review"
         }
+    },
+    "chronicles": {
+        "metadata": {
+            "title": "Chronicles",
+            "description": "Browse the latest chronicles, tours, and signings."
+        },
+        "latestNews": "Latest News",
+        "sectionTitle": "Latest Chronicles",
+        "noResults": "No chronicles match",
+        "showing": "Showing",
+        "resultsFor": "results for",
+        "emptyTitle": "No chronicles found",
+        "emptyDescription": "The archives are silent. Please try adjusting your search or filters.",
+        "readProclamation": "Read Proclamation",
+        "sidebar": {
+            "messengerTitle": "The Royal Messenger",
+            "messengerDescription": "Be the first to receive proclamations of tours, secret chapters, and magical giveaways.",
+            "emailPlaceholder": "Your herald address (Email)",
+            "joinService": "Join the Service",
+            "privacyNote": "By joining, you agree to the Kingdom's Scrolls of Privacy.",
+            "recentlyInscribed": "Recently Inscribed",
+            "archiveEntry": "Archive Entry",
+            "socialScrolls": "Social Scrolls"
+        }
+    },
+    "shop": {
+        "metadata": {
+            "title": "Shop",
+            "description": "Search for products in the store."
+        },
+        "layout": {
+            "sortBy": "Sort by:",
+            "allRealms": "All Realms"
+        },
+        "filter": {
+            "sort": {
+                "alphabetical": "Alphabetic A-Z",
+                "latest": "Latest arrivals",
+                "priceLowHigh": "Price: Low to high",
+                "priceHighLow": "Price: High to low"
+            }
+        },
+        "search": {
+            "placeholder": "Search the enchanted archives...",
+            "clear": "Clear search",
+            "noMagicalTomes": "No magical tomes match <bold>\"{searchValue}\"</bold>",
+            "revealing": "Revealing <bold>{count} {count, plural, =1 {result} other {results}}</bold> for <bold>\"{searchValue}\"</bold>"
+        },
+        "empty": {
+            "title": "No Enchantments Found",
+            "description": "The archives are silent. Please try adjusting your search or filters."
+        }
+    },
+    "notFound": {
+        "metadata": {
+            "title": "Not Found",
+            "description": "Page not found."
+        },
+        "title": "Lost in the <italic>Ether</italic>",
+        "description": "It seems this chapter has vanished into the mist.",
+        "returnHome": "Return to the Kingdom",
+        "helpText": "Perhaps these scrolls will help?",
+        "imageAlt": "Lost in the Ether"
     }
 }

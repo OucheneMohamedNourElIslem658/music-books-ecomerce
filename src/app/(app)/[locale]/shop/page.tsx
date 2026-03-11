@@ -14,20 +14,24 @@ type SearchParams = { [key: string]: string | string[] | undefined, page?: strin
 
 type Props = {
   searchParams: Promise<SearchParams>
+  params: Promise<{locale: 'en' | 'ar' | 'pt'}>
 }
 
 const LIMIT = 12
 
-export default async function ShopPage({ searchParams }: Props) {
+export default async function ShopPage({ searchParams, params }: Props) {
   const { q: searchValue, sort, category, page: pageParam } = await searchParams
   const payload = await getPayload({ config: configPromise })
 
   const page = Math.max(1, parseInt(pageParam ?? '1', 10))
 
+  const { locale } = await params
+
   const products = await payload.find({
     collection: 'products',
     limit: LIMIT,
     page,
+    locale,
     draft: false,
     overrideAccess: false,
     select: {

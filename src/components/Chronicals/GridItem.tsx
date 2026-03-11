@@ -4,12 +4,14 @@ import { extractHeroText } from '@/utilities/extractTextFromNode'
 import { formatDistanceToNow } from 'date-fns'
 import Image from 'next/image'
 import React from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = {
     post: Partial<Page> & { id: string | number }
 }
 
 export const ChronicleGridItem: React.FC<Props> = ({ post }) => {
+    const t = useTranslations('chronicles')
     const { title, slug, meta, publishedOn, hero } = post
 
     // --- Image: hero media first, fallback to SEO image ---
@@ -30,64 +32,62 @@ export const ChronicleGridItem: React.FC<Props> = ({ post }) => {
         : null
 
     return (
-        <Link href={`/${slug}`} className="group block">
-            <div className="flex flex-col sm:flex-row gap-4 rounded-xl border border-border bg-card p-4 transition-all duration-200 hover:border-primary/30 hover:shadow-sm">
+        <article className="parchment-glow bg-card border border-border rounded-2xl overflow-hidden flex flex-col md:flex-row transition-all duration-500 group hover:scale-[1.01]">
+            {/* Thumbnail */}
+            {imageUrl && (
+                <div className="md:w-1/3 min-h-[240px] relative overflow-hidden">
+                    <Image
+                        src={imageUrl}
+                        alt={displayTitle}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-primary/5 group-hover:bg-transparent transition-colors duration-500" />
+                </div>
+            )}
 
-                {/* Thumbnail */}
-                {imageUrl && (
-                    <div className="relative shrink-0 w-full sm:w-44 h-32 rounded-lg overflow-hidden bg-muted">
-                        <Image
-                            src={imageUrl}
-                            alt={displayTitle}
-                            fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                    </div>
-                )}
-
-                {/* Content */}
-                <div className="flex flex-col justify-between gap-2 flex-1 min-w-0">
-                    <div className="flex flex-col gap-1.5">
-
-                        {/* Time */}
-                        {timeAgo && (
-                            <span className="text-xs text-muted-foreground">{timeAgo}</span>
-                        )}
-
-                        {/* Title */}
-                        <h2 className="text-base font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2">
-                            {displayTitle}
-                        </h2>
-
-                        {/* Description — meta desc preferred, hero rich text as fallback */}
-                        {description && (
-                            <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
-                                {description}
-                            </p>
-                        )}
-
-                        {/* If both exist, show hero excerpt as secondary line */}
-                        {metaDesc && heroExcerpt && metaDesc !== heroExcerpt && (
-                            <p className="text-xs text-muted-foreground/70 line-clamp-1 leading-relaxed italic">
-                                {heroExcerpt}
-                            </p>
-                        )}
-                    </div>
-
-                    {/* Footer */}
-                    <div className="flex items-center justify-between gap-2 mt-1">
-                        {/* SEO title badge — shown only if different from display title */}
-                        {meta?.title && meta.title !== displayTitle && (
-                            <span className="text-[11px] text-muted-foreground/60 truncate">
-                                {meta.title}
-                            </span>
-                        )}
-                        <span className="text-xs font-semibold text-primary opacity-0 group-hover:opacity-100 transition-opacity shrink-0 ml-auto">
-                            Read Proclamation →
+            {/* Content */}
+            <div className="p-8 flex-1 flex flex-col justify-between">
+                <div>
+                    <div className="flex items-center gap-3 mb-4">
+                        <span className="text-primary text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1 border border-primary/20 rounded-full bg-primary/5">
+                            {hero?.eyebrow || 'Chronicle'}
                         </span>
+                        {timeAgo && (
+                            <span className="text-muted-foreground text-xs font-medium italic">{timeAgo}</span>
+                        )}
                     </div>
+                    
+                    <Link href={`/${slug}`}>
+                        <h3 className="text-2xl font-black mb-4 group-hover:text-primary transition-colors leading-tight italic">
+                            {displayTitle}
+                        </h3>
+                    </Link>
+                    
+                    {description && (
+                        <p className="text-muted-foreground text-base leading-relaxed mb-6 line-clamp-3 font-medium">
+                            {description}
+                        </p>
+                    )}
+                </div>
+
+                <div className="flex items-center justify-between mt-auto pt-6 border-t border-border/50">
+                    <div className="flex items-center gap-3">
+                        <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                            <span className="material-symbols-outlined text-xl">auto_stories</span>
+                        </div>
+                        <span className="text-sm font-bold text-foreground/80 tracking-tight">Archivist</span>
+                    </div>
+                    
+                    <Link 
+                        href={`/${slug}`} 
+                        className="flex items-center gap-2 text-primary text-sm font-black uppercase tracking-widest group/link"
+                    >
+                        {t('readProclamation')}
+                        <span className="material-symbols-outlined text-base group-hover/link:translate-x-1 transition-transform">arrow_right_alt</span>
+                    </Link>
                 </div>
             </div>
-        </Link>
+        </article>
     )
 }

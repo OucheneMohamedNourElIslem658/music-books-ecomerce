@@ -1,10 +1,12 @@
 import { Categories } from '@/components/layout/search/Categories'
 import { FilterList } from '@/components/layout/search/filter'
 import { ShopSearch } from '@/components/ShopSearch'
+import { getTranslations } from 'next-intl/server'
 import { sorting } from '@/lib/constants'
 import React, { Suspense } from 'react'
 
-export default function ShopLayout({ children }: { children: React.ReactNode }) {
+export default async function ShopLayout({ children }: { children: React.ReactNode }) {
+  const t = await getTranslations('shop.layout')
   return (
     <div className="container py-6 md:py-16">
 
@@ -20,7 +22,7 @@ export default function ShopLayout({ children }: { children: React.ReactNode }) 
             <ShopSearch />
             <div className="flex gap-3 items-center">
               <span className="shrink-0 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
-                Sort by:
+                {t('sortBy')}
               </span>
               <FilterList list={sorting} />
             </div>
@@ -28,7 +30,7 @@ export default function ShopLayout({ children }: { children: React.ReactNode }) 
 
         </div>
       </section>
-
+...
       {/* Main Content */}
       <Suspense fallback={null}>
         <div className="min-h-screen">

@@ -19,7 +19,7 @@ export const LowImpactHero: React.FC<Props> = ({
   songGroup
 }) => {
   return (
-    <div className="container py-8 md:py-12">
+    <div data-theme="dark" className="container py-8 md:py-12">
       <section className="relative w-full overflow-hidden rounded-[2.5rem] min-h-130 flex items-center justify-center shadow-sm border border-border bg-card transition-all duration-300">
 
         {/* Background Media with Theme-Aware Overlay */}
@@ -31,7 +31,7 @@ export const LowImpactHero: React.FC<Props> = ({
               imgClassName="object-cover object-center"
               priority
             />
-            <div className="absolute inset-0 bg-linear-to-b from-background/60 via-background/80 to-background/95" />
+            <div className="absolute inset-0 bg-linear-to-b from-background/20 via-background/60 to-background/95" />
           </div>
         )}
 

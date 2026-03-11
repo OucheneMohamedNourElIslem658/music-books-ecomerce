@@ -36,7 +36,7 @@ export const SongPreview: React.FC<SongPreviewProps> = ({
         <div className="size-10 bg-primary rounded-full flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/20 shrink-0">
           <Activity className="size-5 animate-pulse" />
         </div>
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 flex flex-col gap-1 items-start">
           <p className="text-[9px] font-bold uppercase tracking-widest text-primary">Now Previewing</p>
           <p className="text-sm font-semibold truncate">{title || (typeof song === 'object' && song?.filename) || 'Enchanted Melody'}</p>
         </div>

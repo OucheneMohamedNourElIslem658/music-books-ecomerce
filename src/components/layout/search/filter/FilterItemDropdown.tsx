@@ -6,8 +6,10 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import type { ListItem } from '.'
 import { FilterItem } from './FilterItem'
+import { useTranslations } from 'next-intl'
 
 export function FilterItemDropdown({ list }: { list: ListItem[] }) {
+  const t = useTranslations()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const [active, setActive] = useState('')
@@ -32,12 +34,12 @@ export function FilterItemDropdown({ list }: { list: ListItem[] }) {
         ('path' in listItem && pathname === listItem.path) ||
         ('slug' in listItem && searchParams.get('sort') === listItem.slug)
       ) {
-        setActive(listItem.title)
+        setActive(t(listItem.title as any))
         found = true
       }
     })
-    if (!found && list.length > 0) setActive(list[0].title)
-  }, [pathname, list, searchParams])
+    if (!found && list.length > 0) setActive(t(list[0].title as any))
+  }, [pathname, list, searchParams, t])
 
   return (
     <div className="relative" ref={ref}>

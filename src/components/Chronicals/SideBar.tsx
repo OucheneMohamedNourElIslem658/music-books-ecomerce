@@ -1,104 +1,87 @@
 import { Link } from '@/i18n/navigation'
 import configPromise from '@payload-config'
-import { Mail } from 'lucide-react'
+import { Mail, Share2, MessageSquare, Camera } from 'lucide-react'
 import { getPayload } from 'payload'
 import React from 'react'
+import { getTranslations } from 'next-intl/server'
 
-export const ChroniclesSidebar: React.FC = async () => {
+export const ChroniclesSidebar = async () => {
     const payload = await getPayload({ config: configPromise })
+    const t = await getTranslations('chronicles.sidebar')
 
     const recent = await payload.find({
         collection: 'pages',
         limit: 3,
         draft: false,
         overrideAccess: false,
-        select: { title: true, slug: true, publishedOn: true, categories: true },
+        select: { title: true, slug: true, publishedOn: true, hero: true },
         where: {
             and: [
                 { _status: { equals: 'published' } },
-                // { template: { equals: 'chronicle' } },
+                { isBlog: { equals: true } },
             ],
         },
         sort: '-publishedOn',
     })
 
-    const tagColors: Record<string, string> = {
-        'new-release': 'text-emerald-400',
-        'royal-tour': 'text-blue-400',
-        'signing': 'text-amber-400',
-    }
-
-    const tagLabels: Record<string, string> = {
-        'new-release': 'Archive Entry',
-        'royal-tour': 'Travel Log',
-        'signing': 'Fan Works',
-    }
-
     return (
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-10">
 
             {/* Newsletter */}
-            <div className="rounded-2xl border border-border bg-card p-5 flex flex-col gap-4">
-                <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10">
-                    <Mail className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                    <h3 className="font-bold text-foreground">The Royal Messenger</h3>
-                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                        Be the first to receive proclamations of tours, secret chapters, and magical giveaways.
+            <div className="bg-primary/5 dark:bg-primary/10 border border-primary/20 p-8 rounded-2xl relative overflow-hidden shadow-2xl shadow-primary/5">
+                <div className="absolute -top-4 -right-4 size-24 bg-primary/10 rounded-full blur-2xl"></div>
+                <div className="relative">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-2xl bg-primary text-white mb-6 shadow-lg shadow-primary/20">
+                        <Mail className="h-6 w-6" />
+                    </div>
+                    <h3 className="text-xl font-black text-foreground mb-3 italic">{t('messengerTitle')}</h3>
+                    <p className="text-sm text-muted-foreground mb-8 leading-relaxed font-medium">
+                        {t('messengerDescription')}
+                    </p>
+                    <div className="space-y-4">
+                        <input
+                            type="email"
+                            placeholder={t('emailPlaceholder')}
+                            className="w-full bg-white dark:bg-slate-800 border border-border rounded-full py-3.5 px-6 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all outline-none"
+                        />
+                        <button className="w-full bg-primary hover:bg-primary/90 text-white font-black py-4 rounded-full transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
+                            {t('joinService')} <span className="material-symbols-outlined text-sm">send</span>
+                        </button>
+                    </div>
+                    <p className="text-[10px] text-muted-foreground/60 mt-6 text-center font-bold uppercase tracking-tighter">
+                        {t('privacyNote')}
                     </p>
                 </div>
-                <input
-                    type="email"
-                    placeholder="Your herald address (Email)"
-                    className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition-colors"
-                />
-                <Link
-                    href="/contact"
-                    className="w-full inline-flex items-center justify-between rounded-lg bg-primary px-4 py-2.5 text-sm font-bold text-white hover:bg-primary/80 transition-colors"
-                >
-                    Join the Service
-                    <span>›</span>
-                </Link>
-                <p className="text-[10px] text-muted-foreground text-center">
-                    By joining, you agree to the Kingdom&apos;s Scrolls of Privacy.
-                </p>
             </div>
 
             {/* Recently inscribed */}
-            <div className="rounded-2xl border border-border bg-card p-5 flex flex-col gap-4">
-                <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                        Recently Inscribed
-                    </span>
-                </div>
-
-                <div className="flex flex-col divide-y divide-border">
-                    {recent.docs.map((post) => {
-
-                        return (
-                            <Link
-                                key={post.id}
-                                href={`/${post.slug}`}
-                                className="group flex flex-col gap-0.5 py-3 first:pt-0 last:pb-0"
-                            >
-                                <h4 className="text-sm font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2">
-                                    {post.title}
-                                </h4>
-                                {post.publishedOn && (
-                                    <span className="text-[10px] text-muted-foreground">
-                                        {new Date(post.publishedOn).toLocaleDateString('en-US', {
-                                            day: 'numeric',
-                                            month: 'short',
-                                            hour: '2-digit',
-                                            minute: '2-digit',
-                                        })}
-                                    </span>
-                                )}
-                            </Link>
-                        )
-                    })}
+            <div className="bg-card border border-border p-8 rounded-2xl shadow-sm">
+                <h3 className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground mb-8 flex items-center gap-3">
+                    <span className="size-2.5 rounded-full bg-primary animate-pulse shadow-[0_0_8px_oklch(var(--primary))]"></span> 
+                    {t('recentlyInscribed')}
+                </h3>
+                <div className="space-y-8">
+                    {recent.docs.map((post, i) => (
+                        <Link
+                            key={post.id}
+                            href={`/${post.slug}`}
+                            className="group flex flex-col gap-2 transition-all"
+                        >
+                            <p className="text-[10px] text-primary font-black uppercase tracking-widest">{t('archiveEntry')} #{421 - i}</p>
+                            <h4 className="text-base font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2 italic">
+                                {post.title}
+                            </h4>
+                            {post.publishedOn && (
+                                <p className="text-xs text-muted-foreground font-medium">
+                                    {new Date(post.publishedOn).toLocaleDateString('en-US', {
+                                        day: 'numeric',
+                                        month: 'short',
+                                        year: 'numeric',
+                                    })}
+                                </p>
+                            )}
+                        </Link>
+                    ))}
                 </div>
             </div>
         </div>

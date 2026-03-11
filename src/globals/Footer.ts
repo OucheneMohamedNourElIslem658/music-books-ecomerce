@@ -32,6 +32,7 @@ export const Footer: GlobalConfig = {
         {
           name: 'label',
           type: 'text',
+          localized: true,
           label: 'Group Label',
           required: true,
         },
@@ -99,12 +100,14 @@ export const Footer: GlobalConfig = {
         {
           name: 'heading',
           type: 'text',
+          localized: true,
           label: 'Heading',
           defaultValue: 'Join the Mythos',
         },
         {
           name: 'subheading',
           type: 'text',
+          localized: true,
           label: 'Subheading',
           defaultValue: 'Receive lore, releases and rare scrolls directly to your sanctum.',
         },
@@ -115,6 +118,7 @@ export const Footer: GlobalConfig = {
     {
       name: 'copyright',
       type: 'text',
+      localized: true,
       label: 'Copyright text',
       defaultValue: '© Melody & Myth. All rights reserved.',
     },
