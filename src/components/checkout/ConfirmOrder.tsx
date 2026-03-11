@@ -3,10 +3,12 @@
 import { LoadingSpinner } from '@/components/LoadingSpinner'
 import { useCart, usePayments } from '@payloadcms/plugin-ecommerce/client/react'
 import { Sparkles } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useRef } from 'react'
 
 export const ConfirmOrder: React.FC = () => {
+  const t = useTranslations('confirmOrder')
   const { confirmOrder } = usePayments()
   const { cart } = useCart()
 
@@ -41,7 +43,7 @@ export const ConfirmOrder: React.FC = () => {
       // If no payment intent ID is found, redirect to the home
       router.push('/')
     }
-  }, [cart, searchParams])
+  }, [cart, searchParams, confirmOrder, router])
 
   return (
     <div className="text-center w-full flex flex-col items-center justify-center gap-8 py-24 bg-card/30 rounded-3xl border border-border mt-12">
@@ -49,13 +51,15 @@ export const ConfirmOrder: React.FC = () => {
         <Sparkles size={48} className="text-primary" />
       </div>
       <div className="flex flex-col gap-3">
-        <h1 className="text-3xl font-black uppercase tracking-widest">Confirming the Quest</h1>
-        <p className="text-muted-foreground font-medium">Please wait while our owls finalize your tribute and secure your enchanted artifacts.</p>
+        <h1 className="text-3xl font-black uppercase tracking-widest">{t('title')}</h1>
+        <p className="text-muted-foreground font-medium">{t('note')}</p>
       </div>
 
       <div className="flex flex-col items-center gap-4">
         <LoadingSpinner className="w-16 h-8" />
-        <p className="text-[10px] font-black uppercase tracking-widest text-primary animate-pulse">Invoking Mystical Wards...</p>
+        <p className="text-[10px] font-black uppercase tracking-widest text-primary animate-pulse">
+          {t('invokingWards')}
+        </p>
       </div>
     </div>
   )

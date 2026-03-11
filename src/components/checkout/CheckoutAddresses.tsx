@@ -13,6 +13,7 @@ import {
 import { Address } from '@/payload-types'
 import { useAddresses } from '@payloadcms/plugin-ecommerce/client/react'
 import { Package } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
 type Props = {
@@ -25,15 +26,21 @@ type Props = {
 
 export const CheckoutAddresses: React.FC<Props> = ({
   setAddress,
-  heading = 'Addresses',
-  description = 'Please select or add your shipping and billing addresses.',
+  heading,
+  description,
 }) => {
+  const t = useTranslations('checkoutAddresses')
   const { addresses } = useAddresses()
+
+  const displayHeading = heading ?? t('defaultHeading')
+  const displayDescription = description ?? t('defaultDescription')
 
   if (!addresses || addresses.length === 0) {
     return (
       <div className="flex flex-col gap-6 items-center justify-center p-12 border-2 border-dashed border-border rounded-2xl bg-secondary/10">
-        <p className="text-muted-foreground font-medium text-center">No addresses found in your quest log. Please add an address to proceed.</p>
+        <p className="text-muted-foreground font-medium text-center">
+          {t('noAddresses')}
+        </p>
 
         <CreateAddressModal />
       </div>
@@ -42,10 +49,10 @@ export const CheckoutAddresses: React.FC<Props> = ({
 
   return (
     <div className="flex flex-col gap-8">
-      {heading && (
+      {displayHeading && (
         <div>
-          <h3 className="text-xl font-bold mb-2">{heading}</h3>
-          <p className="text-muted-foreground text-sm">{description}</p>
+          <h3 className="text-xl font-bold mb-2">{displayHeading}</h3>
+          <p className="text-muted-foreground text-sm">{displayDescription}</p>
         </div>
       )}
       <AddressesModal setAddress={setAddress} />
@@ -54,6 +61,7 @@ export const CheckoutAddresses: React.FC<Props> = ({
 }
 
 const AddressesModal: React.FC<Props> = ({ setAddress }) => {
+  const t = useTranslations('checkoutAddresses')
   const [open, setOpen] = useState(false)
   const handleOpenChange = (state: boolean) => {
     setOpen(state)
@@ -65,28 +73,34 @@ const AddressesModal: React.FC<Props> = ({ setAddress }) => {
   const { addresses } = useAddresses()
 
   if (!addresses || addresses.length === 0) {
-    return <p className="text-muted-foreground">No addresses found. Please add an address.</p>
+    return <p className="text-muted-foreground">{t('noAddressesFound')}</p>
   }
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button variant={'outline'} className="rounded-full px-8 py-6 font-bold border-primary/20 hover:bg-primary/5 transition-all">
-          {'Select an address'}
+        <Button
+          variant={'outline'}
+          className="rounded-full px-8 py-6 font-bold border-primary/20 hover:bg-primary/5 transition-all"
+        >
+          {t('selectAnAddress')}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-2xl rounded-2xl border-border bg-background">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold flex items-center gap-3">
             <Package className="text-primary" size={24} />
-            {'Select an address'}
+            {t('selectAnAddress')}
           </DialogTitle>
         </DialogHeader>
 
         <div className="flex flex-col gap-10 mt-6">
           <ul className="flex flex-col gap-6">
             {addresses.map((address) => (
-              <li key={address.id} className="p-6 rounded-xl border border-border bg-secondary/20 hover:border-primary/50 transition-colors">
+              <li
+                key={address.id}
+                className="p-6 rounded-xl border border-border bg-secondary/20 hover:border-primary/50 transition-colors"
+              >
                 <AddressItem
                   address={address}
                   beforeActions={
@@ -98,7 +112,7 @@ const AddressesModal: React.FC<Props> = ({ setAddress }) => {
                         closeModal()
                       }}
                     >
-                      Select
+                      {t('select')}
                     </Button>
                   }
                 />
