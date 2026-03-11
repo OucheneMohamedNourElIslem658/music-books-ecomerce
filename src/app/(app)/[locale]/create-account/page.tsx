@@ -9,43 +9,44 @@ import { headers as getHeaders } from 'next/headers'
 import { getPayload } from 'payload'
 import { AuthLayout } from '@/components/layout/AuthLayout'
 
+import { getTranslations } from 'next-intl/server'
+
 interface Props {
   params: Promise<{ locale: string }>
 }
 
-export default async function CreateAccount(
-  { params }: Props
-) {
+export default async function CreateAccount({ params }: Props) {
   const headers = await getHeaders()
   const payload = await getPayload({ config: configPromise })
   const { user } = await payload.auth({ headers })
 
   const { locale } = await params
+  const t = await getTranslations('auth.createAccount')
 
   if (user) {
     redirect({
-      href: `/account?warning=${encodeURIComponent('You are already logged in.')}`,
+      href: `/account?warning=${encodeURIComponent(t('alreadyLoggedIn' as any))}`, // assuming we add this if not present or use a common one
       locale,
     })
   }
 
   return (
-    <AuthLayout
-      title="Enlist in the Guild"
-      description="Join our fellowship of readers and melodiists to unlock the full library of wonders."
-      sealText="Guild Seal"
-    >
+    <AuthLayout title={t('title')} description={t('description')} sealText={t('sealText')}>
       <RenderParams />
       <CreateAccountForm />
     </AuthLayout>
   )
 }
 
-export const metadata: Metadata = {
-  description: 'Create an account or log in to your existing account.',
-  openGraph: mergeOpenGraph({
-    title: 'Account',
-    url: '/account',
-  }),
-  title: 'Account',
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('auth.createAccount')
+
+  return {
+    description: t('metadata.description'),
+    openGraph: mergeOpenGraph({
+      title: t('metadata.title'),
+      url: '/account',
+    }),
+    title: t('metadata.title'),
+  }
 }

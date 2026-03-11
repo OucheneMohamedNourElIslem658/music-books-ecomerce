@@ -5,17 +5,21 @@ import React from 'react'
 
 import { LogoutPage } from './LogoutPage'
 
+import { getTranslations } from 'next-intl/server'
+
 export default async function Logout() {
-  return (
-    <LogoutPage />
-  )
+  return <LogoutPage />
 }
 
-export const metadata: Metadata = {
-  description: 'You have been logged out.',
-  openGraph: mergeOpenGraph({
-    title: 'Logout',
-    url: '/logout',
-  }),
-  title: 'Logout',
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('auth.logout')
+
+  return {
+    description: t('metadata.description'),
+    openGraph: mergeOpenGraph({
+      title: t('metadata.title'),
+      url: '/logout',
+    }),
+    title: t('metadata.title'),
+  }
 }

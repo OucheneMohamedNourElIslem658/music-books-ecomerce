@@ -5,23 +5,27 @@ import { ForgotPasswordForm } from '@/components/forms/ForgotPasswordForm'
 import React from 'react'
 import { AuthLayout } from '@/components/layout/AuthLayout'
 
+import { getTranslations } from 'next-intl/server'
+
 export default async function ForgotPasswordPage() {
+  const t = await getTranslations('auth.forgotPassword')
+
   return (
-    <AuthLayout
-      title="The Lost Key"
-      description="Tell us your chronicler email, and we shall send a messenger with a new key."
-      sealText="Messenger's Seal"
-    >
+    <AuthLayout title={t('title')} description={t('description')} sealText={t('sealText')}>
       <ForgotPasswordForm />
     </AuthLayout>
   )
 }
 
-export const metadata: Metadata = {
-  description: 'Enter your email address to recover your password.',
-  openGraph: mergeOpenGraph({
-    title: 'Forgot Password',
-    url: '/forgot-password',
-  }),
-  title: 'Forgot Password',
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('auth.forgotPassword')
+
+  return {
+    description: t('metadata.description'),
+    openGraph: mergeOpenGraph({
+      title: t('metadata.title'),
+      url: '/forgot-password',
+    }),
+    title: t('metadata.title'),
+  }
 }

@@ -254,5 +254,114 @@
         "selectAnAddress": "Select an address",
         "noAddressesFound": "No addresses found. Please add an address.",
         "select": "Select"
+    },
+    "auth": {
+        "defaultSeal": "Archivist's Seal",
+        "createAccount": {
+            "title": "Enlist in the Guild",
+            "description": "Join our fellowship of readers and melodiists to unlock the full library of wonders.",
+            "sealText": "Guild Seal",
+            "alreadyMember": "Already a member of our world?",
+            "returnToPortal": "Return to Portal",
+            "success": "Account created successfully",
+            "error": "There was an error creating the account. Please try again.",
+            "enlisting": "Enlisting...",
+            "joinGuild": "Join Guild",
+            "metadata": {
+                "title": "Account",
+                "description": "Create an account or log in to your existing account."
+            }
+        },
+        "login": {
+            "title": "The Gatekeeper's Portal",
+            "description": "Whisper your credentials to enter the ancient library of melodies.",
+            "chroniclerName": "Chronicler Name",
+            "emailPlaceholder": "Enter your email",
+            "secretKey": "Secret Key",
+            "passwordPlaceholder": "Enter your secret key",
+            "lostKey": "Lost the Key?",
+            "unsealing": "Unsealing...",
+            "unsealPortal": "Unseal Portal",
+            "notMember": "Not yet a member of our world?",
+            "joinGuild": "Join the Guild",
+            "alreadyLoggedIn": "You are already logged in.",
+            "error": "There was an error with the credentials provided. Please try again.",
+            "metadata": {
+                "title": "Login",
+                "description": "Login or create an account to get started."
+            }
+        },
+        "logout": {
+            "title": "The Gates are Closed",
+            "sessionEnded": "Session Ended",
+            "subtitle": "Safe travels, adventurer. You have been successfully logged out of the enchanted realm. Your progress has been etched into the eternal scrolls and the archives are now resting.",
+            "returnToKingdom": "Return to the Kingdom",
+            "exploreLore": "Explore Public Lore",
+            "metadata": {
+                "title": "Logout",
+                "description": "You have been logged out."
+            }
+        },
+        "forgotPassword": {
+            "title": "The Lost Key",
+            "description": "Tell us your chronicler email, and we shall send a messenger with a new key.",
+            "sealText": "Messenger's Seal",
+            "messengerSent": "Messenger Sent",
+            "parchmentCheck": "Check your parchment for the instructions to reset your secret key.",
+            "sendMessenger": "Send Messenger",
+            "returnToPortal": "Return to Portal",
+            "error": "There was a problem sending a password reset email. Please try again.",
+            "metadata": {
+                "title": "Forgot Password",
+                "description": "Enter your email address to recover your password."
+            }
+        },
+        "resetPassword": {
+            "title": "The Great Rewrite",
+            "description": "Cast a new secret key to regain access to the ancient library.",
+            "sealText": "Archivist's Seal",
+            "newSecretKey": "New Secret Key",
+            "confirmSecretKey": "Confirm Secret Key",
+            "keyPlaceholder": "At least 8 characters",
+            "confirmPlaceholder": "Repeat your new key",
+            "success": "Secret Key Reset",
+            "redirecting": "Your password has been reset. Redirecting to the portal...",
+            "updateKey": "Update Key",
+            "resetting": "Resetting...",
+            "returnToPortal": "Return to Portal",
+            "invalidToken": "Invalid or missing reset token. Please request a new link.",
+            "passwordMismatch": "Passwords do not match.",
+            "passwordLength": "Password must be at least 8 characters.",
+            "genericError": "Something went wrong. Please try again.",
+            "metadata": {
+                "title": "Reset Password",
+                "description": "Reset your secret key."
+            }
+        },
+        "verify": {
+            "title": "Enchanted Seal",
+            "description": "Your verification scroll has arrived. We are consulting the ancient records to confirm your identity.",
+            "consultingArchives": "Consulting the Archives…",
+            "sealConfirmed": "Seal Confirmed!",
+            "sealRejected": "Seal Rejected",
+            "waiting": "Please wait while we verify your enchanted seal…",
+            "redirecting": "Redirecting to portal…",
+            "returnToPortal": "Return to Portal",
+            "verified": "Your email has been verified. Redirecting to login...",
+            "invalidToken": "No verification token found. Please check your email link.",
+            "expired": "Verification failed. Your link may have expired."
+        },
+        "form": {
+            "email": "Chronicler Email",
+            "emailRequired": "Email is required.",
+            "password": "Secret Key",
+            "passwordRequired": "Password is required.",
+            "confirmPassword": "Confirm Secret Key",
+            "confirmPasswordRequired": "Please confirm your password.",
+            "passwordMismatch": "The passwords do not match",
+            "emailPlaceholder": "Enter your email",
+            "passwordPlaceholder": "Create your secret key",
+            "confirmPlaceholder": "Confirm your secret key"
+        }
     }
 }

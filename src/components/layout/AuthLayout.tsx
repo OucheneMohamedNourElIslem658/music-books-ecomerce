@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import React from 'react'
 
 interface AuthLayoutProps {
@@ -11,8 +12,11 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
   children,
   title,
   description,
-  sealText = 'Archivist Seal',
+  sealText,
 }) => {
+  const t = useTranslations('auth')
+  const displaySealText = sealText ?? t('defaultSeal')
+
   return (
     <main className="relative flex min-h-screen w-full flex-col items-center justify-center p-4 pt-24 pb-12 floating-stars">
       {/* Decorative Background Elements */}
@@ -34,7 +38,7 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
         <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-[105%] h-12 bg-[#e8dec0] rounded-full border-4 border-[#c8b486] shadow-xl z-20 flex items-center justify-center">
           <div className="w-full h-1 bg-[#c8b486] mx-4 opacity-50"></div>
           <div className="px-4 text-[#8a7241] font-bold text-sm tracking-widest whitespace-nowrap uppercase font-display">
-            {sealText}
+            {displaySealText}
           </div>
           <div className="w-full h-1 bg-[#c8b486] mx-4 opacity-50"></div>
         </div>
@@ -42,14 +46,16 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
         {/* Parchment Scroll Body */}
         <div className="parchment-texture rounded-xl p-8 md:p-12 shadow-2xl border-x-[12px] border-[#d9cdab] flex flex-col items-center">
           <div className="text-center mb-10">
-            <h1 className="text-[#4a3728] text-4xl font-bold mb-3 tracking-tight font-display">{title}</h1>
+            <h1 className="text-[#4a3728] text-4xl font-bold mb-3 tracking-tight font-display">
+              {title}
+            </h1>
             <div className="h-0.5 w-24 bg-[#4a3728]/20 mx-auto mb-4"></div>
-            <p className="text-[#6d5b4b] text-base italic leading-relaxed font-display">{description}</p>
+            <p className="text-[#6d5b4b] text-base italic leading-relaxed font-display">
+              {description}
+            </p>
           </div>
 
-          <div className="w-full">
-            {children}
-          </div>
+          <div className="w-full">{children}</div>
         </div>
 
         {/* Scroll Bottom Footer Decor */}

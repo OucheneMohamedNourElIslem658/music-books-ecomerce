@@ -254,5 +254,114 @@
         "selectAnAddress": "Selecione um endereço",
         "noAddressesFound": "Nenhum endereço encontrado. Por favor, adicione um endereço.",
         "select": "Selecionar"
+    },
+    "auth": {
+        "defaultSeal": "Selo do Arquivista",
+        "createAccount": {
+            "title": "Alistar-se na Guilda",
+            "description": "Junte-se à nossa irmandade de leitores e melodistas para desbloquear a biblioteca completa de maravilhas.",
+            "sealText": "Selo da Guilda",
+            "alreadyMember": "Já é um membro do nosso mundo?",
+            "returnToPortal": "Retornar ao Portal",
+            "success": "Conta criada com sucesso",
+            "error": "Ocorreu um erro ao criar a conta. Por favor, tente novamente.",
+            "enlisting": "Alistando...",
+            "joinGuild": "Entrar na Guilda",
+            "metadata": {
+                "title": "Conta",
+                "description": "Crie uma conta ou faça login em sua conta existente."
+            }
+        },
+        "login": {
+            "title": "O Portal do Guardião",
+            "description": "Sussurre suas credenciais para entrar na antiga biblioteca de melodias.",
+            "chroniclerName": "Nome do Cronista",
+            "emailPlaceholder": "Digite seu e-mail",
+            "secretKey": "Chave Secreta",
+            "passwordPlaceholder": "Digite sua chave secreta",
+            "lostKey": "Perdeu a Chave?",
+            "unsealing": "Abrindo selo...",
+            "unsealPortal": "Abrir Portal de Selo",
+            "notMember": "Ainda não é um membro do nosso mundo?",
+            "joinGuild": "Junte-se à Guilda",
+            "alreadyLoggedIn": "Você já está logado.",
+            "error": "Ocorreu um erro com as credenciais fornecidas. Por favor, tente novamente.",
+            "metadata": {
+                "title": "Entrar",
+                "description": "Faça login ou crie uma conta para começar."
+            }
+        },
+        "logout": {
+            "title": "Os Portões estão Fechados",
+            "sessionEnded": "Sessão Encerrada",
+            "subtitle": "Boa viagem, aventureiro. Você saiu com sucesso do reino encantado. Seu progresso foi gravado nos pergaminhos eternos e os arquivos agora estão descansando.",
+            "returnToKingdom": "Retornar ao Reino",
+            "exploreLore": "Explorar Contos Públicos",
+            "metadata": {
+                "title": "Sair",
+                "description": "Você saiu da sua conta."
+            }
+        },
+        "forgotPassword": {
+            "title": "A Chave Perdida",
+            "description": "Informe-nos seu e-mail de cronista e enviaremos um mensageiro com uma nova chave.",
+            "sealText": "Selo do Mensageiro",
+            "messengerSent": "Mensageiro Enviado",
+            "parchmentCheck": "Verifique seu pergaminho para as instruções de redefinição de sua chave secreta.",
+            "sendMessenger": "Enviar Mensageiro",
+            "returnToPortal": "Retornar ao Portal",
+            "error": "Ocorreu um problema ao enviar o e-mail de redefinição de senha. Por favor, tente novamente.",
+            "metadata": {
+                "title": "Esqueci a Senha",
+                "description": "Digite seu endereço de e-mail para recuperar sua senha."
+            }
+        },
+        "resetPassword": {
+            "title": "A Grande Reescrita",
+            "description": "Forje uma nova chave secreta para recuperar o acesso à biblioteca antiga.",
+            "sealText": "Selo do Arquivista",
+            "newSecretKey": "Nova Chave Secreta",
+            "confirmSecretKey": "Confirmar Chave Secreta",
+            "keyPlaceholder": "Pelo menos 8 caracteres",
+            "confirmPlaceholder": "Repita sua nova chave",
+            "success": "Chave Secreta Redefinida",
+            "redirecting": "Sua senha foi redefinida. Redirecionando para o portal...",
+            "updateKey": "Atualizar Chave",
+            "resetting": "Redefinindo...",
+            "returnToPortal": "Retornar ao Portal",
+            "invalidToken": "Token de redefinição inválido ou ausente. Por favor, solicite um novo link.",
+            "passwordMismatch": "As senhas não coincidem.",
+            "passwordLength": "A senha deve ter pelo menos 8 caracteres.",
+            "genericError": "Algo deu errado. Por favor, tente novamente.",
+            "metadata": {
+                "title": "Redefinir Senha",
+                "description": "Redefina sua chave secreta."
+            }
+        },
+        "verify": {
+            "title": "Selo Encantado",
+            "description": "Seu pergaminho de verificação chegou. Estamos consultando os registros antigos para confirmar sua identidade.",
+            "consultingArchives": "Consultando os Arquivos…",
+            "sealConfirmed": "Selo Confirmado!",
+            "sealRejected": "Selo Rejeitado",
+            "waiting": "Por favor, aguarde enquanto verificamos seu selo encantado…",
+            "redirecting": "Redirecionando para o portal…",
+            "returnToPortal": "Retornar ao Portal",
+            "verified": "Seu e-mail foi verificado. Redirecionando para o login...",
+            "invalidToken": "Nenhum token de verificação encontrado. Por favor, verifique o link do seu e-mail.",
+            "expired": "A verificação falhou. Seu link pode ter expirado."
+        },
+        "form": {
+            "email": "E-mail do Cronista",
+            "emailRequired": "E-mail é obrigatório.",
+            "password": "Chave Secreta",
+            "passwordRequired": "Senha é obrigatória.",
+            "confirmPassword": "Confirmar Chave Secreta",
+            "confirmPasswordRequired": "Por favor, confirme sua senha.",
+            "passwordMismatch": "As senhas não coincidem",
+            "emailPlaceholder": "Digite seu e-mail",
+            "passwordPlaceholder": "Crie sua chave secreta",
+            "confirmPlaceholder": "Confirme sua chave secreta"
+        }
     }
 }
