@@ -4,8 +4,10 @@ import { Link } from '@/i18n/navigation'
 import { useAuth } from '@/providers/Auth'
 import React, { useEffect, useState } from 'react'
 import { Lock, ShieldCheck, Wand2, ArrowRight } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export const LogoutPage: React.FC = () => {
+  const t = useTranslations('auth.logout')
   const { logout } = useAuth()
   const [success, setSuccess] = useState(false)
 
@@ -45,13 +47,13 @@ export const LogoutPage: React.FC = () => {
         {/* Text Content */}
         <div className="space-y-6 max-w-2xl">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-black uppercase tracking-[0.2em] mb-2">
-            <ShieldCheck size={14} /> Session Ended
+            <ShieldCheck size={14} /> {t('sessionEnded')}
           </div>
           <h1 className="text-foreground text-4xl md:text-5xl font-black tracking-tight uppercase italic">
-            The Gates are <span className="text-accent-gold">Closed</span>
+            {t('title')}
           </h1>
           <p className="text-muted-foreground text-lg leading-relaxed pt-2 font-medium">
-            Safe travels, adventurer. You have been successfully logged out of the enchanted realm. Your progress has been etched into the eternal scrolls and the archives are now resting.
+            {t('subtitle')}
           </p>
 
           {/* Action Buttons */}
@@ -60,14 +62,14 @@ export const LogoutPage: React.FC = () => {
               href="/"
               className="flex min-w-[240px] items-center justify-center rounded-full h-16 px-10 bg-primary text-primary-foreground text-sm font-black uppercase tracking-widest transition-all hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 active:scale-95 group"
             >
-              <span>Return to the Kingdom</span>
+              <span>{t('returnToKingdom')}</span>
               <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link 
               href="/shop"
               className="flex min-w-[240px] items-center justify-center rounded-full h-16 px-10 bg-secondary text-foreground text-sm font-black uppercase tracking-widest transition-all hover:bg-secondary/80 active:scale-95 border border-border shadow-sm"
             >
-              <span>Explore Public Lore</span>
+              <span>{t('exploreLore')}</span>
             </Link>
           </div>
         </div>

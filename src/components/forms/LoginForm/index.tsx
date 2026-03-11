@@ -5,6 +5,7 @@ import { Message } from '@/components/Message'
 import { Link } from '@/i18n/navigation'
 import { useAuth } from '@/providers/Auth'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import React, { useCallback, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -14,6 +15,8 @@ type FormData = {
 }
 
 export const LoginForm: React.FC = () => {
+  const t = useTranslations('auth.login')
+  const tf = useTranslations('auth.form')
   const searchParams = useSearchParams()
   const allParams = searchParams.toString() ? `?${searchParams.toString()}` : ''
   const redirect = useRef(searchParams.get('redirect'))
@@ -37,11 +40,11 @@ export const LoginForm: React.FC = () => {
         const message =
           err instanceof Error && err.message
             ? err.message
-            : 'There was an error with the credentials provided. Please try again.'
+            : t('error')
         setError(message)
       }
     },
-    [login, router],
+    [login, router, t],
   )
 
   return (
@@ -51,7 +54,7 @@ export const LoginForm: React.FC = () => {
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-2">
           <label className="text-[#4a3728] text-sm font-bold uppercase tracking-wider pl-1 font-display" htmlFor="email">
-            Chronicler Name
+            {t('chroniclerName')}
           </label>
           <div className="relative">
             <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#8a7241]">
@@ -60,9 +63,9 @@ export const LoginForm: React.FC = () => {
             <input
               id="email"
               type="email"
-              {...register('email', { required: 'Email is required.' })}
+              {...register('email', { required: tf('emailRequired') })}
               className="w-full bg-white/50 border-2 border-[#d9cdab] rounded-xl py-4 pl-12 pr-4 text-[#4a3728] placeholder-[#a69671] focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-sans"
-              placeholder="Enter your email"
+              placeholder={t('emailPlaceholder')}
             />
           </div>
           {errors.email && <FormError message={errors.email.message} />}
@@ -70,7 +73,7 @@ export const LoginForm: React.FC = () => {
 
         <div className="flex flex-col gap-2">
           <label className="text-[#4a3728] text-sm font-bold uppercase tracking-wider pl-1 font-display" htmlFor="password">
-            Secret Key
+            {t('secretKey')}
           </label>
           <div className="relative">
             <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#8a7241]">
@@ -79,9 +82,9 @@ export const LoginForm: React.FC = () => {
             <input
               id="password"
               type="password"
-              {...register('password', { required: 'Please provide a password.' })}
+              {...register('password', { required: tf('passwordRequired') })}
               className="w-full bg-white/50 border-2 border-[#d9cdab] rounded-xl py-4 pl-12 pr-12 text-[#4a3728] placeholder-[#a69671] focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-sans"
-              placeholder="Enter your secret key"
+              placeholder={t('passwordPlaceholder')}
             />
           </div>
           {errors.password && <FormError message={errors.password.message} />}
@@ -92,7 +95,7 @@ export const LoginForm: React.FC = () => {
         href={`/forgot-password${allParams}`}
         className="text-xs font-bold shrink-0 text-primary uppercase tracking-tighter hover:underline font-display flex justify-end"
       >
-        Lost the Key?
+        {t('lostKey')}
       </Link>
 
       {/* Login Button - The Wax Seal */}
@@ -108,18 +111,18 @@ export const LoginForm: React.FC = () => {
           </span>
           {/* Button Label */}
           <div className="absolute -bottom-8 whitespace-nowrap text-[#4a3728] font-bold text-sm tracking-[0.2em] uppercase font-display">
-            {isSubmitting ? 'Unsealing...' : 'Unseal Portal'}
+            {isSubmitting ? t('unsealing') : t('unsealPortal')}
           </div>
         </button>
       </div>
 
       <div className="mt-8 w-full text-center border-t border-[#d9cdab] pt-6">
-        <p className="text-[#6d5b4b] text-sm font-display">Not yet a member of our world?</p>
+        <p className="text-[#6d5b4b] text-sm font-display">{t('notMember')}</p>
         <Link
           className="inline-block mt-2 text-primary font-bold magical-glow hover:scale-105 transition-transform font-display"
           href={`/create-account${allParams}`}
         >
-          Join the Guild <span className="ml-1">→</span>
+          {t('joinGuild')} <span className="ml-1">→</span>
         </Link>
       </div>
     </form>

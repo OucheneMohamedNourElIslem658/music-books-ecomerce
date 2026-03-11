@@ -3,6 +3,7 @@
 import { FormError } from '@/components/forms/FormError'
 import { Message } from '@/components/Message'
 import { Link } from '@/i18n/navigation'
+import { useTranslations } from 'next-intl'
 import React, { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -11,6 +12,8 @@ type FormData = {
 }
 
 export const ForgotPasswordForm: React.FC = () => {
+  const t = useTranslations('auth.forgotPassword')
+  const tf = useTranslations('auth.form')
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
 
@@ -34,11 +37,9 @@ export const ForgotPasswordForm: React.FC = () => {
       setSuccess(true)
       setError('')
     } else {
-      setError(
-        'There was a problem sending a password reset email. Please try again.',
-      )
+      setError(t('error'))
     }
-  }, [])
+  }, [t])
 
   if (success) {
     return (
@@ -47,9 +48,9 @@ export const ForgotPasswordForm: React.FC = () => {
           <span className="material-symbols-outlined text-5xl">mail</span>
         </div>
         <div>
-          <p className="text-xl font-bold text-[#4a3728] font-display">Messenger Sent</p>
+          <p className="text-xl font-bold text-[#4a3728] font-display">{t('messengerSent')}</p>
           <p className="text-sm text-[#6d5b4b] mt-2 italic font-display">
-            Check your parchment for the instructions to reset your secret key.
+            {t('parchmentCheck')}
           </p>
         </div>
       </div>
@@ -62,7 +63,7 @@ export const ForgotPasswordForm: React.FC = () => {
 
       <div className="flex flex-col gap-2">
         <label className="text-[#4a3728] text-sm font-bold uppercase tracking-wider pl-1 font-display" htmlFor="email">
-          Chronicler Email
+          {tf('email')}
         </label>
         <div className="relative">
           <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#8a7241]">
@@ -71,9 +72,9 @@ export const ForgotPasswordForm: React.FC = () => {
           <input
             id="email"
             type="email"
-            {...register('email', { required: 'Please provide your email.' })}
+            {...register('email', { required: tf('emailRequired') })}
             className="w-full bg-white/50 border-2 border-[#d9cdab] rounded-xl py-4 pl-12 pr-4 text-[#4a3728] placeholder-[#a69671] focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-sans"
-            placeholder="Enter your email"
+            placeholder={tf('emailPlaceholder')}
           />
         </div>
         {errors.email && <FormError message={errors.email.message} />}
@@ -90,7 +91,7 @@ export const ForgotPasswordForm: React.FC = () => {
           </span>
           {/* Button Label */}
           <div className="absolute -bottom-8 whitespace-nowrap text-[#4a3728] font-bold text-sm tracking-[0.2em] uppercase font-display">
-            Send Messenger
+            {t('sendMessenger')}
           </div>
         </button>
       </div>
@@ -100,7 +101,7 @@ export const ForgotPasswordForm: React.FC = () => {
           className="inline-block text-primary font-bold magical-glow hover:scale-105 transition-transform font-display"
           href="/login"
         >
-          Return to Portal
+          {t('returnToPortal')}
         </Link>
       </div>
     </form>
