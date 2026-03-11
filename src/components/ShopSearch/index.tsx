@@ -2,8 +2,10 @@
 import { Search, X } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useRef, useTransition } from 'react'
+import { useTranslations } from 'next-intl'
 
 export function ShopSearch() {
+    const t = useTranslations('shop.search')
     const router = useRouter()
     const pathname = usePathname()
     const searchParams = useSearchParams()
@@ -43,7 +45,7 @@ export function ShopSearch() {
                 type="search"
                 defaultValue={currentQuery}
                 onChange={(e) => handleSearch(e.target.value)}
-                placeholder="Search the enchanted archives…"
+                placeholder={t('placeholder')}
                 className="w-full rounded-full border border-border bg-card pl-11 pr-10 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
             />
             {/* Clear button */}
@@ -51,14 +53,10 @@ export function ShopSearch() {
                 <button
                     onClick={clear}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                    aria-label="Clear search"
+                    aria-label={t('clear')}
                 >
                     <X className="size-4" />
                 </button>
-            )}
-            {/* Pending indicator */}
-            {isPending && (
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 size-4 rounded-full border-2 border-primary border-t-transparent animate-spin" />
             )}
         </div>
     )

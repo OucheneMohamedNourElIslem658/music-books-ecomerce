@@ -1,5 +1,10 @@
 {
     "greeting": "Olá",
+    "search": {
+        "placeholder": "Pesquisar nos arquivos encantados...",
+        "clear": "Limpar pesquisa",
+        "submit": "Invocar Pesquisa"
+    },
     "addresses": {
         "title": "Endereços Místicos",
         "description": "Gerencie seus pontos de teletransporte e entrega em todos os reinos conhecidos.",
@@ -442,5 +447,68 @@
             "updateReview": "Atualizar Avaliação",
             "submitReview": "Enviar Avaliação"
         }
+    },
+    "chronicles": {
+        "metadata": {
+            "title": "Crônicas",
+            "description": "Navegue pelas últimas crônicas, turnês e sessões de autógrafos."
+        },
+        "latestNews": "Últimas Notícias",
+        "sectionTitle": "Últimas Crônicas",
+        "noResults": "Nenhuma crônica corresponde a",
+        "showing": "Mostrando",
+        "resultsFor": "resultados para",
+        "emptyTitle": "Nenhuma crônica encontrada",
+        "emptyDescription": "Os arquivos estão silenciosos. Por favor, tente ajustar sua pesquisa ou filtros.",
+        "readProclamation": "Ler Proclamação",
+        "sidebar": {
+            "messengerTitle": "O Mensageiro Real",
+            "messengerDescription": "Seja o primeiro a receber proclamações de tours, capítulos secretos e prêmios mágicos.",
+            "emailPlaceholder": "Seu endereço de herdeiro (Email)",
+            "joinService": "Junte-se ao Serviço",
+            "privacyNote": "Ao se juntar, você concorda com os Pergaminhos de Privacidade do Reino.",
+            "recentlyInscribed": "Inscrito Recentemente",
+            "archiveEntry": "Entrada de Arquivo",
+            "socialScrolls": "Pergaminhos Sociais"
+        }
+    },
+    "shop": {
+        "metadata": {
+            "title": "Loja",
+            "description": "Procure por produtos na loja."
+        },
+        "layout": {
+            "sortBy": "Ordenar por:",
+            "allRealms": "Todos os Reinos"
+        },
+        "filter": {
+            "sort": {
+                "alphabetical": "Alfabético A-Z",
+                "latest": "Últimas novidades",
+                "priceLowHigh": "Preço: Menor para maior",
+                "priceHighLow": "Preço: Maior para menor"
+            }
+        },
+        "search": {
+            "placeholder": "Pesquisar nos arquivos encantados...",
+            "clear": "Limpar pesquisa",
+            "noMagicalTomes": "Nenhum tomo mágico corresponde a <bold>\"{searchValue}\"</bold>",
+            "revealing": "Revelando <bold>{count} {count, plural, =1 {resultado} other {resultados}}</bold> para <bold>\"{searchValue}\"</bold>"
+        },
+        "empty": {
+            "title": "Nenhum Encantamento Encontrado",
+            "description": "Os arquivos estão silenciosos. Por favor, tente ajustar sua pesquisa ou filtros."
+        }
+    },
+    "notFound": {
+        "metadata": {
+            "title": "Não Encontrado",
+            "description": "Página não encontrada."
+        },
+        "title": "Perdido no <italic>Éter</italic>",
+        "description": "Parece que este capítulo desapareceu na névoa.",
+        "returnHome": "Voltar para o Reino",
+        "helpText": "Talvez estes pergaminhos ajudem?",
+        "imageAlt": "Perdido no Éter"
     }
 }

@@ -391,6 +391,15 @@ button {
     box-shadow: 0 0 0 #8a6800, 0 5px 10px rgba(0, 0, 0, 0.4);
   }
 
+  .parchment-glow {
+    box-shadow: 0 0 20px oklch(var(--primary) / 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .parchment-glow:hover {
+    box-shadow: 0 0 30px oklch(var(--primary) / 0.2);
+  }
+
   .font-variation-fill {
     font-variation-settings: 'FILL' 1;
   }

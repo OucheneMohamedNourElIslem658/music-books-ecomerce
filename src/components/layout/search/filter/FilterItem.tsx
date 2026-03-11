@@ -6,8 +6,10 @@ import { cn } from '@/utilities/cn'
 import { createUrl } from '@/utilities/createUrl'
 import { useSearchParams } from 'next/navigation'
 import type { ListItem, PathFilterItem as PathFilterItemType } from '.'
+import { useTranslations } from 'next-intl'
 
 function PathFilterItem({ item }: { item: PathFilterItemType }) {
+  const t = useTranslations()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const active = pathname === item.path
@@ -25,13 +27,14 @@ function PathFilterItem({ item }: { item: PathFilterItemType }) {
         )}
         href={createUrl(item.path, newParams)}
       >
-        {item.title}
+        {t(item.title as any)}
       </Link>
     </li>
   )
 }
 
 function SortFilterItem({ item }: { item: SortFilterItemType }) {
+  const t = useTranslations()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const active = searchParams.get('sort') === item.slug
@@ -56,7 +59,7 @@ function SortFilterItem({ item }: { item: SortFilterItemType }) {
         href={href}
         prefetch={!active ? false : undefined}
       >
-        {item.title}
+        {t(item.title as any)}
       </Link>
     </li>
   )
