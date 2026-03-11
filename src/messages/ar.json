@@ -1,3 +1,177 @@
 {
-    "greeting": "مرحبا"
+    "greeting": "مرحبا",
+    "addresses": {
+        "title": "العناوين السحرية",
+        "description": "قم بإدارة نقاط الانتقال الآني والتوصيل عبر العوالم المعروفة.",
+        "addNew": "إضافة عنوان جديد",
+        "noAddresses": "لم يتم العثور على إحداثيات سحرية في سجلاتك.",
+        "edit": "تعديل",
+        "editAddress": "تعديل العنوان",
+        "newAddress": "عنوان جديد",
+        "updateDeliveryAddress": "تحديث عنوان التوصيل",
+        "saveDeliveryAddress": "حفظ عنوان التوصيل",
+        "waypointSanctuary": "ملاذ نقطة الطريق",
+        "namelessOutpost": "مخفر مجهول",
+        "recipient": "المستلم: {name}",
+        "editCoordinates": "تعديل الإحداثيات",
+        "reviseMap": "مراجعة الخريطة",
+        "metadata": {
+            "title": "العناوين",
+            "description": "إدارة عناوينك."
+        },
+        "form": {
+            "title": "اللقب",
+            "optional": "اختياري",
+            "selectTitle": "اختر لقباً",
+            "firstName": "الاسم الأول",
+            "lastName": "اسم العائلة",
+            "phone": "الهاتف",
+            "company": "الشركة",
+            "addressLine1": "عنوان السكن 1",
+            "addressLine2": "عنوان السكن 2",
+            "city": "المدينة",
+            "state": "الولاية/المقاطعة",
+            "postalCode": "الرمز البريدي",
+            "zip": "ZIP",
+            "country": "البلد",
+            "selectCountry": "اختر البلد",
+            "required": "مطلوب.",
+            "addressRequired": "العنوان مطلوب.",
+            "saving": "جاري الحفظ...",
+            "saveChanges": "حفظ التغييرات",
+            "addAddress": "إضافة العنوان",
+            "firstNamePlaceholder": "الاسم الأول",
+            "lastNamePlaceholder": "اسم العائلة",
+            "companyPlaceholder": "اسم الشركة",
+            "streetAddressPlaceholder": "عنوان الشارع",
+            "apartmentPlaceholder": "شقة، جناح، وحدة..."
+        },
+        "auth": {
+            "loginWarning": "يرجى تسجيل الدخول للوصول إلى إعدادات حسابك."
+        }
+    },
+    "reviews": {
+        "title": "شهاداتي",
+        "subtitle": "أرشيف المؤرخ للمقتنيات",
+        "total": "{count} إجمالي",
+        "newAcquisition": "مقتنى جديد",
+        "empty": "لم تقم بتسجيل أي شهادات بعد.",
+        "rating": "التقييم",
+        "unknownArtifact": "قطعة أثرية مجهولة",
+        "auth": {
+            "loginWarning": "يرجى تسجيل الدخول للوصول إلى مراجعاتك."
+        },
+        "metadata": {
+            "title": "المراجعات",
+            "description": "مراجعاتك."
+        }
+    },
+    "account": {
+        "title": "سجل المؤرخ",
+        "description": "إدارة هويتك السحرية وتلقي التنبيهات عبر العوالم.",
+        "personalMandates": "التفويضات الشخصية",
+        "recentAcquisitions": "المقتنيات الأخيرة",
+        "noOrders": "لم يتم العثور على لفائف حديثة في الأرشيف.",
+        "examineAll": "فحص جميع اللفائف",
+        "auth": {
+            "loginWarning": "يرجى تسجيل الدخول للوصول إلى إعدادات حسابك."
+        },
+        "metadata": {
+            "title": "سجل المؤرخ",
+            "description": "إدارة إعدادات حسابك وهويتك السحرية."
+        },
+        "form": {
+            "description": "قم بتحديث تفاصيل سجلك أو ادخل إلى الحرم لتغيير حماياتك.",
+            "changePassword": "تغيير كلمات المرور",
+            "chronicleName": "اسم السجل",
+            "namePlaceholder": "سمِ أسطورتك...",
+            "emailLabel": "منارة التواصل (البريد الإلكتروني)",
+            "emailPlaceholder": "adventurer@tales.com",
+            "securityWards": "تعزيز حمايات الأمان",
+            "cancelRitual": "إلغاء الطقس",
+            "newSecurityKey": "مفتاح أمان جديد",
+            "newWardPlaceholder": "أدخل حماية جديدة...",
+            "confirmSecurityKey": "تأكيد مفتاح الأمان",
+            "confirmWardPlaceholder": "أعد إدخال الحماية...",
+            "updateSuccess": "تم تحديث السجل الأبدي بنجاح.",
+            "updateError": "واجه الطقس خطأً.",
+            "loginError": "يجب عليك تسجيل الدخول لعرض هذه الصفحة.",
+            "nameRequired": "يرجى تقديم اسم.",
+            "emailRequired": "يرجى تقديم بريد إلكتروني.",
+            "passwordRequired": "يرجى تقديم كلمة مرور جديدة.",
+            "confirmPasswordRequired": "يرجى تأكيد كلمة المرور الجديدة.",
+            "passwordMismatch": "كلمات المرور غير متطابقة",
+            "processing": "جاري المعالجة...",
+            "reinforceWards": "تعزيز الحمايات",
+            "updateLedger": "تحديث السجل"
+        }
+    },
+    "orderItem": {
+        "scribed": "دُوِّن في: {date}",
+        "orderArchive": "أرشيف الطلبات #{id}",
+        "moreArtifacts": "و {count} من القطع الأثرية الأخرى",
+        "orderID": "رقم الطلب: {id}",
+        "sentVia": "أُرسل عبر {method}",
+        "viewScroll": "عرض اللفيفة",
+        "goldValue": "القيمة الذهبية",
+        "methods": {
+            "processing": "فينيكس إكسبريس",
+            "delivery": "توصيل البومة"
+        }
+    },
+    "orders": {
+        "title": "المقتنيات النشطة",
+        "pending": "{count} {count, plural, =1 {قيد الانتظار} other {قيد الانتظار}}",
+        "empty": "لم يتم العثور على طلبات في الأرشيف.",
+        "auth": {
+            "loginWarning": "يرجى تسجيل الدخول للوصول إلى طلباتك."
+        },
+        "metadata": {
+            "title": "الطلبات",
+            "description": "طلباتك."
+        }
+    },
+    "orderDetail": {
+        "back": "العودة إلى الأرشيف",
+        "confirmed": "تم تأكيد الطلب",
+        "scribed": "دُوِّن في {date}",
+        "manifest": "بيان السلع المسحورة",
+        "artifact": "قطعة أثرية مسحورة",
+        "standardEdition": "الطبعة القياسية",
+        "quantity": "الكمية",
+        "scrolls": "{count} {count, plural, =1 {لفيفة} other {لفائف}}",
+        "goldValue": "القيمة الذهبية",
+        "subtotal": "المجموع الفرعي السري",
+        "tax": "ضريبة الطقوس",
+        "fee": "رسوم بومة التوصيل",
+        "gratis": "مجاناً",
+        "total": "إجمالي الاستثمار",
+        "destination": "الوجهة",
+        "deliveryPoint": "نقطة التوصيل",
+        "viewCrystalBall": "عرض في البلورة السحرية",
+        "essenceSource": "مصدر الجوهر",
+        "arcaneVault": "القبو السري •••• {last4}",
+        "print": "طباعة اللفيفة",
+        "metadata": {
+            "title": "طلب {id}",
+            "description": "تفاصيل الطلب للطلب {id}."
+        }
+    },
+    "orderStatus": {
+        "processing": "جاري الانتقال الآني",
+        "completed": "تم اقتناء القطعة الأثرية",
+        "cancelled": "اختفت",
+        "refunded": "تم استرجاع الذهب",
+        "pending": "قيد الانتظار"
+    },
+    "accountLayout": {
+        "wayfinder": "مرشد الطريق"
+    },
+    "accountNav": {
+        "homePortal": "بوابة الصفحة الرئيسية",
+        "coordinates": "الإحداثيات",
+        "acquisitions": "المقتنيات",
+        "whispers": "الهمسات",
+        "banishSession": "إنهاء الجلسة"
+    }
 }

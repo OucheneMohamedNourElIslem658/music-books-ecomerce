@@ -12,14 +12,14 @@ import { getPayload } from 'payload'
 
 const LIMIT = 10
 
+import { getTranslations } from 'next-intl/server'
+
 interface Props {
   searchParams: Promise<{ page?: string }>
   params: Promise<{ locale: string }>
 }
 
-export default async function Orders(
-  { searchParams, params }: Props
-) {
+export default async function Orders({ searchParams, params }: Props) {
   const headers = await getHeaders()
   const payload = await getPayload({ config: configPromise })
   const { user } = await payload.auth({ headers })
@@ -30,10 +30,11 @@ export default async function Orders(
   let orders: Order[] | null = null
 
   const { locale } = await params
+  const t = await getTranslations('orders')
 
   if (!user) {
     redirect({
-      href: `/login?warning=${encodeURIComponent('Please login to access your orders.')}`,
+      href: `/login?warning=${encodeURIComponent(t('auth.loginWarning'))}`,
       locale,
     })
   }
@@ -57,7 +58,7 @@ export default async function Orders(
 
     orders = ordersResult?.docs || []
     totalPages = ordersResult?.totalPages
-  } catch (error) { }
+  } catch (error) {}
 
   return (
     <main className="flex-1 flex flex-col max-w-5xl mx-auto w-full px-4 md:px-8">
@@ -65,23 +66,23 @@ export default async function Orders(
       <div className="flex items-center justify-between mb-8 px-2">
         <h2 className="text-xl font-black uppercase tracking-widest flex items-center gap-3">
           <History className="text-accent-gold" size={24} />
-          Active Acquisitions
+          {t('title')}
         </h2>
         {orders && orders.length > 0 && (
           <span className="text-[10px] text-muted-foreground bg-secondary px-4 py-1.5 rounded-full uppercase tracking-widest font-black border border-border">
-            {orders.length} {orders.length === 1 ? 'Pending' : 'Pending'}
+            {t('pending', { count: orders.length })}
           </span>
         )}
       </div>
 
       {/* Orders List */}
       <div className="flex flex-col gap-6">
-        {(!orders || !Array.isArray(orders) || orders.length === 0) ? (
+        {!orders || !Array.isArray(orders) || orders.length === 0 ? (
           <div className="bg-card/30 p-12 rounded-2xl border border-dashed border-border flex flex-col items-center justify-center text-center gap-4">
             <div className="p-4 bg-secondary rounded-full">
               <History size={48} className="text-muted-foreground" />
             </div>
-            <p className="text-muted-foreground font-bold uppercase tracking-widest">No orders found in the archives.</p>
+            <p className="text-muted-foreground font-bold uppercase tracking-widest">{t('empty')}</p>
           </div>
         ) : (
           <ul className="flex flex-col gap-6">
@@ -103,11 +104,15 @@ export default async function Orders(
   )
 }
 
-export const metadata: Metadata = {
-  description: 'Your orders.',
-  openGraph: mergeOpenGraph({
-    title: 'Orders',
-    url: '/orders',
-  }),
-  title: 'Orders',
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('orders')
+
+  return {
+    description: t('metadata.description'),
+    openGraph: mergeOpenGraph({
+      title: t('metadata.title'),
+      url: '/orders',
+    }),
+    title: t('metadata.title'),
+  }
 }

@@ -7,10 +7,13 @@ import { Compass } from 'lucide-react'
 import { headers as getHeaders } from 'next/headers.js'
 import { getPayload } from 'payload'
 
+import { getTranslations } from 'next-intl/server'
+
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const headers = await getHeaders()
   const payload = await getPayload({ config: configPromise })
   const { user } = await payload.auth({ headers })
+  const t = await getTranslations('accountLayout')
 
   return (
     <div className="container py-10 pb-20">
@@ -30,7 +33,9 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
                   <Compass size={20} />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-sm font-black text-foreground truncate">{user?.name || 'Wayfinder'}</p>
+                  <p className="text-sm font-black text-foreground truncate">
+                    {user?.name || t('wayfinder')}
+                  </p>
                   <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
                     {user?.email}
                   </p>

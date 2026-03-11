@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label'
 import { User } from '@/payload-types'
 import { useAuth } from '@/providers/Auth'
 import { Save, ShieldBan, X } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -21,6 +22,7 @@ type FormData = {
 }
 
 export const AccountForm: React.FC = () => {
+  const t = useTranslations('account.form')
   const { setUser, user } = useAuth()
   const [changePassword, setChangePassword] = useState(false)
 
@@ -52,7 +54,7 @@ export const AccountForm: React.FC = () => {
         if (response.ok) {
           const json = await response.json()
           setUser(json.doc)
-          toast.success('Successfully updated the eternal ledger.')
+          toast.success(t('updateSuccess'))
           setChangePassword(false)
           reset({
             name: json.doc.name,
@@ -61,19 +63,19 @@ export const AccountForm: React.FC = () => {
             passwordConfirm: '',
           })
         } else {
-          toast.error('The ritual encountered an error.')
+          toast.error(t('updateError'))
         }
       }
     },
-    [user, setUser, reset],
+    [user, setUser, reset, t],
   )
 
   useEffect(() => {
     if (user === null) {
       router.push(
-        `/login?error=${encodeURIComponent(
-          'You must be logged in to view this page.',
-        )}&redirect=${encodeURIComponent('/account')}`,
+        `/login?error=${encodeURIComponent(t('loginError'))}&redirect=${encodeURIComponent(
+          '/account',
+        )}`,
       )
     }
 
@@ -85,16 +87,14 @@ export const AccountForm: React.FC = () => {
         passwordConfirm: '',
       })
     }
-  }, [user, router, reset])
+  }, [user, router, reset, t])
 
   return (
     <form className="w-full space-y-8" onSubmit={handleSubmit(onSubmit)}>
       {!changePassword ? (
         <Fragment>
           <div className="flex items-center justify-between gap-4 flex-wrap border-b border-border/50 pb-6 mb-8">
-            <p className="text-muted-foreground text-sm font-medium">
-              Update your chronicle details or access the sanctum to change your wards.
-            </p>
+            <p className="text-muted-foreground text-sm font-medium">{t('description')}</p>
             <Button
               className="rounded-full text-xs font-black uppercase tracking-widest bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all border border-primary/20"
               onClick={() => setChangePassword(true)}
@@ -102,35 +102,41 @@ export const AccountForm: React.FC = () => {
               variant="secondary"
             >
               <ShieldBan size={14} className="mr-2" />
-              Change Passwords
+              {t('changePassword')}
             </Button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <FormItem className="space-y-3">
-              <Label htmlFor="name" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">
-                Chronicle Name
+              <Label
+                htmlFor="name"
+                className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1"
+              >
+                {t('chronicleName')}
               </Label>
               <Input
                 id="name"
-                {...register('name', { required: 'Please provide a name.' })}
+                {...register('name', { required: t('nameRequired') })}
                 type="text"
                 className="w-full bg-secondary/30 border-border/50 rounded-xl px-6 py-6 text-foreground focus-visible:ring-primary focus-visible:ring-offset-0 transition-all font-medium"
-                placeholder="Name your legend..."
+                placeholder={t('namePlaceholder')}
               />
               {errors.name && <FormError message={errors.name.message} />}
             </FormItem>
 
             <FormItem className="space-y-3">
-              <Label htmlFor="email" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">
-                Communication Beacon (Email)
+              <Label
+                htmlFor="email"
+                className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1"
+              >
+                {t('emailLabel')}
               </Label>
               <Input
                 id="email"
-                {...register('email', { required: 'Please provide an email.' })}
+                {...register('email', { required: t('emailRequired') })}
                 type="email"
                 className="w-full bg-secondary/30 border-border/50 rounded-xl px-6 py-6 text-foreground focus-visible:ring-primary focus-visible:ring-offset-0 transition-all font-medium"
-                placeholder="adventurer@tales.com"
+                placeholder={t('emailPlaceholder')}
               />
               {errors.email && <FormError message={errors.email.message} />}
             </FormItem>
@@ -141,7 +147,7 @@ export const AccountForm: React.FC = () => {
           <div className="flex items-center justify-between gap-4 flex-wrap border-b border-border/50 pb-6 mb-8">
             <div className="flex items-center gap-3">
               <ShieldBan className="text-primary" size={20} />
-              <p className="text-foreground font-bold">Reinforce Security Wards</p>
+              <p className="text-foreground font-bold">{t('securityWards')}</p>
             </div>
             <Button
               className="rounded-full text-xs font-black uppercase tracking-widest text-muted-foreground hover:text-foreground"
@@ -150,38 +156,44 @@ export const AccountForm: React.FC = () => {
               variant="ghost"
             >
               <X size={14} className="mr-2" />
-              Cancel Ritual
+              {t('cancelRitual')}
             </Button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <FormItem className="space-y-3">
-              <Label htmlFor="password" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">
-                New Security Key
+              <Label
+                htmlFor="password"
+                className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1"
+              >
+                {t('newSecurityKey')}
               </Label>
               <Input
                 id="password"
-                {...register('password', { required: 'Please provide a new password.' })}
+                {...register('password', { required: t('passwordRequired') })}
                 type="password"
                 className="w-full bg-secondary/30 border-border/50 rounded-xl px-6 py-6 text-foreground focus-visible:ring-primary transition-all font-medium"
-                placeholder="Enter new ward..."
+                placeholder={t('newWardPlaceholder')}
               />
               {errors.password && <FormError message={errors.password.message} />}
             </FormItem>
 
             <FormItem className="space-y-3">
-              <Label htmlFor="passwordConfirm" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">
-                Confirm Security Key
+              <Label
+                htmlFor="passwordConfirm"
+                className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1"
+              >
+                {t('confirmSecurityKey')}
               </Label>
               <Input
                 id="passwordConfirm"
                 {...register('passwordConfirm', {
-                  required: 'Please confirm your new password.',
-                  validate: (value) => value === password.current || 'The passwords do not match',
+                  required: t('confirmPasswordRequired'),
+                  validate: (value) => value === password.current || t('passwordMismatch'),
                 })}
                 type="password"
                 className="w-full bg-secondary/30 border-border/50 rounded-xl px-6 py-6 text-foreground focus-visible:ring-primary transition-all font-medium"
-                placeholder="Re-enter ward..."
+                placeholder={t('confirmWardPlaceholder')}
               />
               {errors.passwordConfirm && <FormError message={errors.passwordConfirm.message} />}
             </FormItem>
@@ -196,11 +208,11 @@ export const AccountForm: React.FC = () => {
           className="bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-7 rounded-full font-black text-sm uppercase tracking-widest shadow-xl shadow-primary/20 flex items-center gap-3 transition-transform active:scale-95 disabled:opacity-50"
         >
           {isLoading || isSubmitting ? (
-            'Processing...'
+            t('processing')
           ) : (
             <>
               <Save size={18} />
-              {changePassword ? 'Reinforce Wards' : 'Update Ledger'}
+              {changePassword ? t('reinforceWards') : t('updateLedger')}
             </>
           )}
         </Button>

@@ -3,6 +3,7 @@
 import { CreateAddressModal } from '@/components/addresses/CreateAddressModal'
 import type { Address } from '@/payload-types'
 import { MapPin, User } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import React from 'react'
 
 type Props = {
@@ -20,6 +21,8 @@ export const AddressItem: React.FC<Props> = ({
   beforeActions,
   afterActions,
 }) => {
+  const t = useTranslations('addresses')
+
   if (!address) {
     return null
   }
@@ -29,9 +32,11 @@ export const AddressItem: React.FC<Props> = ({
       <div className="flex w-full grow flex-col justify-center gap-4 lg:gap-6 p-6 lg:p-8 relative z-10">
         <div className="flex justify-between items-start">
           <div>
-            <p className="text-accent-gold text-[8px] lg:text-[10px] font-black uppercase tracking-[0.15em] lg:tracking-[0.2em] mb-2">Waypoint Sanctuary</p>
+            <p className="text-accent-gold text-[8px] lg:text-[10px] font-black uppercase tracking-[0.15em] lg:tracking-[0.2em] mb-2">
+              {t('waypointSanctuary')}
+            </p>
             <h3 className="text-xl lg:text-2xl font-black tracking-tight text-foreground">
-              {address.title || 'Nameless Outpost'}
+              {address.title || t('namelessOutpost')}
             </h3>
           </div>
         </div>
@@ -49,7 +54,7 @@ export const AddressItem: React.FC<Props> = ({
           <div className="flex items-center gap-3 text-muted-foreground/80 italic">
             <User size={12} className="lg:size-[14px] flex-shrink-0" />
             <p className="text-xs font-medium">
-              Recipient: {address.firstName} {address.lastName}
+              {t('recipient', { name: `${address.firstName} ${address.lastName}` })}
             </p>
           </div>
         </div>
@@ -64,8 +69,8 @@ export const AddressItem: React.FC<Props> = ({
                 <CreateAddressModal
                   addressID={address.id}
                   initialData={address}
-                  buttonText="Edit Coordinates"
-                  modalTitle="Revise the Map"
+                  buttonText={t('editCoordinates')}
+                  modalTitle={t('reviseMap')}
                   className="w-full sm:w-auto px-6 lg:px-8 py-2 lg:py-2.5 rounded-full bg-primary text-primary-foreground text-xs font-black uppercase tracking-widest shadow-lg shadow-primary/20 hover:brightness-110 transition-all border-none h-auto"
                 />
                 {afterActions}
