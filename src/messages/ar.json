@@ -363,5 +363,84 @@
             "passwordPlaceholder": "أنشئ مفتاحك السري",
             "confirmPlaceholder": "أكد مفتاحك السري"
         }
+    },
+    "pagination": {
+        "previous": "السابق",
+        "next": "التالي",
+        "more": "صفحات إضافية",
+        "goToPrevious": "الذهاب إلى الصفحة السابقة",
+        "goToNext": "الذهاب إلى الصفحة التالية"
+    },
+    "product": {
+        "backToProducts": "العودة إلى المنتجات",
+        "relatedEnchantments": "تمائم ذات صلة",
+        "quickView": "عرض سريع",
+        "gallery": {
+            "magicPlay": "عزف سحري (استمع إلى النوتة)",
+            "audioPlayer": "مشغل الصوت"
+        },
+        "description": {
+            "rating": "({count} {count, plural, =1 {مراجعة سحرية} other {مراجعات سحرية}})",
+            "leaveReview": "اترك مراجعة",
+            "reviewProduct": "مراجعة {title}"
+        },
+        "stock": {
+            "onlyLeft": "بقي {count} فقط في المخزن",
+            "outOfStock": "نفد من المخزن"
+        },
+        "variants": {
+            "outOfStock": "نفد من المخزن"
+        },
+        "addToCart": {
+            "added": "تمت إضافة العنصر إلى الحقيبة.",
+            "label": "إضافة إلى الحقيبة",
+            "ariaLabel": "إضافة إلى السلة"
+        }
+    },
+    "productReviews": {
+        "metadata": {
+            "title": "المراجعات",
+            "description": "مراجعات القراء"
+        },
+        "backToBookshelf": "العودة إلى رف الكتب",
+        "title": "شهادات القراء",
+        "description": "مجموعة من الهمسات السحرية لـ <bold>{title}</bold>، تتردد أصداؤها عبر قاعات الزمن. كل نوتة حكاية، وكل حكاية إرث.",
+        "souls": "{count} {count, plural, =1 {روح مأخوذة} other {أرواح مأخوذة}}",
+        "filter": {
+            "all": "الكل",
+            "order": "الترتيب:",
+            "sort": {
+                "newest": "الأحدث",
+                "highest": "الأعلى تقييماً",
+                "lowest": "الأقل تقييماً"
+            }
+        },
+        "empty": {
+            "title": "لم يتم العثور على شهادات",
+            "starFilter": "لم يتم العثور على أصداء {stars} نجوم. جرب فلتراً آخر.",
+            "firstToRecord": "كن أول من يسجل رحلته في هذا الأرشيف."
+        },
+        "anonymousReader": "قارئ مجهول",
+        "voyager": "مسافر الأرشيف",
+        "modal": {
+            "writeTestimony": "كتابة شهادة",
+            "readerTestimony": "شهادة القارئ",
+            "castLight": "ألقِ بضوئك على هذه الحكاية، أيها المسافر...",
+            "archived": "ستؤرشف هذه الشهادة في قبو الملك"
+        },
+        "form": {
+            "ratingRequired": "يرجى اختيار تقييم.",
+            "commentRequired": "يرجى كتابة مراجعة.",
+            "starsSelected": "تم اختيار {count} نجوم",
+            "divineRating": "تقييم إلهي",
+            "ratingAriaLabel": "تقييم {star} من 5",
+            "commentLabel": "سجلك الخاص",
+            "commentPlaceholder": "اكتب رحلتك السحرية هنا...",
+            "sealing": "جاري الختم...",
+            "sealScroll": "ختم اللفيفة",
+            "submitting": "جاري الإرسال...",
+            "updateReview": "تحديث المراجعة",
+            "submitReview": "إرسال المراجعة"
+        }
     }
 }

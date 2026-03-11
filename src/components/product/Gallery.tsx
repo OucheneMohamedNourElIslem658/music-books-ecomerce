@@ -11,6 +11,7 @@ import { useSearchParams } from 'next/navigation'
 import { DefaultDocumentIDType } from 'payload'
 import React, { useEffect, useState } from 'react'
 import { AudioPlayer } from '../AudioPlayer'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   gallery: NonNullable<Product['gallery']>
@@ -18,6 +19,7 @@ type Props = {
 }
 
 export const Gallery: React.FC<Props> = ({ gallery, song }) => {
+  const t = useTranslations('product.gallery')
   const searchParams = useSearchParams()
   const [current, setCurrent] = React.useState(0)
   const [api, setApi] = React.useState<CarouselApi>()
@@ -57,7 +59,7 @@ export const Gallery: React.FC<Props> = ({ gallery, song }) => {
               onClick={() => setAudioOpen(true)}
             >
               <Play className="size-5 fill-current" />
-              <span>Magic Play (Listen to Score)</span>
+              <span>{t('magicPlay')}</span>
             </Button>
           </div>
         )}
@@ -92,7 +94,7 @@ export const Gallery: React.FC<Props> = ({ gallery, song }) => {
             className="p-0 border-none bg-transparent shadow-none w-[calc(100vw-2rem)] max-w-lg"
             showCloseButton={false}
           >
-            <DialogTitle className="sr-only">Audio Player</DialogTitle>
+            <DialogTitle className="sr-only">{t('audioPlayer')}</DialogTitle>
             <AudioPlayer
               audio={song.song as MediaType}
               title={song.title || (song.song as MediaType).filename}

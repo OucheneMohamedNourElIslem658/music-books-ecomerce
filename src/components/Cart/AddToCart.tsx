@@ -9,6 +9,7 @@ import { ShoppingCart } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 import React, { useCallback, useMemo } from 'react'
 import { toast } from 'sonner'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   product: Product
@@ -17,6 +18,7 @@ type Props = {
 }
 
 export function AddToCart({ product, className, label }: Props) {
+  const t = useTranslations('product.addToCart')
   const { addItem, cart, isLoading } = useCart()
   const searchParams = useSearchParams()
 
@@ -49,10 +51,10 @@ export function AddToCart({ product, className, label }: Props) {
         product: product.id,
         variant: selectedVariant?.id ?? undefined,
       }).then(() => {
-        toast.success('Item added to cart.')
+        toast.success(t('added'))
       })
     },
-    [addItem, product, selectedVariant],
+    [addItem, product, selectedVariant, t],
   )
 
   const disabled = useMemo<boolean>(() => {
@@ -100,7 +102,7 @@ export function AddToCart({ product, className, label }: Props) {
 
   return (
     <Button
-      aria-label="Add to cart"
+      aria-label={t('ariaLabel')}
       className={clsx(
         'w-full flex items-center justify-center gap-3 bg-primary hover:bg-blue-600 text-white font-bold py-8 rounded-full transition-all shadow-xl hover:shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed',
         className,
@@ -110,7 +112,7 @@ export function AddToCart({ product, className, label }: Props) {
       type="submit"
     >
       <ShoppingCart className="size-6" />
-      <span className='text-lg'>{label || 'Add to Satchel'}</span>
+      <span className='text-lg'>{label || t('label')}</span>
     </Button>
   )
 }

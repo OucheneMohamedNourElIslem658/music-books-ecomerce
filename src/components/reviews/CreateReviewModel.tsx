@@ -11,6 +11,7 @@ import { Review } from '@/payload-types'
 import { DefaultDocumentIDType } from 'payload'
 import React, { useState } from 'react'
 import { ReviewForm } from '../forms/ReviewsForm'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   reviewID?: DefaultDocumentIDType
@@ -28,12 +29,13 @@ export const CreateReviewModal: React.FC<Props> = ({
   reviewID,
   productID,
   initialData,
-  buttonText = 'Write a Testimony',
-  modalTitle = "The Reader's Testimony",
+  buttonText,
+  modalTitle,
   callback,
   disabled,
   trigger,
 }) => {
+  const t = useTranslations('productReviews.modal')
   const [open, setOpen] = useState(false)
   const isEditing = Boolean(reviewID)
 
@@ -53,7 +55,7 @@ export const CreateReviewModal: React.FC<Props> = ({
             <span className="material-symbols-outlined">
               {isEditing ? 'edit_note' : 'history_edu'}
             </span>
-            {buttonText}
+            {buttonText || t('writeTestimony')}
           </Button>
         )}
       </DialogTrigger>
@@ -67,11 +69,11 @@ export const CreateReviewModal: React.FC<Props> = ({
         <div className="flex flex-col flex-1 p-6 sm:p-10">
           <header className="text-center mb-8 shrink-0">
             <h2 className="text-3xl sm:text-4xl font-black tracking-tighter italic font-display text-foreground mb-3">
-              {modalTitle}
+              {modalTitle || t('readerTestimony')}
             </h2>
             <div className="w-16 h-0.5 bg-accent-gold mx-auto mb-4" />
             <p className="text-base font-medium italic text-muted-foreground">
-              &quot;Cast your light upon this tale, traveler...&quot;
+              &quot;{t('castLight')}&quot;
             </p>
           </header>
 
@@ -86,7 +88,7 @@ export const CreateReviewModal: React.FC<Props> = ({
           </div>
 
           <p className="mt-8 text-center text-[10px] uppercase tracking-[0.3em] text-muted-foreground/40 font-black shrink-0">
-            This testimony will be archived in the King&apos;s Vault
+            {t('archived')}
           </p>
         </div>
       </DialogContent>

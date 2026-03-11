@@ -79,39 +79,6 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
               required: false,
             },
             {
-              name: 'songGroup',
-              type: 'group',
-              label: 'Song',
-              admin: {
-                condition: (_, siblingData) => Boolean(siblingData?.hasSong),
-              },
-              fields: [
-                {
-                  name: 'title',
-                  type: 'text',
-                  label: 'Song Title',
-                  localized: true,
-                },
-                {
-                  name: 'description',
-                  type: 'text',
-                  label: 'Song Description',
-                  localized: true,
-                },
-                {
-                  label: 'Song',
-                  name: 'song',
-                  type: 'upload',
-                  relationTo: 'media',
-                  filterOptions: {
-                    mimeType: {
-                      contains: 'audio',
-                    },
-                  },
-                },
-              ],
-            },
-            {
               name: 'gallery',
               type: 'array',
               minRows: 1,
@@ -176,6 +143,45 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
         {
           fields: [
             ...defaultCollection.fields,
+            {
+              name: 'hasSong',
+              type: 'checkbox',
+              label: 'Include Song',
+              default: false
+            },
+            {
+              name: 'songGroup',
+              type: 'group',
+              label: 'Song',
+              admin: {
+                condition: (_, siblingData) => Boolean(siblingData?.hasSong),
+              },
+              fields: [
+                {
+                  name: 'title',
+                  type: 'text',
+                  label: 'Song Title',
+                  localized: true,
+                },
+                {
+                  name: 'description',
+                  type: 'text',
+                  label: 'Song Description',
+                  localized: true,
+                },
+                {
+                  label: 'Song',
+                  name: 'song',
+                  type: 'upload',
+                  relationTo: 'media',
+                  filterOptions: {
+                    mimeType: {
+                      contains: 'audio',
+                    },
+                  },
+                },
+              ],
+            },
             {
               name: 'relatedProducts',
               type: 'relationship',

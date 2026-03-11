@@ -5,12 +5,14 @@ import { Link } from '@/i18n/navigation'
 import type { Category, Media as MediaType, Product } from '@/payload-types'
 import { ShoppingCart } from 'lucide-react'
 import React from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   product: Partial<Product>
 }
 
 export const ProductGridItem: React.FC<Props> = ({ product }) => {
+  const t = useTranslations('product')
   const { gallery, priceInUSD, title, categories, meta } = product
 
   let price = priceInUSD
@@ -52,7 +54,7 @@ export const ProductGridItem: React.FC<Props> = ({ product }) => {
               href={`/products/${product.slug}`}
               className="w-full bg-primary text-white py-3 rounded-full font-bold flex items-center justify-center gap-2 hover:scale-105 transition-transform shadow-lg shadow-primary/30"
             >
-              <ShoppingCart className="size-4" /> Quick View
+              <ShoppingCart className="size-4" /> {t('quickView')}
             </Link>
           </div>
         </div>
