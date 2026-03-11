@@ -1,4 +1,5 @@
 import { linkGroup } from '@/fields/linkGroup'
+import { BoldFeature, FixedToolbarFeature, ItalicFeature, lexicalEditor, LinkFeature, StrikethroughFeature, UnderlineFeature } from '@payloadcms/richtext-lexical'
 import type { Block } from 'payload'
 
 export const AuthorOverviewBlock: Block = {
@@ -23,9 +24,19 @@ export const AuthorOverviewBlock: Block = {
         },
         {
             name: 'quote',
-            type: 'textarea',
-            label: 'Quote',
+            type: 'richText',
             localized: true,
+            label: 'Quote',
+            editor: lexicalEditor({
+                features: [
+                    FixedToolbarFeature(),
+                    BoldFeature(),
+                    ItalicFeature(),
+                    LinkFeature(),
+                    UnderlineFeature(),
+                    StrikethroughFeature()
+                ],
+            }),
         },
         {
             name: 'image',
@@ -62,6 +73,11 @@ export const AuthorOverviewBlock: Block = {
                     type: 'upload',
                     relationTo: 'media',
                     label: 'Audio File',
+                    filterOptions: {
+                        mimeType: {
+                            contains: 'audio',
+                        },
+                    },
                 },
             ],
         },

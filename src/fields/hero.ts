@@ -1,11 +1,16 @@
 import type { Field } from 'payload'
 
 import {
+  BoldFeature,
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
+  ItalicFeature,
   lexicalEditor,
-  TextStateFeature
+  LinkFeature,
+  StrikethroughFeature,
+  TextStateFeature,
+  UnderlineFeature
 } from '@payloadcms/richtext-lexical'
 
 import { linkGroup } from './linkGroup'
@@ -104,12 +109,6 @@ export const hero: Field = {
           localized: true,
         },
         {
-          name: 'description',
-          type: 'text',
-          label: 'Song Description',
-          localized: true,
-        },
-        {
           label: 'Song',
           name: 'song',
           type: 'upload',
@@ -146,9 +145,19 @@ export const hero: Field = {
     },
     {
       name: 'quote',
-      type: 'textarea',
-      label: 'Quote',
+      type: 'richText',
       localized: true,
+      label: 'Quote',
+      editor: lexicalEditor({
+        features: [
+          FixedToolbarFeature(),
+          BoldFeature(),
+          ItalicFeature(),
+          LinkFeature(),
+          UnderlineFeature(),
+          StrikethroughFeature()
+        ],
+      }),
       admin: {
         condition: (_, siblingData) => siblingData?.type === 'authorHeader',
       },

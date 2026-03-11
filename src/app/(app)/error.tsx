@@ -6,7 +6,6 @@ import { useEffect } from 'react'
 
 export default function Error({
   error,
-  reset,
 }: {
   error: Error & { digest?: string }
   reset: () => void
@@ -18,9 +17,9 @@ export default function Error({
 
   return (
     <main className="flex-1 flex items-center justify-center px-4 py-12 min-h-[80vh] w-full">
-      <div className="layout-content-container flex flex-col max-w-[800px] w-full items-center text-center">
+      <div className="layout-content-container flex flex-col max-w-200 w-full items-center text-center">
         {/* Hero Illustration Section */}
-        <div className="relative w-full aspect-[16/9] md:aspect-[21/9] rounded-3xl overflow-hidden mb-12 bg-gradient-to-br from-[#1a2333] to-background border border-border shadow-2xl">
+        <div className="relative w-full aspect-video md:aspect-21/9 rounded-3xl overflow-hidden mb-12 bg-linear-to-br from-[#1a2333] to-background border border-border shadow-2xl">
           <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_50%_50%,rgba(43,108,238,0.2),transparent_70%)]"></div>
           <div className="flex h-full w-full items-center justify-center relative z-10">
             {/* Visual Representation: Wizard's familiar among spilled ink and sparks */}
@@ -28,7 +27,7 @@ export default function Error({
               className="w-full h-full bg-center bg-no-repeat bg-cover"
               style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuCj63FIt1Vx2vbEvxtzlqfAsdJjELzH7mz-eFMnhBWuqtJscdUq2n6Nca2B9gsdbE4D24EPQUz-a30Kb8HhxzNZNUdPHOaHLcL6TQ-LCgKVrg4RCpZRQDEwCNiB6cVrBypVIIPZdQtdX0VUm8OCwiv37WUeSq5zeOuScSZ7dawGYLEL4VN7MuqWyunTqaEcmuzFA7alumuSvrnexfznCJvU8o2SBrnHqIdUSvjxgHYfTog4ssfXO3hnZnQXoYsCo5ZtnoJGpzFK2ICf")' }}
             >
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent"></div>
+              <div className="absolute inset-0 bg-linear-to-t from-background/80 via-transparent to-transparent"></div>
               {/* Floating sparkles */}
               <div className="absolute top-1/4 left-1/4 text-primary opacity-60 animate-pulse">
                 <Sparkles size={24} />
@@ -44,7 +43,7 @@ export default function Error({
         </div>
 
         {/* Text Content */}
-        <div className="max-w-[600px] px-4">
+        <div className="max-w-150 px-4">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 mb-8">
             <AlertCircle size={14} />
             <span className="text-[10px] font-black uppercase tracking-[0.2em]">Spell Interrupted</span>

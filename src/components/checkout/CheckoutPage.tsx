@@ -143,7 +143,7 @@ export const CheckoutPage: React.FC = () => {
     if (!billingAddress && addresses && addresses.length > 0) {
       setBillingAddress(addresses[0])
     }
-  }, [addresses])
+  }, [addresses, billingAddress])
 
   useEffect(() => {
     return () => {
@@ -304,7 +304,7 @@ export const CheckoutPage: React.FC = () => {
                       )}
                       <div className="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors" />
                     </div>
-                    <div className="flex-1 min-w-[200px]">
+                    <div className="flex-1 min-w-50">
                       <h4 className="text-lg font-bold leading-tight">{product.title}</h4>
                       <p className="text-muted-foreground text-sm mt-1">
                         {isVariant ? variant.options?.map((o: any) => typeof o === 'object' ? o.label : null).filter(Boolean).join(', ') : 'Standard Edition'}
@@ -338,8 +338,8 @@ export const CheckoutPage: React.FC = () => {
           {/* ── Contact Section ───────────────────────────────────────────── */}
           <Section title="Contact Info" stepNumber={1} icon={BookOpen}>
             {user ? (
-              <div className="flex items-center justify-between p-6 bg-secondary/30 rounded-xl border border-border/50">
-                <div>
+              <div className="flex justify-between p-6 bg-secondary/30 rounded-xl border border-border/50 sm:flex-row sm:items-center flex-col items-end">
+                <div className='w-full'>
                   <p className="font-bold text-lg">{user.email}</p>
                   <p className="text-sm text-muted-foreground">Signed in as Adventurer</p>
                 </div>

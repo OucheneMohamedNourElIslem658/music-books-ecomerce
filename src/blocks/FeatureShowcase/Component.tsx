@@ -1,11 +1,11 @@
 'use client'
 import { RichText } from '@/components/RichText'
 import type { Media } from '@/payload-types'
+import { cn } from '@/utilities/cn'
 import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import Image from 'next/image'
 import type { DefaultDocumentIDType } from 'payload'
 import React from 'react'
-import { cn } from '@/utilities/cn'
 
 type ImageItem = {
   image: Media | string
@@ -47,7 +47,7 @@ const ImageGrid: React.FC<{ images: ImageItem[] }> = ({ images }) => {
         <Image src={getUrl(images[1].image)} alt={getAlt(images[1])} fill className="object-cover" />
       </div>
       {images[2] && (
-        <div className="relative col-span-2 aspect-[21/9] overflow-hidden rounded-xl shadow-lg">
+        <div className="relative col-span-2 aspect-21/9 overflow-hidden rounded-xl shadow-lg">
           <Image src={getUrl(images[2].image)} alt={getAlt(images[2])} fill className="object-cover" />
         </div>
       )}
@@ -86,7 +86,7 @@ export const FeatureShowcaseBlock: React.FC<FeatureShowcaseBlockProps> = ({
                 // List Styling with Checkmark Icons
                 '[&_ul]:space-y-4 [&_ul]:list-none [&_ul]:pl-0 [&_ul]:pt-4',
                 '[&_li]:flex [&_li]:items-center [&_li]:gap-3 [&_li]:text-foreground/80 [&_li]:font-medium',
-                "[&_li]:before:content-[''] [&_li]:before:size-5 [&_li]:before:shrink-0 [&_li]:before:bg-primary [&_li]:before:[mask-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0yMCA2TDEwIDE3IDQgMTIiLz48L3N2Zz4=')] [&_li]:before:[mask-repeat:no-repeat] [&_li]:before:[mask-size:contain]",
+                "[&_li]:before:content-[''] [&_li]:before:size-5 [&_li]:before:shrink-0 [&_li]:before:bg-primary [&_li]:before:mask-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0yMCA2TDEwIDE3IDQgMTIiLz48L3N2Zz4=')] [&_li]:before:mask-no-repeat [&_li]:before:mask-contain",
               )}
             />
           </div>
