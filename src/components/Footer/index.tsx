@@ -25,8 +25,11 @@ const SOCIAL_ICONS: Record<string, React.ElementType> = {
 
 export async function Footer() {
   const footer = await getCachedGlobal('footer', 4)()
-  const { tagline, groups, socials, copyright } = footer
+  const { tagline, copyright } = footer
   const currentYear = new Date().getFullYear()
+  const groups = footer.groups ?? []
+  const socials = footer.socials ?? []
+
   return (
     <footer className="border-t border-border bg-card/40 mt-auto">
       {/* Main grid */}
@@ -49,9 +52,9 @@ export async function Footer() {
             )}
 
             {/* Socials */}
-            {socials?.length > 0 && (
+            {socials.length > 0 && (
               <div className="flex items-center gap-2 flex-wrap">
-                {socials.map((social: any, i: number) => {
+                {socials.map((social, i: number) => {
                   const Icon = SOCIAL_ICONS[social.platform] ?? Music2
                   return (
                     <a
@@ -77,15 +80,15 @@ export async function Footer() {
           </div>
 
           {/* Dynamic link groups */}
-          {groups?.length > 0 && (
+          {groups.length > 0 && (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
-              {groups.map((group: any, i: number) => (
+              {groups.map((group, i: number) => (
                 <div key={i} className="flex flex-col gap-3">
                   <p className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground border-b border-border pb-2">
                     {group.label}
                   </p>
                   <ul className="flex flex-col gap-2">
-                    {group.links?.map((item: any, j: number) => (
+                    {group.links?.map((item, j: number) => (
                       <li key={j}>
                         <CMSLink
                           {...item.link}

@@ -1,5 +1,5 @@
 'use client'
-import { cn } from '@/utilities/cn'
+import { Page } from '@/payload-types'
 import {
   BookOpen,
   CloudLightning,
@@ -18,23 +18,13 @@ import {
   Trophy,
   Zap,
 } from 'lucide-react'
-import type { DefaultDocumentIDType } from 'payload'
 import React from 'react'
 
-type HighlightItem = {
-  id?: string
-  icon?: string
-  title: string
-  description?: string
-}
+type AuthorHighlightsBlockProps = Extract<
+  Page['layout'][number],
+  { blockType: 'authorHighlights' }
+>
 
-export type AuthorHighlightsBlockProps = {
-  id?: DefaultDocumentIDType
-  className?: string
-  title: string
-  icon?: string
-  items?: HighlightItem[]
-}
 
 const iconMap: Record<string, React.FC<{ className?: string }>> = {
   settings: ({ className }) => <Settings className={className} />,
@@ -57,16 +47,14 @@ const iconMap: Record<string, React.FC<{ className?: string }>> = {
 
 export const AuthorHighlightsBlock: React.FC<AuthorHighlightsBlockProps> = ({
   title,
-  icon = 'storm',
+  icon,
   items,
-  className,
 }) => {
   if (!items || items.length === 0) return null
-
-  const SectionIcon = iconMap[icon] || CloudLightning
+  const SectionIcon = iconMap[icon ?? 'storm'] || CloudLightning
 
   return (
-    <div className={cn('container py-10', className)}>
+    <div className='container'>
       <section className="w-full">
         {/* Section Header */}
         <div className="flex items-center gap-4 px-4 pb-8">

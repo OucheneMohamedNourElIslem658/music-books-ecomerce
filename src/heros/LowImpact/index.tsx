@@ -20,7 +20,7 @@ export const LowImpactHero: React.FC<Props> = ({
 }) => {
   return (
     <div className="container py-8 md:py-12">
-      <section className="relative w-full overflow-hidden rounded-[2.5rem] min-h-[520px] flex items-center justify-center shadow-sm border border-border bg-card transition-all duration-300">
+      <section className="relative w-full overflow-hidden rounded-[2.5rem] min-h-130 flex items-center justify-center shadow-sm border border-border bg-card transition-all duration-300">
 
         {/* Background Media with Theme-Aware Overlay */}
         {media && typeof media === 'object' && (
@@ -84,7 +84,7 @@ export const LowImpactHero: React.FC<Props> = ({
         </div>
 
         {/* Subtle background texture */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_2px_2px,rgba(var(--foreground-rgb),0.02)_1px,transparent_0)] bg-[size:32px_32px] pointer-events-none opacity-20" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_2px_2px,rgba(var(--foreground-rgb),0.02)_1px,transparent_0)] bg-size-[32px_32px] pointer-events-none opacity-20" />
       </section>
     </div>
   )

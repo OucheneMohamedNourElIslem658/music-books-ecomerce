@@ -1,36 +1,24 @@
 'use client'
 import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
-import { cn } from '@/utilities/cn'
-import type { DefaultDocumentIDType } from 'payload'
+import { Page } from '@/payload-types'
 import React from 'react'
 
-type LinkItem = {
-    link: any
-    id?: string
-}
-
-export type LinkToPageBlockProps = {
-    id?: DefaultDocumentIDType
-    className?: string
-    image: any
-    title: string
-    description?: string
-    links?: LinkItem[]
-}
-
+type LinkToPageBlockProps = Extract<
+    Page['layout'][number],
+    { blockType: 'linkToPageBlock' }
+>
 export const LinkToPageBlock: React.FC<LinkToPageBlockProps> = ({
     image,
     title,
     description,
     links,
-    className,
 }) => {
     return (
-        <div className={cn('container', className)}>
+        <div className='container'>
             <section className="relative bg-card/50 border border-border rounded-[2.5rem] p-8 md:p-10 overflow-hidden shadow-sm backdrop-blur-md transition-all duration-300">
                 {/* Background Texture Overlay */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_2px_2px,rgba(var(--foreground-rgb),0.02)_1px,transparent_0)] bg-[size:32px_32px] pointer-events-none opacity-20" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_2px_2px,rgba(var(--foreground-rgb),0.02)_1px,transparent_0)] bg-size-[32px_32px] pointer-events-none opacity-20" />
 
                 <div className="relative z-10 flex flex-col gap-10 sm:flex-row sm:items-center">
 

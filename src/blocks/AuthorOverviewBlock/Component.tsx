@@ -1,27 +1,18 @@
 'use client'
 import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
+import { RichText } from '@/components/RichText'
 import { SongPreview } from '@/components/SongPreview'
-import type { Media as MediaType } from '@/payload-types'
+import type { Page } from '@/payload-types'
 import { Edit3 } from 'lucide-react'
 import React from 'react'
 
-export type AuthorOverviewBlockProps = {
-  eyebrow?: string
-  title: string
-  quote?: string
-  image: any
-  hasSong?: boolean
-  songGroup?: {
-    title?: string | null
-    song?: (number | null) | MediaType
-  }
-  links?: {
-    link: any
-  }[]
-}
+type AuthorOverviewBlock = Extract<
+  Page['layout'][number],
+  { blockType: 'authorOverview' }
+>
 
-export const AuthorOverviewBlock: React.FC<AuthorOverviewBlockProps> = ({
+export const AuthorOverviewBlock: React.FC<AuthorOverviewBlock> = ({
   eyebrow,
   title,
   quote,
@@ -34,15 +25,15 @@ export const AuthorOverviewBlock: React.FC<AuthorOverviewBlockProps> = ({
     <div className="container">
       <section className="relative bg-card/50 border border-border rounded-[2.5rem] overflow-hidden mb-12 backdrop-blur-md shadow-sm">
         {/* Background Texture Overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_2px_2px,rgba(var(--foreground-rgb),0.02)_1px,transparent_0)] bg-[size:32px_32px] pointer-events-none" />
-        
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_2px_2px,rgba(var(--foreground-rgb),0.02)_1px,transparent_0)] bg-size-[32px_32px] pointer-events-none" />
+
         <div className="@container">
           <div className="flex flex-col gap-10 px-8 py-12 lg:flex-row lg:items-center">
-            
+
             {/* Left side: Author Image */}
-            <div className="w-full relative group lg:w-1/2 max-w-[500px] mx-auto lg:mx-0">
-              <div className="absolute -inset-2 bg-gradient-to-r from-primary to-purple-600 rounded-[2rem] blur opacity-20 group-hover:opacity-40 transition duration-1000" />
-              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] border-4 border-border/10 shadow-md">
+            <div className="w-full relative group lg:w-1/2 max-w-125 mx-auto lg:mx-0">
+              <div className="absolute -inset-2 bg-linear-to-r from-primary to-purple-600 rounded-4xl blur opacity-20 group-hover:opacity-40 transition duration-1000" />
+              <div className="relative aspect-4/5 w-full overflow-hidden rounded-4xl border-4 border-border/10 shadow-md">
                 {image && (
                   <Media
                     resource={image}
@@ -72,9 +63,9 @@ export const AuthorOverviewBlock: React.FC<AuthorOverviewBlockProps> = ({
                 {/* Blockquote/Text */}
                 {quote && (
                   <div className="relative">
-                    <p className="text-muted-foreground text-lg font-medium leading-relaxed italic border-l-4 border-primary/50 pl-6 py-2 bg-primary/5 rounded-r-lg">
-                      &quot;{quote}&quot;
-                    </p>
+                    <div className="text-muted-foreground text-lg font-medium leading-relaxed italic border-l-4 border-primary/50 pl-6 py-2 bg-primary/5 rounded-r-lg [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-4">
+                      <RichText data={quote} enableGutter={false} />
+                    </div>
                   </div>
                 )}
               </div>
@@ -85,16 +76,15 @@ export const AuthorOverviewBlock: React.FC<AuthorOverviewBlockProps> = ({
                   <CMSLink
                     key={i}
                     {...link}
-                    appearance={i === 0 ? 'default' : 'outline'}
                   />
                 ))}
               </div>
 
               {/* Song Preview Widget */}
               {hasSong && (
-                <SongPreview 
-                  song={songGroup?.song} 
-                  title={songGroup?.title} 
+                <SongPreview
+                  song={songGroup?.song}
+                  title={songGroup?.title}
                   thumbnail={image}
                   className="max-w-sm"
                 />

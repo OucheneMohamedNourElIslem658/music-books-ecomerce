@@ -41,7 +41,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
 
   if (!href) return null
 
-  const size = appearance === 'link' ? 'clear' : sizeFromProps
+  const size = appearance === 'link' ? undefined : sizeFromProps
   const newTabProps = newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {}
 
   /* Ensure we don't break any styles set by richText */
@@ -62,6 +62,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
         'rounded-full font-bold px-6 py-4 text-base shadow-lg shadow-primary/20 h-auto',
         appearance === 'outline' &&
         'rounded-full font-bold px-6 py-4 text-base border-border bg-card/50 backdrop-blur-sm h-auto hover:bg-card/80 text-secondary-foreground',
+        appearance === 'link' && 'text-sm text-muted-foreground hover:text-foreground transition-colors p-0 font-medium',
         className,
       )}
       size={size}

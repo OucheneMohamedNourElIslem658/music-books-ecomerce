@@ -1,18 +1,9 @@
 'use client'
 import { NewsletterForm } from '@/components/forms/NewsletterForm'
-import type { Page } from '@/payload-types'
+import { CMSLinkType } from '@/components/Link'
 import { SendHorizonal } from 'lucide-react'
 import type { DefaultDocumentIDType } from 'payload'
 import React from 'react'
-
-type CMSLink = {
-  type?: 'reference' | 'custom'
-  newTab?: boolean
-  reference?: { relationTo: 'pages'; value: Page | string }
-  url?: string
-  label: string
-  appearance?: string
-}
 
 export type LinkToContactBlockProps = {
   id?: DefaultDocumentIDType
@@ -20,7 +11,7 @@ export type LinkToContactBlockProps = {
   title: string
   description?: string
   inputPlaceholder?: string
-  link: CMSLink
+  link: CMSLinkType
 }
 
 export const LinkToContactBlock: React.FC<LinkToContactBlockProps> = ({
@@ -29,11 +20,6 @@ export const LinkToContactBlock: React.FC<LinkToContactBlockProps> = ({
   inputPlaceholder,
   link,
 }) => {
-  const href =
-    link?.type === 'reference'
-      ? `/${(link.reference?.value as Page)?.slug ?? ''}`
-      : (link?.url ?? '#')
-
   return (
     <div className="container">
       <section className="relative overflow-hidden bg-primary/10 border border-primary/20 rounded-[2.5rem] p-8 md:p-16 text-center">
@@ -54,10 +40,7 @@ export const LinkToContactBlock: React.FC<LinkToContactBlockProps> = ({
           )}
 
           <NewsletterForm
-            buttonLabel={link?.label || 'Subscribe'}
-            buttonHref={href}
-            newTab={link?.newTab}
-            appearance={link?.appearance}
+            link={link}
             inputPlaceholder={inputPlaceholder ?? 'Enter your email address...'}
           />
         </div>

@@ -508,7 +508,6 @@ export interface Page {
     hasSong?: boolean | null;
     songGroup?: {
       title?: string | null;
-      description?: string | null;
       song?: (number | null) | Media;
     };
     /**
@@ -516,7 +515,21 @@ export interface Page {
      */
     eyebrow?: string | null;
     title?: string | null;
-    quote?: string | null;
+    quote?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
   };
   layout: (
     | PopularProductsBlock
@@ -554,7 +567,21 @@ export interface Page {
          */
         eyebrow?: string | null;
         title: string;
-        quote?: string | null;
+        quote?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
         image: number | Media;
         /**
          * Toggle to attach a song to this block
@@ -1359,7 +1386,6 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              description?: T;
               song?: T;
             };
         eyebrow?: T;
