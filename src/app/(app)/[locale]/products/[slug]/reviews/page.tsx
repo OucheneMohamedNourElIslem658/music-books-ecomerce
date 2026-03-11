@@ -4,28 +4,20 @@ import type { User } from '@/payload-types'
 import { cn } from '@/utilities/cn'
 import configPromise from '@payload-config'
 import { MessageSquare, Star } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 
-export const metadata = {
-    title: 'Reviews',
-    description: 'Reader reviews',
+export async function generateMetadata() {
+    const t = await getTranslations('productReviews')
+    return {
+        title: t('metadata.title'),
+        description: t('metadata.description'),
+    }
 }
 
 const LIMIT = 6
 const STARS = [0, 5, 4, 3, 2, 1]
-
-const SORTS = [
-    { label: 'Newest', value: 'newest' },
-    { label: 'Highest rated', value: 'rating-desc' },
-    { label: 'Lowest rated', value: 'rating-asc' },
-]
-
-const SORT_MAP: Record<string, string> = {
-    newest: '-createdAt',
-    'rating-desc': '-rating',
-    'rating-asc': 'rating',
-}
 
 // Fully theme-aware card styles — no hardcoded light colours
 const CARD_STYLES = [
@@ -51,6 +43,21 @@ export default async function ReviewsPage({ params, searchParams }: Props) {
     const page = Math.max(1, parseInt((pageParam as string) ?? '1', 10))
     const starsFilter = parseInt((starsParam as string) ?? '0', 10)
     const currentSort = (sortParam as string) ?? 'newest'
+
+    const t = await getTranslations('productReviews')
+
+    const SORTS = [
+        { label: t('filter.sort.newest'), value: 'newest' },
+        { label: t('filter.sort.highest'), value: 'rating-desc' },
+        { label: t('filter.sort.lowest'), value: 'rating-asc' },
+    ]
+
+    const SORT_MAP: Record<string, string> = {
+        newest: '-createdAt',
+        'rating-desc': '-rating',
+        'rating-asc': 'rating',
+    }
+
     const payloadSort = SORT_MAP[currentSort] ?? '-createdAt'
 
     const { docs: productDocs } = await payload.find({
@@ -109,7 +116,7 @@ export default async function ReviewsPage({ params, searchParams }: Props) {
                                         : "border-border text-muted-foreground hover:border-accent-gold/50 hover:text-foreground"
                                 )}
                             >
-                                {s === 0 ? "All" : (
+                                {s === 0 ? t('filter.all') : (
                                     <>
                                         {s}
                                         <Star className={cn(
@@ -126,7 +133,7 @@ export default async function ReviewsPage({ params, searchParams }: Props) {
                 {/* Sort pills */}
                 <div className="flex items-center gap-2 shrink-0">
                     <span className="text-xs font-black uppercase tracking-widest text-muted-foreground hidden sm:block">
-                        Order:
+                        {t('filter.order')}
                     </span>
                     {SORTS.map(({ label, value }) => (
                         <Link
@@ -152,11 +159,11 @@ export default async function ReviewsPage({ params, searchParams }: Props) {
                         <MessageSquare className="size-10" strokeWidth={1.5} />
                     </div>
                     <div className="space-y-2">
-                        <p className="text-2xl font-black text-foreground italic">No Testimonies Found</p>
+                        <p className="text-2xl font-black text-foreground italic">{t('empty.title')}</p>
                         <p className="text-muted-foreground max-w-xs mx-auto italic">
                             {starsFilter > 0
-                                ? `No ${starsFilter}-star echoes found. Try another filter.`
-                                : 'Be the first to record your journey in this archive.'}
+                                ? t('empty.starFilter', { stars: starsFilter })
+                                : t('empty.firstToRecord')}
                         </p>
                     </div>
                 </div>
@@ -218,10 +225,10 @@ export default async function ReviewsPage({ params, searchParams }: Props) {
                                     </div>
                                     <div>
                                         <h4 className="text-sm font-bold text-foreground">
-                                            {author?.name ?? 'Anonymous Reader'}
+                                            {author?.name ?? t('anonymousReader')}
                                         </h4>
                                         <p className="text-[10px] font-medium text-muted-foreground italic uppercase tracking-widest">
-                                            Voyager of the Archive
+                                            {t('voyager')}
                                         </p>
                                     </div>
                                 </div>

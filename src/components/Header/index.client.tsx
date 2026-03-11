@@ -2,12 +2,14 @@
 import { Cart } from '@/components/Cart'
 import { OpenCartButton } from '@/components/Cart/OpenCart'
 import { Link } from '@/i18n/navigation'
+import { useAuth } from '@/providers/Auth'
 import { cn } from '@/utilities/cn'
 import { User } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { Suspense } from 'react'
 import type { Header } from 'src/payload-types'
 import { Logo } from '../Logo/Logo'
+import { Button } from '../ui/button'
 import { MobileMenu } from './MobileMenu'
 
 type Props = {
@@ -17,10 +19,11 @@ type Props = {
 export function HeaderClient({ header }: Props) {
   const menu = header.navItems || []
   const pathname = usePathname()
+  const { user } = useAuth()
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md px-6 py-4 lg:px-20">
-      <div className="max-w-[1400px] mx-auto flex items-center justify-between">
+      <div className="max-w-350 mx-auto flex items-center justify-between">
         <div className="flex items-center gap-12">
           {/* Logo & Title */}
           <Link href="/" className="group">
@@ -57,7 +60,7 @@ export function HeaderClient({ header }: Props) {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center gap-3">
+        {user ? (<div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
             <Suspense fallback={<OpenCartButton />}>
               <Cart />
@@ -77,7 +80,20 @@ export function HeaderClient({ header }: Props) {
               <MobileMenu menu={menu} />
             </Suspense>
           </div>
-        </div>
+        </div>) : (
+          <div className="flex gap-2">
+            <Button className='rounded-full' variant="outline">
+              <Link href="/create-account" className="text-sm font-bold px-2">
+                Register
+              </Link>
+            </Button>
+            <Button className='rounded-full'>
+              <Link href="/login" className="text-sm font-bold px-2">
+                Login
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
     </header>
   )

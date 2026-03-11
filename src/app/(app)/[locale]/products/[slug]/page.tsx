@@ -6,6 +6,7 @@ import { ProductGridItem } from '@/components/ProductGridItem'
 import { Gallery } from '@/components/product/Gallery'
 import { ProductDescription } from '@/components/product/ProductDescription'
 import { Link } from '@/i18n/navigation'
+import { getTranslations } from 'next-intl/server'
 import configPromise from '@payload-config'
 import { ChevronLeftIcon } from 'lucide-react'
 import { Metadata } from 'next'
@@ -58,6 +59,8 @@ export default async function ProductPage({ params }: Args) {
   const product = await queryProductBySlug({ slug, locale })
   if (!product) return notFound()
 
+  const t = await getTranslations('product')
+
   const gallery =
     product.gallery
       ?.filter((item) => typeof item.image === 'object')
@@ -101,7 +104,7 @@ export default async function ProductPage({ params }: Args) {
           className="hover:text-primary/80 transition-colors flex items-center gap-2 text-sm text-muted-foreground w-fit"
         >
           <ChevronLeftIcon className="h-4 w-4" />
-          Back to Products
+          {t('backToProducts')}
         </Link>
 
         {/* Hero — gallery + description */}
@@ -139,11 +142,12 @@ export default async function ProductPage({ params }: Args) {
 
 // ─── Related Products ─────────────────────────────────────────────────────────
 
-function RelatedProducts({ products }: { products: Product[] }) {
+async function RelatedProducts({ products }: { products: Product[] }) {
+  const t = await getTranslations('product')
   return (
     <div className="flex flex-col gap-12">
       <div className="flex items-center gap-4">
-        <h2 className="text-3xl font-bold">Related Enchantments</h2>
+        <h2 className="text-3xl font-bold">{t('relatedEnchantments')}</h2>
         <div className="h-1 w-24 bg-primary rounded-full" />
       </div>
       <Grid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-12">

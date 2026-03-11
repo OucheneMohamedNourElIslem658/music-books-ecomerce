@@ -281,11 +281,6 @@ export interface Product {
     };
     [k: string]: unknown;
   } | null;
-  songGroup?: {
-    title?: string | null;
-    description?: string | null;
-    song?: (number | null) | Media;
-  };
   gallery?:
     | {
         image: number | Media;
@@ -304,6 +299,12 @@ export interface Product {
   };
   priceInUSDEnabled?: boolean | null;
   priceInUSD?: number | null;
+  hasSong?: boolean | null;
+  songGroup?: {
+    title?: string | null;
+    description?: string | null;
+    song?: (number | null) | Media;
+  };
   relatedProducts?: (number | Product)[] | null;
   popularReviews?: (number | Review)[] | null;
   meta?: {
@@ -1817,13 +1818,6 @@ export interface VariantOptionsSelect<T extends boolean = true> {
 export interface ProductsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
-  songGroup?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        song?: T;
-      };
   gallery?:
     | T
     | {
@@ -1845,6 +1839,14 @@ export interface ProductsSelect<T extends boolean = true> {
   variants?: T;
   priceInUSDEnabled?: T;
   priceInUSD?: T;
+  hasSong?: T;
+  songGroup?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        song?: T;
+      };
   relatedProducts?: T;
   popularReviews?: T;
   meta?:

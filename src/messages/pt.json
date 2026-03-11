@@ -363,5 +363,84 @@
             "passwordPlaceholder": "Crie sua chave secreta",
             "confirmPlaceholder": "Confirme sua chave secreta"
         }
+    },
+    "pagination": {
+        "previous": "Anterior",
+        "next": "Próximo",
+        "more": "Mais páginas",
+        "goToPrevious": "Ir para a página anterior",
+        "goToNext": "Ir para a próxima página"
+    },
+    "product": {
+        "backToProducts": "Voltar para Produtos",
+        "relatedEnchantments": "Encantamentos Relacionados",
+        "quickView": "Visualização Rápida",
+        "gallery": {
+            "magicPlay": "Reprodução Mágica (Ouvir a Trilha)",
+            "audioPlayer": "Player de Áudio"
+        },
+        "description": {
+            "rating": "({count} {count, plural, =1 {Avaliação Mágica} other {Avaliações Mágicas}})",
+            "leaveReview": "Deixe uma Avaliação",
+            "reviewProduct": "Avaliar {title}"
+        },
+        "stock": {
+            "onlyLeft": "Restam apenas {count} em estoque",
+            "outOfStock": "Fora de estoque"
+        },
+        "variants": {
+            "outOfStock": "Fora de Estoque"
+        },
+        "addToCart": {
+            "added": "Item adicionado ao carrinho.",
+            "label": "Adicionar à Alforje",
+            "ariaLabel": "Adicionar ao carrinho"
+        }
+    },
+    "productReviews": {
+        "metadata": {
+            "title": "Avaliações",
+            "description": "Avaliações dos leitores"
+        },
+        "backToBookshelf": "Voltar para a Estante",
+        "title": "Testemunhos dos Leitores",
+        "description": "Uma coleção de sussurros mágicos para <bold>{title}</bold>, ecoando pelos salões do tempo. Cada nota uma história, cada história um legado.",
+        "souls": "{count} {count, plural, =1 {Alma Encantada} other {Almas Encantadas}}",
+        "filter": {
+            "all": "Todos",
+            "order": "Ordem:",
+            "sort": {
+                "newest": "Mais recentes",
+                "highest": "Melhor avaliados",
+                "lowest": "Pior avaliados"
+            }
+        },
+        "empty": {
+            "title": "Nenhum Testemunho Encontrado",
+            "starFilter": "Nenhum eco de {stars} estrelas encontrado. Tente outro filtro.",
+            "firstToRecord": "Seja o primeiro a registrar sua jornada neste arquivo."
+        },
+        "anonymousReader": "Leitor Anônimo",
+        "voyager": "Viajante do Arquivo",
+        "modal": {
+            "writeTestimony": "Escrever um Testemunho",
+            "readerTestimony": "O Testemunho do Leitor",
+            "castLight": "Lance sua luz sobre este conto, viajante...",
+            "archived": "Este testemunho será arquivado no Cofre do Rei"
+        },
+        "form": {
+            "ratingRequired": "Por favor, selecione uma avaliação.",
+            "commentRequired": "Por favor, escreva uma avaliação.",
+            "starsSelected": "{count} Estrelas Selecionadas",
+            "divineRating": "Avaliação Divina",
+            "ratingAriaLabel": "Avaliar {star} de 5",
+            "commentLabel": "Sua Crônica",
+            "commentPlaceholder": "Escreva sua jornada mágica aqui...",
+            "sealing": "Selando...",
+            "sealScroll": "Selar Pergaminho",
+            "submitting": "Enviando...",
+            "updateReview": "Atualizar Avaliação",
+            "submitReview": "Enviar Avaliação"
+        }
     }
 }

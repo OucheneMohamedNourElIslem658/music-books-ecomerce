@@ -4,8 +4,10 @@ import type { Product } from '@/payload-types'
 import { cn } from '@/utilities/cn'
 import { createUrl } from '@/utilities/createUrl'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 export function VariantSelector({ product }: { product: Product }) {
+  const t = useTranslations('product.variants')
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -72,7 +74,7 @@ export function VariantSelector({ product }: { product: Product }) {
                     key={option.id}
                     disabled={!isAvailableForSale}
                     onClick={() => router.replace(optionUrl, { scroll: false })}
-                    title={`${option.label}${!isAvailableForSale ? ' (Out of Stock)' : ''}`}
+                    title={`${option.label}${!isAvailableForSale ? ` (${t('outOfStock')})` : ''}`}
                     className={cn(
                       // Base
                       'relative px-5 py-2 rounded-full text-sm font-bold border transition-all duration-200',

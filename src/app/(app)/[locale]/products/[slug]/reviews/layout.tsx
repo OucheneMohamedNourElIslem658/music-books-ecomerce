@@ -3,6 +3,7 @@ import { Link } from '@/i18n/navigation'
 import type { Category, Media as MediaType } from '@/payload-types'
 import configPromise from '@payload-config'
 import { ArrowLeft, Star } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import React from 'react'
@@ -15,6 +16,8 @@ type Props = {
 export default async function ReviewsLayout({ params, children }: Props) {
     const { slug } = await params
     const payload = await getPayload({ config: configPromise })
+
+    const t = await getTranslations('productReviews')
 
     const { docs } = await payload.find({
         collection: 'products',
@@ -62,7 +65,7 @@ export default async function ReviewsLayout({ params, children }: Props) {
                 className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-accent-gold transition-colors mb-12 group"
             >
                 <ArrowLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
-                Return to Bookshelf
+                {t('backToBookshelf')}
             </Link>
 
             {/* Hero & Summary Section */}
@@ -74,12 +77,13 @@ export default async function ReviewsLayout({ params, children }: Props) {
                         </span>
                     )}
                     <h1 className="text-foreground text-5xl md:text-7xl font-black italic leading-none mb-6">
-                        Reader&apos;s Testimonies
+                        {t('title')}
                     </h1>
                     <p className="text-muted-foreground text-xl font-medium leading-relaxed italic mb-8">
-                        &quot;A collection of magical whispers for{' '}
-                        <span className="text-foreground font-bold">{product.title}</span>,
-                        echoing through the halls of time. Every note a story, every story a legacy.&quot;
+                        {t.rich('description', {
+                            title: product.title,
+                            bold: (chunks) => <span className="text-foreground font-bold">{chunks}</span>
+                        })}
                     </p>
                     <div className="flex flex-wrap gap-4">
                         <CreateReviewModal productID={product.id} />
@@ -106,7 +110,7 @@ export default async function ReviewsLayout({ params, children }: Props) {
                     </div>
 
                     <p className="text-muted-foreground font-black mb-8 uppercase tracking-tighter text-sm">
-                        {totalReviews} Enraptured {totalReviews === 1 ? 'Soul' : 'Souls'}
+                        {t('souls', { count: totalReviews })}
                     </p>
 
                     <div className="w-full space-y-4">

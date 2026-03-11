@@ -16,6 +16,7 @@ import { Review } from '@/payload-types'
 import { DefaultDocumentIDType } from 'payload'
 import { StarIcon } from 'lucide-react'
 import { cn } from '@/utilities/cn'
+import { useTranslations } from 'next-intl'
 
 type ReviewFormValues = {
   rating: number
@@ -31,6 +32,7 @@ type Props = {
 }
 
 function StarPicker({ value, onChange, thematic }: { value: number; onChange: (v: number) => void; thematic?: boolean }) {
+  const t = useTranslations('productReviews.form')
   const [hovered, setHovered] = useState(0)
 
   return (
@@ -47,7 +49,7 @@ function StarPicker({ value, onChange, thematic }: { value: number; onChange: (v
               onMouseEnter={() => setHovered(star)}
               onMouseLeave={() => setHovered(0)}
               className="focus:outline-none group relative"
-              aria-label={`Rate ${star} out of 5`}
+              aria-label={t('ratingAriaLabel', { star })}
             >
               <span className={cn(
                 "material-symbols-outlined transition-all text-5xl",
@@ -66,13 +68,14 @@ function StarPicker({ value, onChange, thematic }: { value: number; onChange: (v
         })}
       </div>
       <p className="text-xs uppercase tracking-widest font-bold opacity-60 text-royal-blue">
-        {value > 0 ? `${value} Stars Selected` : 'Divine Rating'}
+        {value > 0 ? t('starsSelected', { count: value }) : t('divineRating')}
       </p>
     </div>
   )
 }
 
 export const ReviewForm: React.FC<Props> = ({ reviewID, productID, initialData, callback, thematic }) => {
+  const t = useTranslations('productReviews.form')
   const form = useForm<ReviewFormValues>({
     defaultValues: {
       rating: initialData?.rating ?? 0,
@@ -104,7 +107,7 @@ export const ReviewForm: React.FC<Props> = ({ reviewID, productID, initialData, 
         <FormField
           control={form.control}
           name="rating"
-          rules={{ required: 'Please select a rating.', min: { value: 1, message: 'Please select a rating.' } }}
+          rules={{ required: t('ratingRequired'), min: { value: 1, message: t('ratingRequired') } }}
           render={({ field }) => (
             <FormItem className="flex flex-col items-center">
               <FormControl>
@@ -118,14 +121,14 @@ export const ReviewForm: React.FC<Props> = ({ reviewID, productID, initialData, 
         <FormField
           control={form.control}
           name="comment"
-          rules={{ required: 'Please write a review.' }}
+          rules={{ required: t('commentRequired') }}
           render={({ field }) => (
             <FormItem className="relative group">
               <FormLabel className={cn(
                 "text-xs uppercase tracking-[0.2em] font-bold opacity-70 mb-2 block",
                 thematic ? "text-royal-blue" : "text-foreground"
               )}>
-                Your Chronicle
+                {t('commentLabel')}
               </FormLabel>
               {thematic && (
                 <div className="absolute -inset-1 bg-gradient-to-r from-accent-gold/0 via-accent-gold/10 to-accent-gold/0 opacity-0 group-focus-within:opacity-100 transition-opacity" />
@@ -134,7 +137,7 @@ export const ReviewForm: React.FC<Props> = ({ reviewID, productID, initialData, 
                 <div className="relative">
                   <Textarea
                     rows={6}
-                    placeholder="Write your magical journey here..."
+                    placeholder={t('commentPlaceholder')}
                     className={cn(
                       "w-full bg-transparent border-x-0 border-t-0 border-b-2 focus:ring-0 text-xl font-medium placeholder:italic transition-all py-4 px-2",
                       thematic 
@@ -171,7 +174,7 @@ export const ReviewForm: React.FC<Props> = ({ reviewID, productID, initialData, 
               >
                 <span className="material-symbols-outlined text-4xl mb-1 group-hover:scale-110 transition-transform">history_edu</span>
                 <span className="text-[10px] font-black uppercase tracking-[0.3em]">
-                  {form.formState.isSubmitting ? 'Sealing...' : 'Seal Scroll'}
+                  {form.formState.isSubmitting ? t('sealing') : t('sealScroll')}
                 </span>
                 <div className="absolute inset-0 rounded-full border border-white/20 m-2"></div>
               </button>
@@ -182,10 +185,10 @@ export const ReviewForm: React.FC<Props> = ({ reviewID, productID, initialData, 
           ) : (
             <Button type="submit" className="rounded-full px-8 py-6 h-auto text-lg" disabled={form.formState.isSubmitting}>
               {form.formState.isSubmitting
-                ? 'Submitting...'
+                ? t('submitting')
                 : reviewID
-                  ? 'Update Review'
-                  : 'Submit Review'}
+                  ? t('updateReview')
+                  : t('submitReview')}
             </Button>
           )}
         </div>

@@ -12,8 +12,10 @@ import { useAuth } from '@/providers/Auth'
 import { useCurrency } from '@payloadcms/plugin-ecommerce/client/react'
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
+import { useTranslations } from 'next-intl'
 
 export function ProductDescription({ product }: { product: Product }) {
+  const t = useTranslations('product.description')
   const { currency } = useCurrency()
   const { user } = useAuth()
   const searchParams = useSearchParams()
@@ -63,7 +65,7 @@ export function ProductDescription({ product }: { product: Product }) {
           {product.averageRating ? <StarRating rating={product.averageRating} /> : null}
           {product.reviewCount ? (
             <span className="text-sm font-medium">
-              ({product.reviewCount} {product.reviewCount === 1 ? 'Magical Review' : 'Magical Reviews'})
+              {t('rating', { count: product.reviewCount })}
             </span>
           ) : null}
         </div>
@@ -100,8 +102,8 @@ export function ProductDescription({ product }: { product: Product }) {
         {user && (
           <CreateReviewModal
             productID={product.id}
-            buttonText="Leave a Review"
-            modalTitle={`Review ${product.title}`}
+            buttonText={t('leaveReview')}
+            modalTitle={t('reviewProduct', { title: product.title })}
             trigger={
               <button className="w-16 h-16 flex items-center justify-center rounded-full border border-border hover:bg-accent-gold/10 hover:border-accent-gold/50 transition-all hover:scale-105 active:scale-95 group">
                 <span className="material-symbols-outlined">history_edu</span>

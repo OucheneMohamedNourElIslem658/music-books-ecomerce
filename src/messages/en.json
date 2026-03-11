@@ -363,5 +363,84 @@
             "passwordPlaceholder": "Create your secret key",
             "confirmPlaceholder": "Confirm your secret key"
         }
+    },
+    "pagination": {
+        "previous": "Previous",
+        "next": "Next",
+        "more": "More pages",
+        "goToPrevious": "Go to previous page",
+        "goToNext": "Go to next page"
+    },
+    "product": {
+        "backToProducts": "Back to Products",
+        "relatedEnchantments": "Related Enchantments",
+        "quickView": "Quick View",
+        "gallery": {
+            "magicPlay": "Magic Play (Listen to Score)",
+            "audioPlayer": "Audio Player"
+        },
+        "description": {
+            "rating": "({count} {count, plural, =1 {Magical Review} other {Magical Reviews}})",
+            "leaveReview": "Leave a Review",
+            "reviewProduct": "Review {title}"
+        },
+        "stock": {
+            "onlyLeft": "Only {count} left in stock",
+            "outOfStock": "Out of stock"
+        },
+        "variants": {
+            "outOfStock": "Out of Stock"
+        },
+        "addToCart": {
+            "added": "Item added to cart.",
+            "label": "Add to Satchel",
+            "ariaLabel": "Add to cart"
+        }
+    },
+    "productReviews": {
+        "metadata": {
+            "title": "Reviews",
+            "description": "Reader reviews"
+        },
+        "backToBookshelf": "Return to Bookshelf",
+        "title": "Reader's Testimonies",
+        "description": "A collection of magical whispers for <bold>{title}</bold>, echoing through the halls of time. Every note a story, every story a legacy.",
+        "souls": "{count} Enraptured {count, plural, =1 {Soul} other {Souls}}",
+        "filter": {
+            "all": "All",
+            "order": "Order:",
+            "sort": {
+                "newest": "Newest",
+                "highest": "Highest rated",
+                "lowest": "Lowest rated"
+            }
+        },
+        "empty": {
+            "title": "No Testimonies Found",
+            "starFilter": "No {stars}-star echoes found. Try another filter.",
+            "firstToRecord": "Be the first to record your journey in this archive."
+        },
+        "anonymousReader": "Anonymous Reader",
+        "voyager": "Voyager of the Archive",
+        "modal": {
+            "writeTestimony": "Write a Testimony",
+            "readerTestimony": "The Reader's Testimony",
+            "castLight": "Cast your light upon this tale, traveler...",
+            "archived": "This testimony will be archived in the King's Vault"
+        },
+        "form": {
+            "ratingRequired": "Please select a rating.",
+            "commentRequired": "Please write a review.",
+            "starsSelected": "{count} Stars Selected",
+            "divineRating": "Divine Rating",
+            "ratingAriaLabel": "Rate {star} out of 5",
+            "commentLabel": "Your Chronicle",
+            "commentPlaceholder": "Write your magical journey here...",
+            "sealing": "Sealing...",
+            "sealScroll": "Seal Scroll",
+            "submitting": "Submitting...",
+            "updateReview": "Update Review",
+            "submitReview": "Submit Review"
+        }
     }
 }

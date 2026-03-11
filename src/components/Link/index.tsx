@@ -35,8 +35,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
 
   const href =
     type === 'reference' && typeof reference?.value === 'object' && reference.value.slug
-      ? `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ''}/${reference.value.slug
-      }`
+      ? `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ''}/${reference.value.slug}`
       : url
 
   if (!href) return null
@@ -44,7 +43,6 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   const size = appearance === 'link' ? undefined : sizeFromProps
   const newTabProps = newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {}
 
-  /* Ensure we don't break any styles set by richText */
   if (appearance === 'inline') {
     return (
       <Link className={cn(className)} href={href} {...newTabProps}>
@@ -58,17 +56,15 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     <Button
       asChild
       className={cn(
-        appearance === 'default' &&
-        'rounded-full font-bold px-6 py-4 text-base shadow-lg shadow-primary/20 h-auto',
-        appearance === 'outline' &&
-        'rounded-full font-bold px-6 py-4 text-base border-border bg-card/50 backdrop-blur-sm h-auto hover:bg-card/80 text-secondary-foreground',
-        appearance === 'link' && 'text-sm text-muted-foreground hover:text-foreground transition-colors p-0 font-medium',
+        appearance === 'default' && 'rounded-full font-bold px-6 py-4 text-base h-auto',
+        appearance === 'outline' && 'rounded-full font-bold px-6 py-4 text-base h-auto',
+        appearance === 'link' && 'text-sm',
         className,
       )}
       size={size}
       variant={appearance}
     >
-      <Link className={className} href={href} {...newTabProps}>
+      <Link href={href} {...newTabProps}>
         {children && children}
         {label && label}
       </Link>

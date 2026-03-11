@@ -2,12 +2,14 @@
 import { Product, Variant } from '@/payload-types'
 import { useSearchParams } from 'next/navigation'
 import { useMemo } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   product: Product
 }
 
 export const StockIndicator: React.FC<Props> = ({ product }) => {
+  const t = useTranslations('product.stock')
   const searchParams = useSearchParams()
 
   const variants = product.variants?.docs || []
@@ -45,8 +47,8 @@ export const StockIndicator: React.FC<Props> = ({ product }) => {
 
   return (
     <div className="uppercase font-mono text-sm font-medium text-gray-500">
-      {stockQuantity < 10 && stockQuantity > 0 && <p>Only {stockQuantity} left in stock</p>}
-      {(stockQuantity === 0 || !stockQuantity) && <p>Out of stock</p>}
+      {stockQuantity < 10 && stockQuantity > 0 && <p>{t('onlyLeft', { count: stockQuantity })}</p>}
+      {(stockQuantity === 0 || !stockQuantity) && <p>{t('outOfStock')}</p>}
     </div>
   )
 }
