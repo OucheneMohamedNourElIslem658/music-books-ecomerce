@@ -1,6 +1,8 @@
 import { GlobalAudioPlayer } from "@/components/GlobalAudioPlayer"
 import { AudioProvider } from "@/providers/AudioProvider"
+import { isRTL, LocaleType } from "@/types/locale"
 import { Newsreader, Spline_Sans } from "next/font/google"
+import { headers } from "next/headers"
 import type { ReactNode } from 'react'
 import './globals.css'
 
@@ -20,18 +22,23 @@ const newsreader = Newsreader({
 
 export default async function AppLayout({
   children,
-  params,
 }: {
   children: ReactNode
-  params: Promise<{ locale: string }>
+  params: Promise<{ locale: LocaleType }>
 }) {
-  const { locale } = await params
+  const headersList = await headers()
+  const pathname = headersList.get('x-pathname') || ''
+  const locale = pathname.split('/')[1] as LocaleType
+
+  console.log(locale);
+
 
   return (
     <html
       lang={locale ?? 'en'}
       className={`${splineSans.variable} ${newsreader.variable} font-sans`}
       suppressHydrationWarning
+      dir={isRTL(locale) ? 'rtl' : 'ltr'}
     >
       <head>
         <link href="/favicon.ico" rel="icon" sizes="32x32" />

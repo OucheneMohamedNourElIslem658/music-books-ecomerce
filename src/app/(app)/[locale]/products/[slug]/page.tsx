@@ -104,7 +104,7 @@ export default async function ProductPage({ params }: Args) {
           href="/shop"
           className="hover:text-primary/80 transition-colors flex items-center gap-2 text-sm text-muted-foreground w-fit"
         >
-          <ChevronLeftIcon className="h-4 w-4" />
+          <ChevronLeftIcon className="h-4 w-4 rtl:rotate-180" />
           {t('backToProducts')}
         </Link>
 

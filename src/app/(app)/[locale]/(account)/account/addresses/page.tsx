@@ -32,8 +32,8 @@ export default async function AddressesPage({ params }: AddressesPageProps) {
     <div className="flex flex-col gap-10">
       <div className="flex flex-wrap items-center justify-between gap-6 px-2">
         <div className="flex flex-col gap-2">
-          <h1 className="text-4xl lg:text-5xl font-black tracking-tight">{t('title')}</h1>
-          <p className="text-muted-foreground text-lg font-medium">
+          <h1 className="text-3xl lg:text-4xl font-black tracking-tight">{t('title')}</h1>
+          <p className="text-muted-foreground text-md font-medium">
             {t('description')}
           </p>
         </div>
@@ -49,9 +49,9 @@ export default async function AddressesPage({ params }: AddressesPageProps) {
       </div>
     </div>
   )
-  }
+}
 
-  export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("addresses")
 
   return {
@@ -59,4 +59,4 @@ export default async function AddressesPage({ params }: AddressesPageProps) {
     openGraph: mergeOpenGraph({ title: t('metadata.title'), url: '/account/addresses' }),
     title: t('metadata.title'),
   }
-  }
+}

@@ -6,7 +6,7 @@ import { Link, redirect } from '@/i18n/navigation'
 import { cn } from '@/utilities/cn'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import configPromise from '@payload-config'
-import { BookOpenText, History, Package, Plus, RefreshCcw, ShieldCheck, Sparkles, Star } from 'lucide-react'
+import { History, Package, Plus, RefreshCcw, ShieldCheck, Sparkles, Star } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { headers as getHeaders } from 'next/headers'
 import Image from 'next/image'
@@ -80,14 +80,9 @@ export default async function ReviewsPage({ searchParams, params }: Args) {
     <div className="w-full mx-auto px-4 pb-10 flex flex-col gap-8">
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div className="flex items-center gap-4">
-          <div className="bg-primary/10 p-3 rounded-2xl">
-            <BookOpenText className="text-primary size-8" />
-          </div>
-          <div className="flex flex-col">
-            <h1 className="text-3xl font-bold font-display">{t('title')}</h1>
-            <p className="text-muted-foreground text-sm italic">{t('subtitle')}</p>
-          </div>
+        <div className="flex flex-col">
+          <h1 className="text-3xl lg:text-4xl font-black font-display">{t('title')}</h1>
+          <p className="text-muted-foreground text-md">{t('subtitle')}</p>
         </div>
         <div className="flex items-center gap-4">
           <span className="text-[10px] text-muted-foreground bg-muted px-3 py-1 rounded-full uppercase tracking-[0.2em] font-black border border-border">

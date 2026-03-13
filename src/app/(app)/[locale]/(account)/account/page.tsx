@@ -48,7 +48,7 @@ export default async function AccountPage({ params }: AccountPageProps) {
     })
 
     orders = ordersResult?.docs || []
-  } catch (error) {}
+  } catch (error) { }
 
   return (
     <div className="space-y-12">

@@ -102,7 +102,7 @@ export const ReviewsBlockClient: React.FC<Props> = ({
           className="text-primary font-bold flex items-center gap-2 hover:underline transition-all group"
         >
           {t('readAll')}
-          <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="size-4 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1 transition-transform" />
         </Link>
       </div>
 

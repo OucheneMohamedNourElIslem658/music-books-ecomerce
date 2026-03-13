@@ -111,7 +111,7 @@ export const FindOrderForm: React.FC<Props> = ({ initialEmail }) => {
             >
               <Package size={18} />
               {t('form.submit')}
-              <ArrowRight size={18} />
+              <ArrowRight size={18} className='rtl:rotate-180' />
             </Button>
           </form>
         </div>
