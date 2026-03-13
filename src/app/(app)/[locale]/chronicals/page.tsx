@@ -137,7 +137,7 @@ export default async function ChroniclesPage({ searchParams, params }: Props) {
                 {hasPosts && (
                     <Grid className="grid grid-cols-1 gap-8">
                         {regularPosts.map((post) => (
-                            <ChronicleGridItem key={post.id} post={post} />
+                            <ChronicleGridItem key={post.id} post={post} locale={locale} />
                         ))}
                     </Grid>
                 )}

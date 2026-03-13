@@ -1,11 +1,14 @@
 import { Link } from '@/i18n/navigation'
 import configPromise from '@payload-config'
-import { Mail, Share2, MessageSquare, Camera } from 'lucide-react'
-import { getPayload } from 'payload'
-import React from 'react'
+import { Mail } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
+import { getPayload } from 'payload'
 
-export const ChroniclesSidebar = async () => {
+interface ChroniclesSidebarProps {
+    locale: 'en' | 'ar' | 'pt'
+}
+
+export const ChroniclesSidebar = async ({ locale }: ChroniclesSidebarProps) => {
     const payload = await getPayload({ config: configPromise })
     const t = await getTranslations('chronicles.sidebar')
 
@@ -14,6 +17,7 @@ export const ChroniclesSidebar = async () => {
         limit: 3,
         draft: false,
         overrideAccess: false,
+        locale,
         select: { title: true, slug: true, publishedOn: true, hero: true },
         where: {
             and: [
@@ -57,7 +61,7 @@ export const ChroniclesSidebar = async () => {
             {/* Recently inscribed */}
             <div className="bg-card border border-border p-8 rounded-2xl shadow-sm">
                 <h3 className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground mb-8 flex items-center gap-3">
-                    <span className="size-2.5 rounded-full bg-primary animate-pulse shadow-[0_0_8px_oklch(var(--primary))]"></span> 
+                    <span className="size-2.5 rounded-full bg-primary animate-pulse shadow-[0_0_8px_oklch(var(--primary))]"></span>
                     {t('recentlyInscribed')}
                 </h3>
                 <div className="space-y-8">
@@ -73,7 +77,7 @@ export const ChroniclesSidebar = async () => {
                             </h4>
                             {post.publishedOn && (
                                 <p className="text-xs text-muted-foreground font-medium">
-                                    {new Date(post.publishedOn).toLocaleDateString('en-US', {
+                                    {new Date(post.publishedOn).toLocaleDateString(locale, {
                                         day: 'numeric',
                                         month: 'short',
                                         year: 'numeric',

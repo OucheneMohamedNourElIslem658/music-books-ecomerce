@@ -2,15 +2,17 @@ import { Link } from '@/i18n/navigation'
 import type { Media, Page } from '@/payload-types'
 import { extractHeroText } from '@/utilities/extractTextFromNode'
 import { formatDistanceToNow } from 'date-fns'
+import { ar, enUS, pt } from 'date-fns/locale'
+import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import React from 'react'
-import { useTranslations } from 'next-intl'
 
 type Props = {
     post: Partial<Page> & { id: string | number }
+    locale: 'en' | 'ar' | 'pt'
 }
 
-export const ChronicleGridItem: React.FC<Props> = ({ post }) => {
+export const ChronicleGridItem: React.FC<Props> = ({ post, locale }) => {
     const t = useTranslations('chronicles')
     const { title, slug, meta, publishedOn, hero } = post
 
@@ -27,15 +29,21 @@ export const ChronicleGridItem: React.FC<Props> = ({ post }) => {
     const heroExcerpt = hero?.richText ? extractHeroText(hero.richText) : ''
     const description = metaDesc || heroExcerpt || hero?.quote
 
+    const localeMap = {
+        en: enUS,
+        ar: ar,
+        pt: pt,
+    }
+
     const timeAgo = publishedOn
-        ? formatDistanceToNow(new Date(publishedOn), { addSuffix: true })
+        ? formatDistanceToNow(new Date(publishedOn), { addSuffix: true, locale: localeMap[locale] })
         : null
 
     return (
         <article className="parchment-glow bg-card border border-border rounded-2xl overflow-hidden flex flex-col md:flex-row transition-all duration-500 group hover:scale-[1.01]">
             {/* Thumbnail */}
             {imageUrl && (
-                <div className="md:w-1/3 min-h-[240px] relative overflow-hidden">
+                <div className="md:w-1/3 min-h-60 relative overflow-hidden">
                     <Image
                         src={imageUrl}
                         alt={displayTitle}
@@ -57,16 +65,16 @@ export const ChronicleGridItem: React.FC<Props> = ({ post }) => {
                             <span className="text-muted-foreground text-xs font-medium italic">{timeAgo}</span>
                         )}
                     </div>
-                    
+
                     <Link href={`/${slug}`}>
                         <h3 className="text-2xl font-black mb-4 group-hover:text-primary transition-colors leading-tight italic">
                             {displayTitle}
                         </h3>
                     </Link>
-                    
+
                     {description && (
                         <p className="text-muted-foreground text-base leading-relaxed mb-6 line-clamp-3 font-medium">
-                            {description}
+                            {extractHeroText(description)}
                         </p>
                     )}
                 </div>
@@ -78,9 +86,9 @@ export const ChronicleGridItem: React.FC<Props> = ({ post }) => {
                         </div>
                         <span className="text-sm font-bold text-foreground/80 tracking-tight">Archivist</span>
                     </div>
-                    
-                    <Link 
-                        href={`/${slug}`} 
+
+                    <Link
+                        href={`/${slug}`}
                         className="flex items-center gap-2 text-primary text-sm font-black uppercase tracking-widest group/link"
                     >
                         {t('readProclamation')}
