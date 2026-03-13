@@ -5,6 +5,7 @@ import { LivePreviewListener } from "@/components/LivePreviewListener"
 import { routing } from "@/i18n/routing"
 import { Providers } from "@/providers"
 import { InitTheme } from "@/providers/Theme/InitTheme"
+import { LocaleType } from "@/types/locale"
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages } from "next-intl/server"
 import { notFound } from "next/navigation"
@@ -15,10 +16,10 @@ export default async function AppLayout({
     params,
 }: {
     children: ReactNode
-    params: Promise<{ locale: string }>
+    params: Promise<{ locale: LocaleType }>
 }) {
     const { locale } = await params   // ← works because [locale] is a child segment
-    if (!routing.locales.includes(locale as any)) notFound()
+    if (!routing.locales.includes(locale)) notFound()
 
     const messages = await getMessages()
 
@@ -28,9 +29,9 @@ export default async function AppLayout({
                 <InitTheme />
                 <AdminBar />
                 <LivePreviewListener />
-                <Header />
+                <Header locale={locale} />
                 <main>{children}</main>
-                <Footer />
+                <Footer locale={locale} />
             </Providers>
         </NextIntlClientProvider>
     )

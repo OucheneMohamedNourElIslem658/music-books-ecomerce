@@ -1,6 +1,7 @@
 import { CreateReviewModal } from '@/components/reviews/CreateReviewModel'
 import { Link } from '@/i18n/navigation'
 import type { Category, Media as MediaType } from '@/payload-types'
+import { LocaleType } from '@/types/locale'
 import configPromise from '@payload-config'
 import { ArrowLeft, Star } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
@@ -9,12 +10,12 @@ import { getPayload } from 'payload'
 import React from 'react'
 
 type Props = {
-    params: Promise<{ slug: string }>
+    params: Promise<{ slug: string, locale: LocaleType }>
     children: React.ReactNode
 }
 
 export default async function ReviewsLayout({ params, children }: Props) {
-    const { slug } = await params
+    const { slug, locale } = await params
     const payload = await getPayload({ config: configPromise })
 
     const t = await getTranslations('productReviews')
@@ -22,6 +23,7 @@ export default async function ReviewsLayout({ params, children }: Props) {
     const { docs } = await payload.find({
         collection: 'products',
         where: { slug: { equals: slug } },
+        locale,
         limit: 1,
         // Virtual fields are computed on read — just selecting them is enough
         select: {

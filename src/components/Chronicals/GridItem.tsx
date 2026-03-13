@@ -1,5 +1,6 @@
 import { Link } from '@/i18n/navigation'
 import type { Media, Page } from '@/payload-types'
+import { LocaleType } from '@/types/locale'
 import { extractHeroText } from '@/utilities/extractTextFromNode'
 import { formatDistanceToNow } from 'date-fns'
 import { ar, enUS, pt } from 'date-fns/locale'
@@ -9,7 +10,7 @@ import React from 'react'
 
 type Props = {
     post: Partial<Page> & { id: string | number }
-    locale: 'en' | 'ar' | 'pt'
+    locale: LocaleType
 }
 
 export const ChronicleGridItem: React.FC<Props> = ({ post, locale }) => {

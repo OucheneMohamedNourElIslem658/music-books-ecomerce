@@ -1,16 +1,18 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { CopyIcon } from '@payloadcms/ui/icons/Copy'
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
 export function CopyButton({ code }: { code: string }) {
-  const [text, setText] = useState('Copy')
+  const t = useTranslations('blocks.code')
+  const [text, setText] = useState('copy')
 
   function updateCopyStatus() {
-    if (text === 'Copy') {
-      setText(() => 'Copied!')
+    if (text === 'copy') {
+      setText(() => 'copied')
       setTimeout(() => {
-        setText(() => 'Copy')
+        setText(() => 'copy')
       }, 1000)
     }
   }
@@ -25,7 +27,7 @@ export function CopyButton({ code }: { code: string }) {
           updateCopyStatus()
         }}
       >
-        <p>{text}</p>
+        <p>{t(text)}</p>
         <CopyIcon />
       </Button>
     </div>

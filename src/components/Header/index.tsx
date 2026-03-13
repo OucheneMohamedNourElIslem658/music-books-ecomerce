@@ -1,10 +1,15 @@
 import { getCachedGlobal } from '@/utilities/getGlobals'
 
-import './index.css'
+import { LocaleType } from '@/types/locale'
 import { HeaderClient } from './index.client'
+import './index.css'
 
-export async function Header() {
-  const header = await getCachedGlobal('header', 1)()
+interface HeaderProps {
+  locale: LocaleType
+}
+
+export async function Header({ locale }: HeaderProps) {
+  const header = await getCachedGlobal('header', locale, 1)()
 
   return <HeaderClient header={header} />
 }

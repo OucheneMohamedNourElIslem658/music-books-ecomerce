@@ -9,6 +9,7 @@ import { Width } from '../Width'
 import { FormItem } from '@/components/forms/FormItem'
 import { FormError } from '@/components/forms/FormError'
 import { capitaliseFirstLetter } from '@/utilities/capitaliseFirstLetter'
+import { useTranslations } from 'next-intl'
 
 export const Text: React.FC<
   TextField & {
@@ -20,6 +21,7 @@ export const Text: React.FC<
     register: UseFormRegister<FieldValues>
   }
 > = ({ name, defaultValue, errors, label, register, required: requiredFromProps, width }) => {
+  const t = useTranslations('blocks.form')
   return (
     <Width width={width}>
       <FormItem>
@@ -30,7 +32,7 @@ export const Text: React.FC<
           type="text"
           {...register(name, {
             required: requiredFromProps
-              ? `${capitaliseFirstLetter(label || name)} is required.`
+              ? t('required', { label: capitaliseFirstLetter(label || name) })
               : undefined,
           })}
         />

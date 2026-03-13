@@ -6,17 +6,18 @@ import { ProductGridItem } from '@/components/ProductGridItem'
 import { Gallery } from '@/components/product/Gallery'
 import { ProductDescription } from '@/components/product/ProductDescription'
 import { Link } from '@/i18n/navigation'
-import { getTranslations } from 'next-intl/server'
+import { LocaleType } from '@/types/locale'
 import configPromise from '@payload-config'
 import { ChevronLeftIcon } from 'lucide-react'
 import { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import React, { Suspense } from 'react'
 
 type Args = {
-  params: Promise<{ slug: string; locale: 'en' | 'ar' | 'pt' }>
+  params: Promise<{ slug: string; locale: LocaleType }>
 }
 
 // ─── Metadata ─────────────────────────────────────────────────────────────────
@@ -166,7 +167,7 @@ const queryProductBySlug = async ({
   locale,
 }: {
   slug: string
-  locale: 'en' | 'ar' | 'pt'
+  locale: LocaleType
 }) => {
   const { isEnabled: draft } = await draftMode()
   const payload = await getPayload({ config: configPromise })

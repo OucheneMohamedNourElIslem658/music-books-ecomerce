@@ -1,15 +1,21 @@
 import configPromise from '@payload-config'
-import { getPayload } from 'payload'
 import clsx from 'clsx'
+import { getPayload } from 'payload'
 import React, { Suspense } from 'react'
 
+import { LocaleType } from '@/types/locale'
 import { Item } from './Item'
 
-async function List() {
+interface Props {
+  locale: LocaleType
+}
+
+async function List({ locale }: Props) {
   const payload = await getPayload({ config: configPromise })
   const categoriesData = await payload.find({
     collection: 'categories',
     sort: 'title',
+    locale,
     select: {
       title: true,
       slug: true,
@@ -43,11 +49,11 @@ const skeleton = 'mb-3 h-4 w-5/6 animate-pulse rounded'
 const activeAndTitles = 'bg-neutral-800 dark:bg-neutral-300'
 const items = 'bg-neutral-400 dark:bg-neutral-700'
 
-export function CategoryTabs() {
+export function CategoryTabs({ locale }: Props) {
   return (
     <Suspense
       fallback={
-        <div className="col-span-2 hidden h-[400px] w-full flex-none py-4 lg:block">
+        <div className="col-span-2 hidden h-100 w-full flex-none py-4 lg:block">
           <div className={clsx(skeleton, activeAndTitles)} />
           <div className={clsx(skeleton, activeAndTitles)} />
           <div className={clsx(skeleton, items)} />
@@ -61,7 +67,7 @@ export function CategoryTabs() {
         </div>
       }
     >
-      <List />
+      <List locale={locale} />
     </Suspense>
   )
 }

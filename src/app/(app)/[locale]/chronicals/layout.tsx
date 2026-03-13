@@ -1,11 +1,12 @@
 import { ChroniclesSidebar } from '@/components/Chronicals/SideBar'
 import { Search } from '@/components/Search'
+import { LocaleType } from '@/types/locale'
 import { getTranslations } from 'next-intl/server'
 import React, { Suspense } from 'react'
 
 interface ChroniclesLayoutProps {
     children: React.ReactNode
-    params: Promise<{ locale: 'en' | 'ar' | 'pt' }>
+    params: Promise<{ locale: LocaleType }>
 }
 
 export default async function ChroniclesLayout({ children, params }: ChroniclesLayoutProps) {

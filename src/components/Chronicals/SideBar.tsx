@@ -1,11 +1,12 @@
 import { Link } from '@/i18n/navigation'
+import { LocaleType } from '@/types/locale'
 import configPromise from '@payload-config'
 import { Mail } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { getPayload } from 'payload'
 
 interface ChroniclesSidebarProps {
-    locale: 'en' | 'ar' | 'pt'
+    locale: LocaleType
 }
 
 export const ChroniclesSidebar = async ({ locale }: ChroniclesSidebarProps) => {

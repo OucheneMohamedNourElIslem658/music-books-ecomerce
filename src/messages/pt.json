@@ -510,5 +510,64 @@
         "returnHome": "Voltar para o Reino",
         "helpText": "Talvez estes pergaminhos ajudem?",
         "imageAlt": "Perdido no Éter"
+    },
+    "error": {
+        "badge": "Feitiço Interrompido",
+        "title": "Um Contrprevisto Mágico",
+        "description": "Os ventos da magia estão turbulentos. Não conseguimos conjurar esse feitiço. Parece que seu destino desapareceu no ar como a fumaça de um mago.",
+        "retry": "Repetir Encantamento",
+        "backToSafety": "Voltar para a Segurança"
+    },
+    "findOrder": {
+        "metadata": {
+            "title": "Encontrar pedido",
+            "description": "Encontre seu pedido conosco usando seu e-mail."
+        },
+        "header": {
+            "title": "Encontrar Meu Pedido",
+            "description": "Insira seu e-mail e o ID do pedido para invocar o pergaminho do seu pedido."
+        },
+        "form": {
+            "title": "Rastrear Seu Pedido",
+            "emailLabel": "Endereço de E-mail",
+            "emailPlaceholder": "adventurer@tales.com",
+            "emailRequired": "O e-mail é obrigatório.",
+            "orderIdLabel": "ID do Pedido",
+            "orderIdPlaceholder": "ex: 1A2B3C4D",
+            "orderIdRequired": "O ID do pedido é obrigatório. Você pode encontrá-lo em seu e-mail.",
+            "submit": "Encontrar Meu Pedido"
+        },
+        "helper": {
+            "title": "Não consegue encontrar seu pedido?",
+            "description": "Verifique o e-mail que você usou durante a finalização da compra. O ID do pedido pode ser encontrado em seu e-mail de confirmação."
+        }
+    },
+    "blocks": {
+        "code": {
+            "copy": "Copiar",
+            "copied": "Copiado!"
+        },
+        "form": {
+            "loading": "Enviando Mensagem...",
+            "error": {
+                "generic": "Algo deu errado.",
+                "internal": "Erro Interno do Servidor"
+            },
+            "submit": "Enviar Mensagem",
+            "required": "{label} é obrigatório",
+            "fieldRequired": "Este campo é obrigatório"
+        },
+        "linkToContact": {
+            "defaultPlaceholder": "Digite seu endereço de e-mail..."
+        },
+        "popularProducts": {
+            "defaultTitle": "O Arsenal Encantado"
+        },
+        "reviews": {
+            "defaultHeading": "Ecos do Reino",
+            "readAll": "Ler todas as avaliações",
+            "anonymous": "Buscador Anônimo",
+            "verifiedReader": "Leitor Verificado"
+        }
     }
 }

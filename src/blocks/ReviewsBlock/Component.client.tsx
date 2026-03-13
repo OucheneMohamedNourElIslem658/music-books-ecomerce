@@ -5,6 +5,7 @@ import { Link } from '@/i18n/navigation'
 import type { Review, User } from '@/payload-types'
 import { cn } from '@/utilities/cn'
 import { ArrowRight } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import React from 'react'
 
 type Props = {
@@ -22,6 +23,7 @@ function ReviewCard({ review, index }: { review: Review; index: number }) {
 
   const rotations = ['rotate-1', '-rotate-1', 'rotate-2', '-rotate-2']
   const rotation = rotations[index % rotations.length]
+  const t = useTranslations('blocks.reviews')
 
   return (
     <div
@@ -67,9 +69,9 @@ function ReviewCard({ review, index }: { review: Review; index: number }) {
           {author?.name?.charAt(0) || 'A'}
         </div>
         <div className="min-w-0">
-          <p className="font-bold text-sm truncate">{author?.name || 'Anonymous Seeker'}</p>
+          <p className="font-bold text-sm truncate">{author?.name || t('anonymous')}</p>
           <p className="text-[10px] text-slate-600 uppercase tracking-widest font-black">
-            Verified Reader
+            {t('verifiedReader')}
           </p>
         </div>
       </div>
@@ -80,10 +82,11 @@ function ReviewCard({ review, index }: { review: Review; index: number }) {
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export const ReviewsBlockClient: React.FC<Props> = ({
-  heading = 'Echoes from the Kingdom',
+  heading,
   reviews,
   slug,
 }) => {
+  const t = useTranslations('blocks.reviews')
   if (!reviews?.length) return null
 
   return (
@@ -91,14 +94,14 @@ export const ReviewsBlockClient: React.FC<Props> = ({
       {/* Header */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
         <div className="flex items-center gap-4">
-          <h2 className="text-3xl font-bold">{heading}</h2>
+          <h2 className="text-3xl font-bold">{heading || t('defaultHeading')}</h2>
           <div className="h-1 w-24 bg-primary rounded-full" />
         </div>
         <Link
           href={`/products/${slug}/reviews`}
           className="text-primary font-bold flex items-center gap-2 hover:underline transition-all group"
         >
-          Read all reviews
+          {t('readAll')}
           <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
         </Link>
       </div>

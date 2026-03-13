@@ -1,6 +1,7 @@
 import { PaginationController } from '@/components/Pagination/PaginationController'
 import { Link } from '@/i18n/navigation'
 import type { User } from '@/payload-types'
+import { LocaleType } from '@/types/locale'
 import { cn } from '@/utilities/cn'
 import configPromise from '@payload-config'
 import { MessageSquare, Star } from 'lucide-react'
@@ -31,12 +32,12 @@ const CARD_STYLES = [
 
 type SearchParams = { [key: string]: string | string[] | undefined }
 type Props = {
-    params: Promise<{ slug: string }>
+    params: Promise<{ slug: string, locale: LocaleType }>
     searchParams: Promise<SearchParams>
 }
 
 export default async function ReviewsPage({ params, searchParams }: Props) {
-    const { slug } = await params
+    const { slug, locale } = await params
     const { page: pageParam, stars: starsParam, sort: sortParam } = await searchParams
 
     const payload = await getPayload({ config: configPromise })
@@ -62,6 +63,7 @@ export default async function ReviewsPage({ params, searchParams }: Props) {
 
     const { docs: productDocs } = await payload.find({
         collection: 'products',
+        locale,
         where: { slug: { equals: slug } },
         limit: 1,
     })

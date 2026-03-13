@@ -1,11 +1,18 @@
 import { Categories } from '@/components/layout/search/Categories'
 import { FilterList } from '@/components/layout/search/filter'
 import { ShopSearch } from '@/components/ShopSearch'
-import { getTranslations } from 'next-intl/server'
 import { sorting } from '@/lib/constants'
+import { LocaleType } from '@/types/locale'
+import { getTranslations } from 'next-intl/server'
 import React, { Suspense } from 'react'
 
-export default async function ShopLayout({ children }: { children: React.ReactNode }) {
+interface ShopLayoutProps {
+  children: React.ReactNode
+  params: Promise<{ locale: LocaleType }>
+}
+
+export default async function ShopLayout({ children, params }: ShopLayoutProps) {
+  const { locale } = await params
   const t = await getTranslations('shop.layout')
   return (
     <div className="container py-6 md:py-16">
@@ -15,7 +22,7 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between pb-8">
 
           <div className="w-full lg:w-auto">
-            <Categories />
+            <Categories locale={locale} />
           </div>
 
           <div className="flex items-center gap-5 shrink-0 w-full lg:w-auto justify-between lg:justify-end pt-6 lg:pt-0">
@@ -30,7 +37,7 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
 
         </div>
       </section>
-...
+      ...
       {/* Main Content */}
       <Suspense fallback={null}>
         <div className="min-h-screen">

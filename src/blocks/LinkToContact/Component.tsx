@@ -2,6 +2,7 @@
 import { NewsletterForm } from '@/components/forms/NewsletterForm'
 import { CMSLinkType } from '@/components/Link'
 import { SendHorizonal } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import type { DefaultDocumentIDType } from 'payload'
 import React from 'react'
 
@@ -20,6 +21,7 @@ export const LinkToContactBlock: React.FC<LinkToContactBlockProps> = ({
   inputPlaceholder,
   link,
 }) => {
+  const t = useTranslations('blocks.linkToContact')
   return (
     <div className="container">
       <section className="relative overflow-hidden bg-primary/10 border border-primary/20 rounded-[2.5rem] p-8 md:p-16 text-center">
@@ -41,7 +43,7 @@ export const LinkToContactBlock: React.FC<LinkToContactBlockProps> = ({
 
           <NewsletterForm
             link={link}
-            inputPlaceholder={inputPlaceholder ?? 'Enter your email address...'}
+            inputPlaceholder={inputPlaceholder ?? t('defaultPlaceholder')}
           />
         </div>
       </section>
