@@ -3,7 +3,13 @@ import { Search } from '@/components/Search'
 import { getTranslations } from 'next-intl/server'
 import React, { Suspense } from 'react'
 
-export default async function ChroniclesLayout({ children }: { children: React.ReactNode }) {
+interface ChroniclesLayoutProps {
+    children: React.ReactNode
+    params: Promise<{ locale: 'en' | 'ar' | 'pt' }>
+}
+
+export default async function ChroniclesLayout({ children, params }: ChroniclesLayoutProps) {
+    const { locale } = await params
     const t = await getTranslations('shop.layout')
 
     return (
@@ -27,7 +33,7 @@ export default async function ChroniclesLayout({ children }: { children: React.R
                 {/* Right Sidebar */}
                 <aside className="w-full lg:w-80 space-y-8 shrink-0">
                     <Suspense fallback={<div className="h-96 w-full bg-muted animate-pulse rounded-xl" />}>
-                        <ChroniclesSidebar />
+                        <ChroniclesSidebar locale={locale} />
                     </Suspense>
                 </aside>
 
