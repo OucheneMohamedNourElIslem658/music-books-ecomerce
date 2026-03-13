@@ -510,5 +510,64 @@
         "returnHome": "العودة إلى المملكة",
         "helpText": "ربما ستساعد هذه اللفائف؟",
         "imageAlt": "ضائع في الأثير"
+    },
+    "error": {
+        "badge": "انقطعت التعويذة",
+        "title": "حادث سحري",
+        "description": "رياح السحر مضطربة. لم نتمكن من إلقاء تلك التعويذة. يبدو أن وجهتك قد تلاشت في الهواء مثل دخان الساحر.",
+        "retry": "إعادة محاولة التعويذة",
+        "backToSafety": "العودة إلى الأمان"
+    },
+    "findOrder": {
+        "metadata": {
+            "title": "البحث عن الطلب",
+            "description": "ابحث عن طلبك معنا باستخدام بريدك الإلكتروني."
+        },
+        "header": {
+            "title": "البحث عن طلبي",
+            "description": "أدخل بريدك الإلكتروني ومعرف الطلب لاستدعاء لفيفة طلبك."
+        },
+        "form": {
+            "title": "تتبع طلبك",
+            "emailLabel": "عنوان البريد الإلكتروني",
+            "emailPlaceholder": "adventurer@tales.com",
+            "emailRequired": "البريد الإلكتروني مطلوب.",
+            "orderIdLabel": "معرف الطلب",
+            "orderIdPlaceholder": "مثال: 1A2B3C4D",
+            "orderIdRequired": "معرف الطلب مطلوب. يمكنك العثور عليه في بريدك الإلكتروني.",
+            "submit": "البحث عن طلبي"
+        },
+        "helper": {
+            "title": "لا تجد طلبك؟",
+            "description": "تحقق من البريد الإلكتروني الذي استخدمته أثناء إتمام الطلب. يمكن العثور على معرف الطلب في بريد التأكيد الخاص بك."
+        }
+    },
+    "blocks": {
+        "code": {
+            "copy": "نسخ",
+            "copied": "تم النسخ!"
+        },
+        "form": {
+            "loading": "جاري إرسال الرسالة...",
+            "error": {
+                "generic": "حدث خطأ ما.",
+                "internal": "خطأ داخلي في الخادم"
+            },
+            "submit": "إرسال الرسالة",
+            "required": "{label} مطلوب",
+            "fieldRequired": "هذا الحقل مطلوب"
+        },
+        "linkToContact": {
+            "defaultPlaceholder": "أدخل عنوان بريدك الإلكتروني..."
+        },
+        "popularProducts": {
+            "defaultTitle": "مخزن الأسلحة المسحور"
+        },
+        "reviews": {
+            "defaultHeading": "أصداء من المملكة",
+            "readAll": "قراءة جميع المراجعات",
+            "anonymous": "باحث مجهول",
+            "verifiedReader": "قارئ معتمد"
+        }
     }
 }

@@ -10,6 +10,7 @@ import { getPayload } from 'payload'
 
 import { routing } from '@/i18n/routing'
 import type { Page } from '@/payload-types'
+import { LocaleType } from '@/types/locale'
 import { Music, Music2, Music3, Music4 } from 'lucide-react'
 import { notFound } from 'next/navigation'
 
@@ -37,7 +38,7 @@ export async function generateStaticParams() {
 
 type Args = {
   params: Promise<{
-    locale: string
+    locale: LocaleType
     slug: string
   }>
 }
@@ -84,7 +85,7 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   return generateMeta({ doc: page })
 }
 
-const queryPageBySlug = async ({ slug, locale }: { slug: string; locale: string }) => {
+const queryPageBySlug = async ({ slug, locale }: { slug: string; locale: LocaleType }) => {
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config: configPromise })
@@ -93,7 +94,7 @@ const queryPageBySlug = async ({ slug, locale }: { slug: string; locale: string 
     collection: 'pages',
     draft,
     limit: 1,
-    locale: locale as (typeof routing.locales)[number],
+    locale,
     overrideAccess: draft,
     pagination: false,
     where: {

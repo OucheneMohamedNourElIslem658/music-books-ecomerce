@@ -1,6 +1,7 @@
 import { Grid } from '@/components/Grid'
 import { PaginationController } from '@/components/Pagination/PaginationController'
 import { ProductGridItem } from '@/components/ProductGridItem'
+import { LocaleType } from '@/types/locale'
 import configPromise from '@payload-config'
 import { Search } from 'lucide-react'
 import { getPayload } from 'payload'
@@ -14,7 +15,7 @@ type SearchParams = { [key: string]: string | string[] | undefined, page?: strin
 
 type Props = {
   searchParams: Promise<SearchParams>
-  params: Promise<{locale: 'en' | 'ar' | 'pt'}>
+  params: Promise<{ locale: LocaleType }>
 }
 
 const LIMIT = 12

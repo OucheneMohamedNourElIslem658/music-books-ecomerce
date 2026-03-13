@@ -4,9 +4,14 @@ import { Suspense } from 'react'
 import { CategoryItem } from './Categories.client'
 import { CategoryScroller } from './CategoriesScroller'
 
+import { LocaleType } from '@/types/locale'
 import { getTranslations } from 'next-intl/server'
 
-async function CategoryList() {
+interface Props {
+  locale: LocaleType
+}
+
+async function CategoryList({ locale }: Props) {
   const payload = await getPayload({ config: configPromise })
 
   const t = await getTranslations('shop.layout')
@@ -14,6 +19,7 @@ async function CategoryList() {
   const categories = await payload.find({
     collection: 'categories',
     sort: 'title',
+    locale
   })
 
   return (
@@ -26,7 +32,7 @@ async function CategoryList() {
   )
 }
 
-export function Categories() {
+export function Categories({ locale }: Props) {
   return (
     <Suspense
       fallback={
@@ -37,7 +43,7 @@ export function Categories() {
         </div>
       }
     >
-      <CategoryList />
+      <CategoryList locale={locale} />
     </Suspense>
   )
 }

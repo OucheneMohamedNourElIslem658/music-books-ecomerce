@@ -11,6 +11,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { cn } from '@/utilities/cn'
 import { getClientSideURL } from '@/utilities/getURL'
 import { Send } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { DefaultDocumentIDType } from 'payload'
 import { buildInitialFormState } from './buildInitialFormState'
 import { fields } from './fields'
@@ -44,6 +45,8 @@ export const FormBlock: React.FC<
     form: { id: formID, confirmationMessage, confirmationType, redirect, submitButtonLabel } = {},
     introContent,
   } = props
+
+  const t = useTranslations('blocks.form')
 
   const formMethods = useForm({
     defaultValues: buildInitialFormState(formFromProps.fields),
@@ -93,7 +96,7 @@ export const FormBlock: React.FC<
           if (req.status >= 400) {
             setIsLoading(false)
             setError({
-              message: res.errors?.[0]?.message || 'Internal Server Error',
+              message: res.errors?.[0]?.message || t('error.internal'),
               status: res.status,
             })
             return
@@ -109,13 +112,13 @@ export const FormBlock: React.FC<
         } catch (err) {
           console.warn(err)
           setIsLoading(false)
-          setError({ message: 'Something went wrong.' })
+          setError({ message: t('error.generic') })
         }
       }
 
       void submitForm()
     },
-    [router, formID, redirect, confirmationType],
+    [router, formID, redirect, confirmationType, t],
   )
 
   return (
@@ -169,7 +172,7 @@ export const FormBlock: React.FC<
                 <div className="flex flex-col items-center justify-center py-12 gap-4">
                   <div className="size-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
                   <p className="font-bold text-slate-900/60 uppercase tracking-widest text-xs">
-                    Casting Message...
+                    {t('loading')}
                   </p>
                 </div>
               )}
@@ -221,7 +224,7 @@ export const FormBlock: React.FC<
                       type="submit"
                       className="group min-w-[240px] h-16 rounded-full bg-primary text-primary-foreground text-lg font-black shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all"
                     >
-                      {submitButtonLabel || 'Cast Message'}
+                      {submitButtonLabel || t('submit')}
                       <Send className="size-5 ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                     </Button>
                   </div>

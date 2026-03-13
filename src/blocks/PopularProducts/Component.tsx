@@ -5,6 +5,7 @@ import { Link } from '@/i18n/navigation'
 import type { Category, Media, PopularProductsBlock as PopularProductsBlockProps, Product } from '@/payload-types'
 import { cn } from '@/utilities/cn'
 import { Play } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import type { DefaultDocumentIDType } from 'payload'
 import React from 'react'
 
@@ -14,6 +15,7 @@ export const PopularProductsBlock: React.FC<
     className?: string
   }
 > = ({ title, description, products, className }) => {
+  const t = useTranslations('blocks.popularProducts')
   if (!products || products.length === 0) return null
 
   return (
@@ -22,7 +24,7 @@ export const PopularProductsBlock: React.FC<
         {/* Section Header - Exactly like design */}
         <div className="flex flex-col items-center text-center mb-16 space-y-4">
           <h2 className="text-foreground text-3xl md:text-4xl font-bold tracking-tight">
-            {title || 'The Enchanted Armory'}
+            {title || t('defaultTitle')}
           </h2>
           <div className="h-1 w-20 bg-primary rounded-full" />
           {description && (
@@ -87,10 +89,10 @@ export const PopularProductsBlock: React.FC<
                 </Link>
 
                 {/* Optional Song Preview Widget below if product has song */}
-                {product.song && (
+                {product.songGroup && (
                   <div className="px-2">
                     <SongPreview
-                      song={product.song}
+                      song={product.songGroup.song}
                       title={product.title}
                       thumbnail={image}
                       className="bg-card/20 border-border/5"

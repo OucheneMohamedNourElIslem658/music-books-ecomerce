@@ -2,6 +2,7 @@ import { CMSLink } from '@/components/Link'
 import { LocaleSwitcher } from '@/components/LocaleSwitcher'
 import { Link } from '@/i18n/navigation'
 import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
+import { LocaleType } from '@/types/locale'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import {
   Facebook,
@@ -23,8 +24,12 @@ const SOCIAL_ICONS: Record<string, React.ElementType> = {
   tiktok: Music2,
 }
 
-export async function Footer() {
-  const footer = await getCachedGlobal('footer', 4)()
+interface FooterProps {
+  locale: LocaleType
+}
+
+export async function Footer({ locale }: FooterProps) {
+  const footer = await getCachedGlobal('footer', locale, 4)()
   const { tagline, copyright } = footer
   const currentYear = new Date().getFullYear()
   const groups = footer.groups ?? []

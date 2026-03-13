@@ -5,11 +5,11 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import React from 'react'
 
-import { Error } from '../Error'
 import { Width } from '../Width'
 import { FormError } from '@/components/forms/FormError'
 import { FormItem } from '@/components/forms/FormItem'
 import { capitaliseFirstLetter } from '@/utilities/capitaliseFirstLetter'
+import { useTranslations } from 'next-intl'
 export const Number: React.FC<
   TextField & {
     errors: Partial<
@@ -20,6 +20,7 @@ export const Number: React.FC<
     register: UseFormRegister<FieldValues>
   }
 > = ({ name, defaultValue, errors, label, register, required: requiredFromProps, width }) => {
+  const t = useTranslations('blocks.form')
   return (
     <Width width={width}>
       <FormItem>
@@ -30,7 +31,7 @@ export const Number: React.FC<
           type="number"
           {...register(name, {
             required: requiredFromProps
-              ? `${capitaliseFirstLetter(label || name)} is required.`
+              ? t('required', { label: capitaliseFirstLetter(label || name) })
               : undefined,
           })}
         />

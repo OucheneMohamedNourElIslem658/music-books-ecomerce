@@ -1,22 +1,16 @@
 'use client'
 
+import { Link } from '@/i18n/navigation'
 import { AlertCircle, Castle, Sparkles, Star, Wand2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import Link from 'next/link'
-import { useEffect } from 'react'
 
 export default function Error({
-  error,
+  // error,
 }: {
   error: Error & { digest?: string }
   reset: () => void
 }) {
   const t = useTranslations('error')
-
-  useEffect(() => {
-    // Log the error to an error reporting service
-    console.error(error)
-  }, [error])
 
   return (
     <main className="flex-1 flex items-center justify-center px-4 py-12 min-h-[80vh] w-full">

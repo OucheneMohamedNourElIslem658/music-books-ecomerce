@@ -18,7 +18,7 @@ export default function NotFound() {
 
         {/* Image */}
         <div className="relative w-64 h-64 md:w-80 md:h-80">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/40 rounded-3xl z-10" />
+          <div className="absolute inset-0 bg-linear-to-b from-transparent to-background/40 rounded-3xl z-10" />
           <Image
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBslfNsCwFUuF354Jry31ZFNYW4zz8OykR1OBbLoQcoY29cgASadWD4CgGcjLvMmmheluLli1H4HfeoCIlY8CDJql_QK13p1GaUKGQBPkb9tbrZKKSQW5FobEUwSp9KGH2VIzEQmwFCa5KJKyiyr0U1vPBX8VCdmbw0xm3Ow5HYVAtaGQ5EFBOjI9ywPZR-69CZjW0i8h0BcNGtvvj3XgqrSP5xU2DwY2Ey8Y1FbObaeLYa_Ii--mkjazQx09EBUi81v1BVUmz2-xLh"
             alt={t('imageAlt')}

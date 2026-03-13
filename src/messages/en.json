@@ -510,5 +510,64 @@
         "returnHome": "Return to the Kingdom",
         "helpText": "Perhaps these scrolls will help?",
         "imageAlt": "Lost in the Ether"
+    },
+    "error": {
+        "badge": "Spell Interrupted",
+        "title": "A Magical Mishap",
+        "description": "The winds of magic are turbulent. We couldn't cast that spell. It seems your destination has vanished into thin air like a wizard's smoke.",
+        "retry": "Retry Incantation",
+        "backToSafety": "Back to Safety"
+    },
+    "findOrder": {
+        "metadata": {
+            "title": "Find order",
+            "description": "Find your order with us using your email."
+        },
+        "header": {
+            "title": "Find My Order",
+            "description": "Enter your email and order ID to summon your order scroll."
+        },
+        "form": {
+            "title": "Track Your Order",
+            "emailLabel": "Email Address",
+            "emailPlaceholder": "adventurer@tales.com",
+            "emailRequired": "Email is required.",
+            "orderIdLabel": "Order ID",
+            "orderIdPlaceholder": "e.g. 1A2B3C4D",
+            "orderIdRequired": "Order ID is required. You can find this in your email.",
+            "submit": "Find My Order"
+        },
+        "helper": {
+            "title": "Can't find your order?",
+            "description": "Check the email you used during checkout. The order ID can be found in your confirmation email."
+        }
+    },
+    "blocks": {
+        "code": {
+            "copy": "Copy",
+            "copied": "Copied!"
+        },
+        "form": {
+            "loading": "Casting Message...",
+            "error": {
+                "generic": "Something went wrong.",
+                "internal": "Internal Server Error"
+            },
+            "submit": "Cast Message",
+            "required": "{label} is required",
+            "fieldRequired": "This field is required"
+        },
+        "linkToContact": {
+            "defaultPlaceholder": "Enter your email address..."
+        },
+        "popularProducts": {
+            "defaultTitle": "The Enchanted Armory"
+        },
+        "reviews": {
+            "defaultHeading": "Echoes from the Kingdom",
+            "readAll": "Read all reviews",
+            "anonymous": "Anonymous Seeker",
+            "verifiedReader": "Verified Reader"
+        }
     }
 }

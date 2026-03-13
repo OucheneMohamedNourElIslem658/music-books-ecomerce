@@ -1,13 +1,18 @@
 import type { Metadata } from 'next'
 
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import React from 'react'
 import { FindOrderForm } from '@/components/forms/FindOrderForm'
-import { getPayload } from 'payload'
-import { headers as getHeaders } from 'next/headers.js'
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import configPromise from '@payload-config'
+import { getTranslations } from 'next-intl/server'
+import { headers as getHeaders } from 'next/headers.js'
+import { getPayload } from 'payload'
 
-export default async function FindOrderPage() {
+type Props = {
+  params: Promise<{ locale: string }>
+}
+
+export default async function FindOrderPage({ params }: Props) {
+  const { locale } = await params
   const headers = await getHeaders()
   const payload = await getPayload({ config: configPromise })
   const { user } = await payload.auth({ headers })
@@ -19,11 +24,16 @@ export default async function FindOrderPage() {
   )
 }
 
-export const metadata: Metadata = {
-  description: 'Find your order with us using your email.',
-  openGraph: mergeOpenGraph({
-    title: 'Find order',
-    url: '/find-order',
-  }),
-  title: 'Find order',
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'findOrder.metadata' })
+
+  return {
+    description: t('description'),
+    openGraph: mergeOpenGraph({
+      title: t('title'),
+      url: '/find-order',
+    }),
+    title: t('title'),
+  }
 }

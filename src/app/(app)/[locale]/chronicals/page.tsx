@@ -3,6 +3,7 @@ import { Grid } from '@/components/Grid'
 import { PaginationController } from '@/components/Pagination/PaginationController'
 import { Link } from '@/i18n/navigation'
 import type { Media } from '@/payload-types'
+import { LocaleType } from '@/types/locale'
 import configPromise from '@payload-config'
 import { getTranslations } from 'next-intl/server'
 import { getPayload } from 'payload'
@@ -18,7 +19,7 @@ export async function generateMetadata() {
 type SearchParams = { [key: string]: string | string[] | undefined; page?: string }
 type Props = {
     searchParams: Promise<SearchParams>
-    params: Promise<{ locale: 'en' | 'ar' | 'pt' }>
+    params: Promise<{ locale: LocaleType }>
 }
 
 const LIMIT = 9
