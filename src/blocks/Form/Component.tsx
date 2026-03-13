@@ -126,7 +126,7 @@ export const FormBlock: React.FC<
 
       {/* Intro */}
       {enableIntro && introContent && !hasSubmitted && (
-        <div className="w-full max-w-[960px] px-4 text-center mb-16">
+        <div className="w-full max-w-240 px-4 text-center mb-16">
           <RichText
             className={cn(
               'space-y-4',
@@ -152,7 +152,7 @@ export const FormBlock: React.FC<
         >
 
           {/* Subtle dot texture */}
-          <div className="absolute inset-0 opacity-[0.04] pointer-events-none bg-[radial-gradient(circle_at_center,_currentColor_1px,_transparent_1px)] bg-[length:32px_32px]" />
+          <div className="absolute inset-0 opacity-[0.04] pointer-events-none bg-[radial-gradient(circle_at_center,currentColor_1px,transparent_1px)] bg-size-[32px_32px]" />
 
           <div className="relative z-20">
             <FormProvider {...formMethods}>
@@ -222,7 +222,7 @@ export const FormBlock: React.FC<
                     <Button
                       form={formID}
                       type="submit"
-                      className="group min-w-[240px] h-16 rounded-full bg-primary text-primary-foreground text-lg font-black shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all"
+                      className="group min-w-60 h-16 rounded-full bg-primary text-primary-foreground text-lg font-black shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all"
                     >
                       {submitButtonLabel || t('submit')}
                       <Send className="size-5 ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />

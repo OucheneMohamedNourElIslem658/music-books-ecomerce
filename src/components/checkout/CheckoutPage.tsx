@@ -19,9 +19,9 @@ import { AddressItem } from '@/components/addresses/AddressItem'
 import { CreateAddressModal } from '@/components/addresses/CreateAddressModal'
 import { CheckoutAddresses } from '@/components/checkout/CheckoutAddresses'
 import { CheckoutForm } from '@/components/forms/CheckoutForm'
+import { FormItem } from '@/components/forms/FormItem'
 import { LoadingSpinner } from '@/components/LoadingSpinner'
 import { Checkbox } from '@/components/ui/checkbox'
-import { FormItem } from '@/components/forms/FormItem'
 import { Address } from '@/payload-types'
 import { useAddresses, useCart, usePayments } from '@payloadcms/plugin-ecommerce/client/react'
 import { PaymentAdapterClient } from '@payloadcms/plugin-ecommerce/types'
@@ -83,9 +83,8 @@ function StepIndicator({ current }: { current: number }) {
             return (
               <div
                 key={step.label}
-                className={`flex flex-col items-center gap-2 pb-4 border-b-2 transition-all duration-300 ${
-                  isCurrent ? 'border-primary text-primary' : 'border-transparent text-muted-foreground'
-                }`}
+                className={`flex flex-col items-center gap-2 pb-4 border-b-2 transition-all duration-300 ${isCurrent ? 'border-primary text-primary' : 'border-transparent text-muted-foreground'
+                  }`}
               >
                 <Icon size={24} className={isCurrent && i === current ? 'animate-pulse' : ''} />
                 <span className="text-xs font-bold uppercase tracking-widest">{step.label}</span>
@@ -196,7 +195,7 @@ export const CheckoutPage: React.FC = () => {
           fetch(`/api/transactions/${tx.id}`, { method: 'DELETE' }),
         ),
       )
-    } catch {}
+    } catch { }
   }, [cart?.id])
 
   const initiatePaymentIntent = useCallback(
@@ -224,12 +223,12 @@ export const CheckoutPage: React.FC = () => {
         const errorData =
           err instanceof Error
             ? (() => {
-                try {
-                  return JSON.parse(err.message)
-                } catch {
-                  return {}
-                }
-              })()
+              try {
+                return JSON.parse(err.message)
+              } catch {
+                return {}
+              }
+            })()
             : {}
 
         let errorMessage = t('paymentError')
@@ -360,9 +359,9 @@ export const CheckoutPage: React.FC = () => {
                       <p className="text-muted-foreground text-sm mt-1">
                         {isVariant
                           ? variant.options
-                              ?.map((o: any) => (typeof o === 'object' ? o.label : null))
-                              .filter(Boolean)
-                              .join(', ')
+                            ?.map((o: any) => (typeof o === 'object' ? o.label : null))
+                            .filter(Boolean)
+                            .join(', ')
                           : t('standardEdition')}
                       </p>
                       <div className="flex items-center gap-2 mt-2 text-primary text-sm font-medium">
@@ -580,11 +579,10 @@ export const CheckoutPage: React.FC = () => {
                     {paymentMethods.map((method) => (
                       <label
                         key={method.name}
-                        className={`flex items-center gap-4 p-6 rounded-xl border cursor-pointer transition-all duration-300 ${
-                          selectedPaymentMethod?.name === method.name
-                            ? 'border-primary bg-primary/5 ring-1 ring-primary'
-                            : 'border-border hover:border-primary/40 hover:bg-secondary/50'
-                        }`}
+                        className={`flex items-center gap-4 p-6 rounded-xl border cursor-pointer transition-all duration-300 ${selectedPaymentMethod?.name === method.name
+                          ? 'border-primary bg-primary/5 ring-1 ring-primary'
+                          : 'border-border hover:border-primary/40 hover:bg-secondary/50'
+                          }`}
                       >
                         <input
                           type="radio"
@@ -687,14 +685,15 @@ export const CheckoutPage: React.FC = () => {
                         }
                       }}
                     >
-                      {t('continueToPaypal')} <ArrowRight className="ml-2" size={20} />
+                      {t('continueToPaypal')} <ArrowRight className="ml-2 rtl:rotate-180" size={20} />
                     </Button>
                     <Button
                       variant="ghost"
-                      className="text-muted-foreground rounded-full font-bold"
+                      className="text-muted-foreground rounded-full font-bold flex"
                       onClick={handleCancelPayment}
                     >
-                      ← {t('chooseDifferentMethod')}
+                      {t('chooseDifferentMethod')}
+                      <ArrowRight className="ml-2 rtl:rotate-180" size={20} />
                     </Button>
                   </div>
                 )}
@@ -745,7 +744,7 @@ export const CheckoutPage: React.FC = () => {
                 disabled={!canGoToPayment || isProcessingPayment || !!paymentData}
               >
                 <span>{t('embarkOnCheckout')}</span>
-                <ArrowRight size={20} />
+                <ArrowRight size={20} className='rtl:rotate-180' />
               </Button>
             )}
 

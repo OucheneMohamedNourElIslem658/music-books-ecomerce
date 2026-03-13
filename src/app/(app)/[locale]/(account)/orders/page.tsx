@@ -12,11 +12,12 @@ import { getPayload } from 'payload'
 
 const LIMIT = 10
 
+import { LocaleType } from '@/types/locale'
 import { getTranslations } from 'next-intl/server'
 
 interface Props {
   searchParams: Promise<{ page?: string }>
-  params: Promise<{ locale: string }>
+  params: Promise<{ locale: LocaleType }>
 }
 
 export default async function Orders({ searchParams, params }: Props) {
@@ -49,6 +50,7 @@ export default async function Orders({ searchParams, params }: Props) {
       pagination: true,
       user,
       overrideAccess: false,
+      locale,
       where: {
         customer: {
           equals: user?.id,
@@ -58,14 +60,13 @@ export default async function Orders({ searchParams, params }: Props) {
 
     orders = ordersResult?.docs || []
     totalPages = ordersResult?.totalPages
-  } catch (error) {}
+  } catch (error) { }
 
   return (
     <main className="flex-1 flex flex-col max-w-5xl mx-auto w-full px-4 md:px-8">
       {/* Section Header */}
       <div className="flex items-center justify-between mb-8 px-2">
-        <h2 className="text-xl font-black uppercase tracking-widest flex items-center gap-3">
-          <History className="text-accent-gold" size={24} />
+        <h2 className="text-3xl lg:text-4xl font-black flex items-center gap-3">
           {t('title')}
         </h2>
         {orders && orders.length > 0 && (

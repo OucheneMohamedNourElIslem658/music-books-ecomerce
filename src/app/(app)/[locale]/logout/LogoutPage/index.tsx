@@ -2,9 +2,9 @@
 
 import { Link } from '@/i18n/navigation'
 import { useAuth } from '@/providers/Auth'
-import React, { useEffect, useState } from 'react'
-import { Lock, ShieldCheck, Wand2, ArrowRight } from 'lucide-react'
+import { ArrowRight, Lock, ShieldCheck, Wand2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import React, { useEffect, useState } from 'react'
 
 export const LogoutPage: React.FC = () => {
   const t = useTranslations('auth.logout')
@@ -31,8 +31,8 @@ export const LogoutPage: React.FC = () => {
         <div className="relative w-full aspect-video md:aspect-[21/9] rounded-3xl overflow-hidden mb-12 group shadow-2xl border border-border/50">
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10"></div>
           <div className="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
-          <div 
-            className="w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-700 group-hover:scale-105" 
+          <div
+            className="w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-700 group-hover:scale-105"
             style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuDnWalvKEHzaOxg1PCB5dnvt1C87T9iZf70d2yeMSEvcJaVurEuvWiuNWJ23kQHJG-6rv4cgctRc_TUjz4ZufMorYl6BFpPci2nitEBP3OuvV10b5Po76Plx4eiBTgLG9hnz7f8deOyVsKRN8pMx4ulgVSsk40pg3OXtDE0k6N4N9YwxRECTQ0ZfTKDSeG6Oq86-HzBiu5h2TuWWdndTTkofijS9oTxl2lqG1OPFca0gSfTKDDjLZ-7lAJIY_JUD4FJ2VKcafzfpxw7")' }}
           >
           </div>
@@ -58,16 +58,16 @@ export const LogoutPage: React.FC = () => {
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
-            <Link 
+            <Link
               href="/"
-              className="flex min-w-[240px] items-center justify-center rounded-full h-16 px-10 bg-primary text-primary-foreground text-sm font-black uppercase tracking-widest transition-all hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 active:scale-95 group"
+              className="flex min-w-60 items-center justify-center rounded-full h-16 px-10 bg-primary text-primary-foreground text-sm font-black uppercase tracking-widest transition-all hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 active:scale-95 group"
             >
               <span>{t('returnToKingdom')}</span>
               <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Link>
-            <Link 
+            <Link
               href="/shop"
-              className="flex min-w-[240px] items-center justify-center rounded-full h-16 px-10 bg-secondary text-foreground text-sm font-black uppercase tracking-widest transition-all hover:bg-secondary/80 active:scale-95 border border-border shadow-sm"
+              className="flex min-w-60 items-center justify-center rounded-full h-16 px-10 bg-secondary text-foreground text-sm font-black uppercase tracking-widest transition-all hover:bg-secondary/80 active:scale-95 border border-border shadow-sm"
             >
               <span>{t('exploreLore')}</span>
             </Link>

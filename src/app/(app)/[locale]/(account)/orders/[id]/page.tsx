@@ -15,12 +15,13 @@ import { headers as getHeaders } from 'next/headers.js'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 
+import { LocaleType } from '@/types/locale'
 import { getTranslations } from 'next-intl/server'
 
 export const dynamic = 'force-dynamic'
 
 type PageProps = {
-  params: Promise<{ id: string; locale: string }>
+  params: Promise<{ id: string; locale: LocaleType }>
   searchParams: Promise<{ email?: string }>
 }
 
@@ -43,6 +44,7 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
       user,
       overrideAccess: !Boolean(user),
       depth: 2,
+      locale,
       where: {
         and: [
           { id: { equals: id } },
@@ -88,7 +90,7 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
           href="/orders"
           className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-xs font-black uppercase tracking-widest group"
         >
-          <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+          <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform rtl:rotate-180" />
           {t('back')}
         </Link>
       )}
