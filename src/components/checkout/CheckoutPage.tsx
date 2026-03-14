@@ -22,14 +22,18 @@ import { CheckoutForm } from '@/components/forms/CheckoutForm'
 import { FormItem } from '@/components/forms/FormItem'
 import { LoadingSpinner } from '@/components/LoadingSpinner'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Address } from '@/payload-types'
-import { useAddresses, useCart, usePayments } from '@payloadcms/plugin-ecommerce/client/react'
+import { useLocalizedCart } from '@/hooks/useLocalizedCart'
+import type { Address, Product, Variant } from '@/payload-types'
+import type { LocaleType } from '@/types/locale'
+import { useAddresses, usePayments } from '@payloadcms/plugin-ecommerce/client/react'
 import { PaymentAdapterClient } from '@payloadcms/plugin-ecommerce/types'
 import {
+  AlertCircle,
   ArrowRight,
   Bird,
   BookOpen,
   History,
+  Loader2,
   Lock,
   Package,
   Plus,
@@ -38,6 +42,7 @@ import {
   Wand2,
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { useParams } from 'next/navigation'
 import { toast } from 'sonner'
 
 const apiKey = `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`
@@ -79,7 +84,6 @@ function StepIndicator({ current }: { current: number }) {
           {STEPS.map((step, i) => {
             const Icon = step.icon
             const isCurrent = i <= current
-
             return (
               <div
                 key={step.label}
@@ -97,7 +101,6 @@ function StepIndicator({ current }: { current: number }) {
   )
 }
 
-// Section wrapper
 function Section({
   children,
   title,
@@ -133,7 +136,27 @@ export const CheckoutPage: React.FC = () => {
   const t = useTranslations('checkout')
   const { user } = useAuth()
   const router = useRouter()
-  const { cart } = useCart()
+  const params = useParams()
+  const locale = params.locale as LocaleType
+
+  const { cart, localizedItems, isLoading, isLocalizing, localizationError } =
+    useLocalizedCart(locale)
+
+  // Show raw cart items immediately while localized data loads — same pattern as CartModal
+  const displayItems = localizedItems.length > 0
+    ? localizedItems
+    : (cart?.items ?? []).flatMap((item) => {
+      if (typeof item.product !== 'object' || !item.product) return []
+      return [{
+        id: item.id,
+        quantity: item.quantity,
+        product: item.product as Product,
+        variant: item.variant != null && typeof item.variant === 'object'
+          ? (item.variant as Variant)
+          : null,
+      }]
+    })
+
   const [error, setError] = useState<null | string>(null)
   const { theme } = useTheme()
 
@@ -146,10 +169,7 @@ export const CheckoutPage: React.FC = () => {
   const [billingAddress, setBillingAddress] = useState<Partial<Address>>()
   const [billingAddressSameAsShipping, setBillingAddressSameAsShipping] = useState(true)
   const [isProcessingPayment, setProcessingPayment] = useState(false)
-
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentAdapterClient | null>(
-    null,
-  )
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentAdapterClient | null>(null)
   const initiatingRef = useRef(false)
 
   useEffect(() => {
@@ -158,7 +178,7 @@ export const CheckoutPage: React.FC = () => {
     }
   }, [paymentMethods, selectedPaymentMethod])
 
-  const cartIsEmpty = !cart || !cart.items || !cart.items.length
+  const cartIsEmpty = !isLoading && (!cart || !cart.items || !cart.items.length)
 
   const contactComplete = Boolean(user || (email && !emailEditable))
   const addressComplete = Boolean(billingAddress && (billingAddressSameAsShipping || shippingAddress))
@@ -202,7 +222,6 @@ export const CheckoutPage: React.FC = () => {
     async (paymentMethodName: string) => {
       if (initiatingRef.current || paymentData) return
       initiatingRef.current = true
-
       try {
         setProcessingPayment(true)
         setError(null)
@@ -216,25 +235,15 @@ export const CheckoutPage: React.FC = () => {
           },
         })) as Record<string, unknown>
 
-        if (result) {
-          setPaymentData(result)
-        }
+        if (result) setPaymentData(result)
       } catch (err) {
         const errorData =
           err instanceof Error
-            ? (() => {
-              try {
-                return JSON.parse(err.message)
-              } catch {
-                return {}
-              }
-            })()
+            ? (() => { try { return JSON.parse(err.message) } catch { return {} } })()
             : {}
 
         let errorMessage = t('paymentError')
-        if (errorData?.cause?.code === 'OutOfStock') {
-          errorMessage = t('outOfStockError')
-        }
+        if (errorData?.cause?.code === 'OutOfStock') errorMessage = t('outOfStockError')
 
         setError(errorMessage)
         toast.error(errorMessage)
@@ -243,16 +252,7 @@ export const CheckoutPage: React.FC = () => {
         initiatingRef.current = false
       }
     },
-    [
-      billingAddress,
-      billingAddressSameAsShipping,
-      shippingAddress,
-      email,
-      paymentData,
-      initiatePayment,
-      deletePendingTransactions,
-      t,
-    ],
+    [billingAddress, billingAddressSameAsShipping, shippingAddress, email, paymentData, initiatePayment, deletePendingTransactions, t],
   )
 
   const handlePaymentMethodSelect = (method: PaymentAdapterClient) => {
@@ -275,6 +275,18 @@ export const CheckoutPage: React.FC = () => {
   }
 
   if (!stripe) return null
+
+  // Full-page loading — before we even know if the cart has items
+  if (isLoading && !cart) {
+    return (
+      <div className="py-24 w-full flex flex-col items-center justify-center gap-6">
+        <LoadingSpinner />
+        <p className="text-muted-foreground text-sm tracking-wide animate-pulse">
+          {t('processingPayment')}
+        </p>
+      </div>
+    )
+  }
 
   if (cartIsEmpty && isProcessingPayment) {
     return (
@@ -306,35 +318,49 @@ export const CheckoutPage: React.FC = () => {
     <div className="max-w-7xl mx-auto px-6 py-10 w-full">
       <StepIndicator current={currentStep} />
 
+      {/* Localization error banner */}
+      {localizationError && (
+        <div className="mb-6 flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+          <AlertCircle className="size-4 shrink-0" />
+          <span>Could not load translations — showing default language.</span>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
-        {/* ── Left Column: Items & Forms ───────────────────────────────────── */}
+        {/* ── Left Column ─────────────────────────────────────────────────── */}
         <div className="lg:col-span-2 flex flex-col gap-10">
-          {/* Enchanted Items Section */}
+
+          {/* Items */}
           <div className="flex flex-col gap-6">
             <div className="flex items-center justify-between px-4">
-              <h3 className="text-xl font-bold">{t('enchantedItems')}</h3>
+              <h3 className="text-xl font-bold flex items-center gap-2">
+                {t('enchantedItems')}
+                {/* Spinner while translating — doesn't block the page */}
+                {isLocalizing && (
+                  <Loader2 className="size-4 text-muted-foreground animate-spin" />
+                )}
+              </h3>
               <span className="text-muted-foreground text-sm">
-                {t('artifactsFound', { count: cart.items?.length })}
+                {t('artifactsFound', { count: cart.items?.length ?? 0 })}
               </span>
             </div>
 
             <div className="flex flex-col gap-4">
-              {cart?.items?.map((item, index) => {
-                if (typeof item.product !== 'object' || !item.product) return null
-                const { product, quantity, variant } = item
-                if (!quantity) return null
+              {displayItems.map((item, index) => {
+                const { product, variant, quantity } = item
+                if (!product || !quantity) return null
 
                 let image = product.gallery?.[0]?.image || product.meta?.image
-                let price = product?.priceInUSD
+                let price = product.priceInUSD
 
-                const isVariant = Boolean(variant) && typeof variant === 'object'
-                if (isVariant) {
-                  price = variant?.priceInUSD
-                  const imageVariant = product.gallery?.find((g: any) => {
+                const isVariant = Boolean(variant)
+                if (isVariant && variant) {
+                  price = variant.priceInUSD
+                  const imageVariant = product.gallery?.find((g) => {
                     if (!g.variantOption) return false
                     const optId =
                       typeof g.variantOption === 'object' ? g.variantOption.id : g.variantOption
-                    return variant?.options?.some((o: any) =>
+                    return variant.options?.some((o) =>
                       typeof o === 'object' ? o.id === optId : o === optId,
                     )
                   })
@@ -345,8 +371,11 @@ export const CheckoutPage: React.FC = () => {
 
                 return (
                   <div
-                    key={index}
-                    className="bg-card/50 p-6 rounded-xl border border-border flex flex-wrap md:flex-nowrap items-center gap-6 group hover:border-primary/50 transition-colors"
+                    key={item.id ?? index}
+                    className={[
+                      'bg-card/50 p-6 rounded-xl border border-border flex flex-wrap md:flex-nowrap items-center gap-6 group hover:border-primary/50 transition-all',
+                      isLocalizing ? 'opacity-60' : 'opacity-100',
+                    ].join(' ')}
                   >
                     <div className="relative size-24 shrink-0 rounded-lg overflow-hidden border border-border">
                       {image && typeof image !== 'string' && (
@@ -354,12 +383,13 @@ export const CheckoutPage: React.FC = () => {
                       )}
                       <div className="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors" />
                     </div>
+
                     <div className="flex-1 min-w-50">
                       <h4 className="text-lg font-bold leading-tight">{product.title}</h4>
                       <p className="text-muted-foreground text-sm mt-1">
-                        {isVariant
+                        {isVariant && variant
                           ? variant.options
-                            ?.map((o: any) => (typeof o === 'object' ? o.label : null))
+                            ?.map((o) => (typeof o === 'object' ? o.label : null))
                             .filter(Boolean)
                             .join(', ')
                           : t('standardEdition')}
@@ -369,6 +399,7 @@ export const CheckoutPage: React.FC = () => {
                         {t('enchantedArtifact')}
                       </div>
                     </div>
+
                     <div className="flex items-center gap-8 w-full md:w-auto justify-between md:justify-end">
                       <div className="flex items-center gap-3 bg-secondary p-1.5 rounded-full">
                         <span className="text-sm font-bold px-4">{t('qty', { count: quantity })}</span>
@@ -394,7 +425,7 @@ export const CheckoutPage: React.FC = () => {
             </Button>
           </div>
 
-          {/* ── Contact Section ───────────────────────────────────────────── */}
+          {/* ── Contact ──────────────────────────────────────────────────── */}
           <Section title={t('contactInfo')} stepNumber={1} icon={BookOpen}>
             {user ? (
               <div className="flex justify-between p-6 bg-secondary/30 rounded-xl border border-border/50 sm:flex-row sm:items-center flex-col items-end">
@@ -472,14 +503,13 @@ export const CheckoutPage: React.FC = () => {
             )}
           </Section>
 
-          {/* ── Address Section ───────────────────────────────────────────── */}
+          {/* ── Address ──────────────────────────────────────────────────── */}
           <Section
             title={t('deliveryDetails')}
             stepNumber={2}
             icon={Bird}
             className={!contactComplete ? 'opacity-50 pointer-events-none' : ''}
           >
-            {/* Billing */}
             <div className="mb-8">
               <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 ml-1">
                 {t('billingAddress')}
@@ -491,10 +521,7 @@ export const CheckoutPage: React.FC = () => {
                     variant="ghost"
                     size="sm"
                     disabled={Boolean(paymentData)}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      setBillingAddress(undefined)
-                    }}
+                    onClick={(e) => { e.preventDefault(); setBillingAddress(undefined) }}
                     className="text-primary font-bold"
                   >
                     {t('change')}
@@ -511,7 +538,6 @@ export const CheckoutPage: React.FC = () => {
               )}
             </div>
 
-            {/* Shipping Toggle */}
             <div className="flex gap-3 items-center py-6 border-t border-border">
               <Checkbox
                 id="shippingTheSameAsBilling"
@@ -525,7 +551,6 @@ export const CheckoutPage: React.FC = () => {
               </Label>
             </div>
 
-            {/* Shipping (if different) */}
             {!billingAddressSameAsShipping && (
               <div className="mt-8 pt-6 border-t border-border">
                 <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 ml-1">
@@ -538,10 +563,7 @@ export const CheckoutPage: React.FC = () => {
                       variant="ghost"
                       size="sm"
                       disabled={Boolean(paymentData)}
-                      onClick={(e) => {
-                        e.preventDefault()
-                        setShippingAddress(undefined)
-                      }}
+                      onClick={(e) => { e.preventDefault(); setShippingAddress(undefined) }}
                       className="text-primary font-bold"
                     >
                       {t('change')}
@@ -564,7 +586,7 @@ export const CheckoutPage: React.FC = () => {
             )}
           </Section>
 
-          {/* ── Payment Section ───────────────────────────────────────────── */}
+          {/* ── Payment ──────────────────────────────────────────────────── */}
           <Section
             title={t('theFinale')}
             stepNumber={3}
@@ -573,15 +595,14 @@ export const CheckoutPage: React.FC = () => {
           >
             {!paymentData && (
               <div className="flex flex-col gap-6">
-                {/* Method selector */}
                 {paymentMethods.length > 1 && (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {paymentMethods.map((method) => (
                       <label
                         key={method.name}
                         className={`flex items-center gap-4 p-6 rounded-xl border cursor-pointer transition-all duration-300 ${selectedPaymentMethod?.name === method.name
-                          ? 'border-primary bg-primary/5 ring-1 ring-primary'
-                          : 'border-border hover:border-primary/40 hover:bg-secondary/50'
+                            ? 'border-primary bg-primary/5 ring-1 ring-primary'
+                            : 'border-border hover:border-primary/40 hover:bg-secondary/50'
                           }`}
                       >
                         <input
@@ -608,7 +629,6 @@ export const CheckoutPage: React.FC = () => {
               </div>
             )}
 
-            {/* Error */}
             {error && !paymentData?.['clientSecret'] && (
               <div className="mt-6 flex flex-col gap-4">
                 <Message error={error} />
@@ -627,7 +647,6 @@ export const CheckoutPage: React.FC = () => {
               </div>
             )}
 
-            {/* ── Stripe/PayPal Elements ─────────────────────────────────────── */}
             <Suspense fallback={<LoadingSpinner />}>
               {paymentData?.['clientSecret'] && selectedPaymentMethod?.name === 'stripe' && (
                 <div className="mt-2">
@@ -701,7 +720,7 @@ export const CheckoutPage: React.FC = () => {
           </Section>
         </div>
 
-        {/* ── Right Column: Quest Summary ──────────────────────────────────── */}
+        {/* ── Right Column: Summary ────────────────────────────────────────── */}
         <div className="lg:col-span-1 lg:sticky lg:top-28">
           <div className="bg-card p-8 rounded-2xl border border-border shadow-sm flex flex-col gap-8">
             <h3 className="text-xl font-bold flex items-center gap-3">
@@ -739,12 +758,21 @@ export const CheckoutPage: React.FC = () => {
 
             {!paymentData && (
               <Button
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-black py-8 rounded-full flex items-center justify-center gap-3 transition-all transform hover:scale-[1.02] glow-primary mt-2 uppercase tracking-widest"
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-black py-8 rounded-full flex items-center justify-center gap-3 transition-all transform hover:scale-[1.02] glow-primary mt-2 uppercase tracking-widest disabled:opacity-60 disabled:pointer-events-none"
                 onClick={handleGoToPayment}
-                disabled={!canGoToPayment || isProcessingPayment || !!paymentData}
+                disabled={!canGoToPayment || isProcessingPayment || !!paymentData || isLocalizing}
               >
-                <span>{t('embarkOnCheckout')}</span>
-                <ArrowRight size={20} className='rtl:rotate-180' />
+                {isLocalizing ? (
+                  <>
+                    <Loader2 size={20} className="animate-spin" />
+                    <span>{t('loading') ?? 'Loading…'}</span>
+                  </>
+                ) : (
+                  <>
+                    <span>{t('embarkOnCheckout')}</span>
+                    <ArrowRight size={20} className="rtl:rotate-180" />
+                  </>
+                )}
               </Button>
             )}
 

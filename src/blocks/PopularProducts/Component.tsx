@@ -83,7 +83,7 @@ export const PopularProductsBlock: React.FC<
 
                     {/* Play Icon Decorative */}
                     <div className="mt-6 size-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/30 transform translate-y-8 opacity-0 group-hover/card:translate-y-0 group-hover/card:opacity-100 transition-all duration-500 delay-200">
-                      <Play className="size-6 fill-current" />
+                      <Play className="size-6 fill-current rtl:rotate-180" />
                     </div>
                   </div>
                 </Link>

@@ -179,6 +179,19 @@
         "whispers": "Sussurros",
         "banishSession": "Encerrar Sessão"
     },
+    "cart": {
+        "title": "A Bolsa",
+        "emptySatchel": "Bolsa Vazia",
+        "artifactsFound": "{count, plural, one {# Artefacto Encontrado} other {# Artefactos Encontrados}}",
+        "translationError": "Não foi possível carregar as traduções — a mostrar o idioma padrão.",
+        "emptyDescription": "Nenhum artefacto encontrado. Visita o arquivo para começar a tua coleção.",
+        "exploreArchive": "Explorar o Arquivo",
+        "addAnother": "Adicionar outro Artefacto",
+        "subtotal": "Subtotal dos Artefactos",
+        "totalTribute": "Tributo Total",
+        "checkout": "Embarcar no Checkout",
+        "secureNote": "Protegido com encriptação mágica de 256 bits"
+    },
     "checkout": {
         "title": "Finalizar Compra",
         "packing": "Empacotando",
@@ -186,6 +199,7 @@
         "theFinale": "O Grand Finale",
         "finalizingQuest": "Finalizando a Missão",
         "currentStep": "Passo Atual: {step}",
+        "loading": "Carregando...",
         "stepTitles": [
             "Arrumando a Alforje",
             "Preparando para Entrega por Coruja",

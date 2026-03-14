@@ -179,6 +179,19 @@
         "whispers": "الهمسات",
         "banishSession": "إنهاء الجلسة"
     },
+    "cart": {
+        "title": "الحقيبة",
+        "emptySatchel": "الحقيبة فارغة",
+        "artifactsFound": "{count, plural, one {قطعة أثرية واحدة} two {قطعتان أثريتان} few {# قطع أثرية} other {# قطعة أثرية}}",
+        "translationError": "تعذّر تحميل الترجمات — يتم عرض اللغة الافتراضية.",
+        "emptyDescription": "لم يتم العثور على أي قطع أثرية. زُر الأرشيف لبدء مجموعتك.",
+        "exploreArchive": "استكشف الأرشيف",
+        "addAnother": "أضف قطعة أثرية أخرى",
+        "subtotal": "المجموع الفرعي للقطع",
+        "totalTribute": "المجموع الكلي",
+        "checkout": "المتابعة إلى الدفع",
+        "secureNote": "مؤمَّن بتشفير سحري 256-بت"
+    },
     "checkout": {
         "title": "إتمام الطلب",
         "packing": "التعبئة",
@@ -186,6 +199,7 @@
         "theFinale": "الخاتمة",
         "finalizingQuest": "وضع اللمسات الأخيرة على المهمة",
         "currentStep": "الخطوة الحالية: {step}",
+        "loading": "جاري التحميل...",
         "stepTitles": [
             "تعبئة الحقيبة",
             "التحضير لتوصيل البومة",
