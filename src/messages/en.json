@@ -179,6 +179,19 @@
         "whispers": "Whispers",
         "banishSession": "Banish Session"
     },
+    "cart": {
+        "title": "The Satchel",
+        "emptySatchel": "Empty Satchel",
+        "artifactsFound": "{count, plural, one {# Artifact Found} other {# Artifacts Found}}",
+        "translationError": "Could not load translations — showing default language.",
+        "emptyDescription": "No artifacts found. Visit the archive to begin your collection.",
+        "exploreArchive": "Explore the Archive",
+        "addAnother": "Add another Artifact",
+        "subtotal": "Artifact Subtotal",
+        "totalTribute": "Total Tribute",
+        "checkout": "Embark on Checkout",
+        "secureNote": "Secured with 256-bit magic encryption"
+    },
     "checkout": {
         "title": "Checkout",
         "packing": "Packing",
@@ -186,6 +199,7 @@
         "theFinale": "The Finale",
         "finalizingQuest": "Finalizing the Quest",
         "currentStep": "Current Step: {step}",
+        "loading": "Loading...",
         "stepTitles": [
             "Packing the Satchel",
             "Preparing for Owl Delivery",

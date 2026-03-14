@@ -63,7 +63,7 @@ export function HeaderClient({ header }: Props) {
         {user ? (<div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
             <Suspense fallback={<OpenCartButton />}>
-              <Cart />
+              <Cart/>
             </Suspense>
 
             <Link
