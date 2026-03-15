@@ -39,7 +39,6 @@ export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL,
   cors: {
     origins: corsOrigins,
-
   },
   csrf: corsOrigins,
   admin: {

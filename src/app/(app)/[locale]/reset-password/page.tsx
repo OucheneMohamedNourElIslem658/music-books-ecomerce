@@ -108,7 +108,7 @@ function ResetPasswordForm() {
         </label>
         <div className="relative">
           <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#8a7241]">
-            enhanced_encryption
+            enhanced_encryptions
           </span>
           <input
             type="password"
