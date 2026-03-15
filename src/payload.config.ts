@@ -31,7 +31,17 @@ import { customTranslations } from './utilities/translations'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+const corsOrigins = process.env.CORS_ORIGINS
+  ? process.env.CORS_ORIGINS.split(',')
+  : ['http://localhost:3000']
+
 export default buildConfig({
+  serverURL: process.env.NEXT_PUBLIC_SERVER_URL,
+  cors: {
+    origins: corsOrigins,
+
+  },
+  csrf: corsOrigins,
   admin: {
     components: {
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
