@@ -5,6 +5,39 @@ type AuthorPageArgs = {
   authorFullImage: Media
 }
 
+// ─── Rich text quote helper ───────────────────────────────────────────────────
+
+const quoteRichText = (text: string, dir: 'ltr' | 'rtl' = 'ltr') => ({
+  root: {
+    type: 'root' as const,
+    direction: dir,
+    format: '' as const,
+    indent: 0,
+    version: 1,
+    children: [
+      {
+        type: 'paragraph' as const,
+        direction: dir,
+        format: '' as const,
+        indent: 0,
+        textFormat: 0,
+        version: 1,
+        children: [
+          {
+            type: 'text' as const,
+            detail: 0,
+            format: 0,
+            mode: 'normal' as const,
+            style: '',
+            text,
+            version: 1,
+          },
+        ],
+      },
+    ],
+  },
+})
+
 // ─── Shared layout builders ───────────────────────────────────────────────────
 
 const questMapBlock = (
@@ -41,11 +74,10 @@ export const authorPageData = ({
     type: 'authorHeader',
     eyebrow: 'THE AUTHOR\'S MANUSCRIPT',
     title: 'The Chronicler\'s Identity',
-    quote: 'A life spent between inkwells and instruments, weaving melodies into the very fibers of the written word. Welcome to my study, where every book has a rhythm and every song tells a tale.',
+    quote: quoteRichText('A life spent between inkwells and instruments, weaving melodies into the very fibers of the written word. Welcome to my study, where every book has a rhythm and every song tells a tale.'),
     media: authorFullImage,
   },
   layout: [
-    // Quest Map / Timeline
     {
       blockType: 'questMap',
       title: 'The Map of Quests',
@@ -84,8 +116,6 @@ export const authorPageData = ({
         },
       ],
     },
-
-    // Harmonic Forge highlights
     {
       blockType: 'authorHighlights',
       title: 'The Harmonic Forge',
@@ -108,8 +138,6 @@ export const authorPageData = ({
         },
       ],
     },
-
-    // Newsletter CTA at bottom
     {
       blockType: 'linkToContact',
       title: 'Ready to Start Your Journey?',
@@ -138,7 +166,7 @@ export const authorPageAR = ({ authorFullImage }: { authorFullImage: Media }) =>
     type: 'authorHeader' as const,
     eyebrow: 'مخطوطة المؤلف',
     title: 'هوية المؤرخ',
-    quote: 'حياة أمضيتها بين الأحبار والآلات الموسيقية، أنسج الألحان في نسيج الكلمة المكتوبة. مرحباً في مكتبتي، حيث لكل كتاب إيقاع وكل أغنية تحكي قصة.',
+    quote: quoteRichText('حياة أمضيتها بين الأحبار والآلات الموسيقية، أنسج الألحان في نسيج الكلمة المكتوبة. مرحباً في مكتبتي، حيث لكل كتاب إيقاع وكل أغنية تحكي قصة.', 'rtl'),
     media: authorFullImage,
   },
   layout: [
@@ -170,7 +198,7 @@ export const authorPagePT = ({ authorFullImage }: { authorFullImage: Media }) =>
     type: 'authorHeader' as const,
     eyebrow: 'O MANUSCRITO DO AUTOR',
     title: 'A Identidade do Cronista',
-    quote: 'Uma vida passada entre tinteiros e instrumentos, tecendo melodias nas fibras da palavra escrita. Bem-vindo ao meu estúdio, onde cada livro tem um ritmo e cada canção conta uma história.',
+    quote: quoteRichText('Uma vida passada entre tinteiros e instrumentos, tecendo melodias nas fibras da palavra escrita. Bem-vindo ao meu estúdio, onde cada livro tem um ritmo e cada canção conta uma história.'),
     media: authorFullImage,
   },
   layout: [
