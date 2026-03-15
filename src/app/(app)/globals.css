@@ -1,3 +1,6 @@
+/* app/globals.css */
+@import 'material-symbols/outlined';
+/* or /rounded or /sharp */
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
@@ -251,7 +254,7 @@
   }
 
   body {
-    @apply bg-background text-foreground min-h-[100vh] flex flex-col;
+    @apply bg-background text-foreground min-h-screen flex flex-col;
   }
 
   * {
@@ -277,6 +280,21 @@
 
   ::-webkit-scrollbar-thumb:hover {
     background-color: color-mix(in oklch, var(--primary) 80%, transparent);
+  }
+
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
   }
 }
 

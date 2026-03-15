@@ -16,6 +16,7 @@ import { ProductsCollection } from '@/collections/Products'
 import { paypalAdapter } from '@/lib/payments/paypal'
 import { Page, Product } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
 const generateTitle: GenerateTitle<Product | Page> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Payload Ecommerce Template` : 'Payload Ecommerce Template'
@@ -28,6 +29,13 @@ const generateURL: GenerateURL<Product | Page> = ({ doc }) => {
 }
 
 export const plugins: Plugin[] = [
+  vercelBlobStorage({
+    token: process.env.BLOB_READ_WRITE_TOKEN!,
+    enabled: true,
+    collections: {
+      media: true
+    }
+  }),
   seoPlugin({
     generateTitle,
     generateURL,

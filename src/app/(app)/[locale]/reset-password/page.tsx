@@ -1,11 +1,10 @@
 'use client'
 
+import { AuthLayout } from '@/components/layout/AuthLayout'
 import { Link } from '@/i18n/navigation'
-import { cn } from '@/utilities/cn'
+import { useTranslations } from 'next-intl'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Suspense, useState } from 'react'
-import { AuthLayout } from '@/components/layout/AuthLayout'
-import { useTranslations } from 'next-intl'
 
 // ─── Inner form (uses useSearchParams so needs Suspense boundary) ─────────────
 
@@ -134,7 +133,7 @@ function ResetPasswordForm() {
         <button
           className="wax-seal group relative flex h-24 w-24 items-center justify-center rounded-full bg-primary text-white border-4 border-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
           type="submit"
-          disabled={status === 'loading' || status === 'success'}
+          disabled={status === 'loading'}
         >
           <div className="absolute inset-0 rounded-full border-2 border-white/30 scale-90"></div>
           <span className="material-symbols-outlined text-4xl group-hover:scale-110 transition-transform">

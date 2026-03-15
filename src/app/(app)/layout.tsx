@@ -30,9 +30,6 @@ export default async function AppLayout({
   const pathname = headersList.get('x-pathname') || ''
   const locale = pathname.split('/')[1] as LocaleType
 
-  console.log(locale);
-
-
   return (
     <html
       lang={locale ?? 'en'}
@@ -43,7 +40,6 @@ export default async function AppLayout({
       <head>
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
-        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
       </head>
       <body>
         <AudioProvider>

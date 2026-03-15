@@ -6,7 +6,7 @@ import { Link, redirect } from '@/i18n/navigation'
 import { cn } from '@/utilities/cn'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import configPromise from '@payload-config'
-import { History, Package, Plus, RefreshCcw, ShieldCheck, Sparkles, Star } from 'lucide-react'
+import { History, LucideIcon, Package, Plus, RefreshCcw, ShieldCheck, Sparkles, Star } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { headers as getHeaders } from 'next/headers'
 import Image from 'next/image'
@@ -18,7 +18,7 @@ const statusStyles: Record<string, string> = {
   rejected: 'bg-error/20 text-error border-error/30',
 }
 
-const statusIcons: Record<string, any> = {
+const statusIcons: Record<string, LucideIcon> = {
   approved: RefreshCcw,
   pending: Sparkles,
   rejected: History,
@@ -55,26 +55,24 @@ export default async function ReviewsPage({ searchParams, params }: Args) {
   let totalPages = 1
   let totalDocs = 0
 
-  try {
-    const result = await payload.find({
-      collection: 'reviews',
-      limit: LIMIT,
-      page,
-      pagination: true,
-      user,
-      overrideAccess: false,
-      depth: 2,
-      where: {
-        author: {
-          equals: user?.id,
-        },
+  const result = await payload.find({
+    collection: 'reviews',
+    limit: LIMIT,
+    page,
+    pagination: true,
+    user,
+    overrideAccess: false,
+    depth: 2,
+    where: {
+      author: {
+        equals: user?.id,
       },
-    })
+    },
+  })
 
-    reviews = result.docs
-    totalPages = result.totalPages
-    totalDocs = result.totalDocs
-  } catch (error) { }
+  reviews = result.docs
+  totalPages = result.totalPages
+  totalDocs = result.totalDocs
 
   return (
     <div className="w-full mx-auto px-4 pb-10 flex flex-col gap-8">
@@ -187,7 +185,7 @@ export default async function ReviewsPage({ searchParams, params }: Args) {
                     </div>
 
                     {/* Rating */}
-                    <div className="flex flex-col items-end justify-center md:border-l border-border md:pl-8 min-w-[120px]">
+                    <div className="flex flex-col items-end justify-center md:border-l border-border md:pl-8 min-w-30">
                       <span className="text-muted-foreground text-[10px] uppercase font-black tracking-widest mb-1 opacity-60">
                         {t('rating')}
                       </span>

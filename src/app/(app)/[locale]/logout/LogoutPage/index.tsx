@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react'
 export const LogoutPage: React.FC = () => {
   const t = useTranslations('auth.logout')
   const { logout } = useAuth()
-  const [success, setSuccess] = useState(false)
+  const [_, setSuccess] = useState(false)
 
   useEffect(() => {
     const performLogout = async () => {
@@ -26,10 +26,10 @@ export const LogoutPage: React.FC = () => {
 
   return (
     <main className="flex-1 flex flex-col items-center justify-center px-6 py-12 min-h-[80vh]">
-      <div className="max-w-[800px] w-full flex flex-col items-center text-center">
+      <div className="max-w-200 w-full flex flex-col items-center text-center">
         {/* Illustration Section */}
-        <div className="relative w-full aspect-video md:aspect-[21/9] rounded-3xl overflow-hidden mb-12 group shadow-2xl border border-border/50">
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10"></div>
+        <div className="relative w-full aspect-video md:aspect-21/9 rounded-3xl overflow-hidden mb-12 group shadow-2xl border border-border/50">
+          <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-transparent z-10"></div>
           <div className="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
           <div
             className="w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-700 group-hover:scale-105"

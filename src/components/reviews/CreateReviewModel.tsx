@@ -8,10 +8,10 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Review } from '@/payload-types'
+import { useTranslations } from 'next-intl'
 import { DefaultDocumentIDType } from 'payload'
 import React, { useState } from 'react'
 import { ReviewForm } from '../forms/ReviewsForm'
-import { useTranslations } from 'next-intl'
 
 type Props = {
   reviewID?: DefaultDocumentIDType

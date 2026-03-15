@@ -1,10 +1,11 @@
 import { CreateReviewModal } from '@/components/reviews/CreateReviewModel'
 import { Link } from '@/i18n/navigation'
-import type { Category, Media as MediaType } from '@/payload-types'
+import type { Category } from '@/payload-types'
 import { LocaleType } from '@/types/locale'
 import configPromise from '@payload-config'
 import { ArrowLeft, Star } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
+import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import React from 'react'
@@ -46,7 +47,7 @@ export default async function ReviewsLayout({ params, children }: Props) {
     })
     if (!product) notFound()
 
-    const image = (product.gallery?.[0]?.image ?? product.meta?.image) as MediaType | undefined
+    // const image = (product.gallery?.[0]?.image ?? product.meta?.image) as MediaType | undefined
     const category = product.categories?.[0] as Category | undefined
 
     const totalReviews = product.reviewCount ?? 0
@@ -58,6 +59,14 @@ export default async function ReviewsLayout({ params, children }: Props) {
         star,
         count: distribution[star] ?? 0,
     }))
+
+    const cookieStore = await cookies()
+    const token = cookieStore.get('payload-token')?.value
+    const { user } = await payload.auth({
+        headers: new Headers({
+            Authorization: `JWT ${token}`,
+        }),
+    })
 
     return (
         <div className="container py-12 lg:py-20 min-h-screen">
@@ -87,9 +96,11 @@ export default async function ReviewsLayout({ params, children }: Props) {
                             bold: (chunks) => <span className="text-foreground font-bold">{chunks}</span>
                         })}
                     </p>
-                    <div className="flex flex-wrap gap-4">
-                        <CreateReviewModal productID={product.id} />
-                    </div>
+                    {user && (
+                        <div className="flex flex-wrap gap-4">
+                            <CreateReviewModal productID={product.id} />
+                        </div>
+                    )}
                 </div>
 
                 {/* Rating summary card */}

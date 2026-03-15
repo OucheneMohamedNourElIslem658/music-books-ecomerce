@@ -12,6 +12,7 @@
 
 import { routing } from '@/i18n/routing'
 import { Cart } from '@/payload-types'
+import { LocaleType } from '@/types/locale'
 import configPromise from '@payload-config'
 import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
@@ -27,8 +28,8 @@ export async function GET(req: NextRequest) {
         process.env.NEXT_PUBLIC_APP_URL ||
         `${req.headers.get('x-forwarded-proto') || 'http'}://${req.headers.get('host')}`
 
-    const locale = searchParams.get('locale')
-    const safeLocale = routing.locales.includes(locale as any) ? locale : routing.defaultLocale
+    const locale = searchParams.get('locale') as LocaleType
+    const safeLocale = routing.locales.includes(locale) ? locale : routing.defaultLocale
 
     if (!paypalOrderId) {
         return NextResponse.redirect(`${appUrl}/${safeLocale}/checkout?error=missing_token`)

@@ -33,22 +33,20 @@ export default async function AccountPage({ params }: AccountPageProps) {
     })
   }
 
-  try {
-    const ordersResult = await payload.find({
-      collection: 'orders',
-      limit: 3,
-      user,
-      overrideAccess: false,
-      pagination: false,
-      where: {
-        customer: {
-          equals: user?.id,
-        },
+  const ordersResult = await payload.find({
+    collection: 'orders',
+    limit: 3,
+    user,
+    overrideAccess: false,
+    pagination: false,
+    where: {
+      customer: {
+        equals: user?.id,
       },
-    })
+    },
+  })
 
-    orders = ordersResult?.docs || []
-  } catch (error) { }
+  orders = ordersResult?.docs || []
 
   return (
     <div className="space-y-12">

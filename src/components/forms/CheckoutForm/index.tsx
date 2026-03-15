@@ -2,11 +2,11 @@
 
 import { Message } from '@/components/Message'
 import { Button } from '@/components/ui/button'
+import { Address } from '@/payload-types'
+import { useCart, usePayments } from '@payloadcms/plugin-ecommerce/client/react'
 import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import { useRouter } from 'next/navigation'
-import React, { useCallback, FormEvent } from 'react'
-import { useCart, usePayments } from '@payloadcms/plugin-ecommerce/client/react'
-import { Address } from '@/payload-types'
+import React, { FormEvent, useCallback } from 'react'
 
 type Props = {
   customerEmail?: string
@@ -84,7 +84,6 @@ export const CheckoutForm: React.FC<Props> = ({
                 router.push(redirectUrl)
               }
             } catch (err) {
-              console.log({ err })
               const msg = err instanceof Error ? err.message : 'Something went wrong.'
               setError(`Error while confirming order: ${msg}`)
               setIsLoading(false)

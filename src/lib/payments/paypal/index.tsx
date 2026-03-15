@@ -266,11 +266,6 @@ export const paypalAdapter = (args: PayPalAdapterArgs): PaymentAdapter => {
     if (!transactionId) throw new Error('confirmOrder: transactionId is required')
     if (!cartId) throw new Error('confirmOrder: cartId is required')
 
-    console.log('paypal order id', paypalOrderId)
-    console.log('transaction id', transactionId)
-    console.log('cart id', cartId)
-    console.log('customer email', emailFromData)
-
     try {
       const { result: captureResult } = await ordersController.captureOrder({
         id: paypalOrderId,

@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 
 import { CreateAccountForm } from '@/components/forms/CreateAccountForm'
+import { AuthLayout } from '@/components/layout/AuthLayout'
 import { RenderParams } from '@/components/RenderParams'
 import { redirect } from '@/i18n/navigation'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import configPromise from '@payload-config'
 import { headers as getHeaders } from 'next/headers'
 import { getPayload } from 'payload'
-import { AuthLayout } from '@/components/layout/AuthLayout'
 
 import { getTranslations } from 'next-intl/server'
 
@@ -25,7 +25,7 @@ export default async function CreateAccount({ params }: Props) {
 
   if (user) {
     redirect({
-      href: `/account?warning=${encodeURIComponent(t('alreadyLoggedIn' as any))}`, // assuming we add this if not present or use a common one
+      href: `/account?warning=${encodeURIComponent(t('alreadyLoggedIn'))}`, // assuming we add this if not present or use a common one
       locale,
     })
   }

@@ -1,4 +1,4 @@
-import { sqliteAdapter } from '@payloadcms/db-sqlite'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import {
   BoldFeature,
@@ -44,11 +44,11 @@ export default buildConfig({
     user: Users.slug,
   },
   collections: [Users, Pages, Categories, Media, Reviews],
-  db: sqliteAdapter({
-    client: {
+  db: postgresAdapter({
+    pool: {
       // You can use an environment variable or a hardcoded string
       // The format must be 'file:./filename.db' for local files
-      url: process.env.DATABASE_URI || 'file:./payload.db',
+      connectionString: process.env.DATABASE_URL,
     },
   }),
   editor: lexicalEditor({

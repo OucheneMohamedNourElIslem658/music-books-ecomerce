@@ -112,7 +112,7 @@ export default async function ProductPage({ params }: Args) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-20">
           <div className="w-full lg:sticky lg:top-28">
             <Suspense fallback={
-              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-muted animate-pulse" />
+              <div className="relative aspect-4/5 w-full overflow-hidden rounded-xl bg-muted animate-pulse" />
             }>
               {gallery.length > 0 && (
                 <Gallery
@@ -130,7 +130,7 @@ export default async function ProductPage({ params }: Args) {
 
         {/* Content blocks */}
         {product.layout?.length ? (
-          <RenderBlocks blocks={product.layout as any} product={product} />
+          <RenderBlocks blocks={product.layout} product={product} />
         ) : null}
 
         {/* Related products */}

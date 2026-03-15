@@ -1,7 +1,6 @@
 import { ChroniclesSidebar } from '@/components/Chronicals/SideBar'
 import { Search } from '@/components/Search'
 import { LocaleType } from '@/types/locale'
-import { getTranslations } from 'next-intl/server'
 import React, { Suspense } from 'react'
 
 interface ChroniclesLayoutProps {
@@ -11,8 +10,6 @@ interface ChroniclesLayoutProps {
 
 export default async function ChroniclesLayout({ children, params }: ChroniclesLayoutProps) {
     const { locale } = await params
-    const t = await getTranslations('shop.layout')
-
     return (
         <div className="container py-8 md:py-12">
             <div className="flex flex-col lg:flex-row gap-12">

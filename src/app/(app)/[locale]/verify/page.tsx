@@ -44,7 +44,7 @@ function VerifyEmailInner() {
       })
       .catch(() => {
         setStatus('error')
-        setMessage(t('auth.resetPassword.genericError' as any))
+        setMessage(t('auth.resetPassword.genericError'))
       })
   }, [token, router, t])
 
@@ -117,10 +117,10 @@ function VerifyEmailInner() {
             <MailCheck className="size-7 group-hover:scale-110 transition-transform" />
           </Link>
           <Link
-              href="/login"
-              className="text-sm font-bold text-primary magical-glow hover:scale-105 transition-transform font-display"
+            href="/login"
+            className="text-sm font-bold text-primary magical-glow hover:scale-105 transition-transform font-display"
           >
-              {t('returnToPortal')}
+            {t('returnToPortal')}
           </Link>
 
         </div>

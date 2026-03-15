@@ -42,25 +42,23 @@ export default async function Orders({ searchParams, params }: Props) {
 
   let totalPages = 1
 
-  try {
-    const ordersResult = await payload.find({
-      collection: 'orders',
-      limit: LIMIT,
-      page,
-      pagination: true,
-      user,
-      overrideAccess: false,
-      locale,
-      where: {
-        customer: {
-          equals: user?.id,
-        },
+  const ordersResult = await payload.find({
+    collection: 'orders',
+    limit: LIMIT,
+    page,
+    pagination: true,
+    user,
+    overrideAccess: false,
+    locale,
+    where: {
+      customer: {
+        equals: user?.id,
       },
-    })
+    },
+  })
 
-    orders = ordersResult?.docs || []
-    totalPages = ordersResult?.totalPages
-  } catch (error) { }
+  orders = ordersResult?.docs || []
+  totalPages = ordersResult?.totalPages
 
   return (
     <main className="flex-1 flex flex-col max-w-5xl mx-auto w-full px-4 md:px-8">

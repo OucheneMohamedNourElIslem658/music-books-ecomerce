@@ -222,11 +222,10 @@ export const seed = async ({
   ])
 
   // ─── Attach reviews + related products ───────────────────────────────────
-  await Promise.all([
-    payload.update({ collection: 'products', id: product1.id, data: { popularReviews: [review1a.id, review1b.id], relatedProducts: [product2.id, product3.id] } }),
-    payload.update({ collection: 'products', id: product2.id, data: { popularReviews: [review2a.id, review2b.id], relatedProducts: [product1.id, product3.id] } }),
-    payload.update({ collection: 'products', id: product3.id, data: { popularReviews: [review3a.id, review3b.id], relatedProducts: [product1.id, product2.id] } }),
-  ])
+  // NOTE: Sequential (not Promise.all) to avoid PostgreSQL deadlock on products_rels
+  await payload.update({ collection: 'products', id: product1.id, data: { popularReviews: [review1a.id, review1b.id], relatedProducts: [product2.id, product3.id] } })
+  await payload.update({ collection: 'products', id: product2.id, data: { popularReviews: [review2a.id, review2b.id], relatedProducts: [product1.id, product3.id] } })
+  await payload.update({ collection: 'products', id: product3.id, data: { popularReviews: [review3a.id, review3b.id], relatedProducts: [product1.id, product2.id] } })
 
   // ─── Variant types ────────────────────────────────────────────────────────
   payload.logger.info('— Seeding variants...')

@@ -139,11 +139,11 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
               const isVariant = Boolean(variant) && typeof variant === 'object'
               if (isVariant) {
                 price = variant?.priceInUSD
-                const imageVariant = product.gallery?.find((g: any) => {
+                const imageVariant = product.gallery?.find((g) => {
                   if (!g.variantOption) return false
                   const optId =
                     typeof g.variantOption === 'object' ? g.variantOption.id : g.variantOption
-                  return variant?.options?.some((o: any) =>
+                  return variant?.options?.some((o) =>
                     typeof o === 'object' ? o.id === optId : o === optId,
                   )
                 })
@@ -175,7 +175,7 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
                       <p className="text-muted-foreground text-sm line-clamp-2">
                         {isVariant
                           ? variant?.options
-                            ?.map((o: any) => (typeof o === 'object' ? o.label : null))
+                            ?.map((o) => (typeof o === 'object' ? o.label : null))
                             .filter(Boolean)
                             .join(', ')
                           : t('standardEdition')}
