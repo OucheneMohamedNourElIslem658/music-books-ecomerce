@@ -213,12 +213,16 @@ export const CheckoutPage: React.FC = () => {
     try {
       const res = await fetch(
         `/api/transactions?where[cart][equals]=${cart.id}&where[status][equals]=pending&limit=20`,
+        { credentials: 'include' }, // ← sends the payload-token cookie
       )
       if (!res.ok) return
       const { docs } = await res.json()
       await Promise.all(
         (docs ?? []).map((tx: { id: string | number }) =>
-          fetch(`/api/transactions/${tx.id}`, { method: 'DELETE' }),
+          fetch(`/api/transactions/${tx.id}`, {
+            method: 'DELETE',
+            credentials: 'include', // ← same here for the delete calls
+          }),
         ),
       )
     } catch { }
