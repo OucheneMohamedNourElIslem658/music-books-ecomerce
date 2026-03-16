@@ -1,3 +1,4 @@
+// import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import {
@@ -60,6 +61,12 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL,
     },
   }),
+
+  // db: sqliteAdapter({
+  //   client: {
+  //     url: `file:${path.resolve(dirname, 'payload.db')}`,
+  //   }
+  // }),
   editor: lexicalEditor({
     features: () => {
       return [

@@ -5,6 +5,7 @@ import { Link } from '@/i18n/navigation'
 import { useAuth } from '@/providers/Auth'
 import { cn } from '@/utilities/cn'
 import { User } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { usePathname } from 'next/navigation'
 import { Suspense } from 'react'
 import type { Header } from 'src/payload-types'
@@ -20,6 +21,7 @@ export function HeaderClient({ header }: Props) {
   const menu = header.navItems || []
   const pathname = usePathname()
   const { user } = useAuth()
+  const t = useTranslations('header')
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md px-6 py-4 lg:px-20">
@@ -63,7 +65,7 @@ export function HeaderClient({ header }: Props) {
         {user ? (<div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
             <Suspense fallback={<OpenCartButton />}>
-              <Cart/>
+              <Cart />
             </Suspense>
 
             <Link
@@ -84,12 +86,12 @@ export function HeaderClient({ header }: Props) {
           <div className="flex gap-2">
             <Button className='rounded-full' variant="outline">
               <Link href="/create-account" className="text-sm font-bold px-2">
-                Register
+                {t('register')}
               </Link>
             </Button>
             <Button className='rounded-full'>
               <Link href="/login" className="text-sm font-bold px-2">
-                Login
+                {t('login')}
               </Link>
             </Button>
           </div>

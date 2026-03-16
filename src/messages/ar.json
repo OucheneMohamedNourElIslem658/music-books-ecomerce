@@ -1,5 +1,9 @@
 {
     "greeting": "مرحبا",
+    "header": {
+        "register": "تسجيل",
+        "login": "تسجيل الدخول"
+    },
     "search": {
         "placeholder": "ابحث في الأرشيفات المسحورة...",
         "clear": "مسح البحث",

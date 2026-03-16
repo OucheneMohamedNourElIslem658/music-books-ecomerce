@@ -1,5 +1,9 @@
 {
     "greeting": "Olá",
+    "header": {
+        "register": "Registrar",
+        "login": "Entrar"
+    },
     "search": {
         "placeholder": "Pesquisar nos arquivos encantados...",
         "clear": "Limpar pesquisa",

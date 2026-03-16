@@ -1,5 +1,9 @@
 {
     "greeting": "Hello",
+    "header": {
+        "register": "Register",
+        "login": "Login"
+    },
     "search": {
         "placeholder": "Search the enchanted archives...",
         "clear": "Clear search",

@@ -1,5 +1,7 @@
-import type { Form } from '@/payload-types'
+import type { Form, Page } from '@/payload-types'
 import { RequiredDataFromCollectionSlug } from 'payload'
+
+// ─── EN data ──────────────────────────────────────────────────────────────────
 
 export const contactPageData = ({
   contactForm,
@@ -8,36 +10,36 @@ export const contactPageData = ({
 }): RequiredDataFromCollectionSlug<'pages'> => ({
   slug: 'contact',
   _status: 'published',
-  title: 'Reach the Author\'s Tower',
+  title: "Reach the Author's Tower",
   hero: {
     type: 'lowImpact',
     richText: {
       root: {
         type: 'root',
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        version: 1,
         children: [
           {
             type: 'heading',
             tag: 'h1',
-            children: [{ type: 'text', detail: 0, format: 0, mode: 'normal', style: '', text: 'Send a Raven to the High Tower', version: 1 }],
             direction: 'ltr',
             format: '',
             indent: 0,
             version: 1,
+            children: [{ type: 'text', detail: 0, format: 0, mode: 'normal', style: '', text: 'Send a Raven to the High Tower', version: 1 }],
           },
           {
             type: 'paragraph',
-            children: [{ type: 'text', detail: 0, format: 0, mode: 'normal', style: '', text: 'Your missive will be carried by starlight across the enchanted forests. Write your legend below.', version: 1 }],
             direction: 'ltr',
             format: '',
             indent: 0,
             textFormat: 0,
             version: 1,
+            children: [{ type: 'text', detail: 0, format: 0, mode: 'normal', style: '', text: 'Your missive will be carried by starlight across the enchanted forests. Write your legend below.', version: 1 }],
           },
         ],
-        direction: 'ltr',
-        format: '',
-        indent: 0,
-        version: 1,
       },
     },
     links: [],
@@ -50,27 +52,27 @@ export const contactPageData = ({
       introContent: {
         root: {
           type: 'root',
-          children: [
-            {
-              type: 'heading',
-              tag: 'h3',
-              children: [{ type: 'text', detail: 0, format: 0, mode: 'normal', style: '', text: 'The Messenger Scroll', version: 1 }],
-              direction: 'ltr',
-              format: '',
-              indent: 0,
-              version: 1,
-            },
-          ],
           direction: 'ltr',
           format: '',
           indent: 0,
           version: 1,
+          children: [
+            {
+              type: 'heading',
+              tag: 'h3',
+              direction: 'ltr',
+              format: '',
+              indent: 0,
+              version: 1,
+              children: [{ type: 'text', detail: 0, format: 0, mode: 'normal', style: '', text: 'The Messenger Scroll', version: 1 }],
+            },
+          ],
         },
       },
     },
   ],
   meta: {
-    title: 'Reach the Author\'s Tower | Contact',
+    title: "Reach the Author's Tower | Contact",
     description: 'Send a message to the Composer-Author. Your missive will be carried by starlight.',
   },
 })
@@ -79,21 +81,21 @@ export const contactFormData = () => ({
   confirmationMessage: {
     root: {
       type: 'root' as const,
-      children: [
-        {
-          type: 'heading' as const,
-          tag: 'h2' as const,
-          children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'Your raven has been dispatched! The Chronicler will respond soon.', version: 1 }],
-          direction: 'ltr' as const,
-          format: '' as const,
-          indent: 0,
-          version: 1,
-        },
-      ],
       direction: 'ltr' as const,
       format: '' as const,
       indent: 0,
       version: 1,
+      children: [
+        {
+          type: 'heading' as const,
+          tag: 'h2' as const,
+          direction: 'ltr' as const,
+          format: '' as const,
+          indent: 0,
+          version: 1,
+          children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'Your raven has been dispatched! The Chronicler will respond soon.', version: 1 }],
+        },
+      ],
     },
   },
   confirmationType: 'message' as const,
@@ -104,28 +106,28 @@ export const contactFormData = () => ({
       message: {
         root: {
           type: 'root' as const,
+          direction: 'ltr' as const,
+          format: '' as const,
+          indent: 0,
+          version: 1,
           children: [
             {
               type: 'paragraph' as const,
-              children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'Your message to the Author\'s Tower has been received. The Chronicler will be in touch soon.', version: 1 }],
               direction: 'ltr' as const,
               format: '' as const,
               indent: 0,
               textFormat: 0,
               version: 1,
+              children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: "Your message to the Author's Tower has been received. The Chronicler will be in touch soon.", version: 1 }],
             },
           ],
-          direction: 'ltr' as const,
-          format: '' as const,
-          indent: 0,
-          version: 1,
         },
       },
       subject: 'Your raven has reached the tower.',
     },
   ],
   fields: [
-    { name: 'full-name', blockName: 'full-name', blockType: 'text' as const, label: 'Your Legend\'s Name', required: true, width: 100 },
+    { name: 'full-name', blockName: 'full-name', blockType: 'text' as const, label: "Your Legend's Name", required: true, width: 100 },
     { name: 'email', blockName: 'email', blockType: 'email' as const, label: 'The Return Address', required: true, width: 100 },
     { name: 'message', blockName: 'message', blockType: 'textarea' as const, label: 'Your Missive', required: true, width: 100 },
   ],
@@ -136,96 +138,146 @@ export const contactFormData = () => ({
   createdAt: new Date().toISOString(),
 })
 
-// ─── Arabic translation ───────────────────────────────────────────────────────
+// ─── AR translation ───────────────────────────────────────────────────────────
 
-export const contactPageAR = ({ contactForm }: { contactForm: Form }) => ({
-  title: 'تواصل مع البرج',
-  hero: {
-    type: 'lowImpact' as const,
-    richText: {
-      root: {
-        type: 'root' as const, direction: 'rtl' as const, format: '' as const, indent: 0, version: 1,
-        children: [
-          {
-            type: 'heading' as const, tag: 'h1' as const, direction: 'rtl' as const, format: '' as const, indent: 0, version: 1,
-            children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'أرسل غراباً إلى البرج العالي', version: 1 }]
-          },
-          {
-            type: 'paragraph' as const, direction: 'rtl' as const, format: '' as const, indent: 0, textFormat: 0, version: 1,
-            children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'ستُحمل رسالتك بضوء النجوم عبر الغابات المسحورة. اكتب أسطورتك أدناه.', version: 1 }]
-          },
-        ],
-      },
-    },
-    links: [],
-  },
-  layout: [
-    {
-      blockType: 'formBlock' as const,
-      enableIntro: true,
-      form: contactForm,
-      introContent: {
+export const contactPageAR = (createdPage: Page) => {
+  const layout = createdPage.layout as any[]
+  const formBlockId = layout[0]?.id
+
+  return {
+    title: 'تواصل مع البرج',
+    hero: {
+      richText: {
         root: {
-          type: 'root' as const, direction: 'rtl' as const, format: '' as const, indent: 0, version: 1,
+          type: 'root' as const,
+          direction: 'rtl' as const,
+          format: '' as const,
+          indent: 0,
+          version: 1,
           children: [
             {
-              type: 'heading' as const, tag: 'h3' as const, direction: 'rtl' as const, format: '' as const, indent: 0, version: 1,
-              children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'طومار المرسال', version: 1 }]
+              type: 'heading' as const,
+              tag: 'h1' as const,
+              direction: 'rtl' as const,
+              format: '' as const,
+              indent: 0,
+              version: 1,
+              children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'أرسل غراباً إلى البرج العالي', version: 1 }],
+            },
+            {
+              type: 'paragraph' as const,
+              direction: 'rtl' as const,
+              format: '' as const,
+              indent: 0,
+              textFormat: 0,
+              version: 1,
+              children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'ستُحمل رسالتك بضوء النجوم عبر الغابات المسحورة. اكتب أسطورتك أدناه.', version: 1 }],
             },
           ],
         },
       },
     },
-  ],
-  meta: {
-    title: 'تواصل مع برج المؤلف',
-    description: 'أرسل رسالة إلى المؤلف الموسيقي. ستُحمل رسالتك بضوء النجوم.',
-  },
-})
-
-// ─── Portuguese translation ───────────────────────────────────────────────────
-
-export const contactPagePT = ({ contactForm }: { contactForm: Form }) => ({
-  title: 'Contactar a Torre',
-  hero: {
-    type: 'lowImpact' as const,
-    richText: {
-      root: {
-        type: 'root' as const, direction: 'ltr' as const, format: '' as const, indent: 0, version: 1,
-        children: [
-          {
-            type: 'heading' as const, tag: 'h1' as const, direction: 'ltr' as const, format: '' as const, indent: 0, version: 1,
-            children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'Envie um Corvo para a Torre Alta', version: 1 }]
+    layout: [
+      {
+        id: formBlockId,
+        blockType: 'formBlock',
+        introContent: {
+          root: {
+            type: 'root' as const,
+            direction: 'rtl' as const,
+            format: '' as const,
+            indent: 0,
+            version: 1,
+            children: [
+              {
+                type: 'heading' as const,
+                tag: 'h3' as const,
+                direction: 'rtl' as const,
+                format: '' as const,
+                indent: 0,
+                version: 1,
+                children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'طومار المرسال', version: 1 }],
+              },
+            ],
           },
-          {
-            type: 'paragraph' as const, direction: 'ltr' as const, format: '' as const, indent: 0, textFormat: 0, version: 1,
-            children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'A sua mensagem será transportada pela luz das estrelas através das florestas encantadas. Escreva a sua lenda abaixo.', version: 1 }]
-          },
-        ],
+        },
       },
+    ],
+    meta: {
+      title: 'تواصل مع برج المؤلف',
+      description: 'أرسل رسالة إلى المؤلف الموسيقي. ستُحمل رسالتك بضوء النجوم.',
     },
-    links: [],
-  },
-  layout: [
-    {
-      blockType: 'formBlock' as const,
-      enableIntro: true,
-      form: contactForm,
-      introContent: {
+  }
+}
+
+// ─── PT translation ───────────────────────────────────────────────────────────
+
+export const contactPagePT = (createdPage: Page) => {
+  const layout = createdPage.layout as any[]
+  const formBlockId = layout[0]?.id
+
+  return {
+    title: 'Contactar a Torre',
+    hero: {
+      richText: {
         root: {
-          type: 'root' as const, direction: 'ltr' as const, format: '' as const, indent: 0, version: 1,
+          type: 'root' as const,
+          direction: 'ltr' as const,
+          format: '' as const,
+          indent: 0,
+          version: 1,
           children: [
             {
-              type: 'heading' as const, tag: 'h3' as const, direction: 'ltr' as const, format: '' as const, indent: 0, version: 1,
-              children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'O Pergaminho do Mensageiro', version: 1 }]
+              type: 'heading' as const,
+              tag: 'h1' as const,
+              direction: 'ltr' as const,
+              format: '' as const,
+              indent: 0,
+              version: 1,
+              children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'Envie um Corvo para a Torre Alta', version: 1 }],
+            },
+            {
+              type: 'paragraph' as const,
+              direction: 'ltr' as const,
+              format: '' as const,
+              indent: 0,
+              textFormat: 0,
+              version: 1,
+              children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'A sua mensagem será transportada pela luz das estrelas através das florestas encantadas. Escreva a sua lenda abaixo.', version: 1 }],
             },
           ],
         },
       },
     },
-  ],
-  meta: {
-    title: 'Contactar a Torre do Autor',
-    description: 'Envie uma mensagem ao Autor-Compositor. A sua mensagem será transportada pela luz das estrelas.',
-  },
-})
+    layout: [
+      {
+        id: formBlockId,
+        blockType: 'formBlock',
+        introContent: {
+          root: {
+            type: 'root' as const,
+            direction: 'ltr' as const,
+            format: '' as const,
+            indent: 0,
+            version: 1,
+            children: [
+              {
+                type: 'heading' as const,
+                tag: 'h3' as const,
+                direction: 'ltr' as const,
+                format: '' as const,
+                indent: 0,
+                version: 1,
+                children: [{ type: 'text' as const, detail: 0, format: 0, mode: 'normal' as const, style: '', text: 'O Pergaminho do Mensageiro', version: 1 }],
+              },
+            ],
+          },
+        },
+      },
+    ],
+    meta: {
+      title: 'Contactar a Torre do Autor',
+      description: 'Envie uma mensagem ao Autor-Compositor. A sua mensagem será transportada pela luz das estrelas.',
+    },
+  }
+}
