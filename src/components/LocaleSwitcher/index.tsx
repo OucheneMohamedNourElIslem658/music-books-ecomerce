@@ -25,7 +25,7 @@ export function LocaleSwitcher() {
       onValueChange={(value) => switchLocale(value as (typeof routing.locales)[number])}
       disabled={isPending}
     >
-      <SelectTrigger className="w-auto bg-primary/5 hover:bg-primary/10 transition-colors gap-2 px-4 h-8 rounded-full border-none text-muted-foreground hover:text-primary">
+      <SelectTrigger aria-label="Change language" className="w-auto bg-primary/5 hover:bg-primary/10 transition-colors gap-2 px-4 h-8 rounded-full border-none text-muted-foreground hover:text-primary">
         <Languages className="size-4" />
         <SelectValue placeholder="Language" />
       </SelectTrigger>

@@ -30,6 +30,7 @@ function VerifyEmailInner() {
     fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/verify/${token}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      priority: 'high',
     })
       .then(async (res) => {
         if (res.ok) {

@@ -1,6 +1,7 @@
 {
     "greeting": "مرحبا",
     "header": {
+        "account": "الحساب",
         "register": "تسجيل",
         "login": "تسجيل الدخول"
     },

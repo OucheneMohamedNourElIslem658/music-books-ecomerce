@@ -1,6 +1,7 @@
 {
     "greeting": "Olá",
     "header": {
+        "account": "Conta",
         "register": "Registrar",
         "login": "Entrar"
     },

@@ -70,6 +70,7 @@ export function HeaderClient({ header }: Props) {
 
             <Link
               href="/account"
+              aria-label={t('account')}
               className="p-2 hover:bg-primary/10 rounded-full transition-colors text-muted-foreground hover:text-primary active:scale-95"
             >
               <User className="size-6" />
