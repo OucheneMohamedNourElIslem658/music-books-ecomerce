@@ -142,19 +142,23 @@ export const CheckoutPage: React.FC = () => {
   const { cart, localizedItems, isLoading, isLocalizing, localizationError } =
     useLocalizedCart(locale)
 
-  const displayItems = localizedItems.length > 0
-    ? localizedItems
-    : (cart?.items ?? []).flatMap((item) => {
-      if (typeof item.product !== 'object' || !item.product) return []
-      return [{
-        id: item.id,
-        quantity: item.quantity,
-        product: item.product as Product,
-        variant: item.variant != null && typeof item.variant === 'object'
-          ? (item.variant as Variant)
-          : null,
-      }]
-    })
+  const displayItems =
+    localizedItems.length > 0
+      ? localizedItems
+      : (cart?.items ?? []).flatMap((item) => {
+        if (typeof item.product !== 'object' || !item.product) return []
+        return [
+          {
+            id: item.id,
+            quantity: item.quantity,
+            product: item.product as Product,
+            variant:
+              item.variant != null && typeof item.variant === 'object'
+                ? (item.variant as Variant)
+                : null,
+          },
+        ]
+      })
 
   const [error, setError] = useState<null | string>(null)
   const { theme } = useTheme()
@@ -162,13 +166,22 @@ export const CheckoutPage: React.FC = () => {
   const [email, setEmail] = useState('')
   const [emailEditable, setEmailEditable] = useState(true)
   const [paymentData, setPaymentData] = useState<null | Record<string, any>>(null)
+  // paymentKey forces Stripe Elements to fully remount when the user cancels,
+  // ensuring no stale clientSecret lingers that could cause duplicate-id conflicts.
+  const [paymentKey, setPaymentKey] = useState(0)
+
   const { initiatePayment, paymentMethods } = usePayments()
   const { addresses } = useAddresses()
   const [shippingAddress, setShippingAddress] = useState<Partial<Address>>()
   const [billingAddress, setBillingAddress] = useState<Partial<Address>>()
   const [billingAddressSameAsShipping, setBillingAddressSameAsShipping] = useState(true)
   const [isProcessingPayment, setProcessingPayment] = useState(false)
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentAdapterClient | null>(null)
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentAdapterClient | null>(
+    null,
+  )
+
+  // Single ref that is ONLY set to true while an initiation request is in-flight.
+  // Reset on success, error, or cancel — never left true across renders.
   const initiatingRef = useRef(false)
 
   // ── Flags to track intentional user clears ──────────────────────────────
@@ -208,34 +221,25 @@ export const CheckoutPage: React.FC = () => {
     }
   }, [])
 
-  const deletePendingTransactions = useCallback(async () => {
-    if (!cart?.id) return
-    try {
-      const res = await fetch(
-        `/api/transactions?where[cart][equals]=${cart.id}&where[status][equals]=pending&limit=20`,
-        { credentials: 'include' }, // ← sends the payload-token cookie
-      )
-      if (!res.ok) return
-      const { docs } = await res.json()
-      await Promise.all(
-        (docs ?? []).map((tx: { id: string | number }) =>
-          fetch(`/api/transactions/${tx.id}`, {
-            method: 'DELETE',
-            credentials: 'include', // ← same here for the delete calls
-          }),
-        ),
-      )
-    } catch { }
-  }, [cart?.id])
-
   const initiatePaymentIntent = useCallback(
     async (paymentMethodName: string) => {
       if (initiatingRef.current || paymentData) return
       initiatingRef.current = true
+
       try {
         setProcessingPayment(true)
         setError(null)
-        await deletePendingTransactions()
+
+        // Clean up any pending transactions server-side (overrideAccess: true)
+        // before initiating, to prevent the "id must be unique" collision.
+        if (cart?.id) {
+          await fetch(`/api/clear-pending-transactions?cartId=${cart.id}`, {
+            method: 'DELETE',
+            credentials: 'include',
+          }).catch(() => {
+            // non-fatal — proceed even if cleanup fails
+          })
+        }
 
         const result = (await initiatePayment(paymentMethodName, {
           additionalData: {
@@ -262,7 +266,7 @@ export const CheckoutPage: React.FC = () => {
         initiatingRef.current = false
       }
     },
-    [billingAddress, billingAddressSameAsShipping, shippingAddress, email, paymentData, initiatePayment, deletePendingTransactions, t],
+    [cart?.id, billingAddress, billingAddressSameAsShipping, shippingAddress, email, paymentData, initiatePayment, t],
   )
 
   const handlePaymentMethodSelect = (method: PaymentAdapterClient) => {
@@ -271,6 +275,8 @@ export const CheckoutPage: React.FC = () => {
     setPaymentData(null)
     setError(null)
     initiatingRef.current = false
+    // bump key so Elements fully remounts if user switches method after seeing Stripe UI
+    setPaymentKey((k) => k + 1)
   }
 
   const handleGoToPayment = () => {
@@ -282,6 +288,10 @@ export const CheckoutPage: React.FC = () => {
     setPaymentData(null)
     setError(null)
     initiatingRef.current = false
+    // Bump key: forces Stripe Elements to fully unmount + remount so the old
+    // clientSecret is gone. Next initiation will create a fresh transaction
+    // instead of colliding with the previous one.
+    setPaymentKey((k) => k + 1)
   }
 
   if (!stripe) return null
@@ -669,6 +679,7 @@ export const CheckoutPage: React.FC = () => {
                     e.preventDefault()
                     setError(null)
                     initiatingRef.current = false
+                    setPaymentKey((k) => k + 1)
                     router.refresh()
                   }}
                 >
@@ -685,7 +696,11 @@ export const CheckoutPage: React.FC = () => {
                       {error}
                     </p>
                   )}
+                  {/* key={paymentKey} forces a full remount on cancel, clearing the
+                      old clientSecret so the next initiation always creates a fresh
+                      transaction and avoids the "id must be unique" collision. */}
                   <Elements
+                    key={paymentKey}
                     options={{
                       appearance: {
                         theme: theme === 'dark' ? 'night' : 'stripe',
