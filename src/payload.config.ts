@@ -1,5 +1,5 @@
-// import { sqliteAdapter } from '@payloadcms/db-sqlite'
-import { postgresAdapter } from '@payloadcms/db-postgres'
+import { sqliteAdapter } from '@payloadcms/db-sqlite'
+// import { postgresAdapter } from '@payloadcms/db-postgres'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import {
   BoldFeature,
@@ -54,19 +54,19 @@ export default buildConfig({
     user: Users.slug,
   },
   collections: [Users, Pages, Categories, Media, Reviews],
-  db: postgresAdapter({
-    pool: {
-      // You can use an environment variable or a hardcoded string
-      // The format must be 'file:./filename.db' for local files
-      connectionString: process.env.DATABASE_URL,
-    },
-  }),
+  // db: postgresAdapter({
+  //   pool: {
+  //     // You can use an environment variable or a hardcoded string
+  //     // The format must be 'file:./filename.db' for local files
+  //     connectionString: process.env.DATABASE_URL,
+  //   },
+  // }),
 
-  // db: sqliteAdapter({
-  //   client: {
-  //     url: `file:${path.resolve(dirname, 'payload.db')}`,
-  //   }
-  // })
+  db: sqliteAdapter({
+    client: {
+      url: `file:${path.resolve(dirname, 'payload.db')}`,
+    }
+  }),
   editor: lexicalEditor({
     features: () => {
       return [

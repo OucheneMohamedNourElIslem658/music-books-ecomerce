@@ -3,10 +3,10 @@ import { EcommerceProvider } from '@payloadcms/plugin-ecommerce/client/react'
 import { stripeAdapterClient } from '@payloadcms/plugin-ecommerce/payments/stripe'
 import React from 'react'
 
+import { paypalAdapterClient } from '@/lib/payments/paypal'
+import { SonnerProvider } from '@/providers/Sonner'
 import { HeaderThemeProvider } from './HeaderTheme'
 import { ThemeProvider } from './Theme'
-import { SonnerProvider } from '@/providers/Sonner'
-import { paypalAdapter, paypalAdapterClient } from '@/lib/payments/paypal'
 
 export const Providers: React.FC<{
   children: React.ReactNode

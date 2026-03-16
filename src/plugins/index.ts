@@ -6,7 +6,6 @@ import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/
 import { Plugin } from 'payload'
 
 import { stripeAdapter } from '@payloadcms/plugin-ecommerce/payments/stripe'
-import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
 import { adminOnlyFieldAccess } from '@/access/adminOnlyFieldAccess'
 import { adminOrPublishedStatus } from '@/access/adminOrPublishedStatus'
@@ -29,13 +28,13 @@ const generateURL: GenerateURL<Product | Page> = ({ doc }) => {
 }
 
 export const plugins: Plugin[] = [
-  vercelBlobStorage({
-    token: process.env.BLOB_READ_WRITE_TOKEN!,
-    enabled: true,
-    collections: {
-      media: true
-    }
-  }),
+  // vercelBlobStorage({
+  //   token: process.env.BLOB_READ_WRITE_TOKEN!,
+  //   enabled: true,
+  //   collections: {
+  //     media: true
+  //   }
+  // }),
   seoPlugin({
     generateTitle,
     generateURL,
