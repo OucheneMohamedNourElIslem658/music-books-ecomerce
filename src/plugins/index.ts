@@ -91,7 +91,7 @@ export const plugins: Plugin[] = [
           brandName: 'Payload Ecommerce',
           clientId: process.env.PAYPAL_CLIENT_ID!,
           clientSecret: process.env.PAYPAL_CLIENT_SECRET!,
-          environment: process.env.NODE_ENV === 'production' ? 'production' : 'sandbox'
+          environment: process.env.PAYPAL_ENVIRONMENT === 'production' ? 'production' : 'sandbox'
         }),
         stripeAdapter({
           secretKey: process.env.STRIPE_SECRET_KEY!,

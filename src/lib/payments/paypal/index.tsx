@@ -92,6 +92,7 @@ export const paypalAdapter = (args: PayPalAdapterArgs): PaymentAdapter => {
     transactionsSlug,
   }: any) => {
     const { Client, Environment, OrdersController } = getSDK()
+
     const payload = req.payload
 
     const appUrl =
