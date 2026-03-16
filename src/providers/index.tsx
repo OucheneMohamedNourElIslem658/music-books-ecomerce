@@ -1,4 +1,6 @@
-import { AuthProvider } from '@/providers/Auth'
+"use client"
+
+import { AuthProvider, useAuth } from '@/providers/Auth'
 import { EcommerceProvider } from '@payloadcms/plugin-ecommerce/client/react'
 import { stripeAdapterClient } from '@payloadcms/plugin-ecommerce/payments/stripe'
 import React from 'react'
@@ -11,12 +13,14 @@ import { ThemeProvider } from './Theme'
 export const Providers: React.FC<{
   children: React.ReactNode
 }> = ({ children }) => {
+  const { user } = useAuth()
   return (
     <ThemeProvider>
       <AuthProvider>
         <HeaderThemeProvider>
           <SonnerProvider />
           <EcommerceProvider
+            user={user}
             enableVariants={true}
             api={{
               cartsFetchQuery: {
@@ -41,6 +45,7 @@ export const Providers: React.FC<{
               }),
               paypalAdapterClient()
             ]}
+
           >
             {children}
           </EcommerceProvider>

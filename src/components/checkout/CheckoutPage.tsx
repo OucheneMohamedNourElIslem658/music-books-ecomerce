@@ -142,7 +142,6 @@ export const CheckoutPage: React.FC = () => {
   const { cart, localizedItems, isLoading, isLocalizing, localizationError } =
     useLocalizedCart(locale)
 
-  // Show raw cart items immediately while localized data loads — same pattern as CartModal
   const displayItems = localizedItems.length > 0
     ? localizedItems
     : (cart?.items ?? []).flatMap((item) => {
@@ -172,6 +171,10 @@ export const CheckoutPage: React.FC = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentAdapterClient | null>(null)
   const initiatingRef = useRef(false)
 
+  // ── Flags to track intentional user clears ──────────────────────────────
+  const [billingManuallyCleared, setBillingManuallyCleared] = useState(false)
+  const [shippingManuallyCleared, setShippingManuallyCleared] = useState(false)
+
   useEffect(() => {
     if (paymentMethods?.length > 0 && !selectedPaymentMethod) {
       setSelectedPaymentMethod(paymentMethods[0])
@@ -186,11 +189,12 @@ export const CheckoutPage: React.FC = () => {
 
   const currentStep = !contactComplete ? 0 : !addressComplete ? 1 : 2
 
+  // ── Auto-fill billing address only if user hasn't manually cleared it ───
   useEffect(() => {
-    if (!billingAddress && addresses && addresses.length > 0) {
+    if (!billingAddress && addresses && addresses.length > 0 && !billingManuallyCleared) {
       setBillingAddress(addresses[0])
     }
-  }, [addresses, billingAddress])
+  }, [addresses, billingAddress, billingManuallyCleared])
 
   useEffect(() => {
     return () => {
@@ -199,6 +203,8 @@ export const CheckoutPage: React.FC = () => {
       setBillingAddressSameAsShipping(true)
       setEmail('')
       setEmailEditable(true)
+      setBillingManuallyCleared(false)
+      setShippingManuallyCleared(false)
     }
   }, [])
 
@@ -276,7 +282,6 @@ export const CheckoutPage: React.FC = () => {
 
   if (!stripe) return null
 
-  // Full-page loading — before we even know if the cart has items
   if (isLoading && !cart) {
     return (
       <div className="py-24 w-full flex flex-col items-center justify-center gap-6">
@@ -318,7 +323,6 @@ export const CheckoutPage: React.FC = () => {
     <div className="max-w-7xl mx-auto px-6 py-10 w-full">
       <StepIndicator current={currentStep} />
 
-      {/* Localization error banner */}
       {localizationError && (
         <div className="mb-6 flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
           <AlertCircle className="size-4 shrink-0" />
@@ -335,7 +339,6 @@ export const CheckoutPage: React.FC = () => {
             <div className="flex items-center justify-between px-4">
               <h3 className="text-xl font-bold flex items-center gap-2">
                 {t('enchantedItems')}
-                {/* Spinner while translating — doesn't block the page */}
                 {isLocalizing && (
                   <Loader2 className="size-4 text-muted-foreground animate-spin" />
                 )}
@@ -518,21 +521,34 @@ export const CheckoutPage: React.FC = () => {
                 <div className="flex items-start justify-between gap-4 p-5 bg-secondary/30 rounded-xl border border-border/50">
                   <AddressItem address={billingAddress} />
                   <Button
+                    type="button"
                     variant="ghost"
                     size="sm"
                     disabled={Boolean(paymentData)}
-                    onClick={(e) => { e.preventDefault(); setBillingAddress(undefined) }}
+                    onClick={() => {
+                      setBillingManuallyCleared(true)
+                      setBillingAddress(undefined)
+                    }}
                     className="text-primary font-bold"
                   >
                     {t('change')}
                   </Button>
                 </div>
               ) : user ? (
-                <CheckoutAddresses heading="" setAddress={setBillingAddress} />
+                <CheckoutAddresses
+                  heading=""
+                  setAddress={(address) => {
+                    setBillingManuallyCleared(false)
+                    setBillingAddress(address)
+                  }}
+                />
               ) : (
                 <CreateAddressModal
                   disabled={!email || Boolean(emailEditable)}
-                  callback={(address) => setBillingAddress(address)}
+                  callback={(address) => {
+                    setBillingManuallyCleared(false)
+                    setBillingAddress(address)
+                  }}
                   skipSubmission={true}
                 />
               )}
@@ -560,10 +576,14 @@ export const CheckoutPage: React.FC = () => {
                   <div className="flex items-start justify-between gap-4 p-5 bg-secondary/30 rounded-xl border border-border/50">
                     <AddressItem address={shippingAddress} />
                     <Button
+                      type="button"
                       variant="ghost"
                       size="sm"
                       disabled={Boolean(paymentData)}
-                      onClick={(e) => { e.preventDefault(); setShippingAddress(undefined) }}
+                      onClick={() => {
+                        setShippingManuallyCleared(true)
+                        setShippingAddress(undefined)
+                      }}
                       className="text-primary font-bold"
                     >
                       {t('change')}
@@ -573,11 +593,17 @@ export const CheckoutPage: React.FC = () => {
                   <CheckoutAddresses
                     heading=""
                     description={t('whereShallOwlsFly')}
-                    setAddress={setShippingAddress}
+                    setAddress={(address) => {
+                      setShippingManuallyCleared(false)
+                      setShippingAddress(address)
+                    }}
                   />
                 ) : (
                   <CreateAddressModal
-                    callback={(address) => setShippingAddress(address)}
+                    callback={(address) => {
+                      setShippingManuallyCleared(false)
+                      setShippingAddress(address)
+                    }}
                     disabled={!email || Boolean(emailEditable)}
                     skipSubmission={true}
                   />
@@ -601,8 +627,8 @@ export const CheckoutPage: React.FC = () => {
                       <label
                         key={method.name}
                         className={`flex items-center gap-4 p-6 rounded-xl border cursor-pointer transition-all duration-300 ${selectedPaymentMethod?.name === method.name
-                            ? 'border-primary bg-primary/5 ring-1 ring-primary'
-                            : 'border-border hover:border-primary/40 hover:bg-secondary/50'
+                          ? 'border-primary bg-primary/5 ring-1 ring-primary'
+                          : 'border-border hover:border-primary/40 hover:bg-secondary/50'
                           }`}
                       >
                         <input
