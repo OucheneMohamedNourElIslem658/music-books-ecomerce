@@ -46,7 +46,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "redirects.js",
-    "next.config.js"
+    "next.config.js",
+    "src/endpoints/seed/index.js",
+    "src/endpoints/seed/index.js"
   ],
   "exclude": [
     "node_modules",

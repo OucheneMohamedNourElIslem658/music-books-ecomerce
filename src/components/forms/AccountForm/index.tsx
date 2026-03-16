@@ -34,6 +34,12 @@ export const AccountForm: React.FC = () => {
     watch,
   } = useForm<FormData>()
 
+  // Stable ref to reset so it never triggers the useEffect below
+  const resetRef = useRef(reset)
+  useEffect(() => {
+    resetRef.current = reset
+  })
+
   const password = useRef({})
   password.current = watch('password', '')
 
@@ -56,7 +62,7 @@ export const AccountForm: React.FC = () => {
           setUser(json.doc)
           toast.success(t('updateSuccess'))
           setChangePassword(false)
-          reset({
+          resetRef.current({
             name: json.doc.name,
             email: json.doc.email,
             password: '',
@@ -67,7 +73,7 @@ export const AccountForm: React.FC = () => {
         }
       }
     },
-    [user, setUser, reset, t],
+    [user, setUser, t],
   )
 
   useEffect(() => {
@@ -77,17 +83,20 @@ export const AccountForm: React.FC = () => {
           '/account',
         )}`,
       )
+      return
     }
 
     if (user) {
-      reset({
+      resetRef.current({
         name: user.name,
         email: user.email,
         password: '',
         passwordConfirm: '',
       })
     }
-  }, [user, router, reset, t])
+    // reset intentionally excluded — stabilised via resetRef above
+
+  }, [user, router, t])
 
   return (
     <form className="w-full space-y-8" onSubmit={handleSubmit(onSubmit)}>
