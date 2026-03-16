@@ -66,7 +66,7 @@ export default buildConfig({
   //   client: {
   //     url: `file:${path.resolve(dirname, 'payload.db')}`,
   //   }
-  // }),
+  // })
   editor: lexicalEditor({
     features: () => {
       return [
