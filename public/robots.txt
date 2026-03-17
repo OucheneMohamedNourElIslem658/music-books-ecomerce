@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://music-books-ecomerce.vercel.app
+
+# Sitemaps
+Sitemap: https://music-books-ecomerce.vercel.app/sitemap.xml
