@@ -75,7 +75,7 @@ export const FeatureShowcaseBlock: React.FC<FeatureShowcaseBlockProps> = ({
             <RichText
               data={content}
               enableGutter={false}
-              enableProse={false}
+              enableProse={true}
               className={cn(
                 'space-y-6',
                 // Heading Styling
@@ -84,9 +84,9 @@ export const FeatureShowcaseBlock: React.FC<FeatureShowcaseBlockProps> = ({
                 // Paragraph Styling
                 '[&_p]:text-muted-foreground [&_p]:text-lg [&_p]:leading-relaxed',
                 // List Styling with Checkmark Icons
-                '[&_ul]:space-y-4 [&_ul]:list-none [&_ul]:pl-0 [&_ul]:pt-4',
-                '[&_li]:flex [&_li]:items-center [&_li]:gap-3 [&_li]:text-foreground/80 [&_li]:font-medium',
-                "[&_li]:before:content-[''] [&_li]:before:size-5 [&_li]:before:shrink-0 [&_li]:before:bg-primary [&_li]:before:mask-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0yMCA2TDEwIDE3IDQgMTIiLz48L3N2Zz4=')] [&_li]:before:mask-no-repeat [&_li]:before:mask-contain",
+                // '[&_ul]:space-y-4 [&_ul]:list-none [&_ul]:pl-0 [&_ul]:pt-4',
+                // '[&_li]:flex [&_li]:items-center [&_li]:gap-3 [&_li]:text-foreground/80 [&_li]:font-medium',
+                // "[&_li]:before:content-[''] [&_li]:before:size-5 [&_li]:before:shrink-0 [&_li]:before:bg-primary [&_li]:before:mask-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0yMCA2TDEwIDE3IDQgMTIiLz48L3N2Zz4=')] [&_li]:before:mask-no-repeat [&_li]:before:mask-contain",
               )}
             />
           </div>

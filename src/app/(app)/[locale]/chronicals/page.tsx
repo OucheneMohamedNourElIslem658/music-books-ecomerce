@@ -6,6 +6,7 @@ import type { Media } from '@/payload-types'
 import { LocaleType } from '@/types/locale'
 import configPromise from '@payload-config'
 import { getTranslations } from 'next-intl/server'
+import Image from 'next/image'
 import { getPayload } from 'payload'
 
 export async function generateMetadata() {
@@ -79,14 +80,16 @@ export default async function ChroniclesPage({ searchParams, params }: Props) {
 
             {/* Hero Section */}
             {heroPost && (
-                <div className="relative rounded-2xl overflow-hidden min-h-[400px] group shadow-2xl">
+                <div className="relative rounded-2xl overflow-hidden min-h-100 group shadow-2xl">
                     <Link href={`/${heroPost.slug}`} className="absolute inset-0">
-                        <div
-                            className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105"
-                            style={{
-                                backgroundImage: `linear-gradient(0deg, rgba(16, 22, 34, 0.9) 0%, rgba(16, 22, 34, 0.2) 60%), url("${(heroPost.hero?.media as Media)?.url || (heroPost.meta?.image as Media)?.url || ''}")`
-                            }}
+                        <Image
+                            src={(heroPost.hero?.media as Media)?.url || (heroPost.meta?.image as Media)?.url || ''}
+                            alt={heroPost.hero?.title || heroPost.title || 'Hero'}
+                            fill
+                            className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                            priority
                         />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[rgba(16,22,34,0.9)] to-[rgba(16,22,34,0.2)]" />
                         <div className="absolute bottom-0 left-0 p-8 md:p-12 w-full">
                             <span className="bg-primary text-white text-[10px] font-black px-4 py-1.5 rounded-full mb-4 inline-block uppercase tracking-[0.2em] shadow-lg shadow-primary/20">
                                 {t('latestNews')}

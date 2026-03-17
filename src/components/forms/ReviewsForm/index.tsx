@@ -1,9 +1,6 @@
 'use client'
 
-import React, { useCallback, useState } from 'react'
-import { useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
 import {
   Form,
   FormControl,
@@ -12,11 +9,14 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import { Textarea } from '@/components/ui/textarea'
 import { Review } from '@/payload-types'
-import { DefaultDocumentIDType } from 'payload'
-import { StarIcon } from 'lucide-react'
 import { cn } from '@/utilities/cn'
 import { useTranslations } from 'next-intl'
+import Image from 'next/image'
+import { DefaultDocumentIDType } from 'payload'
+import React, { useCallback, useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 type ReviewFormValues = {
   rating: number
@@ -56,7 +56,7 @@ function StarPicker({ value, onChange, thematic }: { value: number; onChange: (v
                 filled ? "text-accent-gold scale-125" : "text-royal-blue/20",
                 thematic && filled && "font-variation-fill"
               )}
-              style={thematic && filled ? { fontVariationSettings: "'FILL' 1" } : {}}
+                style={thematic && filled ? { fontVariationSettings: "'FILL' 1" } : {}}
               >
                 grade
               </span>
@@ -140,7 +140,7 @@ export const ReviewForm: React.FC<Props> = ({ reviewID, productID, initialData, 
                     placeholder={t('commentPlaceholder')}
                     className={cn(
                       "w-full bg-transparent border-x-0 border-t-0 border-b-2 focus:ring-0 text-xl font-medium placeholder:italic transition-all py-4 px-2",
-                      thematic 
+                      thematic
                         ? "border-royal-blue/20 text-royal-blue focus:border-accent-gold placeholder:text-royal-blue/30 resize-none"
                         : "border-border text-foreground focus:border-primary"
                     )}
@@ -150,10 +150,22 @@ export const ReviewForm: React.FC<Props> = ({ reviewID, productID, initialData, 
                     <>
                       {/* Decorative Ink Wash Corners */}
                       <div className="absolute -bottom-6 -left-6 w-20 h-20 opacity-10 pointer-events-none">
-                        <img className="grayscale brightness-0" alt="Ink splash" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4AypY2PwmCVXwOuvgKmyZ0zVUukLI4kQdeHYsMEvQ0K8qIosT9_Bd4W1lXnGSwB1NMGQ5AT2QkM3zmLBDXHa4l2nZFLqMsSbNvGf720RLdhmXuhED3pq6HYzrjIzqBSksRRvU8qjblVefEBRCRvvGU-0bfMmwDSJxXljVetWzH1oly6iTgWJh5UVJPgA884GTSw7FQEthum-oNSt5Ytpxz_TgX4yKmOhP2dS7cU4KyIe2nA-bLEXgPft3nSS6EXVMqMVc2J0IuYTB"/>
+                        <Image
+                          className="grayscale brightness-0"
+                          alt="Ink splash"
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4AypY2PwmCVXwOuvgKmyZ0zVUukLI4kQdeHYsMEvQ0K8qIosT9_Bd4W1lXnGSwB1NMGQ5AT2QkM3zmLBDXHa4l2nZFLqMsSbNvGf720RLdhmXuhED3pq6HYzrjIzqBSksRRvU8qjblVefEBRCRvvGU-0bfMmwDSJxXljVetWzH1oly6iTgWJh5UVJPgA884GTSw7FQEthum-oNSt5Ytpxz_TgX4yKmOhP2dS7cU4KyIe2nA-bLEXgPft3nSS6EXVMqMVc2J0IuYTB"
+                          width={80}
+                          height={80}
+                        />
                       </div>
                       <div className="absolute -top-6 -right-6 w-20 h-20 opacity-10 pointer-events-none rotate-180">
-                        <img className="grayscale brightness-0" alt="Ink splash" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4AypY2PwmCVXwOuvgKmyZ0zVUukLI4kQdeHYsMEvQ0K8qIosT9_Bd4W1lXnGSwB1NMGQ5AT2QkM3zmLBDXHa4l2nZFLqMsSbNvGf720RLdhmXuhED3pq6HYzrjIzqBSksRRvU8qjblVefEBRCRvvGU-0bfMmwDSJxXljVetWzH1oly6iTgWJh5UVJPgA884GTSw7FQEthum-oNSt5Ytpxz_TgX4yKmOhP2dS7cU4KyIe2nA-bLEXgPft3nSS6EXVMqMVc2J0IuYTB"/>
+                        <Image
+                          className="grayscale brightness-0"
+                          alt="Ink splash"
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4AypY2PwmCVXwOuvgKmyZ0zVUukLI4kQdeHYsMEvQ0K8qIosT9_Bd4W1lXnGSwB1NMGQ5AT2QkM3zmLBDXHa4l2nZFLqMsSbNvGf720RLdhmXuhED3pq6HYzrjIzqBSksRRvU8qjblVefEBRCRvvGU-0bfMmwDSJxXljVetWzH1oly6iTgWJh5UVJPgA884GTSw7FQEthum-oNSt5Ytpxz_TgX4yKmOhP2dS7cU4KyIe2nA-bLEXgPft3nSS6EXVMqMVc2J0IuYTB"
+                          width={80}
+                          height={80}
+                        />
                       </div>
                     </>
                   )}
@@ -167,7 +179,7 @@ export const ReviewForm: React.FC<Props> = ({ reviewID, productID, initialData, 
         <div className="flex justify-center mt-8">
           {thematic ? (
             <div className="relative">
-              <button 
+              <button
                 type="submit"
                 disabled={form.formState.isSubmitting}
                 className="royal-seal w-32 h-32 rounded-full flex flex-col items-center justify-center text-white group cursor-pointer border-4 border-[#8a6800] disabled:opacity-50"

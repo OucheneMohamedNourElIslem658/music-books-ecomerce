@@ -4,6 +4,7 @@ import { Link } from '@/i18n/navigation'
 import { useAuth } from '@/providers/Auth'
 import { ArrowRight, Lock, ShieldCheck, Wand2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 
 export const LogoutPage: React.FC = () => {
@@ -31,11 +32,12 @@ export const LogoutPage: React.FC = () => {
         <div className="relative w-full aspect-video md:aspect-21/9 rounded-3xl overflow-hidden mb-12 group shadow-2xl border border-border/50">
           <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-transparent z-10"></div>
           <div className="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
-          <div
-            className="w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-700 group-hover:scale-105"
-            style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuDnWalvKEHzaOxg1PCB5dnvt1C87T9iZf70d2yeMSEvcJaVurEuvWiuNWJ23kQHJG-6rv4cgctRc_TUjz4ZufMorYl6BFpPci2nitEBP3OuvV10b5Po76Plx4eiBTgLG9hnz7f8deOyVsKRN8pMx4ulgVSsk40pg3OXtDE0k6N4N9YwxRECTQ0ZfTKDSeG6Oq86-HzBiu5h2TuWWdndTTkofijS9oTxl2lqG1OPFca0gSfTKDDjLZ-7lAJIY_JUD4FJ2VKcafzfpxw7")' }}
-          >
-          </div>
+          <Image
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnWalvKEHzaOxg1PCB5dnvt1C87T9iZf70d2yeMSEvcJaVurEuvWiuNWJ23kQHJG-6rv4cgctRc_TUjz4ZufMorYl6BFpPci2nitEBP3OuvV10b5Po76Plx4eiBTgLG9hnz7f8deOyVsKRN8pMx4ulgVSsk40pg3OXtDE0k6N4N9YwxRECTQ0ZfTKDSeG6Oq86-HzBiu5h2TuWWdndTTkofijS9oTxl2lqG1OPFca0gSfTKDDjLZ-7lAJIY_JUD4FJ2VKcafzfpxw7"
+            alt="Logout illustration"
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+          />
           {/* Overlay Icon */}
           <div className="absolute inset-0 flex items-center justify-center z-20">
             <div className="bg-background/60 backdrop-blur-md p-6 rounded-full border border-primary/30 shadow-[0_0_30px_rgba(43,108,238,0.3)]">

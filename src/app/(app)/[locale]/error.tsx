@@ -3,6 +3,7 @@
 import { Link } from '@/i18n/navigation'
 import { AlertCircle, Castle, Sparkles, Star, Wand2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import Image from 'next/image'
 
 export default function Error({
   // error,
@@ -20,21 +21,23 @@ export default function Error({
           <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_50%_50%,rgba(43,108,238,0.2),transparent_70%)]"></div>
           <div className="flex h-full w-full items-center justify-center relative z-10">
             {/* Visual Representation: Wizard's familiar among spilled ink and sparks */}
-            <div
-              className="w-full h-full bg-center bg-no-repeat bg-cover"
-              style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuCj63FIt1Vx2vbEvxtzlqfAsdJjELzH7mz-eFMnhBWuqtJscdUq2n6Nca2B9gsdbE4D24EPQUz-a30Kb8HhxzNZNUdPHOaHLcL6TQ-LCgKVrg4RCpZRQDEwCNiB6cVrBypVIIPZdQtdX0VUm8OCwiv37WUeSq5zeOuScSZ7dawGYLEL4VN7MuqWyunTqaEcmuzFA7alumuSvrnexfznCJvU8o2SBrnHqIdUSvjxgHYfTog4ssfXO3hnZnQXoYsCo5ZtnoJGpzFK2ICf")' }}
-            >
-              <div className="absolute inset-0 bg-linear-to-t from-background/80 via-transparent to-transparent"></div>
-              {/* Floating sparkles */}
-              <div className="absolute top-1/4 left-1/4 text-primary opacity-60 animate-pulse">
-                <Sparkles size={24} />
-              </div>
-              <div className="absolute top-1/3 right-1/4 text-primary opacity-40">
-                <Wand2 size={20} />
-              </div>
-              <div className="absolute bottom-1/4 right-1/3 text-primary opacity-50">
-                <Star size={32} />
-              </div>
+            <Image
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCj63FIt1Vx2vbEvxtzlqfAsdJjELzH7mz-eFMnhBWuqtJscdUq2n6Nca2B9gsdbE4D24EPQUz-a30Kb8HhxzNZNUdPHOaHLcL6TQ-LCgKVrg4RCpZRQDEwCNiB6cVrBypVIIPZdQtdX0VUm8OCwiv37WUeSq5zeOuScSZ7dawGYLEL4VN7MuqWyunTqaEcmuzFA7alumuSvrnexfznCJvU8o2SBrnHqIdUSvjxgHYfTog4ssfXO3hnZnQXoYsCo5ZtnoJGpzFK2ICf"
+              alt="Error illustration"
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-linear-to-t from-background/80 via-transparent to-transparent"></div>
+            {/* Floating sparkles */}
+            <div className="absolute top-1/4 left-1/4 text-primary opacity-60 animate-pulse">
+              <Sparkles size={24} />
+            </div>
+            <div className="absolute top-1/3 right-1/4 text-primary opacity-40">
+              <Wand2 size={20} />
+            </div>
+            <div className="absolute bottom-1/4 right-1/3 text-primary opacity-50">
+              <Star size={32} />
             </div>
           </div>
         </div>

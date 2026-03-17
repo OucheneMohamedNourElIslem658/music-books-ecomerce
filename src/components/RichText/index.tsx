@@ -8,10 +8,9 @@ import {
 
 import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
 
-import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import type {
-  BannerBlock as BannerBlockProps,
+  // BannerBlock as BannerBlockProps,
   CallToActionBlock as CTABlockProps,
   MediaBlock as MediaBlockProps,
 } from '@/payload-types'
@@ -25,10 +24,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { CircleCheck } from 'lucide-react'
 
 type NodeTypes =
   | DefaultNodeTypes
-  | SerializedBlockNode<CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps>
+  | SerializedBlockNode<CTABlockProps | MediaBlockProps | CodeBlockProps>
 
 /** Render all cells for a single row node */
 function renderCells(rowNode: any, nodesToJSX: any) {
@@ -67,7 +67,7 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
 
   // ── Blocks ─────────────────────────────────────────────────────────────────
   blocks: {
-    banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
+    // banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
     mediaBlock: ({ node }) => (
       <MediaBlock
         className="col-start-1 col-span-3"
@@ -159,7 +159,7 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
   list: ({ node, nodesToJSX }) => {
     const children = nodesToJSX({ nodes: node.children })
     return node.listType === 'bullet' ? (
-      <ul className="my-4 ml-6 list-disc [&>li]:mt-1.5 marker:text-muted-foreground">
+      <ul className="my-4 list-none pl-0 space-y-1.5"> {/* ← removed ml-6 list-disc */}
         {children}
       </ul>
     ) : (
@@ -168,10 +168,12 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
       </ol>
     )
   },
-
-  // listitem: ({ node, nodesToJSX }) => (
-  //   <li className="leading-7 pl-1">{nodesToJSX({ nodes: node.children })}</li>
-  // ),
+  listitem: ({ node, nodesToJSX }) => (
+    <li className="flex items-center gap-3 text-foreground/80 font-medium">
+      <CircleCheck className="size-5 shrink-0 text-primary" />
+      {nodesToJSX({ nodes: node.children })}
+    </li>
+  ),
 
   // ── Blockquote ────────────────────────────────────────────────────────────
   quote: ({ node, nodesToJSX }) => (

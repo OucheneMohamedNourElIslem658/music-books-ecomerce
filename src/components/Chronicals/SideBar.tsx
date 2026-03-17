@@ -50,7 +50,7 @@ export const ChroniclesSidebar = async ({ locale }: ChroniclesSidebarProps) => {
                             className="w-full bg-white dark:bg-slate-800 border border-border rounded-full py-3.5 px-6 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all outline-none"
                         />
                         <button className="w-full bg-primary hover:bg-primary/90 text-white font-black py-4 rounded-full transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
-                            {t('joinService')} <span className="material-symbols-outlined text-sm">send</span>
+                            {t('joinService')} <span className="material-symbols-outlined text-sm rtl:rotate-180">send</span>
                         </button>
                     </div>
                     <p className="text-[10px] text-muted-foreground/60 mt-6 text-center font-bold uppercase tracking-tighter">

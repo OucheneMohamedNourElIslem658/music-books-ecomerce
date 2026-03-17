@@ -93,7 +93,7 @@ export const ChronicleGridItem: React.FC<Props> = ({ post, locale }) => {
                         className="flex items-center gap-2 text-primary text-sm font-black uppercase tracking-widest group/link"
                     >
                         {t('readProclamation')}
-                        <span className="material-symbols-outlined text-base group-hover/link:translate-x-1 transition-transform">arrow_right_alt</span>
+                        <span className="material-symbols-outlined text-base group-hover/link:translate-x-1 transition-transform rtl:rotate-180">arrow_right_alt</span>
                     </Link>
                 </div>
             </div>

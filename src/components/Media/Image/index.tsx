@@ -1,4 +1,4 @@
-'use client'
+// 'use client'
 
 import type { StaticImageData } from 'next/image'
 
@@ -27,7 +27,7 @@ export const Image: React.FC<MediaProps> = (props) => {
     width: widthFromProps,
   } = props
 
-  const [isLoading, setIsLoading] = React.useState(true)
+  // const [isLoading, setIsLoading] = React.useState(true)
 
   let width: number | undefined | null
   let height: number | undefined | null
@@ -37,7 +37,7 @@ export const Image: React.FC<MediaProps> = (props) => {
   if (!src && resource && typeof resource === 'object') {
     const {
       alt: altFromResource,
-      filename: fullFilename,
+      // filename: fullFilename,
       height: fullHeight,
       url,
       width: fullWidth,
@@ -47,7 +47,7 @@ export const Image: React.FC<MediaProps> = (props) => {
     height = heightFromProps ?? fullHeight
     alt = altFromResource
 
-    const filename = fullFilename
+    // const filename = fullFilename
 
     src = url?.startsWith('http')
       ? url
@@ -69,12 +69,12 @@ export const Image: React.FC<MediaProps> = (props) => {
       height={!fill ? height || heightFromProps : undefined}
       onClick={onClick}
       onLoad={() => {
-        setIsLoading(false)
+        // setIsLoading(false)
         if (typeof onLoadFromProps === 'function') {
           onLoadFromProps()
         }
       }}
-      priority={priority}
+      priority
       quality={90}
       sizes={sizes}
       src={src}

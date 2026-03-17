@@ -10,7 +10,7 @@ import { Link } from '@/i18n/navigation'
 import { formatDateTime } from '@/utilities/formatDateTime'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import configPromise from '@payload-config'
-import { Castle, ChevronLeft, CreditCard, History, Map, Package, Printer } from 'lucide-react'
+import { Castle, ChevronLeft, History, Map, Package } from 'lucide-react'
 import { headers as getHeaders } from 'next/headers.js'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
@@ -262,29 +262,42 @@ export default async function OrderPage({ params, searchParams }: PageProps) {
                   <AddressItem address={order.shippingAddress} hideActions />
                 )}
               </div>
-              <button className="w-full py-4 bg-secondary hover:bg-primary hover:text-primary-foreground rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all border border-border">
+              {/* <button className="w-full py-4 bg-secondary hover:bg-primary hover:text-primary-foreground rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all border border-border">
                 {t('viewCrystalBall')}
-              </button>
+              </button> */}
             </div>
           </div>
 
           {/* Payment Method */}
-          <div className="bg-card/30 rounded-2xl p-6 border border-border flex items-center gap-4">
-            <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-              <CreditCard size={24} />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-muted-foreground text-[10px] font-black uppercase tracking-widest">
-                {t('essenceSource')}
-              </span>
-              <span className="font-bold text-sm">{t('arcaneVault', { last4: '1337' })}</span>
-            </div>
-          </div>
+          {/* Payment Method */}
+          {/* {order.transactions && order.transactions.length > 0 && (
+            <div className="bg-card/30 rounded-2xl p-6 border border-border flex flex-col gap-4">
+              {order.transactions.map((txn, index) => {
+                // txn can have fields like method, last4, brand, amount, etc.
+                const method = typeof (txn) === 'number' ? txn : txn.paymentMethod || t('unknownMethod')
+                const info = typeof (txn) === 'number' ? null : txn.paypal || txn.stripe || null
 
-          <button className="w-full py-5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl font-black text-sm uppercase tracking-widest shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-3 group">
+                return (
+                  <div key={index} className="flex items-center gap-4">
+                    <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                      <CreditCard size={24} />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-muted-foreground text-[10px] font-black uppercase tracking-widest">
+                        {t('essenceSource')}
+                      </span>
+                      
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )} */}
+
+          {/* <button className="w-full py-5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl font-black text-sm uppercase tracking-widest shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-3 group">
             <Printer size={20} className="group-hover:scale-110 transition-transform" />
             {t('print')}
-          </button>
+          </button> */}
         </div>
       </div>
     </main>
