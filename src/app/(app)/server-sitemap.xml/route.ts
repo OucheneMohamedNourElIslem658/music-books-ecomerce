@@ -4,8 +4,9 @@ import { getPayload } from 'payload'
 
 const SITE_URL = 'https://music-books-ecomerce.vercel.app'
 const LOCALES = ['en', 'ar', 'pt'] as const
-const STATIC_PAGES = ['shop', 'contact', 'chronicals']
-const EXCLUDED_PAGE_SLUGS = new Set(['shop', 'contact', 'chronicals', 'home'])
+const STATIC_PAGES = ['shop', 'contact', 'chronicals', 'author'] // add author here
+
+const EXCLUDED_PAGE_SLUGS = new Set(['shop', 'contact', 'chronicals', 'author', 'home']) // add author here
 
 export async function GET() {
     const payload = await getPayload({ config })
