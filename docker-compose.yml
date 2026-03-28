@@ -133,7 +133,7 @@ services:
   # ─────────────────────────────────────────
   app:
     build:
-      context: ./app
+      context: .
       dockerfile: Dockerfile
       args:
         NEXT_PUBLIC_SERVER_URL: https://${DOMAIN}
