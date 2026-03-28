@@ -6,7 +6,8 @@ import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/
 import { Plugin } from 'payload'
 
 import { stripeAdapter } from '@payloadcms/plugin-ecommerce/payments/stripe'
-import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+// import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { s3Storage } from '@payloadcms/storage-s3'
 
 import { adminOnlyFieldAccess } from '@/access/adminOnlyFieldAccess'
 import { adminOrPublishedStatus } from '@/access/adminOrPublishedStatus'
@@ -29,12 +30,28 @@ const generateURL: GenerateURL<Product | Page> = ({ doc }) => {
 }
 
 export const plugins: Plugin[] = [
-  vercelBlobStorage({
-    token: process.env.BLOB_READ_WRITE_TOKEN!,
-    enabled: true,
+  s3Storage({
     collections: {
-      media: true
-    }
+      // Replace 'media' with your actual media collection slug
+      media: {
+        prefix: 'media',
+        disableLocalStorage: true,
+        generateFileURL: ({ filename, prefix }) => {
+          const publicUrl = process.env.S3_PUBLIC_URL
+          return `${publicUrl}/${process.env.S3_BUCKET}/${prefix ? prefix + '/' : ''}${filename}`
+        },
+      },
+    },
+    bucket: process.env.S3_BUCKET as string,
+    config: {
+      credentials: {
+        accessKeyId: process.env.S3_ACCESS_KEY as string,
+        secretAccessKey: process.env.S3_SECRET_KEY as string,
+      },
+      endpoint: process.env.S3_ENDPOINT, // e.g. http://minio:9000
+      region: process.env.S3_REGION ?? 'us-east-1',
+      forcePathStyle: true, // Required for MinIO
+    },
   }),
   seoPlugin({
     generateTitle,

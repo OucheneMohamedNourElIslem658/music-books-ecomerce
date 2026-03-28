@@ -29,6 +29,15 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.public.blob.vercel-storage.com',
       },
+      {
+        protocol: 'https',
+        hostname: process.env.DOMAIN ?? 'localhost',
+      },
+      {
+        // MinIO / object storage public URL
+        protocol: 'https',
+        hostname: `storage.${process.env.DOMAIN ?? 'localhost'}`,
+      },
     ],
   },
   reactStrictMode: true,
